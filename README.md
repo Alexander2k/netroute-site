@@ -55,6 +55,12 @@ Chrome extension that discovers domains on any webpage, resolves IPs via racing 
 - RIPE Stat API for BGP prefix lookups
 - 5 interface languages
 
+## Support the Project
+
+<a href="https://dalink.to/netrouter">
+  <img src="https://img.shields.io/badge/%E2%9D%A4%EF%B8%8F_Support_the_Project-orange?style=for-the-badge" alt="Support the Project">
+</a>
+
 ## License
 
 MIT
