@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — NetRoute Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .policy { max-width: 720px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .policy h1 { font-size: 32px; margin-bottom: 8px; }
+        .policy .date { color: var(--text-muted); font-family: var(--font-mono); font-size: 13px; margin-bottom: 48px; }
+        .policy h2 { font-size: 20px; margin: 40px 0 12px; color: var(--text); }
+        .policy p, .policy li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .policy ul { padding-left: 24px; margin: 12px 0; }
+        .policy li { margin-bottom: 8px; }
+        .policy a { color: var(--accent); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <div class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+        </div>
+    </div>
+</nav>
+
+<div class="policy">
+    <a href="index.html" class="back">&larr; Back to Home</a>
+    <h1>Privacy Policy</h1>
+    <p class="date">Last updated: March 30, 2026</p>
+
+    <h2>Overview</h2>
+    <p>NetRoute Pro is a browser extension that discovers domains on webpages, resolves them to IP addresses, and generates routing commands. Your privacy is important to us. This extension is designed to work entirely locally in your browser.</p>
+
+    <h2>Data Collection</h2>
+    <p>NetRoute Pro does <strong>not</strong> collect, store, transmit, or share any personal data. Specifically:</p>
+    <ul>
+        <li>No analytics or tracking scripts</li>
+        <li>No user accounts or registration</li>
+        <li>No cookies for tracking purposes</li>
+        <li>No data sent to our servers</li>
+        <li>No browsing history recorded</li>
+    </ul>
+
+    <h2>Network Requests</h2>
+    <p>The extension makes the following network requests, all essential to its core functionality:</p>
+    <ul>
+        <li><strong>DNS-over-HTTPS queries</strong> to Cloudflare (1.1.1.1), Google (8.8.8.8), and Quad9 (9.9.9.9) — to resolve domain names to IP addresses</li>
+        <li><strong>RIPE Stat API</strong> (stat.ripe.net) — to fetch BGP prefix information for route optimization (optional, user-enabled)</li>
+        <li><strong>ip-api.com</strong> — to look up ASN/organization info for resolved IPs (optional)</li>
+    </ul>
+    <p>These requests contain only domain names or IP addresses discovered on the current webpage. No personal information is included.</p>
+
+    <h2>Local Storage</h2>
+    <p>The extension uses <code>chrome.storage.local</code> and optionally <code>chrome.storage.sync</code> to store:</p>
+    <ul>
+        <li>User preferences (theme, DNS provider, export settings)</li>
+        <li>Domain blacklist</li>
+        <li>Scan history (last 10 scans, stored locally)</li>
+        <li>DNS and BGP cache (with TTL expiration)</li>
+    </ul>
+    <p>All data stays on your device (or syncs via your Google account if you enable Chrome Sync). We have no access to this data.</p>
+
+    <h2>Permissions</h2>
+    <ul>
+        <li><strong>activeTab</strong> — to access the current tab's URL for domain scanning</li>
+        <li><strong>scripting</strong> — to extract domains from the current page</li>
+        <li><strong>storage</strong> — to save settings and cache locally</li>
+        <li><strong>downloads</strong> — to export route files (.bat, .sh, .rsc)</li>
+        <li><strong>webRequest</strong> — to capture network requests for domain discovery</li>
+        <li><strong>host_permissions (all URLs)</strong> — to make DNS-over-HTTPS queries to resolve domains</li>
+    </ul>
+
+    <h2>Third-Party Services</h2>
+    <p>No data is shared with third parties for advertising, marketing, or analytics purposes. The only external services contacted are DNS providers and network information APIs listed above, solely for the extension's core functionality.</p>
+
+    <h2>Changes</h2>
+    <p>If this policy is updated, the changes will be posted on this page with an updated date.</p>
+
+    <h2>Contact</h2>
+    <p>If you have questions about this privacy policy, please open an issue on the project's support page.</p>
+</div>
+
+</body>
+</html>
