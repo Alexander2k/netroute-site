@@ -63,4 +63,4 @@ Chrome extension that discovers domains on any webpage, resolves IPs via racing 
 
 ## License
 
-MIT
+All rights reserved.
