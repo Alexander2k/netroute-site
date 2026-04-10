@@ -434,5 +434,15 @@
     </div>
 </footer>
 
+<script>
+(function() {
+    if (sessionStorage.getItem('lang-redirected')) return;
+    sessionStorage.setItem('lang-redirected', '1');
+    var lang = (navigator.language || '').toLowerCase().split('-')[0];
+    var map = { ru: '/ru/', uk: '/ru/', be: '/ru/', es: '/es/', zh: '/zh/' };
+    var path = map[lang];
+    if (path) window.location.replace('.' + path);
+})();
+</script>
 </body>
 </html>
