@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alexander2k.github.io/netroute-site/sitemap.xml
