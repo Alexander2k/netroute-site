@@ -656,6 +656,7 @@ img { max-width: 100%; display: block; }
 .lang-switch {
     position: relative;
     cursor: pointer;
+    padding: 8px 0;
 }
 .lang-current {
     font-family: var(--font-mono);
@@ -673,7 +674,7 @@ img { max-width: 100%; display: block; }
 .lang-dropdown {
     display: none;
     position: absolute;
-    top: calc(100% + 8px);
+    top: 100%;
     right: 0;
     background: var(--bg-card);
     border: 1px solid var(--border);
