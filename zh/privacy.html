@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>隐私政策 — NetRoute Pro</title>
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/zh/privacy.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/privacy.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/privacy.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/privacy.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/privacy.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/privacy.html">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif; }
+        .policy { max-width: 720px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .policy h1 { font-size: 32px; margin-bottom: 8px; }
+        .policy .date { color: var(--text-muted); font-family: var(--font-mono); font-size: 13px; margin-bottom: 48px; }
+        .policy h2 { font-size: 20px; margin: 40px 0 12px; color: var(--text); }
+        .policy p, .policy li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .policy ul { padding-left: 24px; margin: 12px 0; }
+        .policy li { margin-bottom: 8px; }
+        .policy a { color: var(--accent); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <div class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <div class="lang-switch">
+                <span class="lang-current">中文</span>
+                <div class="lang-dropdown">
+                    <a href="../privacy.html">English</a>
+                    <a href="../ru/privacy.html">Русский</a>
+                    <a href="../es/privacy.html">Español</a>
+                    <a href="./privacy.html" class="lang-active">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="policy">
+    <a href="index.html" class="back">&larr; 返回首页</a>
+    <h1>隐私政策</h1>
+    <p class="date">最后更新：2026年3月30日</p>
+
+    <h2>概述</h2>
+    <p>NetRoute Pro是一款浏览器扩展，它能发现网页上的域名，将其解析为IP地址，并生成路由命令。您的隐私对我们很重要。此扩展完全在您的浏览器中本地运行。</p>
+
+    <h2>数据收集</h2>
+    <p>NetRoute Pro <strong>不会</strong>收集、存储、传输或共享任何个人数据。具体来说：</p>
+    <ul>
+        <li>没有分析或跟踪脚本</li>
+        <li>没有用户账户或注册</li>
+        <li>没有用于跟踪的Cookie</li>
+        <li>没有数据发送到我们的服务器</li>
+        <li>没有浏览历史记录</li>
+    </ul>
+
+    <h2>网络请求</h2>
+    <p>扩展进行以下网络请求，均为其核心功能所必需：</p>
+    <ul>
+        <li><strong>DNS-over-HTTPS查询</strong> 发送至Cloudflare (1.1.1.1)、Google (8.8.8.8)和Quad9 (9.9.9.9) — 用于将域名解析为IP地址</li>
+        <li><strong>RIPE Stat API</strong> (stat.ripe.net) — 用于获取BGP前缀信息以优化路由（可选）</li>
+        <li><strong>ip-api.com</strong> — 用于查询已解析IP的ASN/组织信息（可选）</li>
+    </ul>
+    <p>这些请求仅包含在当前网页上发现的域名或IP地址。不包含任何个人信息。</p>
+
+    <h2>本地存储</h2>
+    <p>扩展使用<code>chrome.storage.local</code>和可选的<code>chrome.storage.sync</code>来存储：</p>
+    <ul>
+        <li>用户偏好设置（主题、DNS提供商、导出设置）</li>
+        <li>域名黑名单</li>
+        <li>扫描历史（最近10次，本地存储）</li>
+        <li>DNS和BGP缓存（带TTL过期）</li>
+    </ul>
+    <p>所有数据都保存在您的设备上（如果您启用Chrome Sync，则通过Google账户同步）。我们无法访问这些数据。</p>
+
+    <h2>权限</h2>
+    <ul>
+        <li><strong>activeTab</strong> — 访问当前标签页的URL以进行域名扫描</li>
+        <li><strong>scripting</strong> — 从当前页面提取域名</li>
+        <li><strong>storage</strong> — 本地保存设置和缓存</li>
+        <li><strong>downloads</strong> — 导出路由文件（.bat、.sh、.rsc）</li>
+        <li><strong>webRequest</strong> — 捕获网络请求以发现域名</li>
+        <li><strong>host_permissions（所有URL）</strong> — 执行DNS-over-HTTPS查询以解析域名</li>
+    </ul>
+
+    <h2>第三方服务</h2>
+    <p>不会与第三方共享任何数据用于广告、营销或分析目的。唯一联系的外部服务是上述DNS提供商和网络信息API，仅用于扩展的核心功能。</p>
+
+    <h2>变更</h2>
+    <p>如果此政策更新，更改将发布在此页面上，并附有更新日期。</p>
+
+    <h2>联系方式</h2>
+    <p>如果您对此隐私政策有任何疑问，请在项目支持页面上提交issue。</p>
+</div>
+
+</body>
+</html>

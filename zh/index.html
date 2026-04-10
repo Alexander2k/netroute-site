@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetRoute Pro — Domain to IP Route Generator | MikroTik, Cisco, WireGuard, OpenVPN</title>
-    <meta name="description" content="Free Chrome extension to generate IP routes from website domains. Split tunneling route generator for MikroTik, Cisco, Juniper, WireGuard AllowedIPs, OpenVPN, Windows, Linux, macOS. CIDR aggregation, BGP optimization, DNS racing.">
-    <meta name="keywords" content="route generator, domain to ip route, wireguard allowedips generator, wireguard allowedips calculator, mikrotik route add, vpn split tunneling routes, generate ip routes from domains, cisco ip route generator, openvpn route generator, CIDR aggregation tool, BGP route optimization, DNS resolver chrome extension, ip route add linux, network route automation, domain based routing, selective vpn routing">
+    <title>NetRoute Pro — 域名转IP路由生成器 | MikroTik, Cisco, WireGuard, OpenVPN</title>
+    <meta name="description" content="免费Chrome扩展，从网站域名生成IP路由。VPN分流路由生成器，支持MikroTik、Cisco、Juniper、WireGuard AllowedIPs、OpenVPN、Windows、Linux、macOS。CIDR聚合，BGP优化，DNS竞速。">
+    <meta name="keywords" content="路由生成器, 域名转IP路由, wireguard allowedips生成器, mikrotik路由, vpn分流路由, cisco ip route生成器, openvpn路由, CIDR聚合工具, BGP路由优化, DNS解析器, 网络路由自动化, 选择性VPN路由">
     <meta name="author" content="Alexander2k">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/zh/">
     <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/">
     <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/">
     <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/">
@@ -17,24 +17,26 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="NetRoute Pro — Domain to IP Route Generator for 8 Platforms">
-    <meta property="og:description" content="Free Chrome extension: generate VPN split tunneling routes from any website. MikroTik, Cisco, WireGuard AllowedIPs, OpenVPN — one click.">
-    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/">
+    <meta property="og:title" content="NetRoute Pro — 域名转IP路由生成器，支持8个平台">
+    <meta property="og:description" content="免费Chrome扩展：从任何网站生成VPN分流路由。MikroTik、Cisco、WireGuard AllowedIPs、OpenVPN — 一键生成。">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/zh/">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:site_name" content="NetRoute Pro">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="NetRoute Pro — Domain to IP Route Generator for 8 Platforms">
-    <meta name="twitter:description" content="Free Chrome extension: generate VPN split tunneling routes from any website. MikroTik, Cisco, WireGuard AllowedIPs, OpenVPN — one click.">
+    <meta name="twitter:title" content="NetRoute Pro — 域名转IP路由生成器，支持8个平台">
+    <meta name="twitter:description" content="免费Chrome扩展：从任何网站生成VPN分流路由。MikroTik、Cisco、WireGuard AllowedIPs、OpenVPN — 一键生成。">
     <meta name="twitter:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
 
-    <meta name="google-site-verification" content="nbWDYZzNsi8oZ7bjs1Ef9DS8X45mJzmxVwMnyyVK_2o" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif; }
+    </style>
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -43,8 +45,9 @@
         "name": "NetRoute Pro",
         "applicationCategory": "BrowserApplication",
         "operatingSystem": "Chrome",
-        "description": "Free domain to IP route generator. Chrome extension for VPN split tunneling: discover domains, resolve IPs, generate routing commands for MikroTik, Cisco, Juniper, WireGuard AllowedIPs, OpenVPN, Windows, Linux, macOS. CIDR aggregation and BGP optimization.",
-        "url": "https://alexander2k.github.io/netroute-site/",
+        "inLanguage": "zh",
+        "description": "免费域名转IP路由生成器。Chrome扩展用于VPN分流：发现域名、解析IP、为MikroTik、Cisco、Juniper、WireGuard AllowedIPs、OpenVPN、Windows、Linux、macOS生成路由命令。CIDR聚合和BGP优化。",
+        "url": "https://alexander2k.github.io/netroute-site/zh/",
         "downloadUrl": "https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla",
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
         "softwareVersion": "4.0",
@@ -54,14 +57,14 @@
             "priceCurrency": "USD"
         },
         "featureList": [
-            "Network sniffing via Service Worker",
-            "DNS racing (Cloudflare, Google, Quad9)",
-            "CIDR aggregation (IPv4 + IPv6)",
-            "RIPE BGP optimization",
-            "ASN lookup",
-            "Bulk URL scanning",
-            "Domain blacklist with Chrome Sync",
-            "Export as .bat, .sh, .rsc"
+            "通过Service Worker进行网络嗅探",
+            "DNS竞速（Cloudflare、Google、Quad9）",
+            "CIDR聚合（IPv4 + IPv6）",
+            "RIPE BGP优化",
+            "ASN查询",
+            "批量URL扫描",
+            "域名黑名单与Chrome同步",
+            "导出为 .bat、.sh、.rsc"
         ]
     }
     </script>
@@ -89,19 +92,19 @@
             <span class="logo-ver">v4.0</span>
         </div>
         <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#how-it-works">How it works</a>
-            <a href="#platforms">Platforms</a>
+            <a href="#features">功能</a>
+            <a href="#how-it-works">工作原理</a>
+            <a href="#platforms">平台</a>
             <div class="lang-switch">
-                <span class="lang-current">EN</span>
+                <span class="lang-current">中文</span>
                 <div class="lang-dropdown">
-                    <a href="./" class="lang-active">English</a>
-                    <a href="./ru/">Русский</a>
-                    <a href="./es/">Español</a>
-                    <a href="./zh/">中文</a>
+                    <a href="../">English</a>
+                    <a href="../ru/">Русский</a>
+                    <a href="../es/">Español</a>
+                    <a href="./" class="lang-active">中文</a>
                 </div>
             </div>
-            <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="nav-cta" target="_blank" rel="noopener">Install</a>
+            <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="nav-cta" target="_blank" rel="noopener">安装</a>
         </div>
     </div>
 </nav>
@@ -109,19 +112,19 @@
 <!-- HERO -->
 <header class="hero" id="install">
     <div class="hero-content">
-        <div class="hero-badge">Chrome Extension &middot; Manifest V3 &middot; 5 Languages</div>
+        <div class="hero-badge">Chrome扩展 &middot; Manifest V3 &middot; 5种语言</div>
         <h1>
-            <span class="hero-line-1">Smart Route</span>
-            <span class="hero-line-2">Generation</span>
+            <span class="hero-line-1">智能路由</span>
+            <span class="hero-line-2">生成器</span>
         </h1>
         <p class="hero-sub">
-            Discover every domain on a webpage. Resolve to IPs.<br>
-            Generate optimized routing commands for <strong>8 platforms</strong> instantly.
+            发现网页上的每个域名。解析为IP。<br>
+            为<strong>8个平台</strong>即时生成优化的路由命令。
         </p>
         <div class="hero-actions">
             <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9.5"/></svg>
-                Install from Chrome Web Store
+                从Chrome Web Store安装
             </a>
         </div>
         <div class="hero-terminal">
@@ -147,66 +150,66 @@
 <!-- FEATURES -->
 <section class="features" id="features">
     <div class="section-header">
-        <span class="section-tag">// capabilities</span>
-        <h2>Built for Network Engineers</h2>
-        <p>Everything you need to generate production-ready routing commands from any webpage.</p>
+        <span class="section-tag">// 功能特性</span>
+        <h2>专为网络工程师打造</h2>
+        <p>从任何网页生成生产级路由命令所需的一切。</p>
     </div>
     <div class="features-grid">
         <div class="feature-card">
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
             </div>
-            <h3>Network Sniffer</h3>
-            <p>Captures dynamic background requests — AJAX, CDN, API calls — in real-time via Service Worker.</p>
+            <h3>网络嗅探器</h3>
+            <p>通过Service Worker实时捕获后台请求 — AJAX、CDN、API调用。</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 019-9"/></svg>
             </div>
-            <h3>DNS Racing</h3>
-            <p>Queries Cloudflare, Google, Quad9 simultaneously via <code>Promise.any</code>. First response wins.</p>
+            <h3>DNS竞速</h3>
+            <p>同时查询Cloudflare、Google、Quad9，通过<code>Promise.any</code>，最快响应获胜。</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.5"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0-4h18"/></svg>
             </div>
-            <h3>CIDR Aggregation</h3>
-            <p>Merges individual IPs into optimized subnets. IPv4 bitmask + IPv6 BigInt aggregation.</p>
+            <h3>CIDR聚合</h3>
+            <p>将单个IP合并为优化的子网。IPv4位掩码 + IPv6 BigInt聚合。</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
-            <h3>RIPE BGP Optimization</h3>
-            <p>Fetches real BGP prefixes from RIPE Stat API to replace individual /32s with announced routes.</p>
+            <h3>RIPE BGP优化</h3>
+            <p>从RIPE Stat API获取真实BGP前缀，用已公告路由替换单个/32。</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
             </div>
-            <h3>ASN Lookup</h3>
-            <p>Batch IP-to-ASN resolution. See which organization owns each IP: <code>AS13335 (Cloudflare)</code>.</p>
+            <h3>ASN查询</h3>
+            <p>批量IP转ASN解析。查看每个IP的所属组织：<code>AS13335 (Cloudflare)</code>。</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M4 7V4a2 2 0 012-2h8.5L20 7.5V20a2 2 0 01-2 2H6a2 2 0 01-2-2v-3"/><polyline points="14 2 14 8 20 8"/><path d="M1 15h10M8 12l3 3-3 3"/></svg>
             </div>
-            <h3>Pro Export</h3>
-            <p>Download as <code>.bat</code>, <code>.sh</code>, or <code>.rsc</code> with proper headers, shebangs, and verification commands.</p>
+            <h3>专业导出</h3>
+            <p>下载为<code>.bat</code>、<code>.sh</code>或<code>.rsc</code>，包含正确的文件头和验证命令。</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
-            <h3>Bulk Scan</h3>
-            <p>Paste a list of URLs. Generate aggregated routes for all hostnames at once.</p>
+            <h3>批量扫描</h3>
+            <p>粘贴URL列表。一次性为所有主机名生成聚合路由。</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <h3>Domain Blacklist</h3>
-            <p>Exclude analytics, trackers, and unwanted domains. Syncs across devices via Chrome Cloud Sync.</p>
+            <h3>域名黑名单</h3>
+            <p>排除分析、追踪器和不需要的域名。通过Chrome Cloud Sync跨设备同步。</p>
         </div>
     </div>
 </section>
@@ -214,15 +217,15 @@
 <!-- HOW IT WORKS -->
 <section class="how-it-works" id="how-it-works">
     <div class="section-header">
-        <span class="section-tag">// workflow</span>
-        <h2>Three Steps to Routes</h2>
+        <span class="section-tag">// 工作流程</span>
+        <h2>三步生成路由</h2>
     </div>
     <div class="steps">
         <div class="step">
             <div class="step-number">01</div>
             <div class="step-content">
-                <h3>Install &amp; Navigate</h3>
-                <p>Add the extension from Chrome Web Store. Navigate to any website and refresh to start the network sniffer.</p>
+                <h3>安装并浏览</h3>
+                <p>从Chrome Web Store添加扩展。浏览任何网站并刷新以启动网络嗅探器。</p>
             </div>
             <div class="step-visual">
                 <pre><code><span class="t-comment"># chrome://extensions</span>
@@ -236,8 +239,8 @@
         <div class="step">
             <div class="step-number">02</div>
             <div class="step-content">
-                <h3>Configure &amp; Scan</h3>
-                <p>Choose your target OS, merge mask, gateway, and optional domain filter. Click <strong>Analyze Website</strong>.</p>
+                <h3>配置并扫描</h3>
+                <p>选择目标操作系统、合并掩码、网关和域名过滤器。点击<strong>Analyze Website</strong>。</p>
             </div>
             <div class="step-visual">
                 <pre><code><span class="t-comment"># Scan config</span>
@@ -253,8 +256,8 @@
         <div class="step">
             <div class="step-number">03</div>
             <div class="step-content">
-                <h3>Copy or Export</h3>
-                <p>Grab the generated routes from the Routes tab. Copy to clipboard or export as a script file.</p>
+                <h3>复制或导出</h3>
+                <p>从Routes标签页获取生成的路由。复制到剪贴板或导出为脚本文件。</p>
             </div>
             <div class="step-visual">
                 <pre><code><span class="t-comment"># Output: 12 routes generated</span>
@@ -270,17 +273,17 @@
 <!-- PLATFORMS -->
 <section class="platforms" id="platforms">
     <div class="section-header">
-        <span class="section-tag">// supported formats</span>
-        <h2>8 Platform Formats</h2>
-        <p>Native command syntax for every major OS and network equipment vendor.</p>
+        <span class="section-tag">// 支持格式</span>
+        <h2>8种平台格式</h2>
+        <p>支持所有主要操作系统和网络设备厂商的原生命令语法。</p>
     </div>
     <div class="platform-table-wrap">
         <table class="platform-table">
             <thead>
                 <tr>
-                    <th>Platform</th>
-                    <th>IPv4 Command</th>
-                    <th>IPv6 Command</th>
+                    <th>平台</th>
+                    <th>IPv4命令</th>
+                    <th>IPv6命令</th>
                 </tr>
             </thead>
             <tbody>
@@ -333,23 +336,23 @@
 <section class="stats-bar">
     <div class="stat">
         <span class="stat-value">8</span>
-        <span class="stat-label">Platform Formats</span>
+        <span class="stat-label">平台格式</span>
     </div>
     <div class="stat">
         <span class="stat-value">5</span>
-        <span class="stat-label">Languages</span>
+        <span class="stat-label">种语言</span>
     </div>
     <div class="stat">
         <span class="stat-value">IPv4</span>
-        <span class="stat-label">+IPv6 Support</span>
+        <span class="stat-label">+IPv6支持</span>
     </div>
     <div class="stat">
         <span class="stat-value">4</span>
-        <span class="stat-label">Export Formats</span>
+        <span class="stat-label">种导出格式</span>
     </div>
     <div class="stat">
         <span class="stat-value">3</span>
-        <span class="stat-label">DNS Providers</span>
+        <span class="stat-label">个DNS提供商</span>
     </div>
 </section>
 
@@ -359,16 +362,16 @@
         <div class="footer-brand">
             <span class="logo-icon">&#9678;</span>
             <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
-            <p class="footer-desc">Open-source Chrome extension for network route generation.<br>Built for engineers who ship infrastructure.</p>
+            <p class="footer-desc">用于网络路由生成的开源Chrome扩展。<br>专为构建基础设施的工程师打造。</p>
         </div>
         <div class="footer-links">
             <div class="footer-col">
-                <h4>Install</h4>
+                <h4>安装</h4>
                 <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">Chrome Web Store</a>
             </div>
             <div class="footer-col">
-                <h4>Support</h4>
-                <a href="https://dalink.to/netrouter" class="donate-link">Support the Project</a>
+                <h4>支持</h4>
+                <a href="https://dalink.to/netrouter" class="donate-link">支持项目</a>
             </div>
         </div>
     </div>

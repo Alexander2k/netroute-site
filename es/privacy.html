@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de privacidad — NetRoute Pro</title>
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/es/privacy.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/privacy.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/privacy.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/privacy.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/privacy.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/privacy.html">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .policy { max-width: 720px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .policy h1 { font-size: 32px; margin-bottom: 8px; }
+        .policy .date { color: var(--text-muted); font-family: var(--font-mono); font-size: 13px; margin-bottom: 48px; }
+        .policy h2 { font-size: 20px; margin: 40px 0 12px; color: var(--text); }
+        .policy p, .policy li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .policy ul { padding-left: 24px; margin: 12px 0; }
+        .policy li { margin-bottom: 8px; }
+        .policy a { color: var(--accent); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <div class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <div class="lang-switch">
+                <span class="lang-current">ES</span>
+                <div class="lang-dropdown">
+                    <a href="../privacy.html">English</a>
+                    <a href="../ru/privacy.html">Русский</a>
+                    <a href="./privacy.html" class="lang-active">Español</a>
+                    <a href="../zh/privacy.html">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="policy">
+    <a href="index.html" class="back">&larr; Volver al inicio</a>
+    <h1>Política de privacidad</h1>
+    <p class="date">Última actualización: 30 de marzo de 2026</p>
+
+    <h2>Descripción general</h2>
+    <p>NetRoute Pro es una extensión de navegador que descubre dominios en páginas web, los resuelve a direcciones IP y genera comandos de enrutamiento. Tu privacidad es importante para nosotros. Esta extensión está diseñada para funcionar completamente de forma local en tu navegador.</p>
+
+    <h2>Recopilación de datos</h2>
+    <p>NetRoute Pro <strong>no</strong> recopila, almacena, transmite ni comparte datos personales. Específicamente:</p>
+    <ul>
+        <li>Sin scripts de análisis o seguimiento</li>
+        <li>Sin cuentas de usuario ni registro</li>
+        <li>Sin cookies de seguimiento</li>
+        <li>Sin datos enviados a nuestros servidores</li>
+        <li>Sin registro del historial de navegación</li>
+    </ul>
+
+    <h2>Solicitudes de red</h2>
+    <p>La extensión realiza las siguientes solicitudes de red, todas esenciales para su funcionalidad principal:</p>
+    <ul>
+        <li><strong>Consultas DNS-over-HTTPS</strong> a Cloudflare (1.1.1.1), Google (8.8.8.8) y Quad9 (9.9.9.9) — para resolver nombres de dominio a direcciones IP</li>
+        <li><strong>RIPE Stat API</strong> (stat.ripe.net) — para obtener información de prefijos BGP para optimización de rutas (opcional)</li>
+        <li><strong>ip-api.com</strong> — para buscar información ASN/organización de IPs resueltas (opcional)</li>
+    </ul>
+    <p>Estas solicitudes contienen solo nombres de dominio o direcciones IP descubiertas en la página web actual. No se incluye información personal.</p>
+
+    <h2>Almacenamiento local</h2>
+    <p>La extensión usa <code>chrome.storage.local</code> y opcionalmente <code>chrome.storage.sync</code> para almacenar:</p>
+    <ul>
+        <li>Preferencias del usuario (tema, proveedor DNS, configuración de exportación)</li>
+        <li>Lista negra de dominios</li>
+        <li>Historial de escaneos (últimos 10, almacenados localmente)</li>
+        <li>Caché DNS y BGP (con expiración TTL)</li>
+    </ul>
+    <p>Todos los datos permanecen en tu dispositivo (o se sincronizan a través de tu cuenta de Google si habilitas Chrome Sync). No tenemos acceso a estos datos.</p>
+
+    <h2>Permisos</h2>
+    <ul>
+        <li><strong>activeTab</strong> — para acceder a la URL de la pestaña actual para escaneo de dominios</li>
+        <li><strong>scripting</strong> — para extraer dominios de la página actual</li>
+        <li><strong>storage</strong> — para guardar configuración y caché localmente</li>
+        <li><strong>downloads</strong> — para exportar archivos de rutas (.bat, .sh, .rsc)</li>
+        <li><strong>webRequest</strong> — para capturar solicitudes de red para descubrimiento de dominios</li>
+        <li><strong>host_permissions (todas las URLs)</strong> — para realizar consultas DNS-over-HTTPS para resolver dominios</li>
+    </ul>
+
+    <h2>Servicios de terceros</h2>
+    <p>No se comparten datos con terceros para publicidad, marketing o análisis. Los únicos servicios externos contactados son los proveedores DNS y las APIs de información de red listadas arriba, únicamente para la funcionalidad principal de la extensión.</p>
+
+    <h2>Cambios</h2>
+    <p>Si esta política se actualiza, los cambios se publicarán en esta página con una fecha actualizada.</p>
+
+    <h2>Contacto</h2>
+    <p>Si tienes preguntas sobre esta política de privacidad, por favor abre un issue en la página de soporte del proyecto.</p>
+</div>
+
+</body>
+</html>

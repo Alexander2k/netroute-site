@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Политика конфиденциальности — NetRoute Pro</title>
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/privacy.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/privacy.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/privacy.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/privacy.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/privacy.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/privacy.html">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .policy { max-width: 720px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .policy h1 { font-size: 32px; margin-bottom: 8px; }
+        .policy .date { color: var(--text-muted); font-family: var(--font-mono); font-size: 13px; margin-bottom: 48px; }
+        .policy h2 { font-size: 20px; margin: 40px 0 12px; color: var(--text); }
+        .policy p, .policy li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .policy ul { padding-left: 24px; margin: 12px 0; }
+        .policy li { margin-bottom: 8px; }
+        .policy a { color: var(--accent); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <div class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Главная</a>
+            <div class="lang-switch">
+                <span class="lang-current">RU</span>
+                <div class="lang-dropdown">
+                    <a href="../privacy.html">English</a>
+                    <a href="./privacy.html" class="lang-active">Русский</a>
+                    <a href="../es/privacy.html">Español</a>
+                    <a href="../zh/privacy.html">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="policy">
+    <a href="index.html" class="back">&larr; На главную</a>
+    <h1>Политика конфиденциальности</h1>
+    <p class="date">Последнее обновление: 30 марта 2026</p>
+
+    <h2>Обзор</h2>
+    <p>NetRoute Pro — это расширение для браузера, которое обнаруживает домены на веб-страницах, резолвит их в IP-адреса и генерирует команды маршрутизации. Ваша конфиденциальность важна для нас. Это расширение работает полностью локально в вашем браузере.</p>
+
+    <h2>Сбор данных</h2>
+    <p>NetRoute Pro <strong>не</strong> собирает, не хранит, не передаёт и не делится никакими персональными данными. А именно:</p>
+    <ul>
+        <li>Никаких скриптов аналитики или отслеживания</li>
+        <li>Никаких учётных записей или регистрации</li>
+        <li>Никаких cookies для отслеживания</li>
+        <li>Никаких данных, отправляемых на наши серверы</li>
+        <li>Никакой записи истории просмотров</li>
+    </ul>
+
+    <h2>Сетевые запросы</h2>
+    <p>Расширение выполняет следующие сетевые запросы, необходимые для его основной функциональности:</p>
+    <ul>
+        <li><strong>DNS-over-HTTPS запросы</strong> к Cloudflare (1.1.1.1), Google (8.8.8.8) и Quad9 (9.9.9.9) — для резолвинга доменных имён в IP-адреса</li>
+        <li><strong>RIPE Stat API</strong> (stat.ripe.net) — для получения информации о BGP-префиксах для оптимизации маршрутов (опционально)</li>
+        <li><strong>ip-api.com</strong> — для поиска ASN/организации для разрешённых IP (опционально)</li>
+    </ul>
+    <p>Эти запросы содержат только доменные имена или IP-адреса, обнаруженные на текущей веб-странице. Никакая персональная информация не включается.</p>
+
+    <h2>Локальное хранилище</h2>
+    <p>Расширение использует <code>chrome.storage.local</code> и опционально <code>chrome.storage.sync</code> для хранения:</p>
+    <ul>
+        <li>Пользовательских настроек (тема, DNS-провайдер, параметры экспорта)</li>
+        <li>Чёрного списка доменов</li>
+        <li>Истории сканирований (последние 10, хранятся локально)</li>
+        <li>DNS и BGP кеша (с TTL истечением)</li>
+    </ul>
+    <p>Все данные остаются на вашем устройстве (или синхронизируются через ваш аккаунт Google, если включена Chrome Sync). Мы не имеем доступа к этим данным.</p>
+
+    <h2>Разрешения</h2>
+    <ul>
+        <li><strong>activeTab</strong> — для доступа к URL текущей вкладки для сканирования доменов</li>
+        <li><strong>scripting</strong> — для извлечения доменов с текущей страницы</li>
+        <li><strong>storage</strong> — для сохранения настроек и кеша локально</li>
+        <li><strong>downloads</strong> — для экспорта файлов маршрутов (.bat, .sh, .rsc)</li>
+        <li><strong>webRequest</strong> — для перехвата сетевых запросов при обнаружении доменов</li>
+        <li><strong>host_permissions (все URL)</strong> — для выполнения DNS-over-HTTPS запросов для резолвинга доменов</li>
+    </ul>
+
+    <h2>Сторонние сервисы</h2>
+    <p>Никакие данные не передаются третьим сторонам для рекламы, маркетинга или аналитики. Единственные внешние сервисы, с которыми осуществляется связь — это DNS-провайдеры и API сетевой информации, перечисленные выше, исключительно для основной функциональности расширения.</p>
+
+    <h2>Изменения</h2>
+    <p>При обновлении этой политики изменения будут опубликованы на этой странице с обновлённой датой.</p>
+
+    <h2>Контакты</h2>
+    <p>Если у вас есть вопросы по этой политике конфиденциальности, пожалуйста, создайте issue на странице поддержки проекта.</p>
+</div>
+
+</body>
+</html>
