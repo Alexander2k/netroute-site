@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавление маршрутов на Keenetic — инструкция | NetRoute Pro</title>
+    <meta name="description" content="Как добавить статические маршруты на роутер Keenetic через веб-интерфейс или CLI. Пошаговая инструкция: обход блокировок, направление трафика через VPN по доменам.">
+    <meta name="keywords" content="keenetic маршруты, keenetic добавить маршрут, keenetic обход блокировок, keenetic vpn маршруты, keenetic ip route, keenetic static route, keenetic wireguard маршруты, keenetic домены через vpn">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Добавление маршрутов на Keenetic — инструкция">
+    <meta property="og:description" content="Пошаговая инструкция: как добавить статические маршруты на Keenetic через веб-интерфейс или CLI.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Как добавить маршруты на Keenetic",
+        "description": "Пошаговая инструкция по добавлению статических маршрутов на роутер Keenetic для обхода блокировок и направления трафика через VPN.",
+        "inLanguage": "ru",
+        "totalTime": "PT5M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Сгенерируйте маршруты через NetRoute Pro",
+                "text": "Откройте сайт в браузере, запустите расширение NetRoute Pro. Выберите платформу Linux или MikroTik, укажите шлюз VPN (например 10.0.0.1). Нажмите Analyze Website."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Войдите в веб-интерфейс Keenetic",
+                "text": "Откройте http://my.keenetic.net или IP роутера (обычно 192.168.1.1). Войдите под учёткой администратора."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Добавьте маршруты",
+                "text": "Перейдите в Управление → Маршрутизация → Статические маршруты. Нажмите Добавить маршрут и укажите подсеть назначения и шлюз."
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a { color: var(--accent); }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Главная</a>
+            <div class="lang-switch">
+                <span class="lang-current">RU</span>
+                <div class="lang-dropdown">
+                    <a href="../../guides/keenetic.html">English</a>
+                    <a href="./keenetic.html" class="lang-active">Русский</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; На главную</a>
+    <h1>Добавление маршрутов на Keenetic</h1>
+    <p class="lead">Пошаговая инструкция: как направить трафик отдельных сайтов через VPN-туннель на роутере Keenetic. Генерируем маршруты из доменов через NetRoute Pro и импортируем их на роутер.</p>
+
+    <h2>Что понадобится</h2>
+    <ul>
+        <li>Роутер Keenetic с актуальной прошивкой KeeneticOS 3.x или выше</li>
+        <li>Настроенный VPN-туннель (WireGuard, OpenVPN, IKEv2 или другой)</li>
+        <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> в Chrome</li>
+        <li>Доступ к веб-интерфейсу роутера (обычно <code>http://my.keenetic.net</code>)</li>
+    </ul>
+
+    <h2>Шаг 1. Сгенерируйте маршруты через NetRoute Pro</h2>
+    <ol>
+        <li>Откройте нужный сайт в браузере (например, заблокированный ресурс)</li>
+        <li>Нажмите на иконку NetRoute Pro в панели расширений Chrome</li>
+        <li>Выберите платформу <strong>Linux</strong> (Keenetic принимает команды в Linux-формате)</li>
+        <li>Укажите шлюз — IP вашего VPN-интерфейса (например, <code>10.0.0.1</code> для WireGuard)</li>
+        <li>Задайте маску агрегации (рекомендуется <code>/24</code>) и нажмите <strong>Analyze Website</strong></li>
+        <li>Скопируйте сгенерированные маршруты или скачайте как <code>.sh</code> файл</li>
+    </ol>
+
+    <h2>Шаг 2. Добавьте маршруты через веб-интерфейс</h2>
+    <p>Самый простой способ — использовать веб-интерфейс Keenetic:</p>
+    <ol>
+        <li>Откройте <code>http://my.keenetic.net</code> или IP-адрес роутера</li>
+        <li>Войдите под учётной записью администратора</li>
+        <li>Перейдите в раздел <strong>Управление → Маршрутизация</strong></li>
+        <li>Нажмите <strong>Добавить маршрут</strong></li>
+        <li>Заполните поля:
+            <ul>
+                <li><strong>Тип маршрута:</strong> Маршрут до удалённой подсети</li>
+                <li><strong>Адрес сети назначения:</strong> например <code>104.21.32.0</code></li>
+                <li><strong>Маска подсети:</strong> <code>255.255.255.0</code> (для /24)</li>
+                <li><strong>Интерфейс:</strong> ваш VPN-туннель</li>
+            </ul>
+        </li>
+        <li>Повторите для каждой подсети из списка NetRoute Pro</li>
+    </ol>
+
+    <div class="callout">
+        <strong>Совет:</strong> если маршрутов много (50+), используйте CLI — это быстрее, чем добавлять вручную.
+    </div>
+
+    <h2>Шаг 3. Добавление через CLI (быстрый способ)</h2>
+    <p>Для массового добавления подключитесь к Keenetic через SSH или Telnet:</p>
+    <pre><code>ssh admin@192.168.1.1</code></pre>
+
+    <p>Войдите в режим конфигурации и добавьте маршруты:</p>
+    <pre><code>(config)&gt; ip route 104.21.32.0/24 Wireguard0 auto
+(config)&gt; ip route 172.67.182.0/24 Wireguard0 auto
+(config)&gt; ip route 151.101.1.0/24 Wireguard0 auto
+(config)&gt; system configuration save</code></pre>
+
+    <p>Вместо <code>Wireguard0</code> подставьте имя вашего VPN-интерфейса. Посмотреть список интерфейсов:</p>
+    <pre><code>(config)&gt; show interface</code></pre>
+
+    <h2>Шаг 4. Настройка WireGuard через AllowedIPs</h2>
+    <p>Если вы используете WireGuard, проще задать маршруты прямо в AllowedIPs пира — тогда отдельные ip route не нужны:</p>
+    <ol>
+        <li>В NetRoute Pro выберите платформу <strong>WireGuard</strong></li>
+        <li>Скопируйте строку <code>AllowedIPs</code></li>
+        <li>В веб-интерфейсе Keenetic откройте <strong>Интернет → Другие подключения → WireGuard</strong></li>
+        <li>Откройте настройки пира и вставьте список в поле <strong>Allowed IPs</strong></li>
+        <li>Сохраните настройки</li>
+    </ol>
+
+    <pre><code>AllowedIPs = 104.21.32.0/24, 172.67.182.0/24, 151.101.1.0/24</code></pre>
+
+    <h2>Проверка работы</h2>
+    <p>Убедитесь, что маршруты применились:</p>
+    <pre><code>(config)&gt; show ip route</code></pre>
+
+    <p>Проверьте, что сайт идёт через VPN — на компьютере в LAN:</p>
+    <pre><code>tracert example.com   # Windows
+traceroute example.com   # Linux/macOS</code></pre>
+
+    <p>Первые хопы должны идти через IP вашего VPN-шлюза.</p>
+
+    <h2>Частые проблемы</h2>
+
+    <h3>Маршрут добавлен, но трафик не идёт через VPN</h3>
+    <ul>
+        <li>Проверьте, что VPN-интерфейс активен: <code>show interface Wireguard0</code></li>
+        <li>Убедитесь что в правилах файрвола нет блокировки</li>
+        <li>Проверьте NAT/Masquerade на VPN-интерфейсе</li>
+    </ul>
+
+    <h3>IP сайта изменился — маршрут не работает</h3>
+    <p>Cloudflare, Fastly и другие CDN могут менять IP. Пересоздайте маршруты через NetRoute Pro с включённой <strong>RIPE BGP оптимизацией</strong> — она подставит анонсированные BGP-префиксы, которые покрывают все возможные IP провайдера.</p>
+
+    <h3>Слишком много маршрутов</h3>
+    <p>Keenetic без проблем держит 500-1000 статических маршрутов. Если нужно больше — используйте WireGuard AllowedIPs или настройте BGP через opkg-пакеты.</p>
+
+    <div class="cta-block">
+        <h3>Готовы попробовать?</h3>
+        <p>NetRoute Pro — бесплатное расширение Chrome для генерации маршрутов из любого сайта.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Установить расширение</a>
+    </div>
+
+</article>
+
+</body>
+</html>

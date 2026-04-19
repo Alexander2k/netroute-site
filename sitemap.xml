@@ -106,4 +106,26 @@
         <priority>0.5</priority>
     </url>
 
+    <!-- Keenetic guide (EN) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/guides/keenetic.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html"/>
+        <lastmod>2026-04-11</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Keenetic guide (RU) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html"/>
+        <lastmod>2026-04-11</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
 </urlset>

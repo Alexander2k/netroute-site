@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Static Routes on Keenetic — Step-by-Step Guide | NetRoute Pro</title>
+    <meta name="description" content="How to add static routes on Keenetic router via web UI or CLI. Step-by-step: route specific websites through VPN tunnel using domains with NetRoute Pro.">
+    <meta name="keywords" content="keenetic routes, keenetic add route, keenetic vpn routes, keenetic static route, keenetic ip route, keenetic wireguard allowedips, keenetic split tunnel, keenetic route by domain">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Add Static Routes on Keenetic — Step-by-Step Guide">
+    <meta property="og:description" content="How to route specific websites through VPN on Keenetic: generate routes from domains with NetRoute Pro, apply via web UI or CLI.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to add routes on Keenetic",
+        "description": "Step-by-step guide for adding static routes on Keenetic routers to direct specific website traffic through a VPN tunnel.",
+        "inLanguage": "en",
+        "totalTime": "PT5M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Generate routes with NetRoute Pro",
+                "text": "Open the target website in Chrome, launch NetRoute Pro extension. Select Linux platform, set VPN gateway (e.g. 10.0.0.1). Click Analyze Website."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Sign in to Keenetic web UI",
+                "text": "Open http://my.keenetic.net or router IP (usually 192.168.1.1). Log in as administrator."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Add the routes",
+                "text": "Go to Management → Routing → Static Routes. Click Add Route and specify destination subnet and gateway interface."
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a { color: var(--accent); }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Home</a>
+            <div class="lang-switch">
+                <span class="lang-current">EN</span>
+                <div class="lang-dropdown">
+                    <a href="./keenetic.html" class="lang-active">English</a>
+                    <a href="../ru/guides/keenetic.html">Русский</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; Back to Home</a>
+    <h1>Add Static Routes on Keenetic</h1>
+    <p class="lead">Step-by-step guide: route traffic of specific websites through a VPN tunnel on a Keenetic router. Generate routes from domains with NetRoute Pro and import them on the router.</p>
+
+    <h2>Prerequisites</h2>
+    <ul>
+        <li>Keenetic router with KeeneticOS 3.x or newer</li>
+        <li>Configured VPN tunnel (WireGuard, OpenVPN, IKEv2, or other)</li>
+        <li><a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome extension installed</li>
+        <li>Access to the router's web UI (usually <code>http://my.keenetic.net</code>)</li>
+    </ul>
+
+    <h2>Step 1. Generate routes with NetRoute Pro</h2>
+    <ol>
+        <li>Open the target website in Chrome</li>
+        <li>Click the NetRoute Pro icon in your extensions</li>
+        <li>Select the <strong>Linux</strong> platform (Keenetic accepts Linux-style commands)</li>
+        <li>Set the gateway to your VPN interface IP (e.g., <code>10.0.0.1</code> for WireGuard)</li>
+        <li>Choose aggregation mask (recommended <code>/24</code>) and click <strong>Analyze Website</strong></li>
+        <li>Copy the generated routes or download as <code>.sh</code></li>
+    </ol>
+
+    <h2>Step 2. Add routes via web UI</h2>
+    <p>Easiest approach — use the Keenetic web interface:</p>
+    <ol>
+        <li>Open <code>http://my.keenetic.net</code> or the router's IP</li>
+        <li>Sign in as administrator</li>
+        <li>Go to <strong>Management → Routing</strong></li>
+        <li>Click <strong>Add Route</strong></li>
+        <li>Fill in:
+            <ul>
+                <li><strong>Route type:</strong> Route to remote network</li>
+                <li><strong>Destination network:</strong> e.g. <code>104.21.32.0</code></li>
+                <li><strong>Subnet mask:</strong> <code>255.255.255.0</code> (for /24)</li>
+                <li><strong>Interface:</strong> your VPN tunnel</li>
+            </ul>
+        </li>
+        <li>Repeat for each subnet from NetRoute Pro</li>
+    </ol>
+
+    <div class="callout">
+        <strong>Tip:</strong> if you have 50+ routes, use CLI — much faster than manual entry.
+    </div>
+
+    <h2>Step 3. Bulk add via CLI</h2>
+    <p>For mass import, connect to Keenetic via SSH or Telnet:</p>
+    <pre><code>ssh admin@192.168.1.1</code></pre>
+
+    <p>Enter configuration mode and add routes:</p>
+    <pre><code>(config)&gt; ip route 104.21.32.0/24 Wireguard0 auto
+(config)&gt; ip route 172.67.182.0/24 Wireguard0 auto
+(config)&gt; ip route 151.101.1.0/24 Wireguard0 auto
+(config)&gt; system configuration save</code></pre>
+
+    <p>Replace <code>Wireguard0</code> with your VPN interface name. List interfaces:</p>
+    <pre><code>(config)&gt; show interface</code></pre>
+
+    <h2>Step 4. WireGuard AllowedIPs approach</h2>
+    <p>With WireGuard, you can skip static routes entirely — set AllowedIPs on the peer instead:</p>
+    <ol>
+        <li>In NetRoute Pro, select <strong>WireGuard</strong> platform</li>
+        <li>Copy the <code>AllowedIPs</code> line</li>
+        <li>In Keenetic web UI, go to <strong>Internet → Other connections → WireGuard</strong></li>
+        <li>Open peer settings and paste into the <strong>Allowed IPs</strong> field</li>
+        <li>Save</li>
+    </ol>
+
+    <pre><code>AllowedIPs = 104.21.32.0/24, 172.67.182.0/24, 151.101.1.0/24</code></pre>
+
+    <h2>Verify</h2>
+    <p>Check that routes are active:</p>
+    <pre><code>(config)&gt; show ip route</code></pre>
+
+    <p>Verify traffic goes through VPN — from a LAN client:</p>
+    <pre><code>tracert example.com   # Windows
+traceroute example.com   # Linux/macOS</code></pre>
+
+    <p>First hops should go through your VPN gateway IP.</p>
+
+    <h2>Common issues</h2>
+
+    <h3>Route added but traffic doesn't go through VPN</h3>
+    <ul>
+        <li>Check the VPN interface is up: <code>show interface Wireguard0</code></li>
+        <li>Verify there are no blocking firewall rules</li>
+        <li>Check NAT/masquerade on the VPN interface</li>
+    </ul>
+
+    <h3>Website IP changed — route stopped working</h3>
+    <p>Cloudflare, Fastly, and other CDNs rotate IPs. Regenerate routes with <strong>RIPE BGP optimization</strong> enabled in NetRoute Pro — it substitutes announced BGP prefixes that cover all provider IPs.</p>
+
+    <h3>Too many routes</h3>
+    <p>Keenetic handles 500-1000 static routes without issues. For more, use WireGuard AllowedIPs or set up BGP via opkg packages.</p>
+
+    <div class="cta-block">
+        <h3>Ready to try?</h3>
+        <p>NetRoute Pro — a free Chrome extension to generate routes from any website.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Install Extension</a>
+    </div>
+
+</article>
+
+</body>
+</html>
