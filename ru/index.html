@@ -65,6 +65,55 @@
         ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "inLanguage": "ru",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Какие платформы поддерживает NetRoute Pro?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "NetRoute Pro генерирует команды маршрутизации для 8 платформ: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs) и OpenVPN. Поддерживаются IPv4 и IPv6."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "NetRoute Pro бесплатный?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Да, NetRoute Pro полностью бесплатен. Не требуется регистрация или подписка."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Как NetRoute Pro генерирует маршруты с сайта?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Расширение находит все домены на веб-странице (включая AJAX, CDN и API запросы через Service Worker), резолвит их в IP-адреса параллельными DNS-запросами к Cloudflare, Google и Quad9, агрегирует IP в оптимизированные CIDR-подсети и генерирует команды маршрутизации для выбранной платформы."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Можно ли использовать для VPN split tunneling?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Да, NetRoute Pro идеально подходит для выборочной маршрутизации VPN. Расширение генерирует WireGuard AllowedIPs, OpenVPN route-директивы и команды ОС, чтобы через VPN шёл трафик только определённых сайтов."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Собирает ли NetRoute Pro персональные данные?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Нет. Расширение работает полностью локально в браузере. Не собирает, не хранит и не передаёт персональные данные. Единственные сетевые запросы — DNS-запросы и опциональные RIPE/ASN-лукапы для работы расширения."
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
 

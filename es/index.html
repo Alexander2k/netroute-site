@@ -65,6 +65,55 @@
         ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "inLanguage": "es",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "¿Qué plataformas soporta NetRoute Pro?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "NetRoute Pro genera comandos de enrutamiento para 8 plataformas: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs) y OpenVPN. Compatible con IPv4 e IPv6."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "¿NetRoute Pro es gratis?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Sí, NetRoute Pro es completamente gratis. No requiere registro ni suscripción."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "¿Cómo genera NetRoute Pro rutas desde un sitio web?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "NetRoute Pro descubre todos los dominios de una página web (incluyendo solicitudes AJAX, CDN y API mediante Service Worker), los resuelve a direcciones IP usando consultas DNS en paralelo a Cloudflare, Google y Quad9, agrega los IPs en subredes CIDR optimizadas y genera comandos de enrutamiento específicos de la plataforma."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "¿Se puede usar para VPN split tunneling?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Sí, NetRoute Pro es ideal para enrutamiento selectivo VPN. Genera WireGuard AllowedIPs, directivas route de OpenVPN y comandos de enrutamiento del sistema que te permiten enrutar solo el tráfico de sitios específicos a través de tu VPN."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "¿NetRoute Pro recopila datos personales?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. NetRoute Pro funciona completamente de forma local en tu navegador. No recopila, almacena ni transmite datos personales. Las únicas solicitudes de red son consultas DNS y búsquedas opcionales de RIPE/ASN para la funcionalidad principal de la extensión."
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
 
