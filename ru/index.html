@@ -67,7 +67,7 @@
         },
         "featureList": [
             "Перехват сетевых запросов через Service Worker",
-            "DNS racing (Cloudflare, Google, Quad9)",
+            "DNS racing (Cloudflare, Google, AdGuard)",
             "CIDR агрегация (IPv4 + IPv6)",
             "RIPE BGP оптимизация",
             "ASN поиск",
@@ -104,7 +104,7 @@
                 "name": "Как NetRoute Pro генерирует маршруты с сайта?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Расширение находит все домены на веб-странице (включая AJAX, CDN и API запросы через Service Worker), резолвит их в IP-адреса параллельными DNS-запросами к Cloudflare, Google и Quad9, агрегирует IP в оптимизированные CIDR-подсети и генерирует команды маршрутизации для выбранной платформы."
+                    "text": "Расширение находит все домены на веб-странице (включая AJAX, CDN и API запросы через Service Worker), резолвит их в IP-адреса параллельными DNS-запросами к Cloudflare, Google и AdGuard, агрегирует IP в оптимизированные CIDR-подсети и генерирует команды маршрутизации для выбранной платформы."
                 }
             },
             {
@@ -227,7 +227,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 019-9"/></svg>
             </div>
             <h3>DNS Racing</h3>
-            <p>Запрашивает Cloudflare, Google, Quad9 одновременно через <code>Promise.any</code>. Побеждает первый ответ.</p>
+            <p>Запрашивает Cloudflare, Google, AdGuard одновременно через <code>Promise.any</code>. Побеждает первый ответ.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
@@ -433,7 +433,7 @@
         </details>
         <details class="faq-item">
             <summary>Как NetRoute Pro генерирует маршруты с сайта?</summary>
-            <div class="faq-answer">Расширение находит все домены на веб-странице (включая AJAX, CDN и API запросы через Service Worker), резолвит их в IP-адреса параллельными DNS-запросами к Cloudflare, Google и Quad9, агрегирует IP в оптимизированные CIDR-подсети и генерирует команды маршрутизации для выбранной платформы.</div>
+            <div class="faq-answer">Расширение находит все домены на веб-странице (включая AJAX, CDN и API запросы через Service Worker), резолвит их в IP-адреса параллельными DNS-запросами к Cloudflare, Google и AdGuard, агрегирует IP в оптимизированные CIDR-подсети и генерирует команды маршрутизации для выбранной платформы.</div>
         </details>
         <details class="faq-item">
             <summary>Можно ли использовать для VPN split tunneling?</summary>

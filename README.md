@@ -12,7 +12,7 @@ Chrome extension that discovers domains on any webpage, resolves IPs via racing 
 ## Features
 
 - **Network Sniffer** — captures dynamic background requests (AJAX, CDN, API) in real-time via Service Worker
-- **DNS Racing** — queries Cloudflare, Google, Quad9 simultaneously via `Promise.any` — first response wins
+- **DNS Racing** — queries Cloudflare, Google, AdGuard simultaneously via `Promise.any` — first response wins
 - **CIDR Aggregation** — merges individual IPs into optimized subnets (IPv4 bitmask + IPv6 BigInt)
 - **RIPE BGP Optimization** — fetches real BGP prefixes from RIPE Stat API to replace /32s with announced routes
 - **ASN Lookup** — batch IP-to-ASN resolution (e.g. `AS13335 (Cloudflare)`)
