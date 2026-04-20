@@ -95,6 +95,7 @@
             <a href="#features">功能</a>
             <a href="#how-it-works">工作原理</a>
             <a href="#platforms">平台</a>
+            <a href="#faq">FAQ</a>
             <div class="lang-switch">
                 <span class="lang-current">中文</span>
                 <div class="lang-dropdown">
@@ -353,6 +354,36 @@
     <div class="stat">
         <span class="stat-value">3</span>
         <span class="stat-label">个DNS提供商</span>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+    <div class="section-header">
+        <span class="section-tag">// 常见问题</span>
+        <h2>常见问题</h2>
+    </div>
+    <div class="faq-list">
+        <details class="faq-item">
+            <summary>NetRoute Pro 支持哪些平台？</summary>
+            <div class="faq-answer">NetRoute Pro 为 8 个平台生成路由命令：Windows、Linux、macOS、MikroTik、Cisco、Juniper、WireGuard（AllowedIPs）和 OpenVPN。支持 IPv4 和 IPv6。</div>
+        </details>
+        <details class="faq-item">
+            <summary>NetRoute Pro 是免费的吗？</summary>
+            <div class="faq-answer">是的，NetRoute Pro 完全免费。无需注册或订阅。</div>
+        </details>
+        <details class="faq-item">
+            <summary>NetRoute Pro 如何从网站生成路由？</summary>
+            <div class="faq-answer">NetRoute Pro 发现网页上的所有域名（包括通过 Service Worker 的 AJAX、CDN 和 API 请求），使用并行 DNS 查询到 Cloudflare、Google 和 Quad9 将其解析为 IP 地址，将 IP 聚合为优化的 CIDR 子网，并生成特定于平台的路由命令。</div>
+        </details>
+        <details class="faq-item">
+            <summary>可以用于 VPN 分流吗？</summary>
+            <div class="faq-answer">可以，NetRoute Pro 非常适合 VPN 分流。它生成 WireGuard AllowedIPs、OpenVPN 路由指令和操作系统级路由命令，让您仅将特定网站的流量通过 VPN 路由。</div>
+        </details>
+        <details class="faq-item">
+            <summary>NetRoute Pro 会收集个人数据吗？</summary>
+            <div class="faq-answer">不会。NetRoute Pro 完全在您的浏览器中本地运行。它不收集、存储或传输任何个人数据。唯一的网络请求是用于扩展核心功能的 DNS 查询和可选的 RIPE/ASN 查询。</div>
+        </details>
     </div>
 </section>
 
