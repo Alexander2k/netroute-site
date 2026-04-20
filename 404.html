@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found | NetRoute Pro</title>
+    <meta name="description" content="Page not found. Return to NetRoute Pro homepage.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .not-found {
+            position: relative;
+            z-index: 1;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 32px;
+            text-align: center;
+        }
+        .not-found-code {
+            font-family: var(--font-mono);
+            font-size: clamp(80px, 18vw, 180px);
+            font-weight: 700;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.04em;
+            margin-bottom: 16px;
+        }
+        .not-found h1 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .not-found p {
+            font-size: 16px;
+            color: var(--text-dim);
+            margin-bottom: 32px;
+            max-width: 480px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="/" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+    </div>
+</nav>
+
+<div class="not-found">
+    <div class="not-found-code">404</div>
+    <h1>Page not found</h1>
+    <p>The route you requested doesn't exist. Let's get you back to a known destination.</p>
+    <a href="/" class="btn btn-primary">Back to Home</a>
+</div>
+
+</body>
+</html>
