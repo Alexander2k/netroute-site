@@ -4,6 +4,9 @@
 
 Chrome extension that discovers domains on any webpage, resolves IPs via racing DNS queries, and generates optimized routing commands for 8 platforms.
 
+**🌐 Live site:** [alexander2k.github.io/netroute-site](https://alexander2k.github.io/netroute-site/)
+**🧩 Chrome Web Store:** [NetRoute Pro](https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla)
+
 ![NetRoute Pro Banner](screenshots/promo-large.png)
 
 ## Features
@@ -46,6 +49,26 @@ Chrome extension that discovers domains on any webpage, resolves IPs via racing 
 1. **Install & Navigate** — add the extension from Chrome Web Store, navigate to any site
 2. **Configure & Scan** — choose target OS, merge mask, gateway, domain filter, click Analyze Website
 3. **Copy or Export** — grab generated routes, copy to clipboard or export as script file
+
+## Step-by-Step Guides
+
+Detailed instructions for applying generated routes on each platform:
+
+- [Keenetic](https://alexander2k.github.io/netroute-site/guides/keenetic.html) — `.bat` file upload with VPN interface binding
+- [MikroTik](https://alexander2k.github.io/netroute-site/guides/mikrotik.html) — `.rsc` script import via `/import`
+- [WireGuard](https://alexander2k.github.io/netroute-site/guides/wireguard.html) — AllowedIPs on any client (Linux/Windows/macOS/mobile)
+- [Linux](https://alexander2k.github.io/netroute-site/guides/linux.html) — `.sh` script with systemd-networkd / NetworkManager persistence
+- [OpenVPN](https://alexander2k.github.io/netroute-site/guides/openvpn.html) — client config `route` directives for split tunneling
+
+Each guide links to official vendor documentation and covers common pitfalls.
+
+## Available Languages
+
+The site is available in **4 languages**:
+- 🇬🇧 [English](https://alexander2k.github.io/netroute-site/)
+- 🇷🇺 [Русский](https://alexander2k.github.io/netroute-site/ru/)
+- 🇪🇸 [Español](https://alexander2k.github.io/netroute-site/es/)
+- 🇨🇳 [中文](https://alexander2k.github.io/netroute-site/zh/)
 
 ## Tech Stack
 
