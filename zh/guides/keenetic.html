@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>从 .bat 文件导入路由到 Keenetic — 分步指南 | NetRoute Pro</title>
+    <meta name="description" content="如何通过 .bat 文件将路由上传到 Keenetic。在 NetRoute Pro 中生成路由，一键导入并绑定到 VPN 接口。通过域名为网站路由流量到 VPN。">
+    <meta name="keywords" content="keenetic 路由, keenetic 上传 bat, keenetic 导入路由, keenetic vpn 路由, keenetic route add, keenetic 静态路由, keenetic 分流">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/zh/guides/keenetic.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/keenetic.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/keenetic.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="从 .bat 文件导入路由到 Keenetic">
+    <meta property="og:description" content="一键将 NetRoute Pro 生成的路由上传到 Keenetic，并绑定到 VPN 接口。">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/zh/guides/keenetic.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "首页",
+                "item": "https://alexander2k.github.io/netroute-site/zh/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "指南"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Keenetic"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "如何在 Keenetic 上导入路由",
+        "description": "分步指南：在 NetRoute Pro 中生成 .bat 文件并将其上传到 Keenetic，绑定到 VPN 接口。",
+        "inLanguage": "zh",
+        "totalTime": "PT2M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "在 NetRoute Pro 中生成 .bat 文件",
+                "text": "在 Chrome 中打开目标网站，启动 NetRoute Pro。选择 Windows 平台，点击 Analyze Website，下载 .bat 文件。"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "打开 Keenetic 的路由部分",
+                "text": "登录 Keenetic 网页界面（http://my.keenetic.net），转到 管理 → 路由 → IPv4 路由 标签页。"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "上传文件并绑定到接口",
+                "text": "点击 上传，选择 .bat 文件，在 接口 下拉菜单中选择您的 VPN 隧道。确认 — 所有路由一次性添加。"
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        body { font-family: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif; }
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">首页</a>
+            <div class="lang-switch">
+                <span class="lang-current">中文</span>
+                <div class="lang-dropdown">
+                    <a href="../../guides/keenetic.html">English</a>
+                    <a href="../../ru/guides/keenetic.html">Русский</a>
+                    <a href="../../es/guides/keenetic.html">Español</a>
+                    <a href="./keenetic.html" class="lang-active">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; 返回首页</a>
+    <h1>从 .bat 文件导入路由到 Keenetic</h1>
+    <p class="lead">Keenetic 可以上传 Windows <code>route ADD</code> 格式的文件并自动将所有路由应用到选定的接口。NetRoute Pro 正是生成此类文件 — 您只需下载并上传即可。</p>
+
+    <h2>准备工作</h2>
+    <ul>
+        <li>已配置 VPN 隧道（WireGuard、OpenVPN、IKEv2、OpenConnect 等）的 Keenetic 路由器</li>
+        <li>已安装 <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome 扩展</li>
+        <li>访问路由器网页界面（通常为 <code>http://my.keenetic.net</code>）</li>
+    </ul>
+
+    <h2>步骤 1. 在 NetRoute Pro 中生成 .bat 文件</h2>
+    <ol>
+        <li>在 Chrome 中打开目标网站</li>
+        <li>点击扩展栏中的 NetRoute Pro 图标</li>
+        <li>选择 <strong>Windows</strong> 平台 — 这是 Keenetic 接受的格式</li>
+        <li>网关可以是任意值（例如 <code>0.0.0.0</code>）— 上传时绑定到接口时 Keenetic 会忽略它</li>
+        <li>选择聚合掩码（推荐 <code>/24</code>）</li>
+        <li>点击 <strong>Analyze Website</strong></li>
+        <li>将结果下载为 <strong>.bat</strong> 文件</li>
+    </ol>
+
+    <div class="callout">
+        <strong>提示：</strong>在扩展中启用 <strong>RIPE BGP 优化</strong> — 它会用真实公告的 BGP 前缀替换单个 IP。这提供稳定的路由，不会因 Cloudflare/Fastly 轮换 IP 而失效。
+    </div>
+
+    <h2>步骤 2. 打开 Keenetic 的路由部分</h2>
+    <ol>
+        <li>打开 <code>http://my.keenetic.net</code> 或路由器的 IP</li>
+        <li>以管理员身份登录</li>
+        <li>转到 <strong>管理 → 路由</strong></li>
+        <li>选择 <strong>IPv4 路由</strong> 标签页</li>
+    </ol>
+
+    <h2>步骤 3. 上传文件并绑定到 VPN 接口</h2>
+    <ol>
+        <li>点击 <strong>上传</strong> 按钮</li>
+        <li>选择下载的 <code>.bat</code> 文件</li>
+        <li>在 <strong>接口</strong> 下拉菜单中，选择您的 VPN 隧道
+            <ul>
+                <li>接口名称取决于您的配置和 VPN 提供商 — 每个用户都不同</li>
+                <li>如果不确定 — 请在 <strong>Internet</strong> 部分查看 VPN 使用哪个接口</li>
+            </ul>
+        </li>
+        <li>确认上传</li>
+    </ol>
+
+    <p>完成 — 文件中的所有路由都已添加并绑定到所选 VPN 接口。Keenetic 忽略 .bat 文件中的网关值；流量通过所选接口流动。</p>
+
+    <div class="callout">
+        <strong>为什么这很方便：</strong>无需手动输入，无需 SSH — 文件上传甚至在基本的 Keenetic 固件上也能工作。100+ 路由在不到一秒内应用。
+    </div>
+
+    <h2>WireGuard 替代方案：AllowedIPs</h2>
+    <p>如果您使用 WireGuard，可以完全跳过静态路由，直接在 peer 的 AllowedIPs 中设置子网：</p>
+    <ol>
+        <li>在 NetRoute Pro 中选择 <strong>WireGuard</strong> 平台</li>
+        <li>复制 <code>AllowedIPs</code> 行</li>
+        <li>在 Keenetic 中：<strong>Internet → WireGuard</strong> → peer 设置 → 粘贴到 <strong>Allowed IPs</strong></li>
+        <li>保存</li>
+    </ol>
+
+    <h2>验证</h2>
+    <p>导入后，检查路由已应用：它们会出现在 <strong>路由 → IPv4 路由</strong> 列表中，绑定到您的 VPN 接口。</p>
+    <p>验证流量通过 VPN — 从 LAN 客户端：</p>
+    <pre><code>tracert example.com     # Windows
+traceroute example.com  # Linux/macOS</code></pre>
+    <p>前几个跳数应通过您的 VPN 网关 IP。</p>
+
+    <h2>常见问题</h2>
+
+    <h3>网站 IP 改变 — 路由停止工作</h3>
+    <p>Cloudflare、Fastly 等 CDN 会定期轮换 IP。在 NetRoute Pro 中启用 <strong>RIPE BGP 优化</strong> 重新生成 <code>.bat</code> — 它会用公告的 BGP 前缀替换，覆盖所有提供商 IP。</p>
+
+    <h3>路由太多</h3>
+    <p>Keenetic 可以处理数百条静态路由而没有问题。如果需要更多 — 使用 WireGuard AllowedIPs 方法。</p>
+
+    <h3>路由已添加但流量不通过 VPN</h3>
+    <ul>
+        <li>检查 VPN 接口是否处于活动状态（在 <strong>Internet</strong> 部分）</li>
+        <li>验证 VPN 接口上启用了 NAT/masquerade</li>
+        <li>检查防火墙规则 — 不应有任何规则阻止流量</li>
+    </ul>
+
+    <h3>高级用户：CLI</h3>
+    <p>要以编程方式自动化或管理路由，请通过 SSH/Telnet 连接并在 config 模式下使用 <code>ip route</code> 命令。但在大多数情况下，.bat 上传就足够了。</p>
+
+    <div class="cta-block">
+        <h3>准备好尝试了吗？</h3>
+        <p>NetRoute Pro — 免费的 Chrome 扩展，可从任何网站生成路由。</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">安装扩展</a>
+    </div>
+
+</article>
+
+</body>
+</html>
