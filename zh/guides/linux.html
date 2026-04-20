@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通过 .sh 脚本在 Linux 上添加路由 — 分步指南 | NetRoute Pro</title>
+    <meta name="description" content="如何在 Linux 上应用生成的路由。运行 NetRoute Pro .sh 脚本，通过 systemd-networkd、NetworkManager 或 cron 使路由持久化。适用于 Ubuntu、Debian、Fedora、Arch。">
+    <meta name="keywords" content="linux ip route add 脚本, linux vpn 分流, systemd-networkd 静态路由, networkmanager 路由, linux 持久路由">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/zh/guides/linux.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/linux.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/linux.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/linux.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/linux.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/linux.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="通过 .sh 脚本在 Linux 上添加路由">
+    <meta property="og:description" content="运行 NetRoute Pro .sh 脚本，通过 systemd-networkd、NetworkManager 或 cron 使路由持久化。">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/zh/guides/linux.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "inLanguage": "zh",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "首页",
+                "item": "https://alexander2k.github.io/netroute-site/zh/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "指南"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Linux"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "如何通过 .sh 脚本在 Linux 上添加路由",
+        "description": "分步指南：在 NetRoute Pro 中生成 .sh 脚本，应用路由，并通过 systemd-networkd、NetworkManager 或 cron 使其持久化。",
+        "inLanguage": "zh",
+        "totalTime": "PT5M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "在 NetRoute Pro 中生成 .sh",
+                "text": "选择 Linux 平台，设置 VPN 接口 IP，点击 Analyze Website，下载 routes.sh。"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "应用脚本",
+                "text": "运行 chmod +x routes.sh && sudo bash routes.sh，路由应用至下次重启。"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "使路由持久化",
+                "text": "通过 systemd-networkd drop-in、NetworkManager dispatcher 或 @reboot cron 保留路由。"
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        body { font-family: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif; }
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">首页</a>
+            <div class="lang-switch">
+                <span class="lang-current">中文</span>
+                <div class="lang-dropdown">
+                    <a href="../../guides/linux.html">English</a>
+                    <a href="../../ru/guides/linux.html">Русский</a>
+                    <a href="../../es/guides/linux.html">Español</a>
+                    <a href="./linux.html" class="lang-active">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; 返回首页</a>
+    <h1>通过 .sh 脚本在 Linux 上添加路由</h1>
+    <p class="lead">NetRoute Pro 生成包含 <code>ip route add</code> 命令的简单 Bash 脚本。一条命令即可应用。持久化根据发行版需一步额外操作。</p>
+
+    <h2>准备工作</h2>
+    <ul>
+        <li><code>iproute2</code>（所有现代发行版预装）</li>
+        <li>root 或 sudo 权限</li>
+        <li>已配置并处于 up 状态的 VPN 接口（WireGuard、OpenVPN、IKEv2 等）</li>
+        <li>已安装 <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome 扩展</li>
+    </ul>
+
+    <h2>步骤 1. 在 NetRoute Pro 中生成 .sh</h2>
+    <ol>
+        <li>在 Chrome 中打开目标网站</li>
+        <li>启动 NetRoute Pro，选择 <strong>Linux</strong> 平台</li>
+        <li>设置 VPN 接口的 IP 作为网关（例如 <code>10.8.0.1</code>）</li>
+        <li>选择聚合掩码（推荐 <code>/24</code>）</li>
+        <li>点击 <strong>Analyze Website</strong></li>
+        <li>下载 <code>routes.sh</code></li>
+    </ol>
+
+    <div class="callout">
+        <strong>提示：</strong>启用 <strong>RIPE BGP 优化</strong> — 它会用公告的 BGP 前缀替换单个 IP，当 CDN 轮换地址时路由保持有效。
+    </div>
+
+    <h2>步骤 2. 应用脚本</h2>
+    <pre><code>chmod +x routes.sh
+sudo bash routes.sh</code></pre>
+    <p>路由立即应用，一直保留到下次重启。要使路由在重启后保留，请执行步骤 3。</p>
+
+    <h2>步骤 3. 使路由持久化</h2>
+    <p>根据您的发行版选择方法：</p>
+
+    <h3>systemd-networkd</h3>
+    <p>创建 drop-in 文件 <code>/etc/systemd/network/10-vpn.network.d/routes.conf</code>：</p>
+    <pre><code>[Route]
+Destination=104.21.32.0/24
+Gateway=10.8.0.1
+
+[Route]
+Destination=172.67.0.0/16
+Gateway=10.8.0.1</code></pre>
+    <p>应用：</p>
+    <pre><code>sudo systemctl restart systemd-networkd</code></pre>
+
+    <h3>NetworkManager dispatcher</h3>
+    <p>创建脚本 <code>/etc/NetworkManager/dispatcher.d/99-vpn-routes</code>（不要忘记可执行位）：</p>
+    <pre><code>#!/bin/bash
+# $1 — interface, $2 — action
+if [ "$1" = "wg0" ] &amp;&amp; [ "$2" = "up" ]; then
+    /usr/local/bin/routes.sh
+fi</code></pre>
+    <pre><code>sudo chmod +x /etc/NetworkManager/dispatcher.d/99-vpn-routes</code></pre>
+
+    <h3>@reboot cron（最简单、通用）</h3>
+    <p>先将 .sh 移至系统路径：</p>
+    <pre><code>sudo mv routes.sh /usr/local/bin/routes.sh
+sudo chmod +x /usr/local/bin/routes.sh</code></pre>
+    <p>然后编辑 root crontab：</p>
+    <pre><code>sudo crontab -e</code></pre>
+    <p>添加行：</p>
+    <pre><code>@reboot /usr/local/bin/routes.sh</code></pre>
+
+    <h2>验证</h2>
+    <pre><code>ip route show | grep 10.8.0.1</code></pre>
+    <p>您应该看到所有通过 VPN 网关路由的子网。</p>
+
+    <h2>回滚</h2>
+    <p>生成反向脚本 — 复制 <code>routes.sh</code> 并将所有 <code>ip route add</code> 替换为 <code>ip route del</code>，然后以 root 运行：</p>
+    <pre><code>sudo bash routes-undo.sh</code></pre>
+
+    <h2>常见问题</h2>
+
+    <h3><code>Network is unreachable</code></h3>
+    <p>VPN 接口未启动或没有 IP。检查：</p>
+    <pre><code>ip link show
+ip addr show</code></pre>
+
+    <h3><code>RTNETLINK answers: File exists</code></h3>
+    <p>此路由已存在。先删除它：</p>
+    <pre><code>sudo ip route del &lt;subnet&gt;</code></pre>
+
+    <h3><code>Permission denied</code></h3>
+    <p>修改路由表需要 root 权限。使用 <code>sudo</code> 运行脚本。</p>
+
+    <h2>官方文档</h2>
+    <ul>
+        <li><a href="https://man7.org/linux/man-pages/man8/ip-route.8.html" target="_blank" rel="noopener">ip-route(8) man page (en)</a></li>
+        <li><a href="https://www.freedesktop.org/software/systemd/man/systemd.network.html" target="_blank" rel="noopener">systemd.network(5) (en)</a></li>
+        <li><a href="https://networkmanager.dev/docs/api/latest/NetworkManager-dispatcher.html" target="_blank" rel="noopener">NetworkManager Dispatcher (en)</a></li>
+        <li><a href="https://wiki.archlinux.org/title/Systemd-networkd" target="_blank" rel="noopener">Arch Wiki: systemd-networkd (en)</a></li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>准备好尝试了吗？</h3>
+        <p>NetRoute Pro — 免费的 Chrome 扩展，可从任何网站生成路由。</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">安装扩展</a>
+    </div>
+
+</article>
+
+</body>
+</html>

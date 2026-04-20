@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>向 OpenVPN 客户端配置添加路由 — 分步指南 | NetRoute Pro</title>
+    <meta name="description" content="如何向 OpenVPN .ovpn 配置添加选择性路由。在 NetRoute Pro 中生成 route 指令，粘贴到客户端配置，重新连接。非常适合分流。">
+    <meta name="keywords" content="openvpn route 指令, openvpn 分流, openvpn 客户端路由, openvpn push route, ovpn 配置路由">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/zh/guides/openvpn.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/openvpn.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/openvpn.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="向 OpenVPN 客户端配置添加路由">
+    <meta property="og:description" content="在 NetRoute Pro 中生成 route 指令，粘贴到 .ovpn，重新连接 — 几分钟内实现分流。">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/zh/guides/openvpn.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "inLanguage": "zh",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "首页",
+                "item": "https://alexander2k.github.io/netroute-site/zh/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "指南"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "OpenVPN"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "如何向 OpenVPN 配置添加路由",
+        "description": "分步指南：在 NetRoute Pro 中生成 route 指令，粘贴到 .ovpn 配置，重新连接以应用。",
+        "inLanguage": "zh",
+        "totalTime": "PT3M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "在 NetRoute Pro 中生成 route 指令",
+                "text": "选择 OpenVPN 平台，点击 Analyze Website，复制输出（每行一个 route 指令）。"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "编辑 .ovpn",
+                "text": "在文本编辑器中打开 .ovpn，删除 redirect-gateway def1（如有），在文件末尾粘贴 route 指令，保存。"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "重新连接 VPN",
+                "text": "断开并重新连接 OpenVPN 客户端以应用新路由。"
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        body { font-family: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif; }
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">首页</a>
+            <div class="lang-switch">
+                <span class="lang-current">中文</span>
+                <div class="lang-dropdown">
+                    <a href="../../guides/openvpn.html">English</a>
+                    <a href="../../ru/guides/openvpn.html">Русский</a>
+                    <a href="../../es/guides/openvpn.html">Español</a>
+                    <a href="./openvpn.html" class="lang-active">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; 返回首页</a>
+    <h1>向 OpenVPN 客户端配置添加路由</h1>
+    <p class="lead">OpenVPN 在客户端配置中支持按子网的 <code>route</code> 指令。NetRoute Pro 从任何网站的域名生成这些指令 — 添加到 <code>.ovpn</code> 中，几分钟内即可实现分流。</p>
+
+    <h2>准备工作</h2>
+    <ul>
+        <li>OpenVPN 2.4 或更高版本（客户端和服务器）</li>
+        <li>对 <code>.ovpn</code> 配置文件的编辑权限</li>
+        <li>任何 OpenVPN 客户端：官方 OpenVPN Connect、Tunnelblick、Viscosity、openvpn CLI 等</li>
+        <li>已安装 <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome 扩展</li>
+    </ul>
+
+    <h2>步骤 1. 在 NetRoute Pro 中生成 route 指令</h2>
+    <ol>
+        <li>在 Chrome 中打开目标网站</li>
+        <li>启动 NetRoute Pro，选择 <strong>OpenVPN</strong> 平台</li>
+        <li>点击 <strong>Analyze Website</strong></li>
+        <li>复制输出 — 格式：每行一个 route 指令</li>
+    </ol>
+    <pre><code>route 104.21.32.0 255.255.255.0
+route 172.67.0.0 255.255.0.0
+route 198.41.128.0 255.255.128.0</code></pre>
+
+    <div class="callout">
+        <strong>提示：</strong>启用 <strong>RIPE BGP 优化</strong> 获得稳定的 BGP 公告前缀 — CDN IP 轮换时路由不会失效。
+    </div>
+
+    <h2>步骤 2. 编辑 <code>.ovpn</code></h2>
+    <ol>
+        <li>用文本编辑器打开您的 <code>.ovpn</code> 文件</li>
+        <li><strong>删除</strong> <code>redirect-gateway def1</code>（如果存在）— 该指令将所有流量路由到 VPN，会破坏分流</li>
+        <li><strong>删除</strong> <code>push "redirect-gateway def1"</code>（如果有）</li>
+        <li><strong>粘贴</strong> route 指令到文件末尾 — 在 <code>&lt;cert&gt;</code> / <code>&lt;key&gt;</code> / <code>&lt;ca&gt;</code> 块之前</li>
+        <li>保存文件</li>
+    </ol>
+
+    <p>配置应类似：</p>
+    <pre><code>client
+dev tun
+proto udp
+remote vpn.example.com 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+
+# 选择性路由（由 NetRoute Pro 生成）
+route 104.21.32.0 255.255.255.0
+route 172.67.0.0 255.255.0.0
+
+&lt;ca&gt;
+...
+&lt;/ca&gt;</code></pre>
+
+    <h2>步骤 3. 重新连接 VPN</h2>
+    <p>断开并重新连接客户端以应用新路由。OpenVPN 仅在连接时读取 <code>route</code> 指令 — 运行时更改不会生效。</p>
+
+    <h2>替代方案：服务器端路由（用于管理员）</h2>
+    <p>如果您控制 OpenVPN 服务器，可以将路由推送到所有客户端。在服务器配置中：</p>
+    <pre><code>push "route 104.21.32.0 255.255.255.0"
+push "route 172.67.0.0 255.255.0.0"</code></pre>
+    <p>客户端连接时自动接收路由 — 无需编辑每个 <code>.ovpn</code>。</p>
+
+    <h2>验证</h2>
+    <p>连接后检查路由表：</p>
+    <ul>
+        <li><strong>Windows：</strong><code>route print</code></li>
+        <li><strong>Linux / macOS：</strong><code>ip route</code> 或 <code>netstat -rn</code></li>
+    </ul>
+    <p>您应该看到子网指向 VPN <code>tun</code> 接口。</p>
+
+    <h2>常见问题</h2>
+
+    <h3><code>--route</code> 指令被忽略</h3>
+    <p>检查配置中是否存在 <code>route-nopull</code> 或 <code>--pull-filter</code> — 它们会阻止应用路由。删除它们或仔细调整过滤器。</p>
+
+    <h3>DNS 泄漏（Windows）</h3>
+    <p>添加以下指令以防止 DNS 查询绕过 VPN：</p>
+    <pre><code>block-outside-dns</code></pre>
+
+    <h3>路由已添加但流量未通过 VPN</h3>
+    <p>通常表示 VPN 接口上没有 NAT — 需在服务器端修复。验证服务器配置中存在 <code>push "route ..."</code> 且 iptables/防火墙上启用了相应子网的 masquerade。</p>
+
+    <h2>官方文档</h2>
+    <ul>
+        <li><a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-6/" target="_blank" rel="noopener">OpenVPN Reference Manual 2.6 (en)</a></li>
+        <li><a href="https://openvpn.net/community-resources/setting-up-routing/" target="_blank" rel="noopener">Setting up Routing (en)</a></li>
+        <li><a href="https://openvpn.net/community-resources/how-to/" target="_blank" rel="noopener">OpenVPN How-To (en)</a></li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>准备好尝试了吗？</h3>
+        <p>NetRoute Pro — 免费的 Chrome 扩展，可从任何网站生成路由。</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">安装扩展</a>
+    </div>
+
+</article>
+
+</body>
+</html>

@@ -210,6 +210,162 @@
         <priority>0.8</priority>
     </url>
 
+    <!-- WireGuard guide (EN) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/guides/wireguard.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/wireguard.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- WireGuard guide (RU) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/ru/guides/wireguard.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/wireguard.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- WireGuard guide (ES) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/es/guides/wireguard.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/wireguard.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- WireGuard guide (ZH) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/zh/guides/wireguard.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/wireguard.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/wireguard.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Linux guide (EN) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/guides/linux.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/linux.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Linux guide (RU) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/ru/guides/linux.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/linux.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Linux guide (ES) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/es/guides/linux.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/linux.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Linux guide (ZH) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/zh/guides/linux.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/linux.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/linux.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- OpenVPN guide (EN) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/guides/openvpn.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- OpenVPN guide (RU) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- OpenVPN guide (ES) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/es/guides/openvpn.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- OpenVPN guide (ZH) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/zh/guides/openvpn.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/openvpn.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html"/>
+        <lastmod>2026-04-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
     <!-- Keenetic guide (EN) -->
     <url>
         <loc>https://alexander2k.github.io/netroute-site/guides/keenetic.html</loc>

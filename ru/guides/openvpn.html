@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавление маршрутов в OpenVPN клиент-конфиг — инструкция | NetRoute Pro</title>
+    <meta name="description" content="Как добавить выборочные маршруты в .ovpn конфиг OpenVPN. Генерируем route-директивы в NetRoute Pro, вставляем в клиент-конфиг, переподключаемся. Идеально для split tunnel.">
+    <meta name="keywords" content="openvpn route директива, openvpn split tunnel, openvpn клиент маршруты, openvpn push route, ovpn конфиг маршруты">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/openvpn.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/openvpn.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Добавление маршрутов в OpenVPN клиент-конфиг">
+    <meta property="og:description" content="Генерируйте route-директивы в NetRoute Pro, вставляйте в .ovpn конфиг и получайте split tunneling за минуту.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="ru_RU">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "inLanguage": "ru",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Главная",
+                "item": "https://alexander2k.github.io/netroute-site/ru/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Инструкции"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "OpenVPN"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Добавление маршрутов в OpenVPN клиент-конфиг",
+        "description": "Пошаговая инструкция: сгенерируйте route-директивы в NetRoute Pro, отредактируйте .ovpn (уберите redirect-gateway, добавьте route-директивы) и переподключитесь.",
+        "inLanguage": "ru",
+        "totalTime": "PT2M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Сгенерируйте route-директивы в NetRoute Pro",
+                "text": "Запустите расширение NetRoute Pro, выберите платформу OpenVPN, нажмите Analyze Website и скопируйте список route-директив."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Отредактируйте .ovpn",
+                "text": "Уберите redirect-gateway def1 (если есть), вставьте route-директивы в конец клиент-конфига до блоков сертификатов и сохраните."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Переподключитесь",
+                "text": "Отключите и заново подключите VPN — маршруты применятся автоматически."
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Главная</a>
+            <div class="lang-switch">
+                <span class="lang-current">RU</span>
+                <div class="lang-dropdown">
+                    <a href="../../guides/openvpn.html">English</a>
+                    <a href="./openvpn.html" class="lang-active">Русский</a>
+                    <a href="../../es/guides/openvpn.html">Español</a>
+                    <a href="../../zh/guides/openvpn.html">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; На главную</a>
+    <h1>Добавление маршрутов в OpenVPN клиент-конфиг</h1>
+    <p class="lead">OpenVPN поддерживает попоподсеточные <code>route</code> директивы в клиент-конфиге. NetRoute Pro генерирует их из доменов любого сайта — добавьте в <code>.ovpn</code> и split tunneling готов за минуту.</p>
+
+    <h2>Что понадобится</h2>
+    <ul>
+        <li>OpenVPN 2.4+</li>
+        <li>Доступ к вашему <code>.ovpn</code> конфигу</li>
+        <li>Клиент OpenVPN: CLI, OpenVPN GUI, OpenVPN Connect или Tunnelblick (macOS)</li>
+        <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> в Chrome</li>
+    </ul>
+
+    <h2>Шаг 1. Сгенерируйте route-директивы в NetRoute Pro</h2>
+    <ol>
+        <li>Откройте нужный сайт в Chrome</li>
+        <li>Запустите расширение NetRoute Pro</li>
+        <li>Выберите платформу <strong>OpenVPN</strong></li>
+        <li>Нажмите <strong>Analyze Website</strong></li>
+        <li>Скопируйте результат — список вида:
+            <pre><code>route 104.21.32.0 255.255.255.0
+route 172.67.182.0 255.255.255.0
+...</code></pre>
+        </li>
+    </ol>
+
+    <div class="callout">
+        <strong>Совет:</strong> включите <strong>RIPE BGP оптимизацию</strong> для стабильных BGP-префиксов — подсети не ломаются при ротации IP у Cloudflare/Fastly.
+    </div>
+
+    <h2>Шаг 2. Отредактируйте <code>.ovpn</code></h2>
+    <ol>
+        <li>Откройте ваш <code>.ovpn</code> файл в любом текстовом редакторе</li>
+        <li><strong>Удалите</strong> строку <code>redirect-gateway def1</code>, если она есть — она отправляет весь трафик через VPN и ломает split tunnel</li>
+        <li><strong>Удалите</strong> строку <code>push "redirect-gateway def1"</code>, если присутствует</li>
+        <li><strong>Вставьте</strong> сгенерированные <code>route</code> директивы в конец файла — <em>до</em> блоков <code>&lt;cert&gt;</code>, <code>&lt;key&gt;</code>, <code>&lt;ca&gt;</code></li>
+        <li>Сохраните файл</li>
+    </ol>
+
+    <p>Пример фрагмента <code>.ovpn</code>:</p>
+    <pre><code>client
+dev tun
+proto udp
+remote vpn.example.com 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+remote-cert-tls server
+cipher AES-256-GCM
+verb 3
+
+# --- NetRoute Pro routes ---
+route 104.21.32.0 255.255.255.0
+route 172.67.182.0 255.255.255.0
+# ... остальные маршруты ...
+
+&lt;ca&gt;
+...
+&lt;/ca&gt;</code></pre>
+
+    <h2>Шаг 3. Переподключите VPN</h2>
+    <p>Отключитесь и подключитесь снова — OpenVPN применит новые маршруты при подъёме туннеля.</p>
+
+    <h2>Альтернатива: серверные маршруты</h2>
+    <p>Если у вас админский доступ к серверу OpenVPN, добавьте директивы в конфиг сервера:</p>
+    <pre><code>push "route 104.21.32.0 255.255.255.0"
+push "route 172.67.182.0 255.255.255.0"</code></pre>
+    <p>Клиенты получат маршруты автоматически при подключении — править клиент-конфиги не потребуется.</p>
+
+    <h2>Проверка</h2>
+    <p>После подключения проверьте таблицу маршрутизации:</p>
+    <pre><code>route print              # Windows
+ip route                 # Linux / macOS</code></pre>
+    <p>Ваши подсети должны идти через <code>tun0</code> или адаптер OpenVPN TAP.</p>
+
+    <h2>Частые проблемы</h2>
+
+    <h3>Директивы <code>--route</code> игнорируются</h3>
+    <p>В конфиге присутствует <code>route-nopull</code> или <code>--pull-filter</code>, которые блокируют применение. Уберите или скорректируйте соответствующие строки.</p>
+
+    <h3>DNS leak на Windows</h3>
+    <p>При split tunnel Windows может посылать DNS-запросы в обход VPN. Добавьте в клиент-конфиг:</p>
+    <pre><code>block-outside-dns</code></pre>
+
+    <h3>Маршруты применились, но трафик не идёт через VPN</h3>
+    <p>На VPN-интерфейсе сервера не включён NAT. Правьте серверную часть: на Linux — iptables MASQUERADE для VPN-подсети, на готовых решениях — включить опцию NAT в панели.</p>
+
+    <h2>Официальная документация</h2>
+    <ul>
+        <li><a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-6/" target="_blank" rel="noopener">OpenVPN Reference Manual 2.6 (en)</a></li>
+        <li><a href="https://openvpn.net/community-resources/setting-up-routing/" target="_blank" rel="noopener">Setting up Routing (en)</a></li>
+        <li><a href="https://openvpn.net/community-resources/how-to/" target="_blank" rel="noopener">OpenVPN How-To (en)</a></li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>Готовы попробовать?</h3>
+        <p>NetRoute Pro — бесплатное расширение Chrome для генерации маршрутов из любого сайта.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Установить расширение</a>
+    </div>
+
+</article>
+
+</body>
+</html>

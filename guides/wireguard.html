@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WireGuard Split Tunneling with AllowedIPs — Step-by-Step Guide | NetRoute Pro</title>
+    <meta name="description" content="How to route specific websites through WireGuard VPN by setting AllowedIPs. Generate AllowedIPs from domains with NetRoute Pro, paste into peer config, restart tunnel. Works on Linux, Windows, macOS, Android, iOS, routers.">
+    <meta name="keywords" content="wireguard allowedips generator, wireguard split tunnel, wireguard routing by domain, wg-quick allowedips, wireguard peer config, wireguard selective routing">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/guides/wireguard.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/wireguard.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/wireguard.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/wireguard.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/wireguard.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/wireguard.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="WireGuard Split Tunneling with AllowedIPs">
+    <meta property="og:description" content="Generate AllowedIPs from any website's domains with NetRoute Pro, paste into your peer config, restart the tunnel.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/guides/wireguard.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="en_US">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://alexander2k.github.io/netroute-site/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Guides"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "WireGuard"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to set up WireGuard split tunneling with AllowedIPs",
+        "description": "Step-by-step: generate AllowedIPs in NetRoute Pro, paste into your peer config, restart the tunnel.",
+        "inLanguage": "en",
+        "totalTime": "PT2M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Generate AllowedIPs in NetRoute Pro",
+                "text": "Open the target website in Chrome, launch NetRoute Pro. Select WireGuard platform, click Analyze Website, and copy the AllowedIPs string."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Paste into your peer [Peer] section",
+                "text": "Edit your WireGuard peer configuration and replace the AllowedIPs line under the [Peer] block with the generated value."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Restart the tunnel",
+                "text": "Reload the tunnel with wg-quick down/up on Linux, or toggle the switch in the WireGuard GUI / mobile app."
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Home</a>
+            <div class="lang-switch">
+                <span class="lang-current">EN</span>
+                <div class="lang-dropdown">
+                    <a href="./wireguard.html" class="lang-active">English</a>
+                    <a href="../ru/guides/wireguard.html">Русский</a>
+                    <a href="../es/guides/wireguard.html">Español</a>
+                    <a href="../zh/guides/wireguard.html">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; Back to Home</a>
+    <h1>WireGuard Split Tunneling with AllowedIPs</h1>
+    <p class="lead">WireGuard's <code>AllowedIPs</code> parameter doubles as both an ACL filter and a routing table. NetRoute Pro generates a ready-to-paste <code>AllowedIPs</code> string from any website's domains. No extra <code>ip route</code> commands needed — just edit the peer config and reload.</p>
+
+    <h2>Prerequisites</h2>
+    <ul>
+        <li>Any WireGuard client: <code>wg-quick</code> on Linux, the WireGuard GUI on Windows/macOS, the mobile apps on Android/iOS, or a router with WireGuard support</li>
+        <li><a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome extension installed</li>
+        <li>A working WireGuard peer you can edit</li>
+    </ul>
+
+    <h2>Step 1. Generate AllowedIPs in NetRoute Pro</h2>
+    <ol>
+        <li>Open the target website in Chrome</li>
+        <li>Click the NetRoute Pro icon in your extensions</li>
+        <li>Select the <strong>WireGuard</strong> platform</li>
+        <li>Click <strong>Analyze Website</strong></li>
+        <li>Copy the generated <code>AllowedIPs</code> line — it looks like:</li>
+    </ol>
+    <pre><code>AllowedIPs = 104.21.32.0/24, 172.67.182.0/24, 162.159.135.0/24, ...</code></pre>
+
+    <div class="callout">
+        <strong>Tip:</strong> enable <strong>RIPE BGP optimization</strong> in the extension — it replaces individual IPs with real announced BGP prefixes, giving stable subnets that don't break when Cloudflare/Fastly rotate IPs.
+    </div>
+
+    <h2>Step 2. Paste into your peer config</h2>
+
+    <h3>Linux (wg-quick)</h3>
+    <p>Edit your tunnel config file (typically in <code>/etc/wireguard/</code>, for example <code>/etc/wireguard/wg0.conf</code>). Under the <code>[Peer]</code> section, replace the existing <code>AllowedIPs = ...</code> line with the string you copied:</p>
+    <pre><code>[Peer]
+PublicKey = &lt;your-peer-public-key&gt;
+Endpoint = &lt;your-endpoint&gt;:51820
+AllowedIPs = 104.21.32.0/24, 172.67.182.0/24, 162.159.135.0/24
+PersistentKeepalive = 25</code></pre>
+
+    <h3>Windows / macOS (GUI)</h3>
+    <ol>
+        <li>Open the <strong>WireGuard</strong> app</li>
+        <li>Select your tunnel and click <strong>Edit</strong></li>
+        <li>In the config editor, modify the <code>AllowedIPs</code> field under <code>[Peer]</code></li>
+        <li>Click <strong>Save</strong></li>
+    </ol>
+
+    <h3>Android / iOS</h3>
+    <ol>
+        <li>Open the WireGuard mobile app</li>
+        <li>Tap your tunnel → <strong>Edit</strong></li>
+        <li>Replace the <strong>Allowed IPs</strong> field value</li>
+        <li>Tap <strong>Save</strong> (top right)</li>
+    </ol>
+    <div class="callout">
+        <strong>Heads up:</strong> on Android, tap Back/Save carefully — the app sometimes resets the field on exit if you leave focus without saving explicitly.
+    </div>
+
+    <h2>Step 3. Restart the tunnel</h2>
+    <p>Reload the peer so the new routing table takes effect.</p>
+    <ul>
+        <li><strong>Linux:</strong> <code>sudo wg-quick down wg0 &amp;&amp; sudo wg-quick up wg0</code> (replace <code>wg0</code> with your tunnel name)</li>
+        <li><strong>Windows/macOS GUI:</strong> toggle the tunnel off and then on again</li>
+        <li><strong>Mobile:</strong> disable and re-enable the tunnel switch</li>
+    </ul>
+
+    <h2>Verify</h2>
+    <p>Run <code>sudo wg show</code> — the peer should be listed with the new <code>allowed ips</code> values:</p>
+    <pre><code>sudo wg show</code></pre>
+    <p>You can also confirm routing with <code>ip route</code> (Linux/macOS) or <code>route print</code> (Windows) — the listed subnets should point through your WireGuard interface.</p>
+
+    <h2>Common issues</h2>
+
+    <h3>Losing all network access</h3>
+    <p>If you removed <code>0.0.0.0/0</code> but your new <code>AllowedIPs</code> doesn't cover the default route you intended to use, only the listed subnets will go through the tunnel — that's the whole point of split tunneling. Make sure your list contains exactly the subnets you want and nothing else is unintentionally missing.</p>
+
+    <h3>Android tunnel stuck on "connecting"</h3>
+    <p>Re-save the config explicitly: enter edit mode, tap out of the AllowedIPs field, and tap <strong>Save</strong> again. Some Android versions need this to commit the change.</p>
+
+    <h3>Error: AllowedIPs has invalid format</h3>
+    <p>Check for trailing commas, stray whitespace, or newline characters inside the value. <code>AllowedIPs</code> must be a single comma-separated list on one logical line.</p>
+
+    <h2>References</h2>
+    <ul>
+        <li><a href="https://www.wireguard.com/quickstart/" target="_blank" rel="noopener">WireGuard Quick Start</a> — official</li>
+        <li><a href="https://man7.org/linux/man-pages/man8/wg-quick.8.html" target="_blank" rel="noopener">wg-quick(8) man page</a></li>
+        <li><a href="https://man7.org/linux/man-pages/man8/wg.8.html" target="_blank" rel="noopener">wg(8) man page — config syntax</a></li>
+        <li><a href="https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/" target="_blank" rel="noopener">Pro Custodibus: AllowedIPs Calculator</a></li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>Ready to try?</h3>
+        <p>NetRoute Pro — a free Chrome extension to generate routes from any website.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Install Extension</a>
+    </div>
+
+</article>
+
+</body>
+</html>

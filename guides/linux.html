@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Routes on Linux via .sh Script — Step-by-Step Guide | NetRoute Pro</title>
+    <meta name="description" content="How to apply generated routes on Linux. Run NetRoute Pro .sh script, make routes persistent via systemd-networkd, NetworkManager, or cron. Covers Ubuntu, Debian, Fedora, Arch.">
+    <meta name="keywords" content="linux ip route add script, linux vpn split tunnel, systemd-networkd static routes, networkmanager dispatcher routes, ip route persistent linux">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/guides/linux.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/linux.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/linux.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/linux.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/linux.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/linux.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Add Routes on Linux via .sh Script">
+    <meta property="og:description" content="Apply NetRoute Pro generated routes on Linux and make them persistent via systemd-networkd, NetworkManager, or cron.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/guides/linux.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="en_US">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://alexander2k.github.io/netroute-site/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Guides"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Linux"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to add routes on Linux via .sh script",
+        "description": "Step-by-step: generate a .sh script in NetRoute Pro, make it executable, and run it with sudo.",
+        "inLanguage": "en",
+        "totalTime": "PT2M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Generate .sh script in NetRoute Pro",
+                "text": "Open the target website in Chrome, launch NetRoute Pro. Select Linux platform, set the gateway to your VPN interface IP, click Analyze Website, and download routes.sh."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Make the script executable",
+                "text": "Run chmod +x routes.sh to add the executable bit to the downloaded file."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Run the script with sudo",
+                "text": "Run sudo bash routes.sh — the ip route add commands are applied immediately."
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Home</a>
+            <div class="lang-switch">
+                <span class="lang-current">EN</span>
+                <div class="lang-dropdown">
+                    <a href="./linux.html" class="lang-active">English</a>
+                    <a href="../ru/guides/linux.html">Русский</a>
+                    <a href="../es/guides/linux.html">Español</a>
+                    <a href="../zh/guides/linux.html">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; Back to Home</a>
+    <h1>Add Routes on Linux via .sh Script</h1>
+    <p class="lead">NetRoute Pro generates a plain Bash script with <code>ip route add</code> commands. Apply it with one command for instant routes. Persistence requires one extra step depending on your distro.</p>
+
+    <h2>Prerequisites</h2>
+    <ul>
+        <li><code>iproute2</code> (preinstalled on virtually all modern distros — Ubuntu, Debian, Fedora, Arch, etc.)</li>
+        <li>Root/<code>sudo</code> access</li>
+        <li>A configured VPN interface (WireGuard, OpenVPN, IKEv2, etc.) that is already up</li>
+        <li><a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome extension installed</li>
+    </ul>
+
+    <h2>Step 1. Generate .sh in NetRoute Pro</h2>
+    <ol>
+        <li>Open the target website in Chrome</li>
+        <li>Click the NetRoute Pro icon in your extensions</li>
+        <li>Select the <strong>Linux</strong> platform</li>
+        <li>Set the gateway to your VPN interface IP (for example <code>10.8.0.1</code>)</li>
+        <li>Choose aggregation mask (recommended <code>/24</code>)</li>
+        <li>Click <strong>Analyze Website</strong></li>
+        <li>Download the result as <code>routes.sh</code></li>
+    </ol>
+
+    <div class="callout">
+        <strong>Tip:</strong> enable <strong>RIPE BGP optimization</strong> to get announced BGP prefixes instead of individual IPs — more stable when CDNs rotate addresses.
+    </div>
+
+    <h2>Step 2. Apply the script</h2>
+    <pre><code>chmod +x routes.sh
+sudo bash routes.sh</code></pre>
+    <p>Routes are applied immediately — but only until the next reboot or until your VPN interface goes down. For permanence, see Step 3.</p>
+
+    <h2>Step 3. Make routes persistent</h2>
+    <p>Pick one of the three options below, depending on how your system manages networking.</p>
+
+    <h3>systemd-networkd</h3>
+    <p>If your distro uses <code>systemd-networkd</code> (default on many minimal installs, Arch, server distros), create a drop-in file:</p>
+    <pre><code>sudo mkdir -p /etc/systemd/network/10-vpn.network.d
+sudo nano /etc/systemd/network/10-vpn.network.d/routes.conf</code></pre>
+    <p>Add one <code>[Route]</code> block per subnet:</p>
+    <pre><code>[Route]
+Destination=104.21.32.0/24
+Gateway=10.8.0.1
+
+[Route]
+Destination=172.67.182.0/24
+Gateway=10.8.0.1</code></pre>
+    <p>Apply:</p>
+    <pre><code>sudo systemctl restart systemd-networkd</code></pre>
+
+    <h3>NetworkManager dispatcher</h3>
+    <p>If you use NetworkManager (Ubuntu desktop, Fedora Workstation, most laptops), save a dispatcher hook:</p>
+    <pre><code>sudo nano /etc/NetworkManager/dispatcher.d/99-vpn-routes</code></pre>
+    <p>Example content — checks that the triggering interface is your VPN device and re-runs the <code>ip route add</code> commands:</p>
+    <pre><code>#!/bin/bash
+# $1 = interface name, $2 = action
+if [ "$1" = "&lt;your-vpn-interface&gt;" ] &amp;&amp; [ "$2" = "up" ]; then
+    ip route add 104.21.32.0/24 via 10.8.0.1
+    ip route add 172.67.182.0/24 via 10.8.0.1
+fi</code></pre>
+    <p>Make it executable:</p>
+    <pre><code>sudo chmod +x /etc/NetworkManager/dispatcher.d/99-vpn-routes</code></pre>
+
+    <h3>@reboot cron (simplest, universal)</h3>
+    <p>Works on any distro regardless of network stack. Move the generated script to a stable location and schedule it at boot:</p>
+    <pre><code>sudo mv routes.sh /usr/local/bin/routes.sh
+sudo chmod +x /usr/local/bin/routes.sh
+sudo crontab -e</code></pre>
+    <p>Add the line:</p>
+    <pre><code>@reboot /usr/local/bin/routes.sh</code></pre>
+    <div class="callout">
+        <strong>Note:</strong> <code>@reboot</code> runs before your VPN may be fully up. If you hit <code>Network is unreachable</code>, add a short <code>sleep</code> at the top of the script or trigger it from your VPN's post-up hook instead.
+    </div>
+
+    <h2>Verify</h2>
+    <p>Check that the routes are in the kernel table:</p>
+    <pre><code>ip route show | grep 10.8.0.1</code></pre>
+    <p>All added subnets should appear, bound to your VPN gateway.</p>
+
+    <h2>Rollback</h2>
+    <p>To remove the routes, generate a reverse script by replacing <code>add</code> with <code>del</code> in <code>routes.sh</code> and run it as root:</p>
+    <pre><code>sed 's/ip route add/ip route del/' routes.sh > unroutes.sh
+sudo bash unroutes.sh</code></pre>
+
+    <h2>Common issues</h2>
+
+    <h3>Network is unreachable</h3>
+    <p>Your VPN interface is down. Check with:</p>
+    <pre><code>ip link show</code></pre>
+    <p>Bring the interface up before running the script.</p>
+
+    <h3>RTNETLINK answers: File exists</h3>
+    <p>The route is already present. Remove it first:</p>
+    <pre><code>sudo ip route del &lt;subnet&gt;</code></pre>
+    <p>Then re-run the script.</p>
+
+    <h3>Permission denied</h3>
+    <p><code>ip route add</code> needs root. Always invoke with <code>sudo</code>.</p>
+
+    <h2>References</h2>
+    <ul>
+        <li><a href="https://man7.org/linux/man-pages/man8/ip-route.8.html" target="_blank" rel="noopener">ip-route(8) man page</a></li>
+        <li><a href="https://www.freedesktop.org/software/systemd/man/systemd.network.html" target="_blank" rel="noopener">systemd.network(5)</a></li>
+        <li><a href="https://networkmanager.dev/docs/api/latest/NetworkManager-dispatcher.html" target="_blank" rel="noopener">NetworkManager Dispatcher</a></li>
+        <li><a href="https://wiki.archlinux.org/title/Systemd-networkd" target="_blank" rel="noopener">Arch Wiki: systemd-networkd</a></li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>Ready to try?</h3>
+        <p>NetRoute Pro — a free Chrome extension to generate routes from any website.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Install Extension</a>
+    </div>
+
+</article>
+
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Routes to OpenVPN Client Config — Step-by-Step Guide | NetRoute Pro</title>
+    <meta name="description" content="How to add selective routes to OpenVPN .ovpn config. Generate route directives in NetRoute Pro, paste into client config, reconnect. Perfect for split tunneling.">
+    <meta name="keywords" content="openvpn route directive, openvpn split tunnel, openvpn client routes, openvpn push route, ovpn config routes">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/openvpn.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/openvpn.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/openvpn.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Add Routes to OpenVPN Client Config">
+    <meta property="og:description" content="Generate OpenVPN route directives with NetRoute Pro, paste them into your .ovpn file, and reconnect for instant split tunneling.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/guides/openvpn.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="en_US">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://alexander2k.github.io/netroute-site/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Guides"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "OpenVPN"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to add routes to an OpenVPN client config",
+        "description": "Step-by-step: generate route directives in NetRoute Pro, edit the .ovpn file, and reconnect.",
+        "inLanguage": "en",
+        "totalTime": "PT2M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Generate route directives in NetRoute Pro",
+                "text": "Open the target website in Chrome, launch NetRoute Pro. Select OpenVPN platform, click Analyze Website, and copy the route directives."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Edit your .ovpn config",
+                "text": "Open the .ovpn file in a text editor, remove any redirect-gateway directives, and paste the generated route lines."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Reconnect the VPN",
+                "text": "Disconnect and reconnect the OpenVPN client so it loads the new configuration."
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Home</a>
+            <div class="lang-switch">
+                <span class="lang-current">EN</span>
+                <div class="lang-dropdown">
+                    <a href="./openvpn.html" class="lang-active">English</a>
+                    <a href="../ru/guides/openvpn.html">Русский</a>
+                    <a href="../es/guides/openvpn.html">Español</a>
+                    <a href="../zh/guides/openvpn.html">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; Back to Home</a>
+    <h1>Add Routes to OpenVPN Client Config</h1>
+    <p class="lead">OpenVPN supports per-network <code>route</code> directives in the client config. NetRoute Pro generates these directives from any website's domains — add them to your <code>.ovpn</code> and you have split tunneling in minutes.</p>
+
+    <h2>Prerequisites</h2>
+    <ul>
+        <li>OpenVPN 2.4 or newer</li>
+        <li>Access to the <code>.ovpn</code> client configuration file</li>
+        <li>An OpenVPN client — CLI (<code>openvpn</code>), OpenVPN GUI for Windows, Tunnelblick for macOS, or the official mobile apps</li>
+        <li><a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome extension installed</li>
+    </ul>
+
+    <h2>Step 1. Generate route directives in NetRoute Pro</h2>
+    <ol>
+        <li>Open the target website in Chrome</li>
+        <li>Click the NetRoute Pro icon in your extensions</li>
+        <li>Select the <strong>OpenVPN</strong> platform</li>
+        <li>Choose aggregation mask (recommended <code>/24</code>)</li>
+        <li>Click <strong>Analyze Website</strong></li>
+        <li>Copy the generated output — one directive per line:</li>
+    </ol>
+    <pre><code>route 104.21.32.0 255.255.255.0
+route 172.67.182.0 255.255.255.0
+route 162.159.135.0 255.255.255.0</code></pre>
+
+    <div class="callout">
+        <strong>Tip:</strong> enable <strong>RIPE BGP optimization</strong> — it emits announced BGP prefixes that remain valid across CDN IP rotations.
+    </div>
+
+    <h2>Step 2. Edit your .ovpn config</h2>
+    <ol>
+        <li>Open your <code>.ovpn</code> file in a text editor</li>
+        <li><strong>Remove</strong> any <code>redirect-gateway def1</code> line — it routes <em>everything</em> through the VPN and defeats split tunneling</li>
+        <li><strong>Remove</strong> any <code>push "redirect-gateway def1"</code> line if present</li>
+        <li><strong>Paste</strong> the <code>route</code> directives at the end of the file, above any inline <code>&lt;cert&gt;</code>, <code>&lt;key&gt;</code>, <code>&lt;ca&gt;</code>, or <code>&lt;tls-auth&gt;</code> blocks</li>
+        <li>Save the file</li>
+    </ol>
+    <pre><code>client
+dev tun
+proto udp
+remote vpn.example.com 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+
+# Split tunneling — routes only specific subnets through the VPN
+route 104.21.32.0 255.255.255.0
+route 172.67.182.0 255.255.255.0
+route 162.159.135.0 255.255.255.0
+
+&lt;ca&gt;
+...
+&lt;/ca&gt;</code></pre>
+
+    <h2>Step 3. Reconnect the VPN</h2>
+    <p>Disconnect and reconnect the OpenVPN client so it reloads the config and applies the new routes.</p>
+
+    <h2>Alternative: server-side routes</h2>
+    <p>If you're the VPN administrator and want to push routes to <em>all</em> clients automatically, add this to the server config:</p>
+    <pre><code>push "route 104.21.32.0 255.255.255.0"
+push "route 172.67.182.0 255.255.255.0"</code></pre>
+    <p>Clients receive the routes on connect — no client-side edits needed.</p>
+
+    <h2>Verify</h2>
+    <p>After reconnecting, check that the routes are installed:</p>
+    <ul>
+        <li><strong>Windows:</strong> <code>route print</code></li>
+        <li><strong>Linux / macOS:</strong> <code>ip route</code> (Linux) or <code>netstat -rn</code> (macOS)</li>
+    </ul>
+    <p>The added subnets should route via your OpenVPN adapter (typically <code>tun0</code> or similar — use whatever interface your OpenVPN client creates).</p>
+
+    <h2>Common issues</h2>
+
+    <h3>route directives ignored</h3>
+    <p>Your config (or the server push) contains <code>route-nopull</code> or a <code>--pull-filter</code> that drops them. Remove or adjust those directives.</p>
+
+    <h3>DNS leaks on Windows</h3>
+    <p>Windows can still query DNS outside the tunnel. Add this to the client config:</p>
+    <pre><code>block-outside-dns</code></pre>
+
+    <h3>Routes added but traffic doesn't go through VPN</h3>
+    <p>The routes are correct, but the VPN server isn't NAT-ing your traffic for those destinations. This is a server-side fix — the administrator needs to enable masquerade/NAT for the client subnet on the VPN interface.</p>
+
+    <h2>References</h2>
+    <ul>
+        <li><a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-6/" target="_blank" rel="noopener">OpenVPN Reference Manual 2.6</a></li>
+        <li><a href="https://openvpn.net/community-resources/setting-up-routing/" target="_blank" rel="noopener">Setting up Routing (OpenVPN Community)</a></li>
+        <li><a href="https://openvpn.net/community-resources/how-to/" target="_blank" rel="noopener">OpenVPN How-To</a></li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>Ready to try?</h3>
+        <p>NetRoute Pro — a free Chrome extension to generate routes from any website.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Install Extension</a>
+    </div>
+
+</article>
+
+</body>
+</html>
