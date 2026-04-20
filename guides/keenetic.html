@@ -90,7 +90,8 @@
         .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
         .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
         .guide li { margin-bottom: 8px; }
-        .guide a { color: var(--accent); }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
         .guide strong { color: var(--text); }
         .guide code { font-size: 13px; }
         .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
