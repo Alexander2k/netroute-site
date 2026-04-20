@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Добавление маршрутов на Keenetic — инструкция | NetRoute Pro</title>
-    <meta name="description" content="Как добавить статические маршруты на роутер Keenetic через веб-интерфейс или CLI. Пошаговая инструкция: обход блокировок, направление трафика через VPN по доменам.">
-    <meta name="keywords" content="keenetic маршруты, keenetic добавить маршрут, keenetic обход блокировок, keenetic vpn маршруты, keenetic ip route, keenetic static route, keenetic wireguard маршруты, keenetic домены через vpn">
+    <title>Импорт маршрутов на Keenetic из .bat файла — инструкция | NetRoute Pro</title>
+    <meta name="description" content="Как загрузить маршруты на Keenetic через .bat файл. Сгенерируйте маршруты в NetRoute Pro, импортируйте одним кликом с привязкой к VPN-интерфейсу. Обход блокировок по доменам.">
+    <meta name="keywords" content="keenetic маршруты, keenetic загрузить bat, keenetic импорт маршрутов, keenetic обход блокировок, keenetic vpn маршруты, keenetic route add, keenetic домены через vpn, keenetic static route">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html">
     <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
@@ -13,8 +13,8 @@
     <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Добавление маршрутов на Keenetic — инструкция">
-    <meta property="og:description" content="Пошаговая инструкция: как добавить статические маршруты на Keenetic через веб-интерфейс или CLI.">
+    <meta property="og:title" content="Импорт маршрутов на Keenetic из .bat файла">
+    <meta property="og:description" content="Загрузите сгенерированные в NetRoute Pro маршруты на Keenetic одним кликом с привязкой к VPN-интерфейсу.">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
@@ -27,25 +27,25 @@
     {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        "name": "Как добавить маршруты на Keenetic",
-        "description": "Пошаговая инструкция по добавлению статических маршрутов на роутер Keenetic для обхода блокировок и направления трафика через VPN.",
+        "name": "Как импортировать маршруты на Keenetic",
+        "description": "Пошаговая инструкция: сгенерируйте .bat файл в NetRoute Pro и загрузите его на Keenetic с привязкой к VPN-интерфейсу.",
         "inLanguage": "ru",
-        "totalTime": "PT5M",
+        "totalTime": "PT2M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "Сгенерируйте маршруты через NetRoute Pro",
-                "text": "Откройте сайт в браузере, запустите расширение NetRoute Pro. Выберите платформу Linux или MikroTik, укажите шлюз VPN (например 10.0.0.1). Нажмите Analyze Website."
+                "name": "Сгенерируйте .bat файл в NetRoute Pro",
+                "text": "Откройте целевой сайт в Chrome, запустите расширение NetRoute Pro. Выберите платформу Windows, нажмите Analyze Website и скачайте файл .bat."
             },
             {
                 "@type": "HowToStep",
-                "name": "Войдите в веб-интерфейс Keenetic",
-                "text": "Откройте http://my.keenetic.net или IP роутера (обычно 192.168.1.1). Войдите под учёткой администратора."
+                "name": "Откройте раздел Маршрутизация в Keenetic",
+                "text": "Войдите в веб-интерфейс Keenetic (http://my.keenetic.net), перейдите в Управление → Маршрутизация, вкладка IPv4-маршруты."
             },
             {
                 "@type": "HowToStep",
-                "name": "Добавьте маршруты",
-                "text": "Перейдите в Управление → Маршрутизация → Статические маршруты. Нажмите Добавить маршрут и укажите подсеть назначения и шлюз."
+                "name": "Загрузите файл с привязкой к интерфейсу",
+                "text": "Нажмите Загрузить, выберите .bat файл, в выпадающем списке Интерфейс выберите ваш VPN-туннель. Подтвердите — все маршруты добавятся одним действием."
             }
         ]
     }
@@ -98,98 +98,91 @@
 
 <article class="guide">
     <a href="../" class="back">&larr; На главную</a>
-    <h1>Добавление маршрутов на Keenetic</h1>
-    <p class="lead">Пошаговая инструкция: как направить трафик отдельных сайтов через VPN-туннель на роутере Keenetic. Генерируем маршруты из доменов через NetRoute Pro и импортируем их на роутер.</p>
+    <h1>Импорт маршрутов на Keenetic из .bat файла</h1>
+    <p class="lead">Keenetic умеет загружать файл в формате Windows <code>route ADD</code> и сам применять все маршруты к выбранному интерфейсу. NetRoute Pro генерирует именно такой файл — остаётся только скачать и загрузить.</p>
 
     <h2>Что понадобится</h2>
     <ul>
-        <li>Роутер Keenetic с актуальной прошивкой KeeneticOS 3.x или выше</li>
-        <li>Настроенный VPN-туннель (WireGuard, OpenVPN, IKEv2 или другой)</li>
+        <li>Роутер Keenetic с настроенным VPN-туннелем (WireGuard, OpenVPN, IKEv2, OpenConnect и т.д.)</li>
         <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> в Chrome</li>
         <li>Доступ к веб-интерфейсу роутера (обычно <code>http://my.keenetic.net</code>)</li>
     </ul>
 
-    <h2>Шаг 1. Сгенерируйте маршруты через NetRoute Pro</h2>
+    <h2>Шаг 1. Сгенерируйте .bat файл в NetRoute Pro</h2>
     <ol>
-        <li>Откройте нужный сайт в браузере (например, заблокированный ресурс)</li>
-        <li>Нажмите на иконку NetRoute Pro в панели расширений Chrome</li>
-        <li>Выберите платформу <strong>Linux</strong> (Keenetic принимает команды в Linux-формате)</li>
-        <li>Укажите шлюз — IP вашего VPN-интерфейса (например, <code>10.0.0.1</code> для WireGuard)</li>
-        <li>Задайте маску агрегации (рекомендуется <code>/24</code>) и нажмите <strong>Analyze Website</strong></li>
-        <li>Скопируйте сгенерированные маршруты или скачайте как <code>.sh</code> файл</li>
-    </ol>
-
-    <h2>Шаг 2. Добавьте маршруты через веб-интерфейс</h2>
-    <p>Самый простой способ — использовать веб-интерфейс Keenetic:</p>
-    <ol>
-        <li>Откройте <code>http://my.keenetic.net</code> или IP-адрес роутера</li>
-        <li>Войдите под учётной записью администратора</li>
-        <li>Перейдите в раздел <strong>Управление → Маршрутизация</strong></li>
-        <li>Нажмите <strong>Добавить маршрут</strong></li>
-        <li>Заполните поля:
-            <ul>
-                <li><strong>Тип маршрута:</strong> Маршрут до удалённой подсети</li>
-                <li><strong>Адрес сети назначения:</strong> например <code>104.21.32.0</code></li>
-                <li><strong>Маска подсети:</strong> <code>255.255.255.0</code> (для /24)</li>
-                <li><strong>Интерфейс:</strong> ваш VPN-туннель</li>
-            </ul>
-        </li>
-        <li>Повторите для каждой подсети из списка NetRoute Pro</li>
+        <li>Откройте нужный сайт в Chrome (например, заблокированный ресурс)</li>
+        <li>Нажмите на иконку NetRoute Pro в панели расширений</li>
+        <li>Выберите платформу <strong>Windows</strong> — именно этот формат принимает Keenetic</li>
+        <li>Шлюз можно оставить любой (например <code>0.0.0.0</code>) — при импорте с привязкой к интерфейсу Keenetic его проигнорирует</li>
+        <li>Задайте маску агрегации (рекомендуется <code>/24</code>)</li>
+        <li>Нажмите <strong>Analyze Website</strong></li>
+        <li>Скачайте результат как <strong>.bat</strong> файл</li>
     </ol>
 
     <div class="callout">
-        <strong>Совет:</strong> если маршрутов много (50+), используйте CLI — это быстрее, чем добавлять вручную.
+        <strong>Совет:</strong> включите <strong>RIPE BGP оптимизацию</strong> в расширении — она заменит отдельные IP на реальные BGP-префиксы провайдера. Это даст стабильные маршруты, которые не ломаются при ротации IP у Cloudflare/Fastly.
     </div>
 
-    <h2>Шаг 3. Добавление через CLI (быстрый способ)</h2>
-    <p>Для массового добавления подключитесь к Keenetic через SSH или Telnet:</p>
-    <pre><code>ssh admin@192.168.1.1</code></pre>
+    <h2>Шаг 2. Откройте раздел Маршрутизация на Keenetic</h2>
+    <ol>
+        <li>Откройте <code>http://my.keenetic.net</code> или IP роутера</li>
+        <li>Войдите под учётной записью администратора</li>
+        <li>Перейдите в <strong>Управление → Маршрутизация</strong></li>
+        <li>Выберите вкладку <strong>IPv4-маршруты</strong></li>
+    </ol>
 
-    <p>Войдите в режим конфигурации и добавьте маршруты:</p>
-    <pre><code>(config)&gt; ip route 104.21.32.0/24 Wireguard0 auto
-(config)&gt; ip route 172.67.182.0/24 Wireguard0 auto
-(config)&gt; ip route 151.101.1.0/24 Wireguard0 auto
-(config)&gt; system configuration save</code></pre>
+    <h2>Шаг 3. Загрузите файл с привязкой к VPN-интерфейсу</h2>
+    <ol>
+        <li>Нажмите кнопку <strong>Загрузить</strong></li>
+        <li>Выберите скачанный <code>.bat</code> файл</li>
+        <li>В выпадающем списке <strong>Интерфейс</strong> выберите ваш VPN-туннель
+            <ul>
+                <li>Имя интерфейса зависит от вашей настройки и VPN-провайдера — у каждого оно своё</li>
+                <li>Если не знаете — посмотрите в разделе <strong>Интернет</strong> какой интерфейс используется для VPN</li>
+            </ul>
+        </li>
+        <li>Подтвердите загрузку</li>
+    </ol>
 
-    <p>Вместо <code>Wireguard0</code> подставьте имя вашего VPN-интерфейса. Посмотреть список интерфейсов:</p>
-    <pre><code>(config)&gt; show interface</code></pre>
+    <p>Готово — все маршруты из файла добавлены и привязаны к выбранному VPN-интерфейсу. Шлюзы из .bat файла Keenetic игнорирует, трафик идёт через указанный интерфейс.</p>
 
-    <h2>Шаг 4. Настройка WireGuard через AllowedIPs</h2>
-    <p>Если вы используете WireGuard, проще задать маршруты прямо в AllowedIPs пира — тогда отдельные ip route не нужны:</p>
+    <div class="callout">
+        <strong>Почему это удобно:</strong> не нужно вписывать маршруты вручную, не нужен SSH — загрузка файла работает даже на базовых прошивках Keenetic. 100+ маршрутов применяются за секунду.
+    </div>
+
+    <h2>Альтернатива для WireGuard: AllowedIPs</h2>
+    <p>Если используете WireGuard, можно обойтись без статических маршрутов — задать подсети прямо в параметре AllowedIPs пира:</p>
     <ol>
         <li>В NetRoute Pro выберите платформу <strong>WireGuard</strong></li>
         <li>Скопируйте строку <code>AllowedIPs</code></li>
-        <li>В веб-интерфейсе Keenetic откройте <strong>Интернет → Другие подключения → WireGuard</strong></li>
-        <li>Откройте настройки пира и вставьте список в поле <strong>Allowed IPs</strong></li>
-        <li>Сохраните настройки</li>
+        <li>В Keenetic: <strong>Интернет → WireGuard</strong> → настройки пира → вставьте список в поле <strong>Allowed IPs</strong></li>
+        <li>Сохраните</li>
     </ol>
 
-    <pre><code>AllowedIPs = 104.21.32.0/24, 172.67.182.0/24, 151.101.1.0/24</code></pre>
+    <h2>Проверка</h2>
+    <p>После импорта проверьте, что маршруты применились: они появятся в списке <strong>Маршрутизация → IPv4-маршруты</strong> с привязкой к вашему VPN-интерфейсу.</p>
+    <p>Проверьте, что трафик идёт через VPN — с клиента в LAN:</p>
+    <pre><code>tracert example.com     # Windows
+traceroute example.com  # Linux/macOS</code></pre>
+    <p>Первые хопы должны идти через IP VPN-шлюза.</p>
 
-    <h2>Проверка работы</h2>
-    <p>Убедитесь, что маршруты применились:</p>
-    <pre><code>(config)&gt; show ip route</code></pre>
+    <h2>Частые вопросы</h2>
 
-    <p>Проверьте, что сайт идёт через VPN — на компьютере в LAN:</p>
-    <pre><code>tracert example.com   # Windows
-traceroute example.com   # Linux/macOS</code></pre>
+    <h3>IP сайта изменился — маршрут не работает</h3>
+    <p>CDN вроде Cloudflare и Fastly периодически меняют IP. Пересоздайте <code>.bat</code> в NetRoute Pro с включённой <strong>RIPE BGP оптимизацией</strong> — она подставит анонсированные BGP-префиксы, которые покрывают все IP провайдера.</p>
 
-    <p>Первые хопы должны идти через IP вашего VPN-шлюза.</p>
-
-    <h2>Частые проблемы</h2>
+    <h3>Слишком много маршрутов</h3>
+    <p>Keenetic без проблем держит сотни статических маршрутов. Если нужно больше — используйте подход с WireGuard AllowedIPs.</p>
 
     <h3>Маршрут добавлен, но трафик не идёт через VPN</h3>
     <ul>
-        <li>Проверьте, что VPN-интерфейс активен: <code>show interface Wireguard0</code></li>
-        <li>Убедитесь что в правилах файрвола нет блокировки</li>
-        <li>Проверьте NAT/Masquerade на VPN-интерфейсе</li>
+        <li>Убедитесь что VPN-интерфейс активен (раздел <strong>Интернет</strong>)</li>
+        <li>Проверьте что на VPN-интерфейсе включён NAT/Masquerade</li>
+        <li>Проверьте правила файрвола — ничего не блокирует трафик</li>
     </ul>
 
-    <h3>IP сайта изменился — маршрут не работает</h3>
-    <p>Cloudflare, Fastly и другие CDN могут менять IP. Пересоздайте маршруты через NetRoute Pro с включённой <strong>RIPE BGP оптимизацией</strong> — она подставит анонсированные BGP-префиксы, которые покрывают все возможные IP провайдера.</p>
-
-    <h3>Слишком много маршрутов</h3>
-    <p>Keenetic без проблем держит 500-1000 статических маршрутов. Если нужно больше — используйте WireGuard AllowedIPs или настройте BGP через opkg-пакеты.</p>
+    <h3>Для продвинутых: добавление через CLI</h3>
+    <p>Если нужно автоматизировать или массово управлять маршрутами — подключайтесь по SSH/Telnet и используйте команды <code>ip route</code> в режиме конфигурации. Но для большинства сценариев загрузки .bat достаточно.</p>
 
     <div class="cta-block">
         <h3>Готовы попробовать?</h3>

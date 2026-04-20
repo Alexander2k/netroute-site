@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Static Routes on Keenetic — Step-by-Step Guide | NetRoute Pro</title>
-    <meta name="description" content="How to add static routes on Keenetic router via web UI or CLI. Step-by-step: route specific websites through VPN tunnel using domains with NetRoute Pro.">
-    <meta name="keywords" content="keenetic routes, keenetic add route, keenetic vpn routes, keenetic static route, keenetic ip route, keenetic wireguard allowedips, keenetic split tunnel, keenetic route by domain">
+    <title>Import Routes on Keenetic from .bat File — Step-by-Step Guide | NetRoute Pro</title>
+    <meta name="description" content="How to upload routes to Keenetic via .bat file. Generate routes in NetRoute Pro, import in one click with VPN interface binding. Route websites by domain through VPN.">
+    <meta name="keywords" content="keenetic routes, keenetic upload bat, keenetic import routes, keenetic vpn routes, keenetic route add, keenetic static route, keenetic route file, keenetic split tunnel">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
     <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
@@ -13,8 +13,8 @@
     <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Add Static Routes on Keenetic — Step-by-Step Guide">
-    <meta property="og:description" content="How to route specific websites through VPN on Keenetic: generate routes from domains with NetRoute Pro, apply via web UI or CLI.">
+    <meta property="og:title" content="Import Routes on Keenetic from .bat File">
+    <meta property="og:description" content="Upload NetRoute Pro generated routes to Keenetic in one click with VPN interface binding.">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
 
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -27,25 +27,25 @@
     {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        "name": "How to add routes on Keenetic",
-        "description": "Step-by-step guide for adding static routes on Keenetic routers to direct specific website traffic through a VPN tunnel.",
+        "name": "How to import routes on Keenetic",
+        "description": "Step-by-step: generate a .bat file in NetRoute Pro and upload it to Keenetic with VPN interface binding.",
         "inLanguage": "en",
-        "totalTime": "PT5M",
+        "totalTime": "PT2M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "Generate routes with NetRoute Pro",
-                "text": "Open the target website in Chrome, launch NetRoute Pro extension. Select Linux platform, set VPN gateway (e.g. 10.0.0.1). Click Analyze Website."
+                "name": "Generate a .bat file in NetRoute Pro",
+                "text": "Open the target website in Chrome, launch NetRoute Pro. Select Windows platform, click Analyze Website, and download as .bat."
             },
             {
                 "@type": "HowToStep",
-                "name": "Sign in to Keenetic web UI",
-                "text": "Open http://my.keenetic.net or router IP (usually 192.168.1.1). Log in as administrator."
+                "name": "Open Routing section in Keenetic",
+                "text": "Sign in to Keenetic web UI (http://my.keenetic.net), go to Management → Routing → IPv4 routes tab."
             },
             {
                 "@type": "HowToStep",
-                "name": "Add the routes",
-                "text": "Go to Management → Routing → Static Routes. Click Add Route and specify destination subnet and gateway interface."
+                "name": "Upload the file with interface binding",
+                "text": "Click Upload, select the .bat file, choose your VPN interface from the Interface dropdown. Confirm — all routes are added in one action."
             }
         ]
     }
@@ -98,98 +98,91 @@
 
 <article class="guide">
     <a href="../" class="back">&larr; Back to Home</a>
-    <h1>Add Static Routes on Keenetic</h1>
-    <p class="lead">Step-by-step guide: route traffic of specific websites through a VPN tunnel on a Keenetic router. Generate routes from domains with NetRoute Pro and import them on the router.</p>
+    <h1>Import Routes on Keenetic from .bat File</h1>
+    <p class="lead">Keenetic can upload a file in Windows <code>route ADD</code> format and apply all routes to a selected interface automatically. NetRoute Pro generates exactly that file — you just download and upload.</p>
 
     <h2>Prerequisites</h2>
     <ul>
-        <li>Keenetic router with KeeneticOS 3.x or newer</li>
-        <li>Configured VPN tunnel (WireGuard, OpenVPN, IKEv2, or other)</li>
+        <li>Keenetic router with a configured VPN tunnel (WireGuard, OpenVPN, IKEv2, OpenConnect, etc.)</li>
         <li><a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome extension installed</li>
         <li>Access to the router's web UI (usually <code>http://my.keenetic.net</code>)</li>
     </ul>
 
-    <h2>Step 1. Generate routes with NetRoute Pro</h2>
+    <h2>Step 1. Generate a .bat file in NetRoute Pro</h2>
     <ol>
         <li>Open the target website in Chrome</li>
         <li>Click the NetRoute Pro icon in your extensions</li>
-        <li>Select the <strong>Linux</strong> platform (Keenetic accepts Linux-style commands)</li>
-        <li>Set the gateway to your VPN interface IP (e.g., <code>10.0.0.1</code> for WireGuard)</li>
-        <li>Choose aggregation mask (recommended <code>/24</code>) and click <strong>Analyze Website</strong></li>
-        <li>Copy the generated routes or download as <code>.sh</code></li>
+        <li>Select the <strong>Windows</strong> platform — that's the format Keenetic accepts</li>
+        <li>Gateway can be any value (e.g. <code>0.0.0.0</code>) — Keenetic ignores it when you bind to an interface on upload</li>
+        <li>Choose aggregation mask (recommended <code>/24</code>)</li>
+        <li>Click <strong>Analyze Website</strong></li>
+        <li>Download the result as a <strong>.bat</strong> file</li>
     </ol>
 
-    <h2>Step 2. Add routes via web UI</h2>
-    <p>Easiest approach — use the Keenetic web interface:</p>
+    <div class="callout">
+        <strong>Tip:</strong> enable <strong>RIPE BGP optimization</strong> in the extension — it replaces individual IPs with real announced BGP prefixes. This gives stable routes that don't break when Cloudflare/Fastly rotate IPs.
+    </div>
+
+    <h2>Step 2. Open the Routing section in Keenetic</h2>
     <ol>
         <li>Open <code>http://my.keenetic.net</code> or the router's IP</li>
         <li>Sign in as administrator</li>
         <li>Go to <strong>Management → Routing</strong></li>
-        <li>Click <strong>Add Route</strong></li>
-        <li>Fill in:
-            <ul>
-                <li><strong>Route type:</strong> Route to remote network</li>
-                <li><strong>Destination network:</strong> e.g. <code>104.21.32.0</code></li>
-                <li><strong>Subnet mask:</strong> <code>255.255.255.0</code> (for /24)</li>
-                <li><strong>Interface:</strong> your VPN tunnel</li>
-            </ul>
-        </li>
-        <li>Repeat for each subnet from NetRoute Pro</li>
+        <li>Select the <strong>IPv4 routes</strong> tab</li>
     </ol>
 
+    <h2>Step 3. Upload the file with VPN interface binding</h2>
+    <ol>
+        <li>Click the <strong>Upload</strong> button</li>
+        <li>Select the downloaded <code>.bat</code> file</li>
+        <li>In the <strong>Interface</strong> dropdown, select your VPN tunnel
+            <ul>
+                <li>The interface name depends on your setup and VPN provider — it's different for each user</li>
+                <li>If unsure — check which interface your VPN uses in the <strong>Internet</strong> section</li>
+            </ul>
+        </li>
+        <li>Confirm the upload</li>
+    </ol>
+
+    <p>Done — all routes from the file are added and bound to the selected VPN interface. Keenetic ignores the gateway values from the .bat file; traffic flows through the chosen interface.</p>
+
     <div class="callout">
-        <strong>Tip:</strong> if you have 50+ routes, use CLI — much faster than manual entry.
+        <strong>Why this is convenient:</strong> no manual entry, no SSH needed — file upload works even on basic Keenetic firmware. 100+ routes apply in under a second.
     </div>
 
-    <h2>Step 3. Bulk add via CLI</h2>
-    <p>For mass import, connect to Keenetic via SSH or Telnet:</p>
-    <pre><code>ssh admin@192.168.1.1</code></pre>
-
-    <p>Enter configuration mode and add routes:</p>
-    <pre><code>(config)&gt; ip route 104.21.32.0/24 Wireguard0 auto
-(config)&gt; ip route 172.67.182.0/24 Wireguard0 auto
-(config)&gt; ip route 151.101.1.0/24 Wireguard0 auto
-(config)&gt; system configuration save</code></pre>
-
-    <p>Replace <code>Wireguard0</code> with your VPN interface name. List interfaces:</p>
-    <pre><code>(config)&gt; show interface</code></pre>
-
-    <h2>Step 4. WireGuard AllowedIPs approach</h2>
-    <p>With WireGuard, you can skip static routes entirely — set AllowedIPs on the peer instead:</p>
+    <h2>Alternative for WireGuard: AllowedIPs</h2>
+    <p>If you're using WireGuard, you can skip static routes entirely and set subnets directly in the peer's AllowedIPs:</p>
     <ol>
-        <li>In NetRoute Pro, select <strong>WireGuard</strong> platform</li>
+        <li>In NetRoute Pro, select the <strong>WireGuard</strong> platform</li>
         <li>Copy the <code>AllowedIPs</code> line</li>
-        <li>In Keenetic web UI, go to <strong>Internet → Other connections → WireGuard</strong></li>
-        <li>Open peer settings and paste into the <strong>Allowed IPs</strong> field</li>
+        <li>In Keenetic: <strong>Internet → WireGuard</strong> → peer settings → paste into <strong>Allowed IPs</strong></li>
         <li>Save</li>
     </ol>
 
-    <pre><code>AllowedIPs = 104.21.32.0/24, 172.67.182.0/24, 151.101.1.0/24</code></pre>
-
     <h2>Verify</h2>
-    <p>Check that routes are active:</p>
-    <pre><code>(config)&gt; show ip route</code></pre>
-
-    <p>Verify traffic goes through VPN — from a LAN client:</p>
-    <pre><code>tracert example.com   # Windows
-traceroute example.com   # Linux/macOS</code></pre>
-
+    <p>After import, check that routes applied: they appear in <strong>Routing → IPv4 routes</strong> list bound to your VPN interface.</p>
+    <p>Verify traffic goes through the VPN — from a LAN client:</p>
+    <pre><code>tracert example.com     # Windows
+traceroute example.com  # Linux/macOS</code></pre>
     <p>First hops should go through your VPN gateway IP.</p>
 
     <h2>Common issues</h2>
 
-    <h3>Route added but traffic doesn't go through VPN</h3>
-    <ul>
-        <li>Check the VPN interface is up: <code>show interface Wireguard0</code></li>
-        <li>Verify there are no blocking firewall rules</li>
-        <li>Check NAT/masquerade on the VPN interface</li>
-    </ul>
-
     <h3>Website IP changed — route stopped working</h3>
-    <p>Cloudflare, Fastly, and other CDNs rotate IPs. Regenerate routes with <strong>RIPE BGP optimization</strong> enabled in NetRoute Pro — it substitutes announced BGP prefixes that cover all provider IPs.</p>
+    <p>CDNs like Cloudflare and Fastly rotate IPs periodically. Regenerate the <code>.bat</code> in NetRoute Pro with <strong>RIPE BGP optimization</strong> enabled — it substitutes announced BGP prefixes that cover all provider IPs.</p>
 
     <h3>Too many routes</h3>
-    <p>Keenetic handles 500-1000 static routes without issues. For more, use WireGuard AllowedIPs or set up BGP via opkg packages.</p>
+    <p>Keenetic handles hundreds of static routes without issues. If you need more — use the WireGuard AllowedIPs approach.</p>
+
+    <h3>Route added but traffic doesn't go through VPN</h3>
+    <ul>
+        <li>Check that the VPN interface is up (in the <strong>Internet</strong> section)</li>
+        <li>Verify NAT/masquerade is enabled on the VPN interface</li>
+        <li>Check firewall rules — nothing should block the traffic</li>
+    </ul>
+
+    <h3>For advanced users: CLI</h3>
+    <p>To automate or manage routes programmatically, connect via SSH/Telnet and use <code>ip route</code> commands in config mode. But for most cases, .bat upload is enough.</p>
 
     <div class="cta-block">
         <h3>Ready to try?</h3>
