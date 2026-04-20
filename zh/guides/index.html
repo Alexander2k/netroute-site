@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>所有平台的路由指南 | NetRoute Pro</title>
+    <meta name="description" content="在所有主要路由器和平台上添加路由的分步指南：Keenetic、MikroTik、OpenWrt、Cisco、Juniper、Windows、Linux、macOS、WireGuard、OpenVPN。">
+    <meta name="keywords" content="路由指南, 添加路由 路由器, vpn路由教程, 静态路由教程, keenetic mikrotik openwrt cisco 指南">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/zh/guides/">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="所有平台的路由指南">
+    <meta property="og:description" content="在所有主要路由器和平台上添加路由的分步指南。">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/zh/guides/">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://alexander2k.github.io/netroute-site/zh/" },
+            { "@type": "ListItem", "position": 2, "name": "指南" }
+        ]
+    }
+    </script>
+
+    <style>
+        body { font-family: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">首页</a>
+            <div class="lang-switch">
+                <span class="lang-current">中文</span>
+                <div class="lang-dropdown">
+                    <a href="../../guides/">English</a>
+                    <a href="../../ru/guides/">Русский</a>
+                    <a href="../../es/guides/">Español</a>
+                    <a href="./" class="lang-active">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="hub">
+    <div class="hub-header">
+        <h1>路由指南</h1>
+        <p>在所有主要路由器、操作系统和 VPN 协议上应用 NetRoute Pro 生成的路由的分步说明。</p>
+    </div>
+
+    <div class="hub-grid">
+        <a class="hub-card" href="keenetic.html">
+            <span class="hub-card-badge router">路由器</span>
+            <h3>Keenetic</h3>
+            <p>上传 .bat 文件并绑定到 VPN 接口 — KeeneticOS 一键导入。</p>
+        </a>
+        <a class="hub-card" href="mikrotik.html">
+            <span class="hub-card-badge router">路由器</span>
+            <h3>MikroTik</h3>
+            <p>通过 .rsc 脚本、地址列表和动态 DNS 导入路由到 RouterOS。</p>
+        </a>
+        <div class="hub-card coming-soon">
+            <span class="hub-card-badge soon">即将推出</span>
+            <h3>OpenWrt</h3>
+            <p>在基于 OpenWrt 的固件上通过 UCI、LuCI 或命令行应用路由。</p>
+        </div>
+        <div class="hub-card coming-soon">
+            <span class="hub-card-badge soon">即将推出</span>
+            <h3>WireGuard</h3>
+            <p>通用 AllowedIPs 方法 — 适用于任何带 WireGuard 的路由器或操作系统。</p>
+        </div>
+        <div class="hub-card coming-soon">
+            <span class="hub-card-badge soon">即将推出</span>
+            <h3>OpenVPN</h3>
+            <p>路由指令和客户端配置调整，用于分流。</p>
+        </div>
+        <div class="hub-card coming-soon">
+            <span class="hub-card-badge soon">即将推出</span>
+            <h3>Windows</h3>
+            <p>以管理员身份运行生成的 .bat 或使用 netsh 设置持久路由。</p>
+        </div>
+        <div class="hub-card coming-soon">
+            <span class="hub-card-badge soon">即将推出</span>
+            <h3>Linux</h3>
+            <p>通过 ip route、systemd-networkd 或 NetworkManager 应用 .sh 脚本。</p>
+        </div>
+        <div class="hub-card coming-soon">
+            <span class="hub-card-badge soon">即将推出</span>
+            <h3>macOS</h3>
+            <p>使用 route 命令加 sudo 或 launchd 设置持久静态路由。</p>
+        </div>
+        <div class="hub-card coming-soon">
+            <span class="hub-card-badge soon">即将推出</span>
+            <h3>Cisco</h3>
+            <p>在 IOS/IOS-XE 平台上通过 CLI 导入路由。</p>
+        </div>
+        <div class="hub-card coming-soon">
+            <span class="hub-card-badge soon">即将推出</span>
+            <h3>Juniper</h3>
+            <p>通过 Junos set 命令添加静态路由。</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

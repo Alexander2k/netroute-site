@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Импорт маршрутов на MikroTik через .rsc скрипт — инструкция | NetRoute Pro</title>
+    <meta name="description" content="Как добавить маршруты на MikroTik RouterOS. Сгенерируйте .rsc скрипт в NetRoute Pro, импортируйте через Files или терминал. Поддержка address lists и прямых маршрутов.">
+    <meta name="keywords" content="mikrotik маршруты, mikrotik rsc импорт, mikrotik ip route add, mikrotik address list, mikrotik vpn маршруты, mikrotik обход блокировок, routeros статический маршрут, mikrotik import file">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/guides/mikrotik.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/mikrotik.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/mikrotik.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/mikrotik.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/mikrotik.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/mikrotik.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Импорт маршрутов на MikroTik через .rsc скрипт">
+    <meta property="og:description" content="Загрузите сгенерированные в NetRoute Pro маршруты на MikroTik через .rsc скрипт — Files или терминал.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/ru/guides/mikrotik.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="ru_RU">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Главная",
+                "item": "https://alexander2k.github.io/netroute-site/ru/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Инструкции"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "MikroTik"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Как импортировать маршруты на MikroTik",
+        "description": "Пошаговая инструкция: сгенерируйте .rsc скрипт в NetRoute Pro, загрузите его на MikroTik и импортируйте командой /import.",
+        "inLanguage": "ru",
+        "totalTime": "PT3M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Сгенерируйте .rsc в NetRoute Pro",
+                "text": "Откройте целевой сайт в Chrome, запустите расширение NetRoute Pro, выберите платформу MikroTik, нажмите Analyze Website и скачайте файл .rsc."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Загрузите файл на MikroTik",
+                "text": "Загрузите .rsc на роутер через WinBox/WebFig в раздел Files или передайте по SCP."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Импортируйте командой /import",
+                "text": "В терминале MikroTik выполните /import file-name=routes.rsc — все маршруты будут добавлены."
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Главная</a>
+            <div class="lang-switch">
+                <span class="lang-current">RU</span>
+                <div class="lang-dropdown">
+                    <a href="../../guides/mikrotik.html">English</a>
+                    <a href="./mikrotik.html" class="lang-active">Русский</a>
+                    <a href="../../es/guides/mikrotik.html">Español</a>
+                    <a href="../../zh/guides/mikrotik.html">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; На главную</a>
+    <h1>Импорт маршрутов на MikroTik через .rsc скрипт</h1>
+    <p class="lead">MikroTik умеет импортировать <code>.rsc</code> скрипты с командами маршрутизации. NetRoute Pro генерирует именно такой формат — достаточно скачать, загрузить и импортировать.</p>
+
+    <h2>Что понадобится</h2>
+    <ul>
+        <li>Роутер MikroTik с RouterOS 6.x или 7.x</li>
+        <li>Настроенный VPN-туннель (WireGuard, OpenVPN, IKEv2, L2TP и т.д.)</li>
+        <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> в Chrome</li>
+        <li>Доступ через WinBox, WebFig или SSH</li>
+    </ul>
+
+    <h2>Шаг 1. Сгенерируйте .rsc в NetRoute Pro</h2>
+    <ol>
+        <li>Откройте нужный сайт в Chrome</li>
+        <li>Запустите расширение <strong>NetRoute Pro</strong></li>
+        <li>Выберите платформу <strong>MikroTik</strong></li>
+        <li>Укажите шлюз — IP вашего VPN-интерфейса (в отличие от Keenetic, здесь шлюз используется)</li>
+        <li>Маска агрегации <code>/24</code> (рекомендуется)</li>
+        <li>Нажмите <strong>Analyze Website</strong></li>
+        <li>Скачайте результат как <strong>.rsc</strong> файл</li>
+    </ol>
+
+    <div class="callout">
+        <strong>Совет:</strong> включите <strong>RIPE BGP оптимизацию</strong> в расширении — она заменит отдельные IP на реальные BGP-префиксы провайдера. Это даст стабильные маршруты, которые не ломаются при ротации IP у Cloudflare/Fastly.
+    </div>
+
+    <h2>Шаг 2. Загрузите файл на MikroTik</h2>
+    <p>Есть два удобных способа:</p>
+    <ul>
+        <li><strong>WinBox / WebFig:</strong> откройте раздел <strong>Files</strong> и перетащите <code>.rsc</code> в окно</li>
+        <li><strong>SCP:</strong> из терминала вашего компьютера выполните
+            <pre><code>scp routes.rsc admin@192.168.88.1:/</code></pre>
+        </li>
+    </ul>
+
+    <h2>Шаг 3. Импортируйте в терминале</h2>
+    <p>Откройте терминал MikroTik (через WinBox → New Terminal или по SSH) и выполните:</p>
+    <pre><code>/import file-name=routes.rsc</code></pre>
+    <p>RouterOS выведет прогресс импорта. Все команды из файла будут применены — маршруты появятся в <code>/ip route</code>.</p>
+
+    <p>Пример содержимого <code>.rsc</code>:</p>
+    <pre><code>/ip route add dst-address=104.21.32.0/24 gateway=10.0.0.1
+/ip route add dst-address=172.67.182.0/24 gateway=10.0.0.1</code></pre>
+
+    <div class="callout">
+        <strong>Почему это удобно:</strong> один файл — сотни маршрутов одним махом, без ручного ввода и без GUI. Повторный импорт обновит конфигурацию.
+    </div>
+
+    <h2>Альтернатива: Address Lists + правила маршрутизации</h2>
+    <p>Для более гибкой маршрутизации — подход через address-list:</p>
+    <ol>
+        <li>Отредактируйте <code>.rsc</code>, чтобы вместо <code>/ip route add</code> использовать
+            <pre><code>/ip firewall address-list add list=vpn-routes address=X.X.X.X/24</code></pre>
+        </li>
+        <li>Импортируйте как обычно: <code>/import file-name=routes.rsc</code></li>
+        <li>Добавьте правило маршрутизации, которое отправит трафик через VPN:
+            <pre><code>/ip route rule add src-address-list=vpn-routes action=lookup table=vpn
+/ip route rule add dst-address-list=vpn-routes action=lookup table=vpn</code></pre>
+        </li>
+    </ol>
+    <p>Так список легко переиспользовать — например, в правилах firewall или mangle для маркировки пакетов.</p>
+
+    <h2>Альтернатива: WireGuard AllowedIPs</h2>
+    <p>Если используете WireGuard, можно обойтись без статических маршрутов и задать подсети прямо в параметре <code>AllowedIPs</code> пира:</p>
+    <ol>
+        <li>В NetRoute Pro выберите платформу <strong>WireGuard</strong></li>
+        <li>Скопируйте строку <code>AllowedIPs</code></li>
+        <li>В MikroTik выполните:
+            <pre><code>/interface/wireguard/peers/set [find] allowed-address=...</code></pre>
+        </li>
+    </ol>
+
+    <h2>Проверка</h2>
+    <p>Убедитесь, что маршруты применились:</p>
+    <pre><code>/ip route print where dst-address~"104.21"</code></pre>
+    <p>С клиента в LAN проверьте, что трафик идёт через VPN:</p>
+    <pre><code>tracert example.com     # Windows
+traceroute example.com  # Linux/macOS</code></pre>
+    <p>Первые хопы должны идти через ваш VPN-шлюз.</p>
+
+    <h2>Частые проблемы</h2>
+
+    <h3>Ошибка синтаксиса при импорте</h3>
+    <p>Проверьте, что <code>.rsc</code> скачался полностью и не содержит HTML. Откройте его в любом текстовом редакторе — должны быть команды <code>/ip route add ...</code>, одна на строку.</p>
+
+    <h3>Маршруты есть, но трафик не идёт</h3>
+    <ul>
+        <li>Проверьте настройки NAT/masquerade на VPN-интерфейсе: <code>/ip firewall nat print</code></li>
+        <li>Убедитесь, что ваш VPN-интерфейс активен (<code>/interface print</code>)</li>
+        <li>Проверьте, что шлюз в маршрутах указывает на рабочий VPN-туннель</li>
+    </ul>
+
+    <h3>IP ротируется — маршрут не работает</h3>
+    <p>CDN вроде Cloudflare и Fastly периодически меняют IP. Пересоздайте <code>.rsc</code> в NetRoute Pro с включённой <strong>RIPE BGP оптимизацией</strong> — подставятся BGP-префиксы провайдера.</p>
+
+    <h3>Слишком много маршрутов</h3>
+    <p>MikroTik без проблем держит тысячи статических маршрутов. Если нужно покрыть действительно большие объёмы — используйте WireGuard с соответствующими AllowedIPs.</p>
+
+    <h3>Для продвинутых: BGP</h3>
+    <p>Для больших масштабов можно настроить BGP-пиринг и получать маршруты динамически от внешнего источника. Для большинства сценариев этого не требуется — импорт <code>.rsc</code> покрывает задачу целиком.</p>
+
+    <div class="cta-block">
+        <h3>Готовы попробовать?</h3>
+        <p>NetRoute Pro — бесплатное расширение Chrome для генерации маршрутов из любого сайта.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Установить расширение</a>
+    </div>
+
+</article>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通过 .rsc 脚本导入路由到 MikroTik — 分步指南 | NetRoute Pro</title>
+    <meta name="description" content="如何在 MikroTik RouterOS 上添加路由。在 NetRoute Pro 中生成 .rsc 脚本，通过 Files 或终端导入。支持地址列表和直接路由。">
+    <meta name="keywords" content="mikrotik 路由, mikrotik rsc 导入, mikrotik ip route add, mikrotik 地址列表, mikrotik vpn 路由, routeros 静态路由">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/zh/guides/mikrotik.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/mikrotik.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/mikrotik.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/mikrotik.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/mikrotik.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/mikrotik.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="通过 .rsc 脚本导入路由到 MikroTik">
+    <meta property="og:description" content="在 NetRoute Pro 中生成 .rsc 脚本，通过 Files 或终端导入到 MikroTik RouterOS。">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/zh/guides/mikrotik.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "首页",
+                "item": "https://alexander2k.github.io/netroute-site/zh/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "指南"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "MikroTik"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "如何在 MikroTik 上导入路由",
+        "description": "分步指南：在 NetRoute Pro 中生成 .rsc 文件，上传到 MikroTik，然后在终端中导入。",
+        "inLanguage": "zh",
+        "totalTime": "PT2M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "在 NetRoute Pro 中生成 .rsc 文件",
+                "text": "在 Chrome 中打开目标网站，启动 NetRoute Pro。选择 MikroTik 平台，点击 Analyze Website，下载 .rsc 文件。"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "将文件上传到 MikroTik",
+                "text": "通过 WinBox 或 WebFig 的 Files 部分上传，或使用 SCP 命令传输文件到路由器。"
+            },
+            {
+                "@type": "HowToStep",
+                "name": "在终端中导入",
+                "text": "在 MikroTik 终端中运行 /import file-name=routes.rsc 命令，一次性应用所有路由。"
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        body { font-family: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif; }
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="../">首页</a>
+            <div class="lang-switch">
+                <span class="lang-current">中文</span>
+                <div class="lang-dropdown">
+                    <a href="../../guides/mikrotik.html">English</a>
+                    <a href="../../ru/guides/mikrotik.html">Русский</a>
+                    <a href="../../es/guides/mikrotik.html">Español</a>
+                    <a href="./mikrotik.html" class="lang-active">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; 返回首页</a>
+    <h1>通过 .rsc 脚本导入路由到 MikroTik</h1>
+    <p class="lead">MikroTik 可以导入包含路由命令的 .rsc 脚本文件。NetRoute Pro 正是生成此格式 — 只需下载、上传并导入。</p>
+
+    <h2>准备工作</h2>
+    <ul>
+        <li>配备 RouterOS 6.x 或 7.x 的 MikroTik 路由器</li>
+        <li>已配置的 VPN 隧道</li>
+        <li>已安装 <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome 扩展</li>
+        <li>通过 WinBox、WebFig 或 SSH 访问路由器</li>
+    </ul>
+
+    <h2>步骤 1. 在 NetRoute Pro 中生成 .rsc</h2>
+    <ol>
+        <li>在 Chrome 中打开目标网站</li>
+        <li>启动 NetRoute Pro 扩展</li>
+        <li>选择 <strong>MikroTik</strong> 平台</li>
+        <li>网关：您的 VPN 接口的 IP（与 Keenetic 不同，这里会使用该网关）</li>
+        <li>选择聚合掩码 <code>/24</code>（推荐）</li>
+        <li>点击 <strong>Analyze Website</strong> → 下载 .rsc</li>
+    </ol>
+
+    <div class="callout">
+        <strong>提示：</strong>在扩展中启用 <strong>RIPE BGP 优化</strong> — 它会用真实公告的 BGP 前缀替换单个 IP，路由保持稳定，不会因 Cloudflare/Fastly 轮换 IP 而失效。
+    </div>
+
+    <h2>步骤 2. 上传文件到 MikroTik</h2>
+    <p>有两种方式：</p>
+    <ul>
+        <li><strong>WinBox/WebFig：</strong>将 <code>.rsc</code> 文件拖到 <strong>Files</strong> 部分</li>
+        <li><strong>SCP：</strong><code>scp routes.rsc admin@192.168.88.1:/</code></li>
+    </ul>
+
+    <h2>步骤 3. 在终端中导入</h2>
+    <p>在 MikroTik 终端（WinBox 中的 New Terminal、WebFig 或 SSH）中运行：</p>
+    <pre><code>/import file-name=routes.rsc</code></pre>
+    <p>所有路由一次性应用。</p>
+
+    <h3>.rsc 文件内容示例</h3>
+    <pre><code>/ip route add dst-address=104.21.32.0/24 gateway=10.0.0.1
+/ip route add dst-address=172.67.182.0/24 gateway=10.0.0.1</code></pre>
+
+    <h2>替代方案：地址列表 + 路由规则</h2>
+    <p>如果您希望通过策略路由实现更灵活的分流，可以使用地址列表：</p>
+    <ul>
+        <li>编辑 .rsc 使用 <code>/ip firewall address-list add list=vpn-routes address=X.X.X.X/24</code></li>
+        <li>添加规则：<code>/ip route rule add src-address-list=... action=lookup table=vpn</code></li>
+    </ul>
+    <p>这种方法在单独的路由表中保持 VPN 路由，避免干扰主路由表。</p>
+
+    <h2>替代方案：WireGuard AllowedIPs</h2>
+    <p>如果您使用 WireGuard，可以完全跳过静态路由，直接在 peer 的 AllowedIPs 中设置子网：</p>
+    <ol>
+        <li>在 NetRoute Pro 中选择 <strong>WireGuard</strong> 平台</li>
+        <li>复制 <code>AllowedIPs</code> 行</li>
+        <li>在 MikroTik 中：<code>/interface/wireguard/peers/set [find] allowed-address=...</code></li>
+    </ol>
+
+    <h2>验证</h2>
+    <p>导入后，检查路由已应用：</p>
+    <pre><code>/ip route print where dst-address~"104.21"</code></pre>
+    <p>从 LAN 客户端：</p>
+    <pre><code>tracert example.com</code></pre>
+    <p>前几个跳数应通过您的 VPN 网关。</p>
+
+    <h2>常见问题</h2>
+
+    <h3>导入时语法错误</h3>
+    <p>检查 .rsc 是否完整下载，文件中不应包含任何 HTML 片段。在文本编辑器中打开并确认每行都以 <code>/ip route add</code> 开头。</p>
+
+    <h3>路由已添加但流量不通过 VPN</h3>
+    <ul>
+        <li>检查 VPN 接口状态是否为 running</li>
+        <li>验证 VPN 接口上启用了 NAT/masquerade</li>
+        <li>检查防火墙规则 — 不应有任何规则丢弃相关流量</li>
+    </ul>
+
+    <h3>网站 IP 轮换</h3>
+    <p>CDN（Cloudflare、Fastly 等）会定期轮换 IP。使用 NetRoute Pro 扩展中的 <strong>RIPE BGP 优化</strong> 重新生成 .rsc — 它会用公告的 BGP 前缀替换单个 IP。</p>
+
+    <h3>路由太多</h3>
+    <p>MikroTik 可处理数千条静态路由而没有问题。如果需要更多 — 使用 WireGuard AllowedIPs 方法，或切换到地址列表 + 策略路由。</p>
+
+    <h3>高级用户：BGP</h3>
+    <p>对于大规模场景（数万条路由或多个站点），可以在 MikroTik 上配置 BGP 对等，从上游动态接收前缀。这超出了本指南的范围，但 RouterOS 通过 <code>/routing/bgp</code> 完全支持 BGP。</p>
+
+    <div class="cta-block">
+        <h3>准备好尝试了吗？</h3>
+        <p>NetRoute Pro — 免费的 Chrome 扩展，可从任何网站生成路由。</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">安装扩展</a>
+    </div>
+
+</article>
+
+</body>
+</html>
