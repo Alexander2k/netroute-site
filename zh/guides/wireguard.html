@@ -277,12 +277,35 @@ DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
         <li><strong>系统级禁用 IPv6</strong>，如果 VPN 不支持 v6。Linux：<code>sysctl net.ipv6.conf.all.disable_ipv6=1</code>。Windows：在活动适配器上禁用 IPv6。路由器：每个 WAN 上的 IPv6 开关。所有流量回退到 v4 并被隧道化。</li>
     </ul>
 
+    <h2 id="kill-switch">故障关闭（kill switch）</h2>
+    <p>当 WireGuard 隧道断开（网络切换、手动停止、路由失败）时，内核会移除绑定到 wg 接口的路由 &mdash; 流向先前隧道化 CIDR 的流量会经默认路由泄漏。使用 wg-quick 的 <code>PostUp</code>/<code>PostDown</code> 钩子，将 firewall 规则绑定到隧道生命周期：</p>
+    <pre><code>[Interface]
+PrivateKey = ...
+Address    = 10.0.0.2/24
+
+# 故障关闭：除非走 %i（本隧道），否则丢弃流向隧道化 CIDR 的流量
+PostUp = iptables -I OUTPUT ! -o %i -d 1.1.1.0/24 -j REJECT
+PostUp = iptables -I OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT
+PostDown = iptables -D OUTPUT ! -o %i -d 1.1.1.0/24 -j REJECT
+PostDown = iptables -D OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT</code></pre>
+    <p><code>%i</code> 会替换为实际接口名（如 <code>wg0</code>）。隧道启动后，流量经它通过；通过 <code>wg-quick down</code> 关闭时，规则被移除。如果隧道<em>异常崩溃</em>而未执行 <code>PostDown</code>，这些 CIDR 仍被阻断 &mdash; 这是安全的故障模式（阻断、不泄漏）。</p>
+
     <h2>验证</h2>
     <p>运行以下命令确认应用的 AllowedIPs：</p>
     <pre><code>sudo wg show</code></pre>
     <p>输出中的 <code>allowed ips</code> 行应与您粘贴的子网完全匹配。</p>
 
     <h2>常见问题</h2>
+
+    <h3>页面卡住或只加载一部分（PMTU 黑洞）</h3>
+    <p>症状：页面开始加载，前几 KB 到达后卡住；或某些站点正常、另一些却停滞。这是经典的 <strong>path MTU 黑洞</strong> &mdash; 大包在传输途中被分片，但 ICMP &ldquo;fragmentation needed&rdquo; 应答被上游防火墙丢弃，发送端盲目重传。</p>
+    <p>WireGuard 默认 MTU 为 1420（IPv6 上为 1280）。PPPoE 链路实际是 1492；4G/LTE 常为 1400；部分 CGNAT 仅 1280。在 <code>[Interface]</code> 下降低 MTU：</p>
+    <pre><code>[Interface]
+MTU = 1380     # 先试 1380；如果页面仍卡，降到 1280 / 1200</code></pre>
+    <p>对于通过隧道<em>转发</em>的路由器（WG 客户端 + LAN），还需要钳制 TCP MSS，让下游客户端不超过 PMTU：</p>
+    <pre><code>iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN \
+    -j TCPMSS --clamp-mss-to-pmtu</code></pre>
+
 
     <h3>所有网络丢失</h3>
     <p>您可能删除了 <code>0.0.0.0/0</code> 但 AllowedIPs 未覆盖所需子网。添加连接 VPN 所需的特定子网，或保留默认网关并仅添加目标前缀。</p>

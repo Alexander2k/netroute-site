@@ -311,6 +311,19 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
         </li>
     </ul>
 
+    <h2 id="kill-switch">Fail-closed (kill switch)</h2>
+    <p>Cuando el túnel VPN cae (cambio de red, problema del proveedor, sleep/wake), el kernel elimina las rutas asociadas a la interfaz muerta &mdash; y el tráfico a los CIDR antes tunelizados cae a la ruta por defecto del ISP. Resultado: fuga silenciosa sin error visible. Para forzar fail-closed (bloquear en vez de filtrar):</p>
+    <pre><code># nftables (Linux moderno)
+sudo nft add table inet vpnkill
+sudo nft add chain inet vpnkill output { type filter hook output priority 0 \; }
+sudo nft add rule inet vpnkill output ip daddr 1.1.1.0/24 oif != wg0 drop
+sudo nft add rule inet vpnkill output ip daddr 8.8.8.0/24 oif != wg0 drop
+# Repite para cada CIDR tunelizado.</code></pre>
+    <p>Equivalente con iptables:</p>
+    <pre><code>sudo iptables -I OUTPUT ! -o wg0 -d 1.1.1.0/24 -j REJECT
+sudo iptables -I OUTPUT ! -o wg0 -d 8.8.8.0/24 -j REJECT</code></pre>
+    <p>Ahora el tráfico a esos prefijos por cualquier interfaz que no sea <code>wg0</code> se bloquea &mdash; VPN caída = bloqueado, no filtrado. El usuario ve un error de conexión (señal clara de que la VPN no funciona) en vez de una salida silenciosa por el ISP. Este es el modo de fallo seguro.</p>
+
     <h2>Verificar</h2>
     <pre><code>ip route show | grep 10.8.0.1</code></pre>
     <p>Debes ver todas las subredes enrutadas por tu gateway VPN. Prueba con traceroute:</p>

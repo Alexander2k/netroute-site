@@ -310,6 +310,19 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
         </li>
     </ul>
 
+    <h2 id="kill-switch">Fail-closed (kill switch)</h2>
+    <p>Когда VPN-туннель падает (смена сети, проблема у провайдера, sleep/wake), ядро удаляет маршруты привязанные к мёртвому интерфейсу &mdash; и трафик к ранее-тунелированным CIDR'ам откатывается на дефолтный маршрут через ISP. Итог: тихий leak без видимой ошибки. Чтобы включить fail-closed (блокировать вместо leak):</p>
+    <pre><code># nftables (современный Linux)
+sudo nft add table inet vpnkill
+sudo nft add chain inet vpnkill output { type filter hook output priority 0 \; }
+sudo nft add rule inet vpnkill output ip daddr 1.1.1.0/24 oif != wg0 drop
+sudo nft add rule inet vpnkill output ip daddr 8.8.8.0/24 oif != wg0 drop
+# Повторить для каждого тунелированного CIDR.</code></pre>
+    <p>Эквивалент через iptables:</p>
+    <pre><code>sudo iptables -I OUTPUT ! -o wg0 -d 1.1.1.0/24 -j REJECT
+sudo iptables -I OUTPUT ! -o wg0 -d 8.8.8.0/24 -j REJECT</code></pre>
+    <p>Теперь трафик к этим префиксам через любой интерфейс кроме <code>wg0</code> блокируется &mdash; VPN упал = заблокировано, а не утекло. Пользователь видит ошибку соединения (явный сигнал что VPN не работает) вместо тихого выхода через ISP. Это безопасный failure mode.</p>
+
     <h2>Проверка</h2>
     <pre><code>ip route show | grep 10.8.0.1</code></pre>
     <p>Все нужные подсети должны быть привязаны к IP VPN-шлюза.</p>

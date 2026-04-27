@@ -305,6 +305,19 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
         </li>
     </ul>
 
+    <h2 id="kill-switch">故障关闭（kill switch）</h2>
+    <p>当 VPN 隧道断开（网络切换、服务商问题、睡眠/唤醒）时，内核会移除绑定到死接口的路由 &mdash; 流向先前隧道化 CIDR 的流量会回退到 ISP 的默认路由。结果：用户看不到任何错误的静默泄漏。强制故障关闭（阻断而非泄漏）：</p>
+    <pre><code># nftables（现代 Linux）
+sudo nft add table inet vpnkill
+sudo nft add chain inet vpnkill output { type filter hook output priority 0 \; }
+sudo nft add rule inet vpnkill output ip daddr 1.1.1.0/24 oif != wg0 drop
+sudo nft add rule inet vpnkill output ip daddr 8.8.8.0/24 oif != wg0 drop
+# 为每个隧道化 CIDR 重复。</code></pre>
+    <p>iptables 等价规则：</p>
+    <pre><code>sudo iptables -I OUTPUT ! -o wg0 -d 1.1.1.0/24 -j REJECT
+sudo iptables -I OUTPUT ! -o wg0 -d 8.8.8.0/24 -j REJECT</code></pre>
+    <p>现在流向这些前缀的流量经任何非 <code>wg0</code> 接口都会被丢弃 &mdash; VPN 断开 = 阻断，而非泄漏。用户看到连接错误（VPN 不工作的明确信号），而不是静默经 ISP 出去。这是更安全的故障模式。</p>
+
     <h2>验证</h2>
     <pre><code>ip route show | grep 10.8.0.1</code></pre>
     <p>您应该看到所有通过 VPN 网关路由的子网。</p>

@@ -272,6 +272,19 @@ DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
         <li><strong>Отключить IPv6 системно</strong> если VPN не поддерживает v6. На Linux: <code>sysctl net.ipv6.conf.all.disable_ipv6=1</code>. На Windows: отключить IPv6 на активном адаптере. На роутерах: per-WAN переключатель IPv6. Весь трафик откатится на v4 и будет тунелирован.</li>
     </ul>
 
+    <h2 id="kill-switch">Fail-closed (kill switch)</h2>
+    <p>Когда WireGuard-туннель падает (смена сети, ручной стоп, ошибка маршрутизации), ядро убирает маршруты привязанные к wg-интерфейсу &mdash; и трафик к ранее-тунелированным CIDR'ам уходит через дефолтный маршрут. Используйте <code>PostUp</code>/<code>PostDown</code> wg-quick для firewall-правил, привязанных к жизненному циклу туннеля:</p>
+    <pre><code>[Interface]
+PrivateKey = ...
+Address    = 10.0.0.2/24
+
+# Fail-closed: дропать трафик к тунелированным CIDR'ам если он не идёт через %i (этот туннель)
+PostUp = iptables -I OUTPUT ! -o %i -d 1.1.1.0/24 -j REJECT
+PostUp = iptables -I OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT
+PostDown = iptables -D OUTPUT ! -o %i -d 1.1.1.0/24 -j REJECT
+PostDown = iptables -D OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT</code></pre>
+    <p><code>%i</code> заменяется на реальное имя интерфейса (например <code>wg0</code>). Когда туннель поднят, трафик идёт через него; при <code>wg-quick down</code> правила удаляются. Если туннель <em>падает аварийно</em> без выполнения <code>PostDown</code> &mdash; CIDR'ы остаются заблокированы, что и есть безопасный failure mode (блок, не leak).</p>
+
     <h2>Проверка</h2>
     <p>Команда <code>sudo wg show</code> отобразит пира с применёнными <code>allowed ips</code>:</p>
     <pre><code>sudo wg show</code></pre>
@@ -281,6 +294,16 @@ traceroute example.com  # Linux/macOS</code></pre>
     <p>Первые хопы должны идти через WireGuard-эндпоинт.</p>
 
     <h2>Частые проблемы</h2>
+
+    <h3>Страницы зависают или грузятся частично (PMTU black hole)</h3>
+    <p>Симптом: страница начинает грузиться, приходят первые килобайты, потом замирает; или одни сайты работают, другие &mdash; нет. Классический <strong>path MTU black hole</strong> &mdash; большие пакеты дробятся по пути, ICMP &laquo;fragmentation needed&raquo; блокируется upstream firewall'ом, отправитель ретрансмитит вслепую.</p>
+    <p>Дефолтный MTU WireGuard &mdash; 1420 (или 1280 по IPv6). На PPPoE реальный канал 1492; на 4G/LTE часто 1400; на некоторых CGNAT &mdash; 1280. Понизьте MTU под <code>[Interface]</code>:</p>
+    <pre><code>[Interface]
+MTU = 1380     # попробуйте 1380, далее 1280 / 1200 если страницы всё ещё зависают</code></pre>
+    <p>На роутерах которые <em>форвардят</em> через туннель (WG-клиент на роутере с LAN-клиентами) дополнительно clamp'ните TCP MSS чтобы downstream клиенты не превышали PMTU:</p>
+    <pre><code>iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN \
+    -j TCPMSS --clamp-mss-to-pmtu</code></pre>
+
 
     <h3>Пропал весь интернет</h3>
     <p>Убрали <code>0.0.0.0/0</code>, но новый <code>AllowedIPs</code> не покрывает нужные подсети. Добавьте явно все подсети, которые должны идти через VPN, или верните <code>0.0.0.0/0</code>.</p>

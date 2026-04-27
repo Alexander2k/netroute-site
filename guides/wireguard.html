@@ -269,12 +269,34 @@ DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
         <li><strong>Disable IPv6 system-wide</strong> if your VPN doesn&rsquo;t support v6. On Linux: <code>sysctl net.ipv6.conf.all.disable_ipv6=1</code>. On Windows: disable IPv6 on the active adapter. On routers: per-WAN IPv6 toggle. All traffic falls back to v4 and gets tunneled.</li>
     </ul>
 
+    <h2 id="kill-switch">Fail-closed (kill switch)</h2>
+    <p>When the WireGuard tunnel goes down (network change, manual stop, routing failure), the kernel removes routes bound to the wg interface &mdash; and traffic to the previously-tunneled CIDRs leaks via the default route. Use wg-quick&rsquo;s <code>PostUp</code>/<code>PostDown</code> hooks to install fail-closed firewall rules tied to the tunnel lifecycle:</p>
+    <pre><code>[Interface]
+PrivateKey = ...
+Address    = 10.0.0.2/24
+
+# Fail-closed: drop traffic to tunneled CIDRs unless it goes via %i (this tunnel)
+PostUp = iptables -I OUTPUT ! -o %i -d 1.1.1.0/24 -j REJECT
+PostUp = iptables -I OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT
+PostDown = iptables -D OUTPUT ! -o %i -d 1.1.1.0/24 -j REJECT
+PostDown = iptables -D OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT</code></pre>
+    <p><code>%i</code> is replaced by the actual interface name (e.g. <code>wg0</code>). When the tunnel is up, traffic flows through it; when it goes down via <code>wg-quick down</code>, the rules are removed. If the tunnel <em>crashes</em> without running <code>PostDown</code>, those CIDRs stay blocked &mdash; which is the safe failure mode (block, don&rsquo;t leak).</p>
+
     <h2>Verify</h2>
     <p>Run <code>sudo wg show</code> &mdash; the peer should be listed with the new <code>allowed ips</code> values:</p>
     <pre><code>sudo wg show</code></pre>
     <p>You can also confirm routing with <code>ip route</code> (Linux/macOS) or <code>route print</code> (Windows) &mdash; the listed subnets should point through your WireGuard interface.</p>
 
     <h2>Common issues</h2>
+
+    <h3>Pages hang or only partially load (PMTU black hole)</h3>
+    <p>Symptom: a page starts loading, the first few KB arrive, then it freezes; or some sites work fine while others stall. This is a classic <strong>path MTU black hole</strong> &mdash; large packets get fragmented along the path, ICMP &ldquo;fragmentation needed&rdquo; replies are dropped by an upstream firewall, and the sender keeps retransmitting blindly.</p>
+    <p>WireGuard&rsquo;s default MTU is 1420 (or 1280 over IPv6). On PPPoE the underlying link is 1492; on 4G/LTE often 1400; some CGNAT paths are 1280. Lower the MTU under <code>[Interface]</code>:</p>
+    <pre><code>[Interface]
+MTU = 1380     # try 1380 first, drop to 1280 / 1200 if pages still hang</code></pre>
+    <p>On routers that <em>forward</em> through the tunnel (e.g. WG client on a router serving a LAN), also clamp TCP MSS so downstream clients don&rsquo;t blow past PMTU:</p>
+    <pre><code>iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN \
+    -j TCPMSS --clamp-mss-to-pmtu</code></pre>
 
     <h3>Losing all network access</h3>
     <p>If you removed <code>0.0.0.0/0</code> but your new <code>AllowedIPs</code> doesn't cover the default route you intended to use, only the listed subnets will go through the tunnel — that's the whole point of split tunneling. Make sure your list contains exactly the subnets you want and nothing else is unintentionally missing.</p>

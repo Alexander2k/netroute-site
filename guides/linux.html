@@ -311,6 +311,19 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
         </li>
     </ul>
 
+    <h2 id="kill-switch">Fail-closed (kill switch)</h2>
+    <p>When the VPN tunnel goes down (network change, provider hiccup, sleep/wake), the kernel removes any routes bound to the dead interface &mdash; and traffic to previously-tunneled CIDRs falls back to your ISP&rsquo;s default route. Result: silent leak with no error visible to the user. To enforce fail-closed (block instead of leak):</p>
+    <pre><code># nftables (modern Linux)
+sudo nft add table inet vpnkill
+sudo nft add chain inet vpnkill output { type filter hook output priority 0 \; }
+sudo nft add rule inet vpnkill output ip daddr 1.1.1.0/24 oif != wg0 drop
+sudo nft add rule inet vpnkill output ip daddr 8.8.8.0/24 oif != wg0 drop
+# Repeat for each tunneled CIDR.</code></pre>
+    <p>iptables equivalent:</p>
+    <pre><code>sudo iptables -I OUTPUT ! -o wg0 -d 1.1.1.0/24 -j REJECT
+sudo iptables -I OUTPUT ! -o wg0 -d 8.8.8.0/24 -j REJECT</code></pre>
+    <p>Now traffic to those prefixes via any interface other than <code>wg0</code> is dropped &mdash; VPN down = blocked, not leaked. The user sees a connection error (loud signal that VPN is down) instead of silently exiting via the ISP. This is the safer failure mode.</p>
+
     <h2>Verify</h2>
     <p>Check that the routes are in the kernel table:</p>
     <pre><code>ip route show | grep 10.8.0.1</code></pre>

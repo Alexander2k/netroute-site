@@ -269,6 +269,19 @@ DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
         <li><strong>Deshabilitar IPv6 a nivel de sistema</strong> si tu VPN no soporta v6. En Linux: <code>sysctl net.ipv6.conf.all.disable_ipv6=1</code>. En Windows: deshabilita IPv6 en el adaptador activo. En routers: toggle IPv6 por WAN. Todo el tráfico cae a v4 y se tuneliza.</li>
     </ul>
 
+    <h2 id="kill-switch">Fail-closed (kill switch)</h2>
+    <p>Cuando el túnel WireGuard cae (cambio de red, parada manual, fallo de ruteo), el kernel elimina las rutas asociadas a la interfaz wg &mdash; y el tráfico a los CIDR antes tunelizados se filtra por la ruta por defecto. Usa los hooks <code>PostUp</code>/<code>PostDown</code> de wg-quick para reglas de firewall vinculadas al ciclo del túnel:</p>
+    <pre><code>[Interface]
+PrivateKey = ...
+Address    = 10.0.0.2/24
+
+# Fail-closed: descarta tráfico a los CIDR tunelizados a menos que vaya por %i (este túnel)
+PostUp = iptables -I OUTPUT ! -o %i -d 1.1.1.0/24 -j REJECT
+PostUp = iptables -I OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT
+PostDown = iptables -D OUTPUT ! -o %i -d 1.1.1.0/24 -j REJECT
+PostDown = iptables -D OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT</code></pre>
+    <p><code>%i</code> se sustituye por el nombre real de la interfaz (p.ej. <code>wg0</code>). Con el túnel arriba, el tráfico va por él; al bajarlo con <code>wg-quick down</code>, las reglas se quitan. Si el túnel <em>se cae</em> sin ejecutar <code>PostDown</code>, los CIDR siguen bloqueados &mdash; modo de fallo seguro (bloquea, no filtra).</p>
+
     <h2>Verificar</h2>
     <p>Comprueba que los cambios se aplicaron:</p>
     <pre><code>sudo wg show</code></pre>
@@ -277,6 +290,16 @@ DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
 tracert example.com         # Windows</code></pre>
 
     <h2>Problemas comunes</h2>
+
+    <h3>Las páginas se cuelgan o cargan a medias (agujero negro de PMTU)</h3>
+    <p>Síntoma: una página empieza a cargar, llegan los primeros KB, luego se congela; o algunos sitios funcionan y otros se quedan. Es un clásico <strong>path MTU black hole</strong> &mdash; los paquetes grandes se fragmentan en el camino, las respuestas ICMP &ldquo;fragmentation needed&rdquo; las descarta un firewall upstream, y el emisor retransmite a ciegas.</p>
+    <p>El MTU por defecto de WireGuard es 1420 (o 1280 por IPv6). En PPPoE el enlace real es 1492; en 4G/LTE suele ser 1400; en algunos CGNAT 1280. Baja el MTU en <code>[Interface]</code>:</p>
+    <pre><code>[Interface]
+MTU = 1380     # prueba 1380; baja a 1280 / 1200 si las páginas siguen colgándose</code></pre>
+    <p>En routers que <em>reenvían</em> a través del túnel (cliente WG en un router con LAN), además fija el MSS de TCP para que los clientes downstream no superen el PMTU:</p>
+    <pre><code>iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN \
+    -j TCPMSS --clamp-mss-to-pmtu</code></pre>
+
 
     <h3>Se perdió toda la conexión a internet</h3>
     <p>Eliminaste <code>0.0.0.0/0</code> del <code>AllowedIPs</code> pero los prefijos listados no cubren las subredes que quieres usar. Añade las subredes específicas o regenera con más dominios en NetRoute Pro.</p>
