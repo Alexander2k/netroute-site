@@ -432,6 +432,79 @@ def check_guide_examples(path: str, content: str, fails: Failures):
         fails.add(path, 'guide page has examples anchor but no github.com link')
 
 
+def check_keenetic_guide_correct_cli(path: str, content: str, fails: Failures):
+    """Keenetic guide must not present PowerShell `New-NetRoute -destinationprefix`
+    syntax as Keenetic CLI — that's a Windows PowerShell cmdlet, not RouterOS-style
+    Keenetic CLI. Real Keenetic CLI for routes is `ip route <CIDR> <interface>`.
+    """
+    rel = os.path.relpath(path, ROOT).replace(os.sep, '/')
+    if not rel.endswith('guides/keenetic.html'):
+        return
+    if 'new-netroute -destinationprefix' in content:
+        fails.add(path, 'Keenetic guide presents PowerShell New-NetRoute as Keenetic CLI (it is a Windows PowerShell cmdlet)')
+
+
+def check_openvpn_guide_correct_route_nopull(path: str, content: str, fails: Failures):
+    """OpenVPN guide must not advise removing route-nopull as a fix for
+    "route directives ignored" — route-nopull only filters server-pushed routes,
+    it does NOT block locally-defined `route` directives. Removing it breaks
+    split tunneling.
+    """
+    rel = os.path.relpath(path, ROOT).replace(os.sep, '/')
+    if not rel.endswith('guides/openvpn.html'):
+        return
+    # Anti-pattern: doc claims route-nopull causes local route directives to be ignored
+    bad_phrases = [
+        'route-nopull</code> or a <code>--pull-filter</code> that drops them',
+        'contiene <code>route-nopull</code>',  # Spanish equivalent if added
+    ]
+    for phrase in bad_phrases:
+        if phrase in content:
+            fails.add(path, f'OpenVPN guide wrongly blames route-nopull for ignored local route directives')
+            break
+
+
+def check_wireguard_guide_dns_leak(path: str, content: str, fails: Failures):
+    """WireGuard guide must explicitly cover DNS leak risk in split tunneling
+    setups — DNS queries can bypass VPN if not configured.
+    """
+    rel = os.path.relpath(path, ROOT).replace(os.sep, '/')
+    if not rel.endswith('guides/wireguard.html'):
+        return
+    # Look for any DNS leak related discussion or DNS configuration recommendation
+    if 'DNS' not in content:
+        fails.add(path, 'WireGuard guide does not mention DNS configuration / leak risk')
+
+
+def check_mikrotik_routeros_version(path: str, content: str, fails: Failures):
+    """MikroTik guide must clarify RouterOS version differences — `/ip route rule`
+    is v6, replaced by `/routing rule` in v7. Native WireGuard requires v7+.
+    """
+    rel = os.path.relpath(path, ROOT).replace(os.sep, '/')
+    if not rel.endswith('guides/mikrotik.html'):
+        return
+    if 'RouterOS 7' not in content:
+        fails.add(path, 'MikroTik guide should clarify RouterOS 7 specifics (WireGuard, /routing rule)')
+
+
+def check_linux_guide_persistence(path: str, content: str, fails: Failures):
+    """The Linux guide must not recommend `@reboot cron` for VPN routes
+    (race condition with VPN bring-up — routes fail silently when cron fires
+    before tunnel is established). Use systemd oneshot service instead.
+    """
+    rel = os.path.relpath(path, ROOT).replace(os.sep, '/')
+    if not rel.endswith('guides/linux.html'):
+        return
+    # Check for the actual recommendation pattern, not just any mention of @reboot
+    # (the systemd section's "Why not @reboot cron?" callout legitimately mentions it).
+    if re.search(r'@reboot\s+/usr/local/bin/routes\.sh', content):
+        fails.add(path, 'Linux guide actively recommends @reboot cron — race with VPN bring-up')
+    if re.search(r'crontab\s+-e', content):
+        fails.add(path, 'Linux guide tells user to edit crontab for VPN routes — use systemd oneshot service instead')
+    if 'vpn-routes.service' not in content:
+        fails.add(path, 'Linux guide must recommend a systemd oneshot service (vpn-routes.service) for persistence')
+
+
 def check_csp_meta(path: str, content: str, fails: Failures):
     """Each HTML file must declare a Content-Security-Policy via <meta http-equiv>.
     Required directives: default-src, frame-ancestors (clickjacking defense),
@@ -570,6 +643,11 @@ def main():
         check_guide_article_schema(path, content, fails)
         check_no_render_blocking_css(path, content, fails)
         check_csp_meta(path, content, fails)
+        check_linux_guide_persistence(path, content, fails)
+        check_keenetic_guide_correct_cli(path, content, fails)
+        check_openvpn_guide_correct_route_nopull(path, content, fails)
+        check_wireguard_guide_dns_leak(path, content, fails)
+        check_mikrotik_routeros_version(path, content, fails)
     check_sitemap(fails)
     check_404_navigation(fails)
 

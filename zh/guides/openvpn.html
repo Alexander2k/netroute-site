@@ -253,7 +253,13 @@ push "route 172.67.0.0 255.255.0.0"</code></pre>
     <h2>常见问题</h2>
 
     <h3><code>--route</code> 指令被忽略</h3>
-    <p>检查配置中是否存在 <code>route-nopull</code> 或 <code>--pull-filter</code> — 它们会阻止应用路由。删除它们或仔细调整过滤器。</p>
+    <p>常见原因：</p>
+    <ul>
+        <li>服务端推送 <code>redirect-gateway def1</code> &mdash; 这会覆盖你本地的 <code>route</code> 行（所有流量都走 VPN）。在客户端配置中加入 <strong><code>pull-filter ignore "redirect-gateway"</code></strong>，仅丢弃此推送而保留其他服务端推送。</li>
+        <li>你的 <code>route</code> 指令放在了 <code>&lt;cert&gt;</code>、<code>&lt;key&gt;</code> 等内联块内 &mdash; 移到外面。</li>
+        <li>语法错误 &mdash; 该指令使用 <code>NETWORK NETMASK</code> 点分十进制，不是 CIDR。应使用 <code>route 1.1.1.0 255.255.255.0</code>，不是 <code>route 1.1.1.0/24</code>。</li>
+    </ul>
+    <p><strong>注意：</strong> <code>route-nopull</code> <em>不会</em>导致本地 <code>route</code> 指令被忽略 &mdash; 它只会丢弃<em>服务端推送的路由</em>。客户端配置中的本地 <code>route</code> 行仍会生效，这正是 split tunneling 所需要的。</p>
 
     <h3>DNS 泄漏（Windows）</h3>
     <p>添加以下指令以防止 DNS 查询绕过 VPN：</p>

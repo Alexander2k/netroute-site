@@ -256,7 +256,13 @@ ip route                 # Linux / macOS</code></pre>
     <h2>Частые проблемы</h2>
 
     <h3>Директивы <code>--route</code> игнорируются</h3>
-    <p>В конфиге присутствует <code>route-nopull</code> или <code>--pull-filter</code>, которые блокируют применение. Уберите или скорректируйте соответствующие строки.</p>
+    <p>Возможные причины:</p>
+    <ul>
+        <li>Сервер пушит <code>redirect-gateway def1</code> &mdash; это перекрывает ваши локальные <code>route</code> (весь трафик идёт через VPN). Добавьте в клиентский конфиг <strong><code>pull-filter ignore "redirect-gateway"</code></strong>, чтобы отфильтровать именно эту директиву без потери других server push'ей.</li>
+        <li><code>route</code>-директивы находятся внутри inline-блока <code>&lt;cert&gt;</code>, <code>&lt;key&gt;</code> и т.п. &mdash; вынесите их наружу.</li>
+        <li>Неверный синтаксис &mdash; директива принимает <code>NETWORK NETMASK</code> точечной нотацией, не CIDR. Используйте <code>route 1.1.1.0 255.255.255.0</code>, не <code>route 1.1.1.0/24</code>.</li>
+    </ul>
+    <p><strong>Важно:</strong> <code>route-nopull</code> <em>не</em> приводит к игнорированию локальных <code>route</code>-директив &mdash; он лишь отбрасывает маршруты, <em>пушнутые сервером</em>. Локальные <code>route</code> в клиентском конфиге продолжают работать, что и нужно для split tunneling.</p>
 
     <h3>DNS leak на Windows</h3>
     <p>При split tunnel Windows может посылать DNS-запросы в обход VPN. Добавьте в клиент-конфиг:</p>

@@ -173,11 +173,13 @@
 
     <section id="syntax" class="syntax-block">
         <h2>Sintaxis del comando</h2>
-        <p><strong>Sintaxis:</strong></p>
-        <pre><code>new-netroute -destinationprefix &lt;CIDR&gt; -nexthop &lt;GATEWAY&gt; -interface &lt;VPN_IF&gt;</code></pre>
+        <p><strong>CLI de Keenetic (modo config):</strong></p>
+        <pre><code>(config)&gt; ip route &lt;CIDR&gt; &lt;VPN_IF&gt;</code></pre>
         <p><strong>Ejemplo:</strong></p>
-        <pre><code>new-netroute -destinationprefix 1.1.1.0/24 -nexthop 0.0.0.0 -interface Wireguard0</code></pre>
-        <p>Línea equivalente del .bat generado por NetRoute Pro: <code>route ADD 1.1.1.0 MASK 255.255.255.0 0.0.0.0</code>. La carga del <code>.bat</code> vincula las rutas al interfaz VPN seleccionada automáticamente.</p>
+        <pre><code>(config)&gt; ip route 1.1.1.0/24 Wireguard0</code></pre>
+        <p><strong>Línea <code>.bat</code> equivalente</strong> (formato Windows <code>route ADD</code> &mdash; lo que genera NetRoute Pro y acepta Keenetic al cargar desde la web UI):</p>
+        <pre><code>route ADD 1.1.1.0 MASK 255.255.255.0 0.0.0.0</code></pre>
+        <p>La carga del <code>.bat</code> vincula las rutas al interfaz VPN seleccionada automáticamente &mdash; el valor de gateway en cada línea se ignora. Para uso puntual desde CLI, la forma <code>(config)&gt; ip route</code> es la exacta.</p>
     </section>
 
 

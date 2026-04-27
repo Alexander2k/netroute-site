@@ -174,11 +174,13 @@
 
     <section id="syntax" class="syntax-block">
         <h2>命令语法</h2>
-        <p><strong>语法：</strong></p>
-        <pre><code>new-netroute -destinationprefix &lt;CIDR&gt; -nexthop &lt;GATEWAY&gt; -interface &lt;VPN_IF&gt;</code></pre>
+        <p><strong>Keenetic CLI（config 模式）：</strong></p>
+        <pre><code>(config)&gt; ip route &lt;CIDR&gt; &lt;VPN_IF&gt;</code></pre>
         <p><strong>示例：</strong></p>
-        <pre><code>new-netroute -destinationprefix 1.1.1.0/24 -nexthop 0.0.0.0 -interface Wireguard0</code></pre>
-        <p>NetRoute Pro 生成的 .bat 文件中的等效行：<code>route ADD 1.1.1.0 MASK 255.255.255.0 0.0.0.0</code>。上传 <code>.bat</code> 时路由会自动绑定到所选的 VPN 接口。</p>
+        <pre><code>(config)&gt; ip route 1.1.1.0/24 Wireguard0</code></pre>
+        <p><strong>等效的 <code>.bat</code> 行</strong>（Windows <code>route ADD</code> 格式 &mdash; NetRoute Pro 生成的格式，Keenetic 通过 Web 界面接受上传）：</p>
+        <pre><code>route ADD 1.1.1.0 MASK 255.255.255.0 0.0.0.0</code></pre>
+        <p>上传 <code>.bat</code> 时路由会自动绑定到所选的 VPN 接口 &mdash; 每行的 gateway 值被忽略。如果仅在 CLI 中临时使用，<code>(config)&gt; ip route</code> 形式是准确的。</p>
     </section>
 
 

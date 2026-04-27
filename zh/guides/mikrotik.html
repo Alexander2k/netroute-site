@@ -180,6 +180,15 @@
         <pre><code>/ip route add dst-address=1.1.1.0/24 gateway=wg-out distance=1</code></pre>
         <p>NetRoute Pro 将这些命令生成为 <code>.rsc</code> 文件，通过终端中的 <code>/import file=routes.rsc</code> 导入。</p>
     </section>
+    <div class="callout">
+        <strong>RouterOS 版本说明：</strong>
+        <ul>
+            <li><strong>RouterOS 7+</strong>：原生支持 WireGuard；策略路由使用 <code>/routing rule</code>（v6 的 <code>/ip route rule</code> 仍可解析但已废弃）。</li>
+            <li><strong>RouterOS 6.x</strong>：无原生 WireGuard &mdash; 改用 OpenVPN/IPsec 或第三方容器。策略路由使用 <code>/ip route rule</code>。</li>
+        </ul>
+        以下示例假设使用相对较新的 RouterOS &mdash; 不同版本可能需要调整命令。
+    </div>
+
 
 
     <h2>准备工作</h2>

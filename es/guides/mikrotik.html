@@ -179,6 +179,15 @@
         <pre><code>/ip route add dst-address=1.1.1.0/24 gateway=wg-out distance=1</code></pre>
         <p>NetRoute Pro genera estos comandos como archivo <code>.rsc</code> importado mediante <code>/import file=routes.rsc</code> en el terminal.</p>
     </section>
+    <div class="callout">
+        <strong>Notas sobre versiones de RouterOS:</strong>
+        <ul>
+            <li><strong>RouterOS 7+</strong>: WireGuard nativo disponible; el ruteo por políticas usa <code>/routing rule</code> (el <code>/ip route rule</code> de v6 sigue parseándose pero está deprecado).</li>
+            <li><strong>RouterOS 6.x</strong>: sin WireGuard nativo &mdash; usa OpenVPN/IPsec o un contenedor de terceros. Ruteo por políticas con <code>/ip route rule</code>.</li>
+        </ul>
+        Los ejemplos siguientes asumen una RouterOS razonablemente reciente &mdash; ajusta los comandos a tu versión si es necesario.
+    </div>
+
 
 
     <h2>Requisitos previos</h2>

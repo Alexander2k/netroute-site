@@ -240,15 +240,44 @@ if [ "$1" = "wg0" ] &amp;&amp; [ "$2" = "up" ]; then
 fi</code></pre>
     <p>Ajusta <code>wg0</code> al nombre real de tu interfaz VPN.</p>
 
-    <h3>@reboot cron</h3>
-    <p>Opción más simple y universal — funciona en cualquier distro:</p>
+    <h3>servicio systemd oneshot (recomendado)</h3>
+    <p>Funciona en cualquier distro con systemd (Ubuntu, Debian, Fedora, Arch, RHEL, openSUSE — prácticamente todas las distros modernas). Espera correctamente a que el túnel VPN esté arriba antes de aplicar rutas — sin race conditions ni hacks con <code>sleep</code>.</p>
     <pre><code>sudo mv routes.sh /usr/local/bin/routes.sh
 sudo chmod +x /usr/local/bin/routes.sh
-sudo crontab -e</code></pre>
-    <p>Añade la línea:</p>
-    <pre><code>@reboot /usr/local/bin/routes.sh</code></pre>
 
-    <h2>Verificar</h2>
+sudo tee /etc/systemd/system/vpn-routes.service &gt; /dev/null &lt;&lt;'EOF'
+[Unit]
+Description=Apply VPN split-tunnel routes
+After=network-online.target wg-quick@wg0.service
+Wants=network-online.target
+Requisite=wg-quick@wg0.service
+BindsTo=wg-quick@wg0.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/routes.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now vpn-routes.service</code></pre>
+    <p>Reemplaza <code>wg-quick@wg0.service</code> con tu unidad VPN:</p>
+    <ul>
+        <li><strong>OpenVPN</strong>: <code>openvpn-client@&lt;name&gt;.service</code></li>
+        <li><strong>strongSwan / IPsec</strong>: <code>strongswan.service</code></li>
+        <li><strong>Sin dependencia VPN específica</strong>: elimina las líneas <code>Requisite=</code> y <code>BindsTo=</code>, deja sólo <code>After=network-online.target</code></li>
+    </ul>
+    <p>Verifica el servicio:</p>
+    <pre><code>systemctl status vpn-routes.service
+journalctl -u vpn-routes.service</code></pre>
+    <div class="callout">
+        <strong>¿Por qué no <code>@reboot</code> cron?</strong> El demonio cron normalmente arranca antes de que el túnel VPN esté arriba &mdash; <code>ip route add</code> se ejecuta contra una interfaz que aún no existe, falla silenciosamente, y descubres las rutas rotas sólo tras un reinicio. <code>After=</code> y <code>Requisite=</code> de systemd esperan a la unidad VPN y eliminan el race. <code>BindsTo=</code> también detiene las rutas cuando la VPN cae.
+    </div>
+
+        <h2>Verificar</h2>
     <pre><code>ip route show | grep 10.8.0.1</code></pre>
     <p>Debes ver todas las subredes enrutadas por tu gateway VPN. Prueba con traceroute:</p>
     <pre><code>traceroute example.com</code></pre>

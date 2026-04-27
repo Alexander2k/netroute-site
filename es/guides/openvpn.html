@@ -248,7 +248,13 @@ netstat -rn              # macOS</code></pre>
     <h2>Problemas comunes</h2>
 
     <h3>La directiva --route es ignorada</h3>
-    <p>El config contiene <code>route-nopull</code> o un <code>--pull-filter</code> que bloquea las rutas. Elimina esas directivas o ajústalas.</p>
+    <p>Causas comunes:</p>
+    <ul>
+        <li>El servidor envía <code>redirect-gateway def1</code> &mdash; sobrescribe tus líneas <code>route</code> locales (todo el tráfico pasa por la VPN). Añade <strong><code>pull-filter ignore "redirect-gateway"</code></strong> a tu config de cliente para descartar solo ese push sin perder otros.</li>
+        <li>Tus directivas <code>route</code> están dentro de un bloque inline <code>&lt;cert&gt;</code>, <code>&lt;key&gt;</code> o similar &mdash; sácalas fuera.</li>
+        <li>Sintaxis incorrecta &mdash; la directiva usa <code>RED MÁSCARA</code> en octetos, no CIDR. Usa <code>route 1.1.1.0 255.255.255.0</code>, no <code>route 1.1.1.0/24</code>.</li>
+    </ul>
+    <p><strong>Nota:</strong> <code>route-nopull</code> <em>no</em> hace que las directivas <code>route</code> locales sean ignoradas &mdash; solo descarta rutas <em>enviadas por el servidor</em>. Las líneas <code>route</code> locales del config cliente siguen aplicándose, que es justo lo que necesitas para split tunneling.</p>
 
     <h3>DNS leak en Windows</h3>
     <p>Añade al <code>.ovpn</code>:</p>

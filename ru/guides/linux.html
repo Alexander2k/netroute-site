@@ -239,22 +239,44 @@ fi</code></pre>
     <pre><code>sudo chmod +x /etc/NetworkManager/dispatcher.d/99-vpn-routes</code></pre>
     <p>При подъёме VPN NetworkManager вызовет скрипт автоматически.</p>
 
-    <h3>@reboot cron</h3>
-    <p>Самый простой и универсальный способ — подходит любому дистрибутиву:</p>
-    <ol>
-        <li>Скопируйте скрипт в общесистемный путь:
-            <pre><code>sudo cp routes.sh /usr/local/bin/routes.sh
-sudo chmod +x /usr/local/bin/routes.sh</code></pre>
-        </li>
-        <li>Откройте crontab от root:
-            <pre><code>sudo crontab -e</code></pre>
-        </li>
-        <li>Добавьте строку:
-            <pre><code>@reboot /usr/local/bin/routes.sh</code></pre>
-        </li>
-    </ol>
+    <h3>systemd oneshot service (рекомендуемый)</h3>
+    <p>Работает на любом дистрибутиве с systemd (Ubuntu, Debian, Fedora, Arch, RHEL, openSUSE — это практически все современные дистры). Корректно дожидается поднятия VPN-туннеля прежде чем добавлять маршруты — без race conditions и <code>sleep</code>-хаков.</p>
+    <pre><code>sudo mv routes.sh /usr/local/bin/routes.sh
+sudo chmod +x /usr/local/bin/routes.sh
 
-    <h2>Проверка</h2>
+sudo tee /etc/systemd/system/vpn-routes.service &gt; /dev/null &lt;&lt;'EOF'
+[Unit]
+Description=Apply VPN split-tunnel routes
+After=network-online.target wg-quick@wg0.service
+Wants=network-online.target
+Requisite=wg-quick@wg0.service
+BindsTo=wg-quick@wg0.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/routes.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now vpn-routes.service</code></pre>
+    <p>Замените <code>wg-quick@wg0.service</code> на свой VPN-юнит:</p>
+    <ul>
+        <li><strong>OpenVPN</strong>: <code>openvpn-client@&lt;name&gt;.service</code></li>
+        <li><strong>strongSwan / IPsec</strong>: <code>strongswan.service</code></li>
+        <li><strong>Без привязки к VPN</strong>: уберите строки <code>Requisite=</code> и <code>BindsTo=</code>, оставьте только <code>After=network-online.target</code></li>
+    </ul>
+    <p>Проверка:</p>
+    <pre><code>systemctl status vpn-routes.service
+journalctl -u vpn-routes.service</code></pre>
+    <div class="callout">
+        <strong>Почему не <code>@reboot</code> cron?</strong> Cron-демон обычно стартует до поднятия VPN-туннеля &mdash; <code>ip route add</code> запускается против ещё не существующего интерфейса, тихо падает, и вы обнаруживаете сломанные маршруты только при следующей перезагрузке. <code>After=</code> и <code>Requisite=</code> в systemd ждут VPN-юнит и убирают race. <code>BindsTo=</code> также останавливает маршруты когда VPN падает.
+    </div>
+
+        <h2>Проверка</h2>
     <pre><code>ip route show | grep 10.8.0.1</code></pre>
     <p>Все нужные подсети должны быть привязаны к IP VPN-шлюза.</p>
 

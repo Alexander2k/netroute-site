@@ -240,18 +240,44 @@ fi</code></pre>
     <p>Make it executable:</p>
     <pre><code>sudo chmod +x /etc/NetworkManager/dispatcher.d/99-vpn-routes</code></pre>
 
-    <h3>@reboot cron (simplest, universal)</h3>
-    <p>Works on any distro regardless of network stack. Move the generated script to a stable location and schedule it at boot:</p>
+    <h3>systemd oneshot service (recommended)</h3>
+    <p>Works on any distro with systemd (Ubuntu, Debian, Fedora, Arch, RHEL, openSUSE — virtually all modern distros). Properly waits for the VPN tunnel to be up before applying routes — no race conditions, no <code>sleep</code> hacks.</p>
     <pre><code>sudo mv routes.sh /usr/local/bin/routes.sh
 sudo chmod +x /usr/local/bin/routes.sh
-sudo crontab -e</code></pre>
-    <p>Add the line:</p>
-    <pre><code>@reboot /usr/local/bin/routes.sh</code></pre>
+
+sudo tee /etc/systemd/system/vpn-routes.service &gt; /dev/null &lt;&lt;'EOF'
+[Unit]
+Description=Apply VPN split-tunnel routes
+After=network-online.target wg-quick@wg0.service
+Wants=network-online.target
+Requisite=wg-quick@wg0.service
+BindsTo=wg-quick@wg0.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/routes.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now vpn-routes.service</code></pre>
+    <p>Replace <code>wg-quick@wg0.service</code> with your actual VPN unit:</p>
+    <ul>
+        <li><strong>OpenVPN</strong>: <code>openvpn-client@&lt;name&gt;.service</code></li>
+        <li><strong>strongSwan / IPsec</strong>: <code>strongswan.service</code></li>
+        <li><strong>Generic (no VPN-specific dependency)</strong>: drop the <code>Requisite=</code> and <code>BindsTo=</code> lines, keep only <code>After=network-online.target</code></li>
+    </ul>
+    <p>Verify the service:</p>
+    <pre><code>systemctl status vpn-routes.service
+journalctl -u vpn-routes.service</code></pre>
     <div class="callout">
-        <strong>Note:</strong> <code>@reboot</code> runs before your VPN may be fully up. If you hit <code>Network is unreachable</code>, add a short <code>sleep</code> at the top of the script or trigger it from your VPN's post-up hook instead.
+        <strong>Why not <code>@reboot</code> cron?</strong> The cron daemon usually starts before the VPN tunnel is up &mdash; <code>ip route add</code> runs against an interface that doesn&rsquo;t exist yet, fails silently, and you discover broken routes only after a reboot. systemd&rsquo;s <code>After=</code> + <code>Requisite=</code> waits for the VPN unit and eliminates the race. <code>BindsTo=</code> also stops the routes when the VPN goes down.
     </div>
 
-    <h2>Verify</h2>
+        <h2>Verify</h2>
     <p>Check that the routes are in the kernel table:</p>
     <pre><code>ip route show | grep 10.8.0.1</code></pre>
     <p>All added subnets should appear, bound to your VPN gateway.</p>

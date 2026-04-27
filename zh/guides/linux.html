@@ -234,16 +234,44 @@ if [ "$1" = "wg0" ] &amp;&amp; [ "$2" = "up" ]; then
 fi</code></pre>
     <pre><code>sudo chmod +x /etc/NetworkManager/dispatcher.d/99-vpn-routes</code></pre>
 
-    <h3>@reboot cron（最简单、通用）</h3>
-    <p>先将 .sh 移至系统路径：</p>
+    <h3>systemd oneshot 服务（推荐）</h3>
+    <p>适用于任何 systemd 发行版（Ubuntu、Debian、Fedora、Arch、RHEL、openSUSE — 几乎所有现代发行版）。在添加路由前正确等待 VPN 隧道建立 — 没有竞态条件，无需 <code>sleep</code> 黑科技。</p>
     <pre><code>sudo mv routes.sh /usr/local/bin/routes.sh
-sudo chmod +x /usr/local/bin/routes.sh</code></pre>
-    <p>然后编辑 root crontab：</p>
-    <pre><code>sudo crontab -e</code></pre>
-    <p>添加行：</p>
-    <pre><code>@reboot /usr/local/bin/routes.sh</code></pre>
+sudo chmod +x /usr/local/bin/routes.sh
 
-    <h2>验证</h2>
+sudo tee /etc/systemd/system/vpn-routes.service &gt; /dev/null &lt;&lt;'EOF'
+[Unit]
+Description=Apply VPN split-tunnel routes
+After=network-online.target wg-quick@wg0.service
+Wants=network-online.target
+Requisite=wg-quick@wg0.service
+BindsTo=wg-quick@wg0.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/routes.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now vpn-routes.service</code></pre>
+    <p>将 <code>wg-quick@wg0.service</code> 替换为你实际的 VPN 单元：</p>
+    <ul>
+        <li><strong>OpenVPN</strong>：<code>openvpn-client@&lt;name&gt;.service</code></li>
+        <li><strong>strongSwan / IPsec</strong>：<code>strongswan.service</code></li>
+        <li><strong>不绑定 VPN 单元</strong>：移除 <code>Requisite=</code> 和 <code>BindsTo=</code> 行，只保留 <code>After=network-online.target</code></li>
+    </ul>
+    <p>检查服务：</p>
+    <pre><code>systemctl status vpn-routes.service
+journalctl -u vpn-routes.service</code></pre>
+    <div class="callout">
+        <strong>为什么不用 <code>@reboot</code> cron？</strong> cron 守护进程通常在 VPN 隧道建立前启动 &mdash; <code>ip route add</code> 对尚不存在的接口运行，悄悄失败，你只在下次重启时才发现路由失效。systemd 的 <code>After=</code> 和 <code>Requisite=</code> 会等待 VPN 单元，消除竞态。<code>BindsTo=</code> 也在 VPN 关闭时停止路由。
+    </div>
+
+        <h2>验证</h2>
     <pre><code>ip route show | grep 10.8.0.1</code></pre>
     <p>您应该看到所有通过 VPN 网关路由的子网。</p>
 

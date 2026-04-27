@@ -252,7 +252,13 @@ push "route 172.67.182.0 255.255.255.0"</code></pre>
     <h2>Common issues</h2>
 
     <h3>route directives ignored</h3>
-    <p>Your config (or the server push) contains <code>route-nopull</code> or a <code>--pull-filter</code> that drops them. Remove or adjust those directives.</p>
+    <p>Common causes:</p>
+    <ul>
+        <li>The server pushes <code>redirect-gateway def1</code> &mdash; this overrides your local <code>route</code> lines (everything goes through the VPN). Add <strong><code>pull-filter ignore "redirect-gateway"</code></strong> to your client config to drop just that push without losing other server pushes.</li>
+        <li>Your <code>route</code> directives are placed inside an inline <code>&lt;cert&gt;</code>, <code>&lt;key&gt;</code>, or similar block &mdash; move them outside.</li>
+        <li>Wrong syntax &mdash; the directive takes <code>NETWORK NETMASK</code> in dotted octets, not CIDR. Use <code>route 1.1.1.0 255.255.255.0</code>, not <code>route 1.1.1.0/24</code>.</li>
+    </ul>
+    <p><strong>Note:</strong> <code>route-nopull</code> does <em>not</em> cause local <code>route</code> directives to be ignored &mdash; it only drops routes <em>pushed by the server</em>. Local <code>route</code> lines in the client config still apply, which is exactly what you want for split tunneling.</p>
 
     <h3>DNS leaks on Windows</h3>
     <p>Windows can still query DNS outside the tunnel. Add this to the client config:</p>
