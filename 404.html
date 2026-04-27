@@ -46,6 +46,46 @@
             margin-bottom: 32px;
             max-width: 480px;
         }
+        .not-found-nav {
+            margin-top: 64px;
+            max-width: 640px;
+            text-align: left;
+        }
+        .not-found-nav h2 {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+        }
+        .nf-grid {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 24px;
+        }
+        .nf-grid li {
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+        .nf-grid a {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        .nf-langs {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-dim);
+            text-align: center;
+        }
+        .nf-langs a { color: var(--accent); margin: 0 4px; }
+        @media (max-width: 600px) {
+            .nf-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -66,6 +106,26 @@
     <h1>Page not found</h1>
     <p>The route you requested doesn't exist. Let's get you back to a known destination.</p>
     <a href="/" class="btn btn-primary">Back to Home</a>
+
+    <div class="not-found-nav">
+        <h2>Or explore the site</h2>
+        <ul class="nf-grid">
+            <li><a href="/">Home</a> &mdash; what NetRoute Pro does</li>
+            <li><a href="/guides/">Guides hub</a> &mdash; all 5 platform walkthroughs</li>
+            <li><a href="/guides/keenetic.html">Keenetic</a> &mdash; routes from <code>.bat</code> upload</li>
+            <li><a href="/guides/mikrotik.html">MikroTik</a> &mdash; <code>.rsc</code> import</li>
+            <li><a href="/guides/wireguard.html">WireGuard</a> &mdash; <code>AllowedIPs</code> split tunnel</li>
+            <li><a href="/guides/linux.html">Linux</a> &mdash; <code>ip route</code> shell script</li>
+            <li><a href="/guides/openvpn.html">OpenVPN</a> &mdash; client config <code>route</code> directives</li>
+            <li><a href="/privacy.html">Privacy policy</a></li>
+        </ul>
+        <p class="nf-langs">
+            <a href="/">EN</a> &middot;
+            <a href="/ru/">RU</a> &middot;
+            <a href="/es/">ES</a> &middot;
+            <a href="/zh/">ZH</a>
+        </p>
+    </div>
 </div>
 
 </body>

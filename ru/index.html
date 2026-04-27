@@ -85,6 +85,29 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "NetRoute Pro",
+        "alternateName": [
+            "NetRoute",
+            "Net Route Pro",
+            "netroute"
+        ],
+        "url": "https://alexander2k.github.io/netroute-site/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://alexander2k.github.io/netroute-site/icon.png",
+            "width": 128,
+            "height": 128
+        },
+        "sameAs": [
+            "https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla",
+            "https://github.com/Alexander2k/netroute-site"
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
         "@type": "FAQPage",
         "inLanguage": "ru",
         "mainEntity": [
@@ -418,6 +441,37 @@
     <div class="stat">
         <span class="stat-value">3</span>
         <span class="stat-label">DNS провайдера</span>
+    </div>
+</section>
+
+<!-- POPULAR GUIDES -->
+<section class="features" id="popular-guides">
+    <div class="section-header">
+        <span class="section-tag">// инструкции</span>
+        <h2>Популярные инструкции</h2>
+        <p>Пошаговые руководства для каждой поддерживаемой платформы &mdash; синтаксис команд, ссылки на официальную документацию и готовые примеры конфигов.</p>
+    </div>
+    <div class="features-grid">
+        <a class="feature-card" href="guides/keenetic.html" style="text-decoration:none;display:block;">
+            <h3>Keenetic &mdash; загрузка .bat</h3>
+            <p>Сгенерируйте <code>.bat</code> в NetRoute Pro и загрузите на Keenetic с привязкой к VPN-интерфейсу.</p>
+        </a>
+        <a class="feature-card" href="guides/mikrotik.html" style="text-decoration:none;display:block;">
+            <h3>MikroTik &mdash; импорт .rsc</h3>
+            <p>RouterOS-скрипт с командами <code>/ip route</code>. Один <code>/import</code> применяет все маршруты.</p>
+        </a>
+        <a class="feature-card" href="guides/wireguard.html" style="text-decoration:none;display:block;">
+            <h3>WireGuard &mdash; AllowedIPs</h3>
+            <p>Split tunneling через <code>AllowedIPs</code> в конфиге пира. Без дополнительных команд маршрутизации.</p>
+        </a>
+        <a class="feature-card" href="guides/linux.html" style="text-decoration:none;display:block;">
+            <h3>Linux &mdash; ip route</h3>
+            <p>Shell-скрипт с <code>ip route add</code>. Постоянство через systemd-networkd или NetworkManager.</p>
+        </a>
+        <a class="feature-card" href="guides/openvpn.html" style="text-decoration:none;display:block;">
+            <h3>OpenVPN &mdash; route</h3>
+            <p>Добавьте директивы <code>route</code> в клиентский <code>.ovpn</code>. С <code>route-nopull</code>.</p>
+        </a>
     </div>
 </section>
 

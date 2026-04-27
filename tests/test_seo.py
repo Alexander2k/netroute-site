@@ -248,6 +248,47 @@ def _is_home_index(path: str) -> bool:
     return rel == 'index.html' or re.match(r'^(ru|es|zh)/index\.html$', rel) is not None
 
 
+def check_home_organization_schema(path: str, content: str, fails: Failures):
+    """Each home index must carry an Organization schema with name, url,
+    logo, and sameAs links (Chrome Web Store + GitHub) — strengthens brand
+    entity for Google's Knowledge Graph.
+    """
+    if not _is_home_index(path):
+        return
+    org = None
+    for raw in extract_jsonld_blocks(content):
+        try:
+            data = json.loads(raw)
+        except json.JSONDecodeError:
+            continue
+        if data.get('@type') == 'Organization':
+            org = data
+            break
+    if org is None:
+        fails.add(path, 'home page missing Organization schema')
+        return
+    for fld in ('name', 'url', 'logo', 'sameAs'):
+        if fld not in org:
+            fails.add(path, f'Organization schema missing "{fld}"')
+
+
+def check_home_popular_guides(path: str, content: str, fails: Failures):
+    """Each home index must have a 'Popular Guides' section linking to all 5
+    guide leaves (in the same language). Uses deep anchors to syntax/examples
+    sections to surface long-tail keywords from inside the guides.
+    """
+    if not _is_home_index(path):
+        return
+    if not re.search(r'<(?:section|h2)[^>]*\bid="popular-guides"', content):
+        fails.add(path, 'home page missing id="popular-guides" section')
+        return
+    # Each guide must be linked from the page (relative path inside same-lang area).
+    for guide in ('keenetic', 'mikrotik', 'wireguard', 'linux', 'openvpn'):
+        # Accept any href ending with guides/<guide>.html (with optional anchor)
+        if not re.search(rf'href="[^"]*guides/{re.escape(guide)}\.html(?:#[^"]*)?"', content):
+            fails.add(path, f'home page missing link to guides/{guide}.html')
+
+
 def check_home_brand_signals(path: str, content: str, fails: Failures):
     """Home pages must carry brand signals in SoftwareApplication schema:
     alternateName (catches 'netroute' lowercase / variations) and sameAs
@@ -306,6 +347,30 @@ def check_guide_comments_toggle_note(path: str, content: str, fails: Failures):
     label = CHECKBOX_LABELS[lang]
     if label not in content:
         fails.add(path, f'guide page missing reference to checkbox label "{label}" ({lang})')
+
+
+def check_guide_article_schema(path: str, content: str, fails: Failures):
+    """Each guide leaf should have an Article schema (in addition to HowTo)
+    so Google can pick either as a rich snippet. Required: headline, author,
+    datePublished, image.
+    """
+    if not _is_guide_leaf(path):
+        return
+    has_article = False
+    for raw in extract_jsonld_blocks(content):
+        try:
+            data = json.loads(raw)
+        except json.JSONDecodeError:
+            continue
+        t = data.get('@type')
+        if t in ('Article', 'TechArticle'):
+            has_article = True
+            for fld in ('headline', 'author', 'datePublished', 'image'):
+                if fld not in data:
+                    fails.add(path, f'{t} schema missing "{fld}"')
+            break
+    if not has_article:
+        fails.add(path, 'guide page missing Article/TechArticle schema')
 
 
 def check_guide_inline_example(path: str, content: str, fails: Failures):
@@ -367,6 +432,30 @@ def check_guide_examples(path: str, content: str, fails: Failures):
         fails.add(path, 'guide page has examples anchor but no github.com link')
 
 
+def check_404_navigation(fails: Failures):
+    """404.html must offer navigation back to key destinations: home,
+    guides hub, and ideally the 5 platform guides — so a wrong URL still
+    leads users to useful content.
+    """
+    path = os.path.join(ROOT, '404.html')
+    if not os.path.exists(path):
+        fails.add(path, '404.html not found')
+        return
+    with open(path) as f:
+        content = f.read()
+    expected = [
+        ('/', 'home'),
+        ('guides/', 'guides hub'),
+    ]
+    for href_target, label in expected:
+        if not re.search(rf'href="[^"]*{re.escape(href_target)}"', content):
+            fails.add(path, f'404 page missing link to {label} ({href_target})')
+    # Each platform guide should be linked
+    for g in ('keenetic', 'mikrotik', 'wireguard', 'linux', 'openvpn'):
+        if not re.search(rf'href="[^"]*guides/{re.escape(g)}\.html"', content):
+            fails.add(path, f'404 page missing link to guides/{g}.html')
+
+
 def check_sitemap(fails: Failures):
     sitemap_path = f'{ROOT}/sitemap.xml'
     if not os.path.exists(sitemap_path):
@@ -397,6 +486,30 @@ def check_sitemap(fails: Failures):
         if not re.match(r'^\d{4}-\d{2}-\d{2}$', date_str):
             fails.add(sitemap_path, f'lastmod not ISO date: {date_str}')
 
+    # lastmod freshness: must be >= last git commit date for the file (so sitemap
+    # signals real changes to crawlers).
+    import subprocess
+    url_block_re = re.compile(
+        r'<url>\s*<loc>([^<]+)</loc>.*?<lastmod>(\d{4}-\d{2}-\d{2})</lastmod>',
+        re.DOTALL,
+    )
+    for loc, lastmod in url_block_re.findall(sm):
+        target = url_to_file(loc)
+        if not target or not os.path.exists(target):
+            continue
+        rel = os.path.relpath(target, ROOT)
+        try:
+            git_date = subprocess.check_output(
+                ['git', 'log', '-1', '--format=%cs', '--', rel],
+                cwd=ROOT, text=True,
+            ).strip()
+        except subprocess.CalledProcessError:
+            continue
+        if not git_date:
+            continue
+        if git_date > lastmod:
+            fails.add(sitemap_path, f'sitemap lastmod stale for {loc}: file last committed {git_date}, sitemap says {lastmod}')
+
 
 # ────────────────────────────────────────────────────────────────────
 # Main
@@ -417,10 +530,14 @@ def main():
         check_guide_official_docs(path, content, fails)
         check_guide_examples(path, content, fails)
         check_home_brand_signals(path, content, fails)
+        check_home_popular_guides(path, content, fails)
+        check_home_organization_schema(path, content, fails)
         check_guide_related_links(path, content, fails)
         check_guide_inline_example(path, content, fails)
         check_guide_comments_toggle_note(path, content, fails)
+        check_guide_article_schema(path, content, fails)
     check_sitemap(fails)
+    check_404_navigation(fails)
 
     if fails:
         print(f'\n❌ {len(fails)} failure(s):\n')

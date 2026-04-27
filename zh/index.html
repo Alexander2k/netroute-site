@@ -88,6 +88,29 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "NetRoute Pro",
+        "alternateName": [
+            "NetRoute",
+            "Net Route Pro",
+            "netroute"
+        ],
+        "url": "https://alexander2k.github.io/netroute-site/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://alexander2k.github.io/netroute-site/icon.png",
+            "width": 128,
+            "height": 128
+        },
+        "sameAs": [
+            "https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla",
+            "https://github.com/Alexander2k/netroute-site"
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
         "@type": "FAQPage",
         "inLanguage": "zh",
         "mainEntity": [
@@ -421,6 +444,37 @@
     <div class="stat">
         <span class="stat-value">3</span>
         <span class="stat-label">个DNS提供商</span>
+    </div>
+</section>
+
+<!-- POPULAR GUIDES -->
+<section class="features" id="popular-guides">
+    <div class="section-header">
+        <span class="section-tag">// 指南</span>
+        <h2>热门配置指南</h2>
+        <p>每个支持平台的分步教程 &mdash; 命令语法、官方文档链接和可编辑的配置示例。</p>
+    </div>
+    <div class="features-grid">
+        <a class="feature-card" href="guides/keenetic.html" style="text-decoration:none;display:block;">
+            <h3>Keenetic &mdash; .bat 上传</h3>
+            <p>在 NetRoute Pro 中生成 <code>.bat</code> 文件，上传到 Keenetic 并绑定 VPN 接口。</p>
+        </a>
+        <a class="feature-card" href="guides/mikrotik.html" style="text-decoration:none;display:block;">
+            <h3>MikroTik &mdash; .rsc 导入</h3>
+            <p>RouterOS 脚本，使用 <code>/ip route</code> 命令。一次 <code>/import</code> 应用所有路由。</p>
+        </a>
+        <a class="feature-card" href="guides/wireguard.html" style="text-decoration:none;display:block;">
+            <h3>WireGuard &mdash; AllowedIPs</h3>
+            <p>通过对等配置中的 <code>AllowedIPs</code> 实现分流。无需额外的路由命令。</p>
+        </a>
+        <a class="feature-card" href="guides/linux.html" style="text-decoration:none;display:block;">
+            <h3>Linux &mdash; ip route</h3>
+            <p><code>ip route add</code> shell 脚本。通过 systemd-networkd 或 NetworkManager 实现持久化。</p>
+        </a>
+        <a class="feature-card" href="guides/openvpn.html" style="text-decoration:none;display:block;">
+            <h3>OpenVPN &mdash; route 指令</h3>
+            <p>将 <code>route</code> 行追加到客户端 <code>.ovpn</code>。配合 <code>route-nopull</code>。</p>
+        </a>
     </div>
 </section>
 

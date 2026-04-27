@@ -85,6 +85,29 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "NetRoute Pro",
+        "alternateName": [
+            "NetRoute",
+            "Net Route Pro",
+            "netroute"
+        ],
+        "url": "https://alexander2k.github.io/netroute-site/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://alexander2k.github.io/netroute-site/icon.png",
+            "width": 128,
+            "height": 128
+        },
+        "sameAs": [
+            "https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla",
+            "https://github.com/Alexander2k/netroute-site"
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
         "@type": "FAQPage",
         "inLanguage": "es",
         "mainEntity": [
@@ -418,6 +441,37 @@
     <div class="stat">
         <span class="stat-value">3</span>
         <span class="stat-label">Proveedores DNS</span>
+    </div>
+</section>
+
+<!-- POPULAR GUIDES -->
+<section class="features" id="popular-guides">
+    <div class="section-header">
+        <span class="section-tag">// guías</span>
+        <h2>Guías de configuración populares</h2>
+        <p>Tutoriales paso a paso para cada plataforma compatible &mdash; sintaxis de comandos, enlaces a documentación oficial y configuraciones de ejemplo listas para editar.</p>
+    </div>
+    <div class="features-grid">
+        <a class="feature-card" href="guides/keenetic.html" style="text-decoration:none;display:block;">
+            <h3>Keenetic &mdash; carga .bat</h3>
+            <p>Genera un <code>.bat</code> en NetRoute Pro y cárgalo en Keenetic con enlace a la interfaz VPN.</p>
+        </a>
+        <a class="feature-card" href="guides/mikrotik.html" style="text-decoration:none;display:block;">
+            <h3>MikroTik &mdash; importar .rsc</h3>
+            <p>Script RouterOS con comandos <code>/ip route</code>. Un <code>/import</code> aplica todas las rutas.</p>
+        </a>
+        <a class="feature-card" href="guides/wireguard.html" style="text-decoration:none;display:block;">
+            <h3>WireGuard &mdash; AllowedIPs</h3>
+            <p>Split tunneling vía <code>AllowedIPs</code> en el config del peer. Sin comandos extra de rutas.</p>
+        </a>
+        <a class="feature-card" href="guides/linux.html" style="text-decoration:none;display:block;">
+            <h3>Linux &mdash; ip route</h3>
+            <p>Script Bash con <code>ip route add</code>. Persistencia con systemd-networkd o NetworkManager.</p>
+        </a>
+        <a class="feature-card" href="guides/openvpn.html" style="text-decoration:none;display:block;">
+            <h3>OpenVPN &mdash; directivas route</h3>
+            <p>Añade líneas <code>route</code> a tu <code>.ovpn</code> cliente. Úsalo con <code>route-nopull</code>.</p>
+        </a>
     </div>
 </section>
 
