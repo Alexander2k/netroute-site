@@ -175,11 +175,11 @@
 
     <section id="syntax" class="syntax-block">
         <h2>命令语法</h2>
-        <p><strong>语法：</strong></p>
-        <pre><code>ip route add &lt;CIDR&gt; via &lt;GATEWAY&gt; dev &lt;VPN_IF&gt;</code></pre>
+        <p><strong>语法（幂等 &mdash; 脚本中使用此形式）：</strong></p>
+        <pre><code>ip route replace &lt;CIDR&gt; via &lt;GATEWAY&gt; dev &lt;VPN_IF&gt;</code></pre>
         <p><strong>示例：</strong></p>
-        <pre><code>ip route add 1.1.1.0/24 via 10.0.0.1 dev wg0</code></pre>
-        <p>以 root 身份运行或使用 <code>sudo</code>。NetRoute Pro 将命令生成为 <code>.sh</code> 脚本 — 通过 <code>bash routes.sh</code> 应用。</p>
+        <pre><code>ip route replace 1.1.1.0/24 via 10.0.0.1 dev wg0</code></pre>
+        <p>以 root 身份运行或使用 <code>sudo</code>。NetRoute Pro 将命令生成为 <code>.sh</code> 脚本 &mdash; 通过 <code>bash routes.sh</code> 应用。<code>replace</code> 在路由不存在时创建、存在时更新，因此重复运行是安全的；<code>add</code> 在重复时会失败并报 <code>RTNETLINK answers: File exists</code>，配合 <code>set -e</code> 会中止脚本。</p>
     </section>
 
 
@@ -310,8 +310,13 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
     <p>您应该看到所有通过 VPN 网关路由的子网。</p>
 
     <h2>回滚</h2>
-    <p>生成反向脚本 — 复制 <code>routes.sh</code> 并将所有 <code>ip route add</code> 替换为 <code>ip route del</code>，然后以 root 运行：</p>
-    <pre><code>sudo bash routes-undo.sh</code></pre>
+    <p>脚本在应用更改前会将路由表快照保存到 <code>/tmp/route-table.&lt;timestamp&gt;.txt</code> &mdash; 用于诊断变化。要删除 NetRoute Pro 添加的路由，逐个删除前缀：</p>
+    <pre><code>for cidr in 1.1.1.0/24 8.8.8.0/24 162.159.0.0/16; do
+    sudo ip route del "$cidr" 2&gt;/dev/null || true
+done</code></pre>
+    <p>或更保守地，从 <code>routes.sh</code> 生成反向列表，将 <code>replace</code>（或 <code>add</code>）替换为 <code>del</code>：</p>
+    <pre><code>awk '/ip route /{ sub(/^ip route (replace|add)/, "ip route del"); print }' routes.sh | sudo bash</code></pre>
+    <p>如果出现严重问题，<code>/tmp/route-table.&lt;timestamp&gt;.txt</code> 中的快照显示更改前状态 &mdash; 可手动恢复需要的部分。</p>
 
     <h2>常见问题</h2>
 
@@ -319,10 +324,6 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
     <p>VPN 接口未启动或没有 IP。检查：</p>
     <pre><code>ip link show
 ip addr show</code></pre>
-
-    <h3><code>RTNETLINK answers: File exists</code></h3>
-    <p>此路由已存在。先删除它：</p>
-    <pre><code>sudo ip route del &lt;subnet&gt;</code></pre>
 
     <h3><code>Permission denied</code></h3>
     <p>修改路由表需要 root 权限。使用 <code>sudo</code> 运行脚本。</p>
@@ -339,18 +340,32 @@ ip addr show</code></pre>
 #
 # Run as root or with sudo. Routes added here last until reboot —
 # for persistence see the Linux guide (systemd-networkd / NetworkManager).
+#
+# Idempotent: uses `ip route replace` so re-running the script is safe.
+# `add` would fail with "RTNETLINK answers: File exists" on a duplicate;
+# combined with `set -e`, the first existing route would abort the script
+# and skip the rest. `replace` creates if missing, updates if present.
 
 set -euo pipefail
 
 DEV="wg0"          # VPN interface name (wg0, tun0, ppp0, ...)
 GW="10.0.0.1"      # VPN gateway IP (or use only "dev $DEV" if VPN is point-to-point)
 
-ip route add 1.1.1.0/24    via "$GW" dev "$DEV"
-ip route add 8.8.8.0/24    via "$GW" dev "$DEV"
-ip route add 162.159.0.0/16 via "$GW" dev "$DEV"
+# Snapshot current route table — useful for rollback if something breaks.
+SNAPSHOT="/tmp/route-table.$(date +%s).txt"
+ip route show &gt; "$SNAPSHOT"
+echo "Route table snapshot saved to $SNAPSHOT"
+
+ip route replace 1.1.1.0/24    via "$GW" dev "$DEV"
+ip route replace 8.8.8.0/24    via "$GW" dev "$DEV"
+ip route replace 162.159.0.0/16 via "$GW" dev "$DEV"
 
 # Verify with: ip route show
-# Remove with: ip route del &lt;CIDR&gt;
+# Remove a single route: ip route del &lt;CIDR&gt;
+# Full rollback (delete all routes added by this script):
+#   for cidr in 1.1.1.0/24 8.8.8.0/24 162.159.0.0/16; do
+#     ip route del "$cidr" 2&gt;/dev/null || true
+#   done
 <!-- /EMBED --></code></pre>
 
     <p class="callout"><strong>提示：</strong>需要不带注释行的配置？在 NetRoute Pro 选项中取消勾选 <strong>「在导出文件中包含注释」</strong>，扩展将仅导出路由命令。适用于不支持注释的路由器。</p>

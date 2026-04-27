@@ -173,11 +173,11 @@
 
     <section id="syntax" class="syntax-block">
         <h2>Command Syntax</h2>
-        <p><strong>Syntax:</strong></p>
-        <pre><code>ip route add &lt;CIDR&gt; via &lt;GATEWAY&gt; dev &lt;VPN_IF&gt;</code></pre>
+        <p><strong>Syntax (idempotent — use this in scripts):</strong></p>
+        <pre><code>ip route replace &lt;CIDR&gt; via &lt;GATEWAY&gt; dev &lt;VPN_IF&gt;</code></pre>
         <p><strong>Example:</strong></p>
-        <pre><code>ip route add 1.1.1.0/24 via 10.0.0.1 dev wg0</code></pre>
-        <p>Run as root or with <code>sudo</code>. NetRoute Pro generates these as a <code>.sh</code> script — apply with <code>bash routes.sh</code>.</p>
+        <pre><code>ip route replace 1.1.1.0/24 via 10.0.0.1 dev wg0</code></pre>
+        <p>Run as root or with <code>sudo</code>. NetRoute Pro generates these as a <code>.sh</code> script — apply with <code>bash routes.sh</code>. <code>replace</code> creates the route if missing and updates it if present, so re-running is safe; <code>add</code> would fail with <code>RTNETLINK answers: File exists</code> on a duplicate and (combined with <code>set -e</code>) abort the script.</p>
     </section>
 
 
@@ -317,9 +317,13 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
     <p>All added subnets should appear, bound to your VPN gateway.</p>
 
     <h2>Rollback</h2>
-    <p>To remove the routes, generate a reverse script by replacing <code>add</code> with <code>del</code> in <code>routes.sh</code> and run it as root:</p>
-    <pre><code>sed 's/ip route add/ip route del/' routes.sh > unroutes.sh
-sudo bash unroutes.sh</code></pre>
+    <p>The script saves a snapshot of your route table to <code>/tmp/route-table.&lt;timestamp&gt;.txt</code> before applying changes &mdash; useful for diagnosing what changed. To remove the routes added by NetRoute Pro, delete each prefix:</p>
+    <pre><code>for cidr in 1.1.1.0/24 8.8.8.0/24 162.159.0.0/16; do
+    sudo ip route del "$cidr" 2&gt;/dev/null || true
+done</code></pre>
+    <p>Or, more conservatively, generate a reverse list from your <code>routes.sh</code> &mdash; replacing <code>replace</code> (or <code>add</code>) with <code>del</code>:</p>
+    <pre><code>awk '/ip route /{ sub(/^ip route (replace|add)/, "ip route del"); print }' routes.sh | sudo bash</code></pre>
+    <p>If something went catastrophically wrong, the snapshot at <code>/tmp/route-table.&lt;timestamp&gt;.txt</code> shows the pre-change state &mdash; you can manually re-add anything you needed.</p>
 
     <h2>Common issues</h2>
 
@@ -328,13 +332,8 @@ sudo bash unroutes.sh</code></pre>
     <pre><code>ip link show</code></pre>
     <p>Bring the interface up before running the script.</p>
 
-    <h3>RTNETLINK answers: File exists</h3>
-    <p>The route is already present. Remove it first:</p>
-    <pre><code>sudo ip route del &lt;subnet&gt;</code></pre>
-    <p>Then re-run the script.</p>
-
     <h3>Permission denied</h3>
-    <p><code>ip route add</code> needs root. Always invoke with <code>sudo</code>.</p>
+    <p><code>ip route replace</code> needs root. Always invoke with <code>sudo</code>.</p>
 
     <h2 id="examples">Example Configuration File</h2>
     <p>Ready-to-edit template with inline comments. Replace the example routes with output from NetRoute Pro for your target sites.</p>
@@ -348,18 +347,32 @@ sudo bash unroutes.sh</code></pre>
 #
 # Run as root or with sudo. Routes added here last until reboot —
 # for persistence see the Linux guide (systemd-networkd / NetworkManager).
+#
+# Idempotent: uses `ip route replace` so re-running the script is safe.
+# `add` would fail with "RTNETLINK answers: File exists" on a duplicate;
+# combined with `set -e`, the first existing route would abort the script
+# and skip the rest. `replace` creates if missing, updates if present.
 
 set -euo pipefail
 
 DEV="wg0"          # VPN interface name (wg0, tun0, ppp0, ...)
 GW="10.0.0.1"      # VPN gateway IP (or use only "dev $DEV" if VPN is point-to-point)
 
-ip route add 1.1.1.0/24    via "$GW" dev "$DEV"
-ip route add 8.8.8.0/24    via "$GW" dev "$DEV"
-ip route add 162.159.0.0/16 via "$GW" dev "$DEV"
+# Snapshot current route table — useful for rollback if something breaks.
+SNAPSHOT="/tmp/route-table.$(date +%s).txt"
+ip route show &gt; "$SNAPSHOT"
+echo "Route table snapshot saved to $SNAPSHOT"
+
+ip route replace 1.1.1.0/24    via "$GW" dev "$DEV"
+ip route replace 8.8.8.0/24    via "$GW" dev "$DEV"
+ip route replace 162.159.0.0/16 via "$GW" dev "$DEV"
 
 # Verify with: ip route show
-# Remove with: ip route del &lt;CIDR&gt;
+# Remove a single route: ip route del &lt;CIDR&gt;
+# Full rollback (delete all routes added by this script):
+#   for cidr in 1.1.1.0/24 8.8.8.0/24 162.159.0.0/16; do
+#     ip route del "$cidr" 2&gt;/dev/null || true
+#   done
 <!-- /EMBED --></code></pre>
 
     <p class="callout"><strong>Tip:</strong> Need a config without these comment lines? In NetRoute Pro options, uncheck <strong>&ldquo;Include comments in exported files&rdquo;</strong> &mdash; the extension will export only the route commands. Useful for routers that don&rsquo;t tolerate comment lines.</p>

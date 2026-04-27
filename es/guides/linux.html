@@ -174,11 +174,11 @@
 
     <section id="syntax" class="syntax-block">
         <h2>Sintaxis del comando</h2>
-        <p><strong>Sintaxis:</strong></p>
-        <pre><code>ip route add &lt;CIDR&gt; via &lt;GATEWAY&gt; dev &lt;VPN_IF&gt;</code></pre>
+        <p><strong>Sintaxis (idempotente &mdash; usa esta forma en scripts):</strong></p>
+        <pre><code>ip route replace &lt;CIDR&gt; via &lt;GATEWAY&gt; dev &lt;VPN_IF&gt;</code></pre>
         <p><strong>Ejemplo:</strong></p>
-        <pre><code>ip route add 1.1.1.0/24 via 10.0.0.1 dev wg0</code></pre>
-        <p>Ejecuta como root o con <code>sudo</code>. NetRoute Pro las genera en un script <code>.sh</code> — aplícalas con <code>bash routes.sh</code>.</p>
+        <pre><code>ip route replace 1.1.1.0/24 via 10.0.0.1 dev wg0</code></pre>
+        <p>Ejecuta como root o con <code>sudo</code>. NetRoute Pro las genera en un script <code>.sh</code> &mdash; aplícalas con <code>bash routes.sh</code>. <code>replace</code> es idempotente: crea la ruta si no existe y la actualiza si existe, así que re-ejecutar el script es seguro; <code>add</code> fallaría con <code>RTNETLINK answers: File exists</code> en duplicados (y junto a <code>set -e</code> abortaría el script).</p>
     </section>
 
 
@@ -317,15 +317,18 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
     <pre><code>traceroute example.com</code></pre>
 
     <h2>Revertir</h2>
-    <p>Para eliminar las rutas, genera un script inverso reemplazando <code>add</code> por <code>del</code> y ejecútalo, o reinicia el sistema si no las hiciste persistentes.</p>
+    <p>El script guarda un snapshot de la tabla de rutas en <code>/tmp/route-table.&lt;timestamp&gt;.txt</code> antes de aplicar cambios &mdash; útil para diagnosticar qué cambió. Para eliminar las rutas añadidas por NetRoute Pro, borra cada prefijo:</p>
+    <pre><code>for cidr in 1.1.1.0/24 8.8.8.0/24 162.159.0.0/16; do
+    sudo ip route del "$cidr" 2&gt;/dev/null || true
+done</code></pre>
+    <p>O, más conservadoramente, genera una lista inversa desde tu <code>routes.sh</code>, sustituyendo <code>replace</code> (o <code>add</code>) por <code>del</code>:</p>
+    <pre><code>awk '/ip route /{ sub(/^ip route (replace|add)/, "ip route del"); print }' routes.sh | sudo bash</code></pre>
+    <p>Si algo salió catastróficamente mal, el snapshot en <code>/tmp/route-table.&lt;timestamp&gt;.txt</code> muestra el estado previo &mdash; puedes restaurar manualmente lo necesario.</p>
 
     <h2>Problemas comunes</h2>
 
     <h3>Network is unreachable</h3>
     <p>La interfaz VPN no está activa. Comprueba con <code>ip link show</code> que tu interfaz VPN (p.ej. <code>wg0</code>, <code>tun0</code>) está <code>UP</code>. Activa la VPN antes de aplicar rutas.</p>
-
-    <h3>RTNETLINK answers: File exists</h3>
-    <p>La ruta ya existe en la tabla. Elimínala primero con <code>ip route del &lt;destino&gt;</code> y vuelve a ejecutar el script, o edita el script para usar <code>ip route replace</code>.</p>
 
     <h3>Permission denied</h3>
     <p>Necesitas privilegios root. Ejecuta con <code>sudo</code>.</p>
@@ -345,18 +348,32 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 #
 # Run as root or with sudo. Routes added here last until reboot —
 # for persistence see the Linux guide (systemd-networkd / NetworkManager).
+#
+# Idempotent: uses `ip route replace` so re-running the script is safe.
+# `add` would fail with "RTNETLINK answers: File exists" on a duplicate;
+# combined with `set -e`, the first existing route would abort the script
+# and skip the rest. `replace` creates if missing, updates if present.
 
 set -euo pipefail
 
 DEV="wg0"          # VPN interface name (wg0, tun0, ppp0, ...)
 GW="10.0.0.1"      # VPN gateway IP (or use only "dev $DEV" if VPN is point-to-point)
 
-ip route add 1.1.1.0/24    via "$GW" dev "$DEV"
-ip route add 8.8.8.0/24    via "$GW" dev "$DEV"
-ip route add 162.159.0.0/16 via "$GW" dev "$DEV"
+# Snapshot current route table — useful for rollback if something breaks.
+SNAPSHOT="/tmp/route-table.$(date +%s).txt"
+ip route show &gt; "$SNAPSHOT"
+echo "Route table snapshot saved to $SNAPSHOT"
+
+ip route replace 1.1.1.0/24    via "$GW" dev "$DEV"
+ip route replace 8.8.8.0/24    via "$GW" dev "$DEV"
+ip route replace 162.159.0.0/16 via "$GW" dev "$DEV"
 
 # Verify with: ip route show
-# Remove with: ip route del &lt;CIDR&gt;
+# Remove a single route: ip route del &lt;CIDR&gt;
+# Full rollback (delete all routes added by this script):
+#   for cidr in 1.1.1.0/24 8.8.8.0/24 162.159.0.0/16; do
+#     ip route del "$cidr" 2&gt;/dev/null || true
+#   done
 <!-- /EMBED --></code></pre>
 
     <p class="callout"><strong>Consejo:</strong> ¿Necesitas un config sin estas líneas de comentarios? En las opciones de NetRoute Pro desactiva <strong>«Incluir comentarios en archivos exportados»</strong> &mdash; la extensión exportará solo los comandos de rutas. Útil para routers que no toleran comentarios.</p>

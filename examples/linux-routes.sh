@@ -4,15 +4,29 @@
 #
 # Run as root or with sudo. Routes added here last until reboot —
 # for persistence see the Linux guide (systemd-networkd / NetworkManager).
+#
+# Idempotent: uses `ip route replace` so re-running the script is safe.
+# `add` would fail with "RTNETLINK answers: File exists" on a duplicate;
+# combined with `set -e`, the first existing route would abort the script
+# and skip the rest. `replace` creates if missing, updates if present.
 
 set -euo pipefail
 
 DEV="wg0"          # VPN interface name (wg0, tun0, ppp0, ...)
 GW="10.0.0.1"      # VPN gateway IP (or use only "dev $DEV" if VPN is point-to-point)
 
-ip route add 1.1.1.0/24    via "$GW" dev "$DEV"
-ip route add 8.8.8.0/24    via "$GW" dev "$DEV"
-ip route add 162.159.0.0/16 via "$GW" dev "$DEV"
+# Snapshot current route table — useful for rollback if something breaks.
+SNAPSHOT="/tmp/route-table.$(date +%s).txt"
+ip route show > "$SNAPSHOT"
+echo "Route table snapshot saved to $SNAPSHOT"
+
+ip route replace 1.1.1.0/24    via "$GW" dev "$DEV"
+ip route replace 8.8.8.0/24    via "$GW" dev "$DEV"
+ip route replace 162.159.0.0/16 via "$GW" dev "$DEV"
 
 # Verify with: ip route show
-# Remove with: ip route del <CIDR>
+# Remove a single route: ip route del <CIDR>
+# Full rollback (delete all routes added by this script):
+#   for cidr in 1.1.1.0/24 8.8.8.0/24 162.159.0.0/16; do
+#     ip route del "$cidr" 2>/dev/null || true
+#   done
