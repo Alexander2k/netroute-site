@@ -18,6 +18,7 @@ Covers:
   - sitemap.xml: every <loc> exists as file; every content HTML appears in sitemap
 """
 
+import html
 import os
 import re
 import sys
@@ -272,6 +273,67 @@ def check_home_brand_signals(path: str, content: str, fails: Failures):
         fails.add(path, 'SoftwareApplication missing "sameAs" (authority links)')
 
 
+EMBED_RE = re.compile(
+    r'<!--\s*EMBED:(\S+?)\s*-->(.*?)<!--\s*/EMBED\s*-->',
+    re.DOTALL,
+)
+
+
+CHECKBOX_LABELS = {
+    'en': 'Include comments in exported files',
+    'ru': 'Включать комментарии в экспортируемые файлы',
+    'es': 'Incluir comentarios en archivos exportados',
+    'zh': '在导出文件中包含注释',
+}
+
+
+def _guide_lang(path: str) -> str:
+    rel = os.path.relpath(path, ROOT).replace(os.sep, '/')
+    parts = rel.split('/')
+    if parts[0] in ('ru', 'es', 'zh'):
+        return parts[0]
+    return 'en'
+
+
+def check_guide_comments_toggle_note(path: str, content: str, fails: Failures):
+    """Each guide leaf must reference the extension's 'Include comments...'
+    checkbox so users know they can generate routes without inline comments
+    (some routers like certain Keenetic firmwares don't tolerate them).
+    """
+    if not _is_guide_leaf(path):
+        return
+    lang = _guide_lang(path)
+    label = CHECKBOX_LABELS[lang]
+    if label not in content:
+        fails.add(path, f'guide page missing reference to checkbox label "{label}" ({lang})')
+
+
+def check_guide_inline_example(path: str, content: str, fails: Failures):
+    """Each guide leaf must inline the corresponding examples/<file> contents
+    between <!-- EMBED:<file> --> ... <!-- /EMBED --> markers, and the inlined
+    content must stay in sync with the source file in examples/.
+    """
+    if not _is_guide_leaf(path):
+        return
+    m = EMBED_RE.search(content)
+    if not m:
+        fails.add(path, 'guide page missing inline example block (EMBED marker)')
+        return
+    filename = m.group(1).strip()
+    embedded = m.group(2)
+    src_path = os.path.join(ROOT, 'examples', filename)
+    if not os.path.exists(src_path):
+        fails.add(path, f'embed references non-existent file: examples/{filename}')
+        return
+    with open(src_path) as f:
+        src = f.read().rstrip('\n')
+    # strip leading/trailing blank lines around marker, un-escape HTML entities
+    embedded_inner = embedded.strip('\n')
+    embedded_inner = html.unescape(embedded_inner).rstrip('\n')
+    if embedded_inner != src:
+        fails.add(path, f'embed content drift: examples/{filename} differs from inline block')
+
+
 def check_guide_related_links(path: str, content: str, fails: Failures):
     """Each guide leaf should link to the other 4 guides in the same language
     (internal weight distribution + UX). Look for the section anchored as 'related'.
@@ -356,6 +418,8 @@ def main():
         check_guide_examples(path, content, fails)
         check_home_brand_signals(path, content, fails)
         check_guide_related_links(path, content, fails)
+        check_guide_inline_example(path, content, fails)
+        check_guide_comments_toggle_note(path, content, fails)
     check_sitemap(fails)
 
     if fails:
