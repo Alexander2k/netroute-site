@@ -261,11 +261,23 @@
     </ul>
 
     <h2>验证</h2>
-    <p>导入后，检查路由已应用：它们会出现在 <strong>路由 → IPv4 路由</strong> 列表中，绑定到您的 VPN 接口。</p>
-    <p>验证流量通过 VPN — 从 LAN 客户端：</p>
-    <pre><code>tracert example.com     # Windows
-traceroute example.com  # Linux/macOS</code></pre>
-    <p>前几个跳数应通过您的 VPN 网关 IP。</p>
+    <p>导入后，检查路由已应用：它们会出现在 <strong>路由 → IPv4 路由</strong> 列表中，绑定到您的 VPN 接口。但这只确认路由被<em>添加</em>，不代表流量真的走 VPN。从 LAN 客户端进行三步真正的验证：</p>
+    <ol>
+        <li><strong>检查路由域名的出口 IP</strong> &mdash; 应属于 VPN 提供商，而非 ISP：
+            <pre><code>curl -v https://example.com 2>&amp;1 | grep "Connected to"
+# 应显示位于你路由 CIDR 内的 IP。</code></pre>
+        </li>
+        <li><strong>检查互联网看到的访问路由站点的 IP：</strong>
+            <pre><code>curl -s https://api.ipify.org
+# 当路由 CIDR 包含 ipify 或测试通过 VPN 出口代理时，
+# 该结果反映 VPN 出口 IP。与你真实的 ISP IP 对比。</code></pre>
+        </li>
+        <li><strong>在路由器上</strong>（通过 SSH/Telnet）：
+            <pre><code>show ip route                  # 确认 CIDR 已绑定到 VPN_IF
+show interface stat &lt;VPN_IF&gt;   # LAN 客户端浏览时 RX/TX 字节应增长</code></pre>
+        </li>
+    </ol>
+    <p><code>tracert</code>/<code>traceroute</code> 不可靠：ICMP/UDP 探测常被过滤，每跳返回 <code>* * *</code>，没有有用信号。</p>
 
     <h2>常见问题</h2>
 
@@ -277,9 +289,10 @@ traceroute example.com  # Linux/macOS</code></pre>
 
     <h3>路由已添加但流量不通过 VPN</h3>
     <ul>
-        <li>检查 VPN 接口是否处于活动状态（在 <strong>Internet</strong> 部分）</li>
-        <li>验证 VPN 接口上启用了 NAT/masquerade</li>
-        <li>检查防火墙规则 — 不应有任何规则阻止流量</li>
+        <li><strong>VPN 接口已建立？</strong>在 <strong>Internet → 连接</strong> 中检查 &mdash; VPN 行应显示<em>已连接</em>且 uptime 非零。</li>
+        <li><strong>LAN 流量的 SNAT？</strong>打开 <strong>Internet → 其他连接</strong>，选择你的 VPN 接口，确保启用 <em>&ldquo;用于访问 Internet&rdquo;</em>。这个开关让 Keenetic 对走 VPN 出去的 LAN 客户端流量做 NAT。没有它，数据包能到达 VPN 出口，但 VPN 服务端看到内部 LAN 源 IP 后会静默丢弃。</li>
+        <li><strong>不要为商业 VPN 提供商额外启用 masquerade 规则</strong>（Mullvad、ProtonVPN、IVPN 等）。提供商服务端已经将你的流量 SNAT 到自己的出口 IP &mdash; 客户端再做一次 masquerade 没有意义，还可能破坏非对称流。仅当你运行<em>自己的</em>不做 SNAT 的 VPN 服务端时才启用。</li>
+        <li><strong>检查防火墙规则</strong> &mdash; <strong>网络规则 → 防火墙</strong> 中不应有显式阻断你路由 CIDR 的规则。</li>
     </ul>
 
     <h3>高级用户：CLI</h3>

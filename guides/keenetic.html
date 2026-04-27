@@ -260,11 +260,23 @@
     </ul>
 
     <h2>Verify</h2>
-    <p>After import, check that routes applied: they appear in <strong>Routing → IPv4 routes</strong> list bound to your VPN interface.</p>
-    <p>Verify traffic goes through the VPN — from a LAN client:</p>
-    <pre><code>tracert example.com     # Windows
-traceroute example.com  # Linux/macOS</code></pre>
-    <p>First hops should go through your VPN gateway IP.</p>
+    <p>After import, check that routes applied: they appear in <strong>Routing → IPv4 routes</strong> list bound to your VPN interface. But that only confirms the route was <em>added</em> &mdash; not that traffic actually flows through the VPN. Three real verification steps from a LAN client:</p>
+    <ol>
+        <li><strong>Check exit IP for a routed domain</strong> &mdash; the IP you see should belong to your VPN provider, not your ISP:
+            <pre><code>curl -v https://example.com 2>&amp;1 | grep "Connected to"
+# Should show an IP within one of your routed CIDRs.</code></pre>
+        </li>
+        <li><strong>Check what the wider internet sees as your IP for a routed site:</strong>
+            <pre><code>curl -s https://api.ipify.org
+# When the routed CIDR includes ipify or you test through a proxy at the VPN
+# exit, this reflects the VPN exit IP. Compare with your real ISP IP.</code></pre>
+        </li>
+        <li><strong>On the router itself</strong> (CLI via SSH/Telnet):
+            <pre><code>show ip route                  # confirm CIDRs bound to VPN_IF
+show interface stat &lt;VPN_IF&gt;   # RX/TX bytes should grow as the LAN client browses</code></pre>
+        </li>
+    </ol>
+    <p><code>tracert</code>/<code>traceroute</code> are unreliable for this verification: ICMP/UDP probes are commonly filtered, returning <code>* * *</code> on every hop and giving you no useful signal.</p>
 
     <h2>Common issues</h2>
 
@@ -276,9 +288,10 @@ traceroute example.com  # Linux/macOS</code></pre>
 
     <h3>Route added but traffic doesn't go through VPN</h3>
     <ul>
-        <li>Check that the VPN interface is up (in the <strong>Internet</strong> section)</li>
-        <li>Verify NAT/masquerade is enabled on the VPN interface</li>
-        <li>Check firewall rules — nothing should block the traffic</li>
+        <li><strong>VPN interface up?</strong> Check in <strong>Internet → Connections</strong> &mdash; the VPN row should show <em>Connected</em> with a non-zero uptime.</li>
+        <li><strong>SNAT for LAN traffic?</strong> Open <strong>Internet → Other connections</strong>, select your VPN interface, and ensure <em>&ldquo;Use for accessing the Internet&rdquo;</em> is enabled. This is what makes Keenetic NAT LAN-client traffic out via the VPN. Without it, packets reach the VPN exit but the VPN server sees them with internal LAN source IPs and silently drops them.</li>
+        <li><strong>Don&rsquo;t enable a separate masquerade rule</strong> for commercial VPN providers (Mullvad, ProtonVPN, IVPN, etc.). The provider&rsquo;s server already SNATs your traffic to its own exit IP &mdash; an extra masquerade on the client side does nothing useful and can break asymmetric flows. Only enable masquerade if you&rsquo;re running your <em>own</em> VPN server that doesn&rsquo;t SNAT.</li>
+        <li><strong>Check firewall rules</strong> &mdash; nothing in <strong>Network rules → Firewall</strong> should explicitly drop traffic to your routed CIDRs.</li>
     </ul>
 
     <h3>For advanced users: CLI</h3>

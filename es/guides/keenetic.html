@@ -260,11 +260,23 @@
     </ul>
 
     <h2>Verificar</h2>
-    <p>Después del import, comprueba que las rutas se aplicaron: aparecen en la lista <strong>Enrutamiento → rutas IPv4</strong> enlazadas a tu interfaz VPN.</p>
-    <p>Verifica que el tráfico va por la VPN — desde un cliente LAN:</p>
-    <pre><code>tracert example.com     # Windows
-traceroute example.com  # Linux/macOS</code></pre>
-    <p>Los primeros saltos deben ir por la IP de tu gateway VPN.</p>
+    <p>Después del import, comprueba que las rutas se aplicaron: aparecen en la lista <strong>Enrutamiento → rutas IPv4</strong> enlazadas a tu interfaz VPN. Pero esto sólo confirma que la ruta fue <em>añadida</em> &mdash; no que el tráfico realmente va por la VPN. Tres comprobaciones reales desde un cliente LAN:</p>
+    <ol>
+        <li><strong>Verifica la IP de salida para un dominio enrutado</strong> &mdash; debe pertenecer al proveedor VPN, no al ISP:
+            <pre><code>curl -v https://example.com 2>&amp;1 | grep "Connected to"
+# Debe mostrar una IP dentro de uno de tus CIDR enrutados.</code></pre>
+        </li>
+        <li><strong>Comprueba qué IP ve internet para un sitio enrutado:</strong>
+            <pre><code>curl -s https://api.ipify.org
+# Cuando el CIDR enrutado incluye ipify o pruebas vía un proxy en la salida VPN,
+# esto refleja la IP de salida VPN. Compárala con tu IP real del ISP.</code></pre>
+        </li>
+        <li><strong>En el propio router</strong> (CLI por SSH/Telnet):
+            <pre><code>show ip route                  # confirma CIDR enlazados al VPN_IF
+show interface stat &lt;VPN_IF&gt;   # los bytes RX/TX deben crecer al navegar el cliente LAN</code></pre>
+        </li>
+    </ol>
+    <p><code>tracert</code>/<code>traceroute</code> no son fiables para esta verificación: las sondas ICMP/UDP suelen filtrarse, devolviendo <code>* * *</code> en cada salto y no dan señal útil.</p>
 
     <h2>Problemas comunes</h2>
 
@@ -276,9 +288,10 @@ traceroute example.com  # Linux/macOS</code></pre>
 
     <h3>Ruta añadida pero el tráfico no va por la VPN</h3>
     <ul>
-        <li>Comprueba que la interfaz VPN está activa (en la sección <strong>Internet</strong>)</li>
-        <li>Verifica que NAT/masquerade está activado en la interfaz VPN</li>
-        <li>Comprueba las reglas de firewall — nada debe bloquear el tráfico</li>
+        <li><strong>¿Interfaz VPN arriba?</strong> Comprueba en <strong>Internet → Conexiones</strong> &mdash; la fila de VPN debe mostrar <em>Conectado</em> con un uptime distinto de cero.</li>
+        <li><strong>¿SNAT para tráfico LAN?</strong> Abre <strong>Internet → Otras conexiones</strong>, selecciona tu interfaz VPN y asegúrate de que <em>&ldquo;Usar para acceder a Internet&rdquo;</em> esté activado. Esa casilla hace que Keenetic NAT-ee el tráfico de los clientes LAN saliendo por la VPN. Sin ella los paquetes llegan al exit del VPN pero el servidor los ve con IPs de origen LAN internas y los descarta silenciosamente.</li>
+        <li><strong>No habilites una regla de masquerade aparte</strong> para proveedores VPN comerciales (Mullvad, ProtonVPN, IVPN, etc.). El servidor del proveedor ya hace SNAT del tráfico a su IP de salida &mdash; un masquerade adicional en el cliente no aporta nada y puede romper flujos asimétricos. Habilita masquerade sólo si corres tu <em>propio</em> servidor VPN sin SNAT.</li>
+        <li><strong>Revisa las reglas de firewall</strong> &mdash; en <strong>Reglas de red → Firewall</strong> nada debería bloquear explícitamente tus CIDR enrutados.</li>
     </ul>
 
     <h3>Para usuarios avanzados: CLI</h3>

@@ -232,7 +232,7 @@
 <span class="t-cmd">ip route add</span> <span class="t-ip">104.21.32.0/24</span> via <span class="t-gw">10.0.0.1</span>
 <span class="t-cmd">ip route add</span> <span class="t-ip">172.67.182.0/24</span> via <span class="t-gw">10.0.0.1</span>
 <span class="t-cmd">ip route add</span> <span class="t-ip">151.101.1.0/24</span> via <span class="t-gw">10.0.0.1</span>
-<span class="t-cmd">ip route add</span> <span class="t-ip">2606:4700::/32</span> via <span class="t-gw">fe80::1</span>
+<span class="t-cmd">ip -6 route add</span> <span class="t-ip">2606:4700::/32</span> via <span class="t-gw">fe80::1</span> dev <span class="t-gw">wg0</span>
 
 <span class="t-comment"># Verify: ip route show | grep "10.0.0.1"</span></code></pre>
         </div>
