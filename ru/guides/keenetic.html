@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Импорт маршрутов на Keenetic из .bat файла — инструкция | NetRoute Pro</title>
-    <meta name="description" content="Как загрузить маршруты на Keenetic через .bat файл. Сгенерируйте маршруты в NetRoute Pro, импортируйте одним кликом с привязкой к VPN-интерфейсу. Обход блокировок по доменам.">
-    <meta name="keywords" content="keenetic маршруты, keenetic загрузить bat, keenetic импорт маршрутов, keenetic обход блокировок, keenetic vpn маршруты, keenetic route add, keenetic домены через vpn, keenetic static route">
+    <title>Маршруты для роутера Keenetic из BAT-файла — пошаговая инструкция | NetRoute Pro</title>
+    <meta name="description" content="Маршруты для роутера Keenetic из BAT-файла: сгенерируйте в NetRoute Pro и загрузите одним кликом с привязкой к VPN-интерфейсу. Обход блокировок по доменам, без ручного route add.">
+    <meta name="keywords" content="маршруты для keenetic bat, маршруты для роутера keenetic, keenetic bat файл, keenetic загрузить bat, keenetic импорт маршрутов, keenetic обход блокировок, keenetic vpn маршруты, keenetic route add, keenetic домены через vpn, keenetic static route, кинетик маршруты">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html">
     <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
@@ -15,8 +15,8 @@
     <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/keenetic.html">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Импорт маршрутов на Keenetic из .bat файла">
-    <meta property="og:description" content="Загрузите сгенерированные в NetRoute Pro маршруты на Keenetic одним кликом с привязкой к VPN-интерфейсу.">
+    <meta property="og:title" content="Маршруты для роутера Keenetic из BAT-файла — пошаговая инструкция">
+    <meta property="og:description" content="Сгенерируйте маршруты в NetRoute Pro и загрузите BAT-файл на роутер Keenetic с привязкой к VPN-интерфейсу. Обход блокировок по доменам в один клик.">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/ru/guides/keenetic.html">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
@@ -134,8 +134,18 @@
 
 <article class="guide">
     <a href="../" class="back">&larr; На главную</a>
-    <h1>Импорт маршрутов на Keenetic из .bat файла</h1>
-    <p class="lead">Keenetic умеет загружать файл в формате Windows <code>route ADD</code> и сам применять все маршруты к выбранному интерфейсу. NetRoute Pro генерирует именно такой файл — остаётся только скачать и загрузить.</p>
+    <h1>Маршруты для роутера Keenetic из BAT-файла</h1>
+    <p class="lead">Keenetic умеет загружать BAT-файл в формате Windows <code>route ADD</code> и сам применять все маршруты к выбранному VPN-интерфейсу. NetRoute Pro генерирует именно такой файл — остаётся только скачать и загрузить через веб-интерфейс роутера.</p>
+
+    <section id="syntax" class="syntax-block">
+        <h2>Синтаксис команды</h2>
+        <p><strong>Синтаксис:</strong></p>
+        <pre><code>new-netroute -destinationprefix &lt;CIDR&gt; -nexthop &lt;GATEWAY&gt; -interface &lt;VPN_IF&gt;</code></pre>
+        <p><strong>Пример:</strong></p>
+        <pre><code>new-netroute -destinationprefix 1.1.1.0/24 -nexthop 0.0.0.0 -interface Wireguard0</code></pre>
+        <p>Эквивалентная строка BAT-файла, сгенерированного NetRoute Pro: <code>route ADD 1.1.1.0 MASK 255.255.255.0 0.0.0.0</code>. При загрузке <code>.bat</code> маршруты автоматически привязываются к выбранному VPN-интерфейсу.</p>
+    </section>
+
 
     <h2>Что понадобится</h2>
     <ul>
@@ -220,11 +230,26 @@ traceroute example.com  # Linux/macOS</code></pre>
     <h3>Для продвинутых: добавление через CLI</h3>
     <p>Если нужно автоматизировать или массово управлять маршрутами — подключайтесь по SSH/Telnet и используйте команды <code>ip route</code> в режиме конфигурации. Но для большинства сценариев загрузки .bat достаточно.</p>
 
-    <h2>Официальная документация</h2>
+    <h2 id="examples">Пример конфигурационного файла</h2>
+    <p>Готовый шаблон с комментариями. Замените примеры маршрутов выводом NetRoute Pro для ваших сайтов.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/keenetic-routes.bat" target="_blank" rel="noopener"><code>keenetic-routes.bat</code></a> — Windows-формат <code>route ADD</code> готовый к загрузке на Keenetic</li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Все примеры конфигов на GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Официальная документация</h2>
     <ul>
         <li><a href="https://help.keenetic.com/" target="_blank" rel="noopener">Keenetic Help Center</a></li>
         <li><a href="https://help.keenetic.com/hc/ru/articles/213965789" target="_blank" rel="noopener">Keenetic: Маршрутизация (официальный help)</a></li>
         <li><a href="https://help.keenetic.com/hc/ru/categories/213952985" target="_blank" rel="noopener">Keenetic CLI Reference</a></li>
+    </ul>
+
+    <h2 id="related">Похожие инструкции</h2>
+    <ul>
+        <li><a href="./mikrotik.html">MikroTik</a> — импорт <code>.rsc</code>-скрипта в RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> — split tunneling через <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> — <code>ip route</code> через shell-скрипт</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — директивы <code>route</code> в клиентском конфиге</li>
     </ul>
 
     <div class="cta-block">

@@ -137,6 +137,16 @@
     <h1>Importar rutas en MikroTik mediante script .rsc</h1>
     <p class="lead">MikroTik puede importar scripts <code>.rsc</code> que contienen comandos de enrutamiento. NetRoute Pro genera exactamente ese formato — solo tienes que descargar, subir e importar.</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>Sintaxis del comando</h2>
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code>/ip route add dst-address=&lt;CIDR&gt; gateway=&lt;GATEWAY&gt; distance=1</code></pre>
+        <p><strong>Ejemplo:</strong></p>
+        <pre><code>/ip route add dst-address=1.1.1.0/24 gateway=wg-out distance=1</code></pre>
+        <p>NetRoute Pro genera estos comandos como archivo <code>.rsc</code> importado mediante <code>/import file=routes.rsc</code> en el terminal.</p>
+    </section>
+
+
     <h2>Requisitos previos</h2>
     <ul>
         <li>Router MikroTik con RouterOS 6.x o 7.x</li>
@@ -233,11 +243,26 @@ traceroute example.com  # Linux/macOS</code></pre>
     <h3>Para usuarios avanzados: BGP</h3>
     <p>A gran escala, en lugar de importar listas estáticas, puedes configurar <strong>BGP peering</strong> con un servidor de rutas y recibir prefijos dinámicamente. Queda fuera del alcance de esta guía, pero es el siguiente paso natural cuando las listas estáticas dejan de escalar.</p>
 
-    <h2>Documentación oficial</h2>
+    <h2 id="examples">Archivo de configuración de ejemplo</h2>
+    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute Pro para tus sitios.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/mikrotik-routes.rsc" target="_blank" rel="noopener"><code>mikrotik-routes.rsc</code></a> — Script <code>/import</code> de RouterOS con definiciones de rutas</li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Ver todos los ejemplos en GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Documentación oficial</h2>
     <ul>
         <li><a href="https://help.mikrotik.com/docs/spaces/ROS/pages/328084/IP+Routing" target="_blank" rel="noopener">RouterOS: IP Routing (en)</a></li>
         <li><a href="https://help.mikrotik.com/docs/spaces/ROS/pages/130220135/Address-lists" target="_blank" rel="noopener">RouterOS: Address Lists (en)</a></li>
         <li><a href="https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting" target="_blank" rel="noopener">RouterOS: Scripting / import (en)</a></li>
+    </ul>
+
+    <h2 id="related">Guías relacionadas</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — rutas desde archivo <code>.bat</code></li>
+        <li><a href="./wireguard.html">WireGuard</a> — split tunneling con <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> — <code>ip route</code> con script shell</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — directivas <code>route</code> en config cliente</li>
     </ul>
 
     <div class="cta-block">

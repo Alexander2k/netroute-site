@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Split Tunneling en WireGuard con AllowedIPs — Guía paso a paso | NetRoute Pro</title>
-    <meta name="description" content="Cómo enrutar sitios específicos por WireGuard VPN configurando AllowedIPs. Genera AllowedIPs desde dominios en NetRoute Pro, pega en el config del peer, reinicia el túnel. Funciona en Linux, Windows, macOS, Android, iOS y routers.">
+    <meta name="description" content="Enruta sitios específicos por WireGuard VPN configurando AllowedIPs. Genera la lista desde dominios en NetRoute Pro, pega en el config del peer, reinicia el túnel.">
     <meta name="keywords" content="wireguard allowedips generador, wireguard split tunnel, wireguard enrutamiento por dominio, wg-quick allowedips, wireguard config peer">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/es/guides/wireguard.html">
@@ -138,6 +138,16 @@
     <h1>Split Tunneling en WireGuard con AllowedIPs</h1>
     <p class="lead">En WireGuard el parámetro <code>AllowedIPs</code> funciona como filtro ACL y tabla de enrutamiento a la vez. NetRoute Pro genera la cadena <code>AllowedIPs</code> lista desde los dominios de cualquier sitio — no necesitas comandos <code>ip route</code> adicionales, solo edita el config del peer y recarga.</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>Sintaxis del comando</h2>
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code>AllowedIPs = &lt;CIDR1&gt;, &lt;CIDR2&gt;, &lt;CIDR3&gt;</code></pre>
+        <p><strong>Ejemplo:</strong></p>
+        <pre><code>AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 162.159.0.0/16</code></pre>
+        <p>Añade a la sección <code>[Peer]</code> de <code>wg0.conf</code>. Documentado en el <a href="https://www.wireguard.com/quickstart/" target="_blank" rel="noopener">quickstart oficial de WireGuard</a>.</p>
+    </section>
+
+
     <h2>Requisitos previos</h2>
     <ul>
         <li>Cualquier cliente WireGuard: <code>wg-quick</code> en Linux, WireGuard GUI en Windows/macOS, apps móviles Android/iOS, o router con soporte WireGuard</li>
@@ -220,12 +230,27 @@ tracert example.com         # Windows</code></pre>
         <li>En el servidor, verifica que hay NAT/masquerade hacia tu salida</li>
     </ul>
 
-    <h2>Documentación oficial</h2>
+    <h2 id="examples">Archivo de configuración de ejemplo</h2>
+    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute Pro para tus sitios.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/wireguard-split-tunnel.conf" target="_blank" rel="noopener"><code>wireguard-split-tunnel.conf</code></a> — Config del peer WireGuard con split tunneling vía <code>AllowedIPs</code></li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Ver todos los ejemplos en GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Documentación oficial</h2>
     <ul>
         <li><a href="https://www.wireguard.com/quickstart/" target="_blank" rel="noopener">WireGuard Quick Start (en)</a></li>
         <li><a href="https://man7.org/linux/man-pages/man8/wg-quick.8.html" target="_blank" rel="noopener">wg-quick(8) man page (en)</a></li>
         <li><a href="https://man7.org/linux/man-pages/man8/wg.8.html" target="_blank" rel="noopener">wg(8) — sintaxis de config (en)</a></li>
         <li><a href="https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/" target="_blank" rel="noopener">Pro Custodibus: AllowedIPs Calculator (en)</a></li>
+    </ul>
+
+    <h2 id="related">Guías relacionadas</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — rutas desde archivo <code>.bat</code></li>
+        <li><a href="./mikrotik.html">MikroTik</a> — importación de script <code>.rsc</code> de RouterOS</li>
+        <li><a href="./linux.html">Linux</a> — <code>ip route</code> con script shell</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — directivas <code>route</code> en config cliente</li>
     </ul>
 
     <div class="cta-block">

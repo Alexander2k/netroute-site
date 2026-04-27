@@ -138,6 +138,16 @@
     <h1>Añadir rutas al config cliente de OpenVPN</h1>
     <p class="lead">OpenVPN admite directivas <code>route</code> por subred en el config cliente. NetRoute Pro genera estas directivas desde los dominios de cualquier sitio — añádelas a tu <code>.ovpn</code> y tendrás split tunneling en minutos.</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>Sintaxis del comando</h2>
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code>route &lt;NETWORK&gt; &lt;NETMASK&gt;</code></pre>
+        <p><strong>Ejemplo:</strong></p>
+        <pre><code>route 1.1.1.0 255.255.255.0</code></pre>
+        <p>Añade las directivas a tu archivo cliente <code>.ovpn</code>. Con <code>route-nopull</code> sólo estas rutas pasan por VPN. Ver el <a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-6/" target="_blank" rel="noopener">manual de OpenVPN 2.6</a>.</p>
+    </section>
+
+
     <h2>Requisitos previos</h2>
     <ul>
         <li>OpenVPN 2.4 o superior</li>
@@ -220,11 +230,26 @@ netstat -rn              # macOS</code></pre>
     <h3>Error: "Options error: unrecognized option"</h3>
     <p>Versión de OpenVPN antigua. Actualiza a 2.4+.</p>
 
-    <h2>Documentación oficial</h2>
+    <h2 id="examples">Archivo de configuración de ejemplo</h2>
+    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute Pro para tus sitios.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/openvpn-routes.ovpn" target="_blank" rel="noopener"><code>openvpn-routes.ovpn</code></a> — Fragmento de config cliente OpenVPN con directivas <code>route</code></li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Ver todos los ejemplos en GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Documentación oficial</h2>
     <ul>
         <li><a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-6/" target="_blank" rel="noopener">OpenVPN Reference Manual 2.6 (en)</a></li>
         <li><a href="https://openvpn.net/community-resources/setting-up-routing/" target="_blank" rel="noopener">Setting up Routing (en)</a></li>
         <li><a href="https://openvpn.net/community-resources/how-to/" target="_blank" rel="noopener">OpenVPN How-To (en)</a></li>
+    </ul>
+
+    <h2 id="related">Guías relacionadas</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — rutas desde archivo <code>.bat</code></li>
+        <li><a href="./mikrotik.html">MikroTik</a> — importación de script <code>.rsc</code> de RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> — split tunneling con <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> — <code>ip route</code> con script shell</li>
     </ul>
 
     <div class="cta-block">

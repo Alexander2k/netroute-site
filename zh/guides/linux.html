@@ -139,6 +139,16 @@
     <h1>通过 .sh 脚本在 Linux 上添加路由</h1>
     <p class="lead">NetRoute Pro 生成包含 <code>ip route add</code> 命令的简单 Bash 脚本。一条命令即可应用。持久化根据发行版需一步额外操作。</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>命令语法</h2>
+        <p><strong>语法：</strong></p>
+        <pre><code>ip route add &lt;CIDR&gt; via &lt;GATEWAY&gt; dev &lt;VPN_IF&gt;</code></pre>
+        <p><strong>示例：</strong></p>
+        <pre><code>ip route add 1.1.1.0/24 via 10.0.0.1 dev wg0</code></pre>
+        <p>以 root 身份运行或使用 <code>sudo</code>。NetRoute Pro 将命令生成为 <code>.sh</code> 脚本 — 通过 <code>bash routes.sh</code> 应用。</p>
+    </section>
+
+
     <h2>准备工作</h2>
     <ul>
         <li><code>iproute2</code>（所有现代发行版预装）</li>
@@ -221,12 +231,27 @@ ip addr show</code></pre>
     <h3><code>Permission denied</code></h3>
     <p>修改路由表需要 root 权限。使用 <code>sudo</code> 运行脚本。</p>
 
-    <h2>官方文档</h2>
+    <h2 id="examples">配置文件示例</h2>
+    <p>带注释的可编辑模板。将示例路由替换为 NetRoute Pro 为目标网站生成的输出。</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/linux-routes.sh" target="_blank" rel="noopener"><code>linux-routes.sh</code></a> — Bash 脚本，使用 <code>ip route add</code> 命令</li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">在 GitHub 上查看所有示例 &rarr;</a></p>
+
+    <h2 id="official-docs">官方文档</h2>
     <ul>
         <li><a href="https://man7.org/linux/man-pages/man8/ip-route.8.html" target="_blank" rel="noopener">ip-route(8) man page (en)</a></li>
         <li><a href="https://www.freedesktop.org/software/systemd/man/systemd.network.html" target="_blank" rel="noopener">systemd.network(5) (en)</a></li>
         <li><a href="https://networkmanager.dev/docs/api/latest/NetworkManager-dispatcher.html" target="_blank" rel="noopener">NetworkManager Dispatcher (en)</a></li>
         <li><a href="https://wiki.archlinux.org/title/Systemd-networkd" target="_blank" rel="noopener">Arch Wiki: systemd-networkd (en)</a></li>
+    </ul>
+
+    <h2 id="related">相关指南</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — 通过 <code>.bat</code> 文件添加路由</li>
+        <li><a href="./mikrotik.html">MikroTik</a> — RouterOS <code>.rsc</code> 脚本导入</li>
+        <li><a href="./wireguard.html">WireGuard</a> — 通过 <code>AllowedIPs</code> 分流</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — 客户端配置中的 <code>route</code> 指令</li>
     </ul>
 
     <div class="cta-block">

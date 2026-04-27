@@ -138,6 +138,16 @@
     <h1>Добавление маршрутов на Linux через .sh скрипт</h1>
     <p class="lead">NetRoute Pro генерирует простой Bash-скрипт с командами <code>ip route add</code>. Применяется одной командой. Для персистентности — один дополнительный шаг в зависимости от дистрибутива.</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>Синтаксис команды</h2>
+        <p><strong>Синтаксис:</strong></p>
+        <pre><code>ip route add &lt;CIDR&gt; via &lt;GATEWAY&gt; dev &lt;VPN_IF&gt;</code></pre>
+        <p><strong>Пример:</strong></p>
+        <pre><code>ip route add 1.1.1.0/24 via 10.0.0.1 dev wg0</code></pre>
+        <p>Выполнять от root или через <code>sudo</code>. NetRoute Pro генерирует команды в <code>.sh</code>-скрипте — запустите <code>bash routes.sh</code>.</p>
+    </section>
+
+
     <h2>Что понадобится</h2>
     <ul>
         <li>Пакет <code>iproute2</code> — есть во всех современных дистрибутивах (Ubuntu, Debian, Fedora, Arch и др.)</li>
@@ -234,12 +244,27 @@ ip addr show</code></pre>
     <h3><code>Permission denied</code></h3>
     <p>Команды <code>ip route</code> требуют root. Запускайте скрипт через <code>sudo</code>.</p>
 
-    <h2>Официальная документация</h2>
+    <h2 id="examples">Пример конфигурационного файла</h2>
+    <p>Готовый шаблон с комментариями. Замените примеры маршрутов выводом NetRoute Pro для ваших сайтов.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/linux-routes.sh" target="_blank" rel="noopener"><code>linux-routes.sh</code></a> — Bash-скрипт с командами <code>ip route add</code></li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Все примеры конфигов на GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Официальная документация</h2>
     <ul>
         <li><a href="https://man7.org/linux/man-pages/man8/ip-route.8.html" target="_blank" rel="noopener">ip-route(8) man page (en)</a></li>
         <li><a href="https://www.freedesktop.org/software/systemd/man/systemd.network.html" target="_blank" rel="noopener">systemd.network(5) (en)</a></li>
         <li><a href="https://networkmanager.dev/docs/api/latest/NetworkManager-dispatcher.html" target="_blank" rel="noopener">NetworkManager Dispatcher (en)</a></li>
         <li><a href="https://wiki.archlinux.org/title/Systemd-networkd" target="_blank" rel="noopener">Arch Wiki: systemd-networkd (en)</a></li>
+    </ul>
+
+    <h2 id="related">Похожие инструкции</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — маршруты из BAT-файла</li>
+        <li><a href="./mikrotik.html">MikroTik</a> — импорт <code>.rsc</code>-скрипта в RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> — split tunneling через <code>AllowedIPs</code></li>
+        <li><a href="./openvpn.html">OpenVPN</a> — директивы <code>route</code> в клиентском конфиге</li>
     </ul>
 
     <div class="cta-block">

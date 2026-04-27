@@ -139,6 +139,16 @@
     <h1>WireGuard 分流（AllowedIPs）</h1>
     <p class="lead">在 WireGuard 中，<code>AllowedIPs</code> 参数同时充当 ACL 过滤器和路由表。NetRoute Pro 从任何网站的域名生成可直接粘贴的 AllowedIPs 字符串 — 无需额外的 <code>ip route</code> 命令，只需编辑对端配置并重新加载。</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>命令语法</h2>
+        <p><strong>语法：</strong></p>
+        <pre><code>AllowedIPs = &lt;CIDR1&gt;, &lt;CIDR2&gt;, &lt;CIDR3&gt;</code></pre>
+        <p><strong>示例：</strong></p>
+        <pre><code>AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 162.159.0.0/16</code></pre>
+        <p>添加到 <code>wg0.conf</code> 的 <code>[Peer]</code> 部分。详见 <a href="https://www.wireguard.com/quickstart/" target="_blank" rel="noopener">WireGuard 官方 quickstart</a>。</p>
+    </section>
+
+
     <h2>准备工作</h2>
     <ul>
         <li>任何 WireGuard 客户端：
@@ -219,12 +229,27 @@ PersistentKeepalive = 25</code></pre>
     <h3><code>Error: AllowedIPs has invalid format</code></h3>
     <p>检查逗号和换行符 — AllowedIPs 必须是逗号分隔的 CIDR 列表。移除隐藏的空格、BOM 字符或多余的换行。</p>
 
-    <h2>官方文档</h2>
+    <h2 id="examples">配置文件示例</h2>
+    <p>带注释的可编辑模板。将示例路由替换为 NetRoute Pro 为目标网站生成的输出。</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/wireguard-split-tunnel.conf" target="_blank" rel="noopener"><code>wireguard-split-tunnel.conf</code></a> — WireGuard 对等配置，通过 <code>AllowedIPs</code> 实现分流</li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">在 GitHub 上查看所有示例 &rarr;</a></p>
+
+    <h2 id="official-docs">官方文档</h2>
     <ul>
         <li><a href="https://www.wireguard.com/quickstart/" target="_blank" rel="noopener">WireGuard Quick Start (en)</a></li>
         <li><a href="https://man7.org/linux/man-pages/man8/wg-quick.8.html" target="_blank" rel="noopener">wg-quick(8) man page (en)</a></li>
         <li><a href="https://man7.org/linux/man-pages/man8/wg.8.html" target="_blank" rel="noopener">wg(8) — 配置语法 (en)</a></li>
         <li><a href="https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/" target="_blank" rel="noopener">Pro Custodibus: AllowedIPs Calculator (en)</a></li>
+    </ul>
+
+    <h2 id="related">相关指南</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — 通过 <code>.bat</code> 文件添加路由</li>
+        <li><a href="./mikrotik.html">MikroTik</a> — RouterOS <code>.rsc</code> 脚本导入</li>
+        <li><a href="./linux.html">Linux</a> — 通过 shell 脚本添加 <code>ip route</code></li>
+        <li><a href="./openvpn.html">OpenVPN</a> — 客户端配置中的 <code>route</code> 指令</li>
     </ul>
 
     <div class="cta-block">

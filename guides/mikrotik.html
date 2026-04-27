@@ -137,6 +137,16 @@
     <h1>Import Routes on MikroTik via .rsc Script</h1>
     <p class="lead">MikroTik RouterOS can import <code>.rsc</code> script files containing native routing commands — and NetRoute Pro generates that format directly. Just download the script, upload it to the router, and import it in the terminal. No manual entry, no copy-pasting dozens of commands.</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>Command Syntax</h2>
+        <p><strong>Syntax:</strong></p>
+        <pre><code>/ip route add dst-address=&lt;CIDR&gt; gateway=&lt;GATEWAY&gt; distance=1</code></pre>
+        <p><strong>Example:</strong></p>
+        <pre><code>/ip route add dst-address=1.1.1.0/24 gateway=wg-out distance=1</code></pre>
+        <p>NetRoute Pro generates these commands as a <code>.rsc</code> file imported via <code>/import file=routes.rsc</code> in the terminal.</p>
+    </section>
+
+
     <h2>Prerequisites</h2>
     <ul>
         <li>MikroTik router running RouterOS 6.x or 7.x</li>
@@ -235,11 +245,26 @@ traceroute example.com  # Linux/macOS</code></pre>
     <h3>For advanced users: BGP</h3>
     <p>At very large scale, run BGP peering with a route server and import prefixes dynamically rather than managing static routes. This is out of scope for this guide, but RouterOS has full BGP support built in.</p>
 
-    <h2>References</h2>
+    <h2 id="examples">Example Configuration File</h2>
+    <p>Ready-to-edit template with inline comments. Replace the example routes with output from NetRoute Pro for your target sites.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/mikrotik-routes.rsc" target="_blank" rel="noopener"><code>mikrotik-routes.rsc</code></a> — RouterOS <code>/import</code> script with route definitions</li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">View all example configs on GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Official Documentation</h2>
     <ul>
         <li><a href="https://help.mikrotik.com/docs/spaces/ROS/pages/328084/IP+Routing" target="_blank" rel="noopener">RouterOS: IP Routing (official)</a></li>
         <li><a href="https://help.mikrotik.com/docs/spaces/ROS/pages/130220135/Address-lists" target="_blank" rel="noopener">RouterOS: Address Lists</a></li>
         <li><a href="https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting" target="_blank" rel="noopener">RouterOS: Scripting (import)</a></li>
+    </ul>
+
+    <h2 id="related">Related Guides</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — Routes from <code>.bat</code> file upload</li>
+        <li><a href="./wireguard.html">WireGuard</a> — split tunneling with <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> — <code>ip route</code> via shell script</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — client config <code>route</code> directives</li>
     </ul>
 
     <div class="cta-block">

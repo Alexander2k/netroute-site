@@ -138,6 +138,16 @@
     <h1>从 .bat 文件导入路由到 Keenetic</h1>
     <p class="lead">Keenetic 可以上传 Windows <code>route ADD</code> 格式的文件并自动将所有路由应用到选定的接口。NetRoute Pro 正是生成此类文件 — 您只需下载并上传即可。</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>命令语法</h2>
+        <p><strong>语法：</strong></p>
+        <pre><code>new-netroute -destinationprefix &lt;CIDR&gt; -nexthop &lt;GATEWAY&gt; -interface &lt;VPN_IF&gt;</code></pre>
+        <p><strong>示例：</strong></p>
+        <pre><code>new-netroute -destinationprefix 1.1.1.0/24 -nexthop 0.0.0.0 -interface Wireguard0</code></pre>
+        <p>NetRoute Pro 生成的 .bat 文件中的等效行：<code>route ADD 1.1.1.0 MASK 255.255.255.0 0.0.0.0</code>。上传 <code>.bat</code> 时路由会自动绑定到所选的 VPN 接口。</p>
+    </section>
+
+
     <h2>准备工作</h2>
     <ul>
         <li>已配置 VPN 隧道（WireGuard、OpenVPN、IKEv2、OpenConnect 等）的 Keenetic 路由器</li>
@@ -221,11 +231,26 @@ traceroute example.com  # Linux/macOS</code></pre>
     <h3>高级用户：CLI</h3>
     <p>要以编程方式自动化或管理路由，请通过 SSH/Telnet 连接并在 config 模式下使用 <code>ip route</code> 命令。但在大多数情况下，.bat 上传就足够了。</p>
 
-    <h2>官方文档</h2>
+    <h2 id="examples">配置文件示例</h2>
+    <p>带注释的可编辑模板。将示例路由替换为 NetRoute Pro 为目标网站生成的输出。</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/keenetic-routes.bat" target="_blank" rel="noopener"><code>keenetic-routes.bat</code></a> — Windows <code>route ADD</code> 格式，可上传到 Keenetic</li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">在 GitHub 上查看所有示例 &rarr;</a></p>
+
+    <h2 id="official-docs">官方文档</h2>
     <ul>
         <li><a href="https://help.keenetic.com/" target="_blank" rel="noopener">Keenetic Help Center (en)</a></li>
         <li><a href="https://help.keenetic.com/hc/en-us/articles/213965789" target="_blank" rel="noopener">Keenetic: Routing (en)</a></li>
         <li><a href="https://help.keenetic.com/hc/en-us/categories/213952985" target="_blank" rel="noopener">Keenetic CLI Reference (en)</a></li>
+    </ul>
+
+    <h2 id="related">相关指南</h2>
+    <ul>
+        <li><a href="./mikrotik.html">MikroTik</a> — RouterOS <code>.rsc</code> 脚本导入</li>
+        <li><a href="./wireguard.html">WireGuard</a> — 通过 <code>AllowedIPs</code> 分流</li>
+        <li><a href="./linux.html">Linux</a> — 通过 shell 脚本添加 <code>ip route</code></li>
+        <li><a href="./openvpn.html">OpenVPN</a> — 客户端配置中的 <code>route</code> 指令</li>
     </ul>
 
     <div class="cta-block">

@@ -139,6 +139,16 @@
     <h1>向 OpenVPN 客户端配置添加路由</h1>
     <p class="lead">OpenVPN 在客户端配置中支持按子网的 <code>route</code> 指令。NetRoute Pro 从任何网站的域名生成这些指令 — 添加到 <code>.ovpn</code> 中，几分钟内即可实现分流。</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>命令语法</h2>
+        <p><strong>语法：</strong></p>
+        <pre><code>route &lt;NETWORK&gt; &lt;NETMASK&gt;</code></pre>
+        <p><strong>示例：</strong></p>
+        <pre><code>route 1.1.1.0 255.255.255.0</code></pre>
+        <p>将这些指令添加到客户端的 <code>.ovpn</code> 文件。配合 <code>route-nopull</code> 仅这些路由通过 VPN。参见 <a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-6/" target="_blank" rel="noopener">OpenVPN 2.6 手册</a>。</p>
+    </section>
+
+
     <h2>准备工作</h2>
     <ul>
         <li>OpenVPN 2.4 或更高版本（客户端和服务器）</li>
@@ -218,11 +228,26 @@ push "route 172.67.0.0 255.255.0.0"</code></pre>
     <h3>路由已添加但流量未通过 VPN</h3>
     <p>通常表示 VPN 接口上没有 NAT — 需在服务器端修复。验证服务器配置中存在 <code>push "route ..."</code> 且 iptables/防火墙上启用了相应子网的 masquerade。</p>
 
-    <h2>官方文档</h2>
+    <h2 id="examples">配置文件示例</h2>
+    <p>带注释的可编辑模板。将示例路由替换为 NetRoute Pro 为目标网站生成的输出。</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/openvpn-routes.ovpn" target="_blank" rel="noopener"><code>openvpn-routes.ovpn</code></a> — OpenVPN 客户端配置片段，包含 <code>route</code> 指令</li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">在 GitHub 上查看所有示例 &rarr;</a></p>
+
+    <h2 id="official-docs">官方文档</h2>
     <ul>
         <li><a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-6/" target="_blank" rel="noopener">OpenVPN Reference Manual 2.6 (en)</a></li>
         <li><a href="https://openvpn.net/community-resources/setting-up-routing/" target="_blank" rel="noopener">Setting up Routing (en)</a></li>
         <li><a href="https://openvpn.net/community-resources/how-to/" target="_blank" rel="noopener">OpenVPN How-To (en)</a></li>
+    </ul>
+
+    <h2 id="related">相关指南</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — 通过 <code>.bat</code> 文件添加路由</li>
+        <li><a href="./mikrotik.html">MikroTik</a> — RouterOS <code>.rsc</code> 脚本导入</li>
+        <li><a href="./wireguard.html">WireGuard</a> — 通过 <code>AllowedIPs</code> 分流</li>
+        <li><a href="./linux.html">Linux</a> — 通过 shell 脚本添加 <code>ip route</code></li>
     </ul>
 
     <div class="cta-block">

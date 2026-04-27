@@ -137,6 +137,16 @@
     <h1>Add Routes to OpenVPN Client Config</h1>
     <p class="lead">OpenVPN supports per-network <code>route</code> directives in the client config. NetRoute Pro generates these directives from any website's domains — add them to your <code>.ovpn</code> and you have split tunneling in minutes.</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>Command Syntax</h2>
+        <p><strong>Syntax:</strong></p>
+        <pre><code>route &lt;NETWORK&gt; &lt;NETMASK&gt;</code></pre>
+        <p><strong>Example:</strong></p>
+        <pre><code>route 1.1.1.0 255.255.255.0</code></pre>
+        <p>Add directives to your client <code>.ovpn</code> file. With <code>route-nopull</code> set, only these routes are pushed via VPN. See the <a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-6/" target="_blank" rel="noopener">OpenVPN 2.6 manual</a>.</p>
+    </section>
+
+
     <h2>Prerequisites</h2>
     <ul>
         <li>OpenVPN 2.4 or newer</li>
@@ -217,11 +227,26 @@ push "route 172.67.182.0 255.255.255.0"</code></pre>
     <h3>Routes added but traffic doesn't go through VPN</h3>
     <p>The routes are correct, but the VPN server isn't NAT-ing your traffic for those destinations. This is a server-side fix — the administrator needs to enable masquerade/NAT for the client subnet on the VPN interface.</p>
 
-    <h2>References</h2>
+    <h2 id="examples">Example Configuration File</h2>
+    <p>Ready-to-edit template with inline comments. Replace the example routes with output from NetRoute Pro for your target sites.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/openvpn-routes.ovpn" target="_blank" rel="noopener"><code>openvpn-routes.ovpn</code></a> — OpenVPN client config snippet with <code>route</code> directives</li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">View all example configs on GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Official Documentation</h2>
     <ul>
         <li><a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-6/" target="_blank" rel="noopener">OpenVPN Reference Manual 2.6</a></li>
         <li><a href="https://openvpn.net/community-resources/setting-up-routing/" target="_blank" rel="noopener">Setting up Routing (OpenVPN Community)</a></li>
         <li><a href="https://openvpn.net/community-resources/how-to/" target="_blank" rel="noopener">OpenVPN How-To</a></li>
+    </ul>
+
+    <h2 id="related">Related Guides</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — Routes from <code>.bat</code> file upload</li>
+        <li><a href="./mikrotik.html">MikroTik</a> — RouterOS <code>.rsc</code> script import</li>
+        <li><a href="./wireguard.html">WireGuard</a> — split tunneling with <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> — <code>ip route</code> via shell script</li>
     </ul>
 
     <div class="cta-block">

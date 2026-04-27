@@ -138,6 +138,16 @@
     <h1>Добавление маршрутов в OpenVPN клиент-конфиг</h1>
     <p class="lead">OpenVPN поддерживает попоподсеточные <code>route</code> директивы в клиент-конфиге. NetRoute Pro генерирует их из доменов любого сайта — добавьте в <code>.ovpn</code> и split tunneling готов за минуту.</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>Синтаксис команды</h2>
+        <p><strong>Синтаксис:</strong></p>
+        <pre><code>route &lt;NETWORK&gt; &lt;NETMASK&gt;</code></pre>
+        <p><strong>Пример:</strong></p>
+        <pre><code>route 1.1.1.0 255.255.255.0</code></pre>
+        <p>Добавьте директивы в клиентский <code>.ovpn</code> файл. С <code>route-nopull</code> через VPN пойдут только эти маршруты. См. <a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-6/" target="_blank" rel="noopener">мануал OpenVPN 2.6</a>.</p>
+    </section>
+
+
     <h2>Что понадобится</h2>
     <ul>
         <li>OpenVPN 2.4+</li>
@@ -221,11 +231,26 @@ ip route                 # Linux / macOS</code></pre>
     <h3>Маршруты применились, но трафик не идёт через VPN</h3>
     <p>На VPN-интерфейсе сервера не включён NAT. Правьте серверную часть: на Linux — iptables MASQUERADE для VPN-подсети, на готовых решениях — включить опцию NAT в панели.</p>
 
-    <h2>Официальная документация</h2>
+    <h2 id="examples">Пример конфигурационного файла</h2>
+    <p>Готовый шаблон с комментариями. Замените примеры маршрутов выводом NetRoute Pro для ваших сайтов.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/openvpn-routes.ovpn" target="_blank" rel="noopener"><code>openvpn-routes.ovpn</code></a> — Фрагмент клиентского конфига OpenVPN с директивами <code>route</code></li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Все примеры конфигов на GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Официальная документация</h2>
     <ul>
         <li><a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-6/" target="_blank" rel="noopener">OpenVPN Reference Manual 2.6 (en)</a></li>
         <li><a href="https://openvpn.net/community-resources/setting-up-routing/" target="_blank" rel="noopener">Setting up Routing (en)</a></li>
         <li><a href="https://openvpn.net/community-resources/how-to/" target="_blank" rel="noopener">OpenVPN How-To (en)</a></li>
+    </ul>
+
+    <h2 id="related">Похожие инструкции</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — маршруты из BAT-файла</li>
+        <li><a href="./mikrotik.html">MikroTik</a> — импорт <code>.rsc</code>-скрипта в RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> — split tunneling через <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> — <code>ip route</code> через shell-скрипт</li>
     </ul>
 
     <div class="cta-block">

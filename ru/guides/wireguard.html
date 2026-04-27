@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Split Tunneling в WireGuard через AllowedIPs — инструкция | NetRoute Pro</title>
-    <meta name="description" content="Как направить отдельные сайты через WireGuard VPN настройкой AllowedIPs. Генерируем AllowedIPs из доменов в NetRoute Pro, вставляем в конфиг пира, перезапускаем туннель. Работает на Linux, Windows, macOS, Android, iOS и роутерах.">
+    <meta name="description" content="Направьте отдельные сайты через WireGuard VPN настройкой AllowedIPs. Сгенерируйте список из доменов в NetRoute Pro, вставьте в конфиг пира, перезапустите туннель.">
     <meta name="keywords" content="wireguard allowedips генератор, wireguard split tunnel, wireguard маршрутизация по доменам, wg-quick allowedips, wireguard конфиг пира, выборочная маршрутизация wireguard">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/guides/wireguard.html">
@@ -138,6 +138,16 @@
     <h1>Split Tunneling в WireGuard через AllowedIPs</h1>
     <p class="lead">В WireGuard параметр <code>AllowedIPs</code> одновременно и ACL-фильтр, и таблица маршрутизации. NetRoute Pro генерирует готовую строку <code>AllowedIPs</code> из доменов любого сайта — дополнительные <code>ip route</code> команды не нужны, просто отредактируйте конфиг пира и перезапустите туннель.</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>Синтаксис команды</h2>
+        <p><strong>Синтаксис:</strong></p>
+        <pre><code>AllowedIPs = &lt;CIDR1&gt;, &lt;CIDR2&gt;, &lt;CIDR3&gt;</code></pre>
+        <p><strong>Пример:</strong></p>
+        <pre><code>AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 162.159.0.0/16</code></pre>
+        <p>Добавьте в секцию <code>[Peer]</code> файла <code>wg0.conf</code>. Описано в <a href="https://www.wireguard.com/quickstart/" target="_blank" rel="noopener">официальном quickstart WireGuard</a>.</p>
+    </section>
+
+
     <h2>Что понадобится</h2>
     <ul>
         <li>Любой клиент WireGuard: <code>wg-quick</code> на Linux, WireGuard GUI на Windows/macOS, мобильные приложения Android/iOS или роутер с WireGuard</li>
@@ -217,12 +227,27 @@ traceroute example.com  # Linux/macOS</code></pre>
     <h3><code>Error: AllowedIPs has invalid format</code></h3>
     <p>Проверьте запятые и переносы строк в конфиге: подсети в одну строку, разделены запятой с пробелом. Никаких лишних переносов внутри значения.</p>
 
-    <h2>Официальная документация</h2>
+    <h2 id="examples">Пример конфигурационного файла</h2>
+    <p>Готовый шаблон с комментариями. Замените примеры маршрутов выводом NetRoute Pro для ваших сайтов.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/wireguard-split-tunnel.conf" target="_blank" rel="noopener"><code>wireguard-split-tunnel.conf</code></a> — Конфиг пира WireGuard со сплит-туннелем через <code>AllowedIPs</code></li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Все примеры конфигов на GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Официальная документация</h2>
     <ul>
         <li><a href="https://www.wireguard.com/quickstart/" target="_blank" rel="noopener">WireGuard Quick Start (en)</a></li>
         <li><a href="https://man7.org/linux/man-pages/man8/wg-quick.8.html" target="_blank" rel="noopener">wg-quick(8) man page (en)</a></li>
         <li><a href="https://man7.org/linux/man-pages/man8/wg.8.html" target="_blank" rel="noopener">wg(8) — синтаксис конфига (en)</a></li>
         <li><a href="https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/" target="_blank" rel="noopener">Pro Custodibus: AllowedIPs Calculator (en)</a></li>
+    </ul>
+
+    <h2 id="related">Похожие инструкции</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — маршруты из BAT-файла</li>
+        <li><a href="./mikrotik.html">MikroTik</a> — импорт <code>.rsc</code>-скрипта в RouterOS</li>
+        <li><a href="./linux.html">Linux</a> — <code>ip route</code> через shell-скрипт</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — директивы <code>route</code> в клиентском конфиге</li>
     </ul>
 
     <div class="cta-block">

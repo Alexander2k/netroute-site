@@ -138,6 +138,16 @@
     <h1>通过 .rsc 脚本导入路由到 MikroTik</h1>
     <p class="lead">MikroTik 可以导入包含路由命令的 .rsc 脚本文件。NetRoute Pro 正是生成此格式 — 只需下载、上传并导入。</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>命令语法</h2>
+        <p><strong>语法：</strong></p>
+        <pre><code>/ip route add dst-address=&lt;CIDR&gt; gateway=&lt;GATEWAY&gt; distance=1</code></pre>
+        <p><strong>示例：</strong></p>
+        <pre><code>/ip route add dst-address=1.1.1.0/24 gateway=wg-out distance=1</code></pre>
+        <p>NetRoute Pro 将这些命令生成为 <code>.rsc</code> 文件，通过终端中的 <code>/import file=routes.rsc</code> 导入。</p>
+    </section>
+
+
     <h2>准备工作</h2>
     <ul>
         <li>配备 RouterOS 6.x 或 7.x 的 MikroTik 路由器</li>
@@ -220,11 +230,26 @@
     <h3>高级用户：BGP</h3>
     <p>对于大规模场景（数万条路由或多个站点），可以在 MikroTik 上配置 BGP 对等，从上游动态接收前缀。这超出了本指南的范围，但 RouterOS 通过 <code>/routing/bgp</code> 完全支持 BGP。</p>
 
-    <h2>官方文档</h2>
+    <h2 id="examples">配置文件示例</h2>
+    <p>带注释的可编辑模板。将示例路由替换为 NetRoute Pro 为目标网站生成的输出。</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/mikrotik-routes.rsc" target="_blank" rel="noopener"><code>mikrotik-routes.rsc</code></a> — RouterOS <code>/import</code> 脚本，包含路由定义</li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">在 GitHub 上查看所有示例 &rarr;</a></p>
+
+    <h2 id="official-docs">官方文档</h2>
     <ul>
         <li><a href="https://help.mikrotik.com/docs/spaces/ROS/pages/328084/IP+Routing" target="_blank" rel="noopener">RouterOS: IP Routing (en)</a></li>
         <li><a href="https://help.mikrotik.com/docs/spaces/ROS/pages/130220135/Address-lists" target="_blank" rel="noopener">RouterOS: Address Lists (en)</a></li>
         <li><a href="https://help.mikrotik.com/docs/spaces/ROS/pages/47579229/Scripting" target="_blank" rel="noopener">RouterOS: Scripting / import (en)</a></li>
+    </ul>
+
+    <h2 id="related">相关指南</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — 通过 <code>.bat</code> 文件添加路由</li>
+        <li><a href="./wireguard.html">WireGuard</a> — 通过 <code>AllowedIPs</code> 分流</li>
+        <li><a href="./linux.html">Linux</a> — 通过 shell 脚本添加 <code>ip route</code></li>
+        <li><a href="./openvpn.html">OpenVPN</a> — 客户端配置中的 <code>route</code> 指令</li>
     </ul>
 
     <div class="cta-block">

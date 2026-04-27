@@ -137,6 +137,16 @@
     <h1>Importar rutas en Keenetic desde archivo .bat</h1>
     <p class="lead">Keenetic puede cargar un archivo en formato <code>route ADD</code> de Windows y aplicar automáticamente todas las rutas a una interfaz seleccionada. NetRoute Pro genera exactamente ese archivo — solo tienes que descargarlo y subirlo.</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>Sintaxis del comando</h2>
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code>new-netroute -destinationprefix &lt;CIDR&gt; -nexthop &lt;GATEWAY&gt; -interface &lt;VPN_IF&gt;</code></pre>
+        <p><strong>Ejemplo:</strong></p>
+        <pre><code>new-netroute -destinationprefix 1.1.1.0/24 -nexthop 0.0.0.0 -interface Wireguard0</code></pre>
+        <p>Línea equivalente del .bat generado por NetRoute Pro: <code>route ADD 1.1.1.0 MASK 255.255.255.0 0.0.0.0</code>. La carga del <code>.bat</code> vincula las rutas al interfaz VPN seleccionada automáticamente.</p>
+    </section>
+
+
     <h2>Requisitos previos</h2>
     <ul>
         <li>Router Keenetic con un túnel VPN configurado (WireGuard, OpenVPN, IKEv2, OpenConnect, etc.)</li>
@@ -220,11 +230,26 @@ traceroute example.com  # Linux/macOS</code></pre>
     <h3>Para usuarios avanzados: CLI</h3>
     <p>Para automatizar o gestionar rutas programáticamente, conecta por SSH/Telnet y usa comandos <code>ip route</code> en modo config. Pero para la mayoría de casos, la subida de .bat es suficiente.</p>
 
-    <h2>Documentación oficial</h2>
+    <h2 id="examples">Archivo de configuración de ejemplo</h2>
+    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute Pro para tus sitios.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/keenetic-routes.bat" target="_blank" rel="noopener"><code>keenetic-routes.bat</code></a> — Formato <code>route ADD</code> de Windows listo para cargar en Keenetic</li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Ver todos los ejemplos en GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Documentación oficial</h2>
     <ul>
         <li><a href="https://help.keenetic.com/" target="_blank" rel="noopener">Keenetic Help Center (en)</a></li>
         <li><a href="https://help.keenetic.com/hc/en-us/articles/213965789" target="_blank" rel="noopener">Keenetic: Routing (en)</a></li>
         <li><a href="https://help.keenetic.com/hc/en-us/categories/213952985" target="_blank" rel="noopener">Keenetic CLI Reference (en)</a></li>
+    </ul>
+
+    <h2 id="related">Guías relacionadas</h2>
+    <ul>
+        <li><a href="./mikrotik.html">MikroTik</a> — importación de script <code>.rsc</code> de RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> — split tunneling con <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> — <code>ip route</code> con script shell</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — directivas <code>route</code> en config cliente</li>
     </ul>
 
     <div class="cta-block">

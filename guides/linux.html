@@ -137,6 +137,16 @@
     <h1>Add Routes on Linux via .sh Script</h1>
     <p class="lead">NetRoute Pro generates a plain Bash script with <code>ip route add</code> commands. Apply it with one command for instant routes. Persistence requires one extra step depending on your distro.</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>Command Syntax</h2>
+        <p><strong>Syntax:</strong></p>
+        <pre><code>ip route add &lt;CIDR&gt; via &lt;GATEWAY&gt; dev &lt;VPN_IF&gt;</code></pre>
+        <p><strong>Example:</strong></p>
+        <pre><code>ip route add 1.1.1.0/24 via 10.0.0.1 dev wg0</code></pre>
+        <p>Run as root or with <code>sudo</code>. NetRoute Pro generates these as a <code>.sh</code> script — apply with <code>bash routes.sh</code>.</p>
+    </section>
+
+
     <h2>Prerequisites</h2>
     <ul>
         <li><code>iproute2</code> (preinstalled on virtually all modern distros — Ubuntu, Debian, Fedora, Arch, etc.)</li>
@@ -232,12 +242,27 @@ sudo bash unroutes.sh</code></pre>
     <h3>Permission denied</h3>
     <p><code>ip route add</code> needs root. Always invoke with <code>sudo</code>.</p>
 
-    <h2>References</h2>
+    <h2 id="examples">Example Configuration File</h2>
+    <p>Ready-to-edit template with inline comments. Replace the example routes with output from NetRoute Pro for your target sites.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/linux-routes.sh" target="_blank" rel="noopener"><code>linux-routes.sh</code></a> — Bash script with <code>ip route add</code> commands</li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">View all example configs on GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Official Documentation</h2>
     <ul>
         <li><a href="https://man7.org/linux/man-pages/man8/ip-route.8.html" target="_blank" rel="noopener">ip-route(8) man page</a></li>
         <li><a href="https://www.freedesktop.org/software/systemd/man/systemd.network.html" target="_blank" rel="noopener">systemd.network(5)</a></li>
         <li><a href="https://networkmanager.dev/docs/api/latest/NetworkManager-dispatcher.html" target="_blank" rel="noopener">NetworkManager Dispatcher</a></li>
         <li><a href="https://wiki.archlinux.org/title/Systemd-networkd" target="_blank" rel="noopener">Arch Wiki: systemd-networkd</a></li>
+    </ul>
+
+    <h2 id="related">Related Guides</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — Routes from <code>.bat</code> file upload</li>
+        <li><a href="./mikrotik.html">MikroTik</a> — RouterOS <code>.rsc</code> script import</li>
+        <li><a href="./wireguard.html">WireGuard</a> — split tunneling with <code>AllowedIPs</code></li>
+        <li><a href="./openvpn.html">OpenVPN</a> — client config <code>route</code> directives</li>
     </ul>
 
     <div class="cta-block">

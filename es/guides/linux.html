@@ -138,6 +138,16 @@
     <h1>Añadir rutas en Linux mediante script .sh</h1>
     <p class="lead">NetRoute Pro genera un script Bash simple con comandos <code>ip route add</code>. Se aplica con un solo comando. Hacer las rutas persistentes entre reinicios requiere un paso extra según tu distribución.</p>
 
+    <section id="syntax" class="syntax-block">
+        <h2>Sintaxis del comando</h2>
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code>ip route add &lt;CIDR&gt; via &lt;GATEWAY&gt; dev &lt;VPN_IF&gt;</code></pre>
+        <p><strong>Ejemplo:</strong></p>
+        <pre><code>ip route add 1.1.1.0/24 via 10.0.0.1 dev wg0</code></pre>
+        <p>Ejecuta como root o con <code>sudo</code>. NetRoute Pro las genera en un script <code>.sh</code> — aplícalas con <code>bash routes.sh</code>.</p>
+    </section>
+
+
     <h2>Requisitos previos</h2>
     <ul>
         <li><code>iproute2</code> (preinstalado en casi todas las distros: Ubuntu, Debian, Fedora, Arch)</li>
@@ -226,12 +236,27 @@ sudo crontab -e</code></pre>
     <h3>Las rutas no se aplican tras reiniciar</h3>
     <p>No configuraste persistencia. Elige una de las tres opciones del Paso 3.</p>
 
-    <h2>Documentación oficial</h2>
+    <h2 id="examples">Archivo de configuración de ejemplo</h2>
+    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute Pro para tus sitios.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/linux-routes.sh" target="_blank" rel="noopener"><code>linux-routes.sh</code></a> — Script Bash con comandos <code>ip route add</code></li>
+    </ul>
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Ver todos los ejemplos en GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Documentación oficial</h2>
     <ul>
         <li><a href="https://man7.org/linux/man-pages/man8/ip-route.8.html" target="_blank" rel="noopener">ip-route(8) man page (en)</a></li>
         <li><a href="https://www.freedesktop.org/software/systemd/man/systemd.network.html" target="_blank" rel="noopener">systemd.network(5) (en)</a></li>
         <li><a href="https://networkmanager.dev/docs/api/latest/NetworkManager-dispatcher.html" target="_blank" rel="noopener">NetworkManager Dispatcher (en)</a></li>
         <li><a href="https://wiki.archlinux.org/title/Systemd-networkd" target="_blank" rel="noopener">Arch Wiki: systemd-networkd (en)</a></li>
+    </ul>
+
+    <h2 id="related">Guías relacionadas</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> — rutas desde archivo <code>.bat</code></li>
+        <li><a href="./mikrotik.html">MikroTik</a> — importación de script <code>.rsc</code> de RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> — split tunneling con <code>AllowedIPs</code></li>
+        <li><a href="./openvpn.html">OpenVPN</a> — directivas <code>route</code> en config cliente</li>
     </ul>
 
     <div class="cta-block">
