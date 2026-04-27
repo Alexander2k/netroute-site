@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Free WireGuard, Keenetic, MikroTik & Cisco Route Generator — NetRoute Pro Chrome Extension</title>
     <meta name="description" content="Free Chrome extension that generates VPN split tunneling routes from any website. WireGuard AllowedIPs, Keenetic .bat, MikroTik .rsc, Cisco, OpenVPN. Privacy-first.">
     <meta name="keywords" content="route generator, vpn route generator, domain to ip route, split tunnel vpn by domain, wireguard allowedips calculator, wireguard allowedips generator, wireguard allowedips from domains, mikrotik route add, mikrotik domain bypass, mikrotik address list generator, keenetic vpn routes, openwrt route generator, vpn split tunneling routes, generate ip routes from domains, cisco ip route generator, openvpn route generator, CIDR aggregation tool, BGP route optimization, DNS resolver chrome extension, domain based routing, selective vpn routing, network route automation, vpn uk, uk vpn routes, vpn split tunnel uk">
@@ -43,11 +44,12 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="icon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="preload" as="style" href="style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"></noscript>
     <!-- Structured Data -->
     <script type="application/ld+json">
     {

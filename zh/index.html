@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>WireGuard、Keenetic、MikroTik、Cisco 路由生成器 — NetRoute Pro Chrome 扩展</title>
     <meta name="description" content="免费Chrome扩展：从网站域名生成VPN分流路由。支持WireGuard AllowedIPs、Keenetic .bat、MikroTik .rsc、Cisco、OpenVPN。隐私优先，无数据收集。">
     <meta name="keywords" content="路由生成器, 域名转IP路由, wireguard allowedips生成器, mikrotik路由, vpn分流路由, cisco ip route生成器, openvpn路由, CIDR聚合工具, BGP路由优化, DNS解析器, 网络路由自动化, 选择性VPN路由">
@@ -41,11 +42,12 @@
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="icon" type="image/png" href="../favicon.png">
     <link rel="apple-touch-icon" href="../icon.png">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="preload" as="style" href="../style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../style.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"></noscript>
     <style>
         body { font-family: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif; }
     </style>

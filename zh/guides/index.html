@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>所有平台的路由指南 | NetRoute Pro</title>
     <meta name="description" content="在所有主要路由器和平台上添加路由的分步指南：Keenetic、MikroTik、OpenWrt、Cisco、Juniper、Windows、Linux、macOS、WireGuard、OpenVPN。">
     <meta name="keywords" content="路由指南, 添加路由 路由器, vpn路由教程, 静态路由教程, keenetic mikrotik openwrt cisco 指南">
@@ -23,10 +24,12 @@
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="preload" as="style" href="../../style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../../style.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"></noscript>
 
     <script type="application/ld+json">
     {

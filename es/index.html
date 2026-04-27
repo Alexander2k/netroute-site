@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Generador de rutas WireGuard, Keenetic, MikroTik, Cisco — NetRoute Pro | Extensión Chrome</title>
     <meta name="description" content="Extensión gratuita de Chrome para generar rutas VPN split tunneling desde dominios. WireGuard AllowedIPs, Keenetic, MikroTik, Cisco, OpenVPN. Sin recopilación de datos.">
     <meta name="keywords" content="generador de rutas, dominio a ruta ip, wireguard allowedips generador, mikrotik rutas, vpn split tunneling rutas, cisco ip route generador, openvpn rutas, agregación CIDR, optimización BGP, resolución DNS, automatización de rutas de red, enrutamiento selectivo VPN">
@@ -41,11 +42,12 @@
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="icon" type="image/png" href="../favicon.png">
     <link rel="apple-touch-icon" href="../icon.png">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="preload" as="style" href="../style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../style.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"></noscript>
     <!-- Structured Data -->
     <script type="application/ld+json">
     {

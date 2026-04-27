@@ -432,6 +432,38 @@ def check_guide_examples(path: str, content: str, fails: Failures):
         fails.add(path, 'guide page has examples anchor but no github.com link')
 
 
+def check_csp_meta(path: str, content: str, fails: Failures):
+    """Each HTML file must declare a Content-Security-Policy via <meta http-equiv>.
+    Required directives: default-src, frame-ancestors (clickjacking defense),
+    base-uri (prevents <base> injection). Static hosting can't set HTTP headers,
+    so meta-CSP is our only knob.
+    """
+    m = re.search(
+        r'<meta\s+http-equiv="Content-Security-Policy"\s+content="([^"]+)"',
+        content, re.IGNORECASE,
+    )
+    if not m:
+        fails.add(path, 'missing <meta http-equiv="Content-Security-Policy">')
+        return
+    policy = m.group(1)
+    for directive in ('default-src', 'frame-ancestors', 'base-uri'):
+        if directive not in policy:
+            fails.add(path, f'CSP missing directive "{directive}"')
+
+
+def check_no_render_blocking_css(path: str, content: str, fails: Failures):
+    """Stylesheets loaded synchronously block first paint and hurt LCP/FCP.
+    Each <link rel="stylesheet"> should either (a) be inside <noscript> as a
+    fallback, or (b) come from a <link rel="preload" as="style" onload=...>
+    pair. Any sync <link rel="stylesheet"> outside <noscript> fails this check.
+    """
+    # Strip <noscript> blocks (sync stylesheets there are intentional fallbacks)
+    stripped = re.sub(r'<noscript>.*?</noscript>', '', content, flags=re.DOTALL)
+    blockers = re.findall(r'<link\s+[^>]*rel="stylesheet"[^>]*>', stripped)
+    for b in blockers:
+        fails.add(path, f'render-blocking stylesheet: {b}')
+
+
 def check_404_navigation(fails: Failures):
     """404.html must offer navigation back to key destinations: home,
     guides hub, and ideally the 5 platform guides — so a wrong URL still
@@ -536,6 +568,8 @@ def main():
         check_guide_inline_example(path, content, fails)
         check_guide_comments_toggle_note(path, content, fails)
         check_guide_article_schema(path, content, fails)
+        check_no_render_blocking_css(path, content, fails)
+        check_csp_meta(path, content, fails)
     check_sitemap(fails)
     check_404_navigation(fails)
 
