@@ -203,7 +203,7 @@
         <li>Откройте нужный сайт в Chrome</li>
         <li>Запустите расширение <strong>NetRoute Pro</strong></li>
         <li>Выберите платформу <strong>MikroTik</strong></li>
-        <li>Укажите шлюз — IP вашего VPN-интерфейса (в отличие от Keenetic, здесь шлюз используется)</li>
+        <li>Укажите шлюз как <strong>имя VPN-интерфейса</strong> (например <code>wg-out</code>, <code>ovpn-out</code>, <code>l2tp-out1</code>) — рекомендуемая форма. Имя интерфейса работает независимо от того как VPN-провайдер раздаёт peer IP. Указание IP-адреса (<code>10.0.0.1</code>) сработает только если этот IP &laquo;directly reachable&raquo;; для типичных коммерческих WireGuard-настроек (Mullvad, ProtonVPN, IVPN) peer назначается как <code>/32</code> и форма с IP вернёт <code>gateway not directly reachable</code>.</li>
         <li>Маска агрегации <code>/24</code> (рекомендуется)</li>
         <li>Нажмите <strong>Analyze Website</strong></li>
         <li>Скачайте результат как <strong>.rsc</strong> файл</li>
@@ -228,8 +228,9 @@
     <p>RouterOS выведет прогресс импорта. Все команды из файла будут применены — маршруты появятся в <code>/ip route</code>.</p>
 
     <p>Пример содержимого <code>.rsc</code>:</p>
-    <pre><code>/ip route add dst-address=104.21.32.0/24 gateway=10.0.0.1
-/ip route add dst-address=172.67.182.0/24 gateway=10.0.0.1</code></pre>
+    <pre><code>/ip route add dst-address=104.21.32.0/24 gateway=wg-out
+/ip route add dst-address=172.67.182.0/24 gateway=wg-out</code></pre>
+    <p>Замените <code>wg-out</code> на реальное имя вашего VPN-интерфейса (видно в выводе <code>/interface print</code>).</p>
 
     <div class="callout">
         <strong>Почему это удобно:</strong> один файл — сотни маршрутов одним махом, без ручного ввода и без GUI. Повторный импорт обновит конфигурацию.
@@ -258,6 +259,37 @@
             <pre><code>/interface/wireguard/peers/set [find] allowed-address=...</code></pre>
         </li>
     </ol>
+
+    <h2 id="dns-leak">DNS leak &mdash; обязательно прочитать</h2>
+    <p>Статические маршруты на RouterOS направляют трафик <em>по IP</em>. <strong>DNS они не направляют.</strong> LAN-клиент всё равно спрашивает DNS-сервис роутера (по умолчанию форвардит на ISP), какой IP у <code>example.com</code> &mdash; через VPN идёт только IP-трафик. ISP видит какие сайты посещаются, даже если данные зашифрованы.</p>
+    <p>Три варианта в зависимости от модели угроз:</p>
+    <ol>
+        <li><strong>Полностью спрятать DNS от ISP (split-DNS).</strong> Заставьте DNS-сервис роутера использовать внутренний резолвер вашего VPN-провайдера:
+            <pre><code>/ip dns set servers=10.0.0.1 allow-remote-requests=yes</code></pre>
+            Для конкретных доменов через VPN-резолвер используйте статические DNS-правила:
+            <pre><code>/ip dns static add type=FWD name=example.com forward-to=10.0.0.1</code></pre>
+        </li>
+        <li><strong>Снизить видимость для ISP (DoH).</strong> RouterOS 7+ нативно поддерживает DoH:
+            <pre><code>/ip dns set use-doh-server=https://cloudflare-dns.com/dns-query verify-doh-cert=yes</code></pre>
+            Замените на AdGuard (<code>https://dns.adguard-dns.com/dns-query</code>) или Quad9 (<code>https://dns.quad9.net/dns-query</code>) при желании. RouterOS 6 не имеет нативного DoH &mdash; либо обновляйтесь, либо принимайте leak.
+        </li>
+        <li><strong>Принять leak.</strong> Поведение по умолчанию &mdash; шифруется только трафик.</li>
+    </ol>
+    <p>Проверить с LAN-клиента: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a>. На роутере состояние DNS видно через <code>/ip dns print</code>, кеш &mdash; <code>/ip dns cache print</code>.</p>
+
+    <h2 id="ipv6">IPv6 dual-stack bypass</h2>
+    <p><code>/ip route</code> &mdash; только для IPv4. RouterOS управляет IPv6 через <code>/ipv6/route</code>. Если у destination есть <code>AAAA</code>-запись (а у большинства современных сайтов есть), LAN-клиенты предпочитают IPv6 и запрос идёт через дефолтный IPv6-маршрут ISP, минуя VPN.</p>
+    <p>Два варианта решения:</p>
+    <ul>
+        <li><strong>Зеркалировать маршруты для v6</strong> (если у вашего VPN есть IPv6-endpoint):
+            <pre><code>/ipv6/route add dst-address=2606:4700::/32 gateway=wg-out
+/ipv6/route add dst-address=2001:4860::/32 gateway=wg-out</code></pre>
+        </li>
+        <li><strong>Отключить IPv6-форвардинг</strong> если у VPN нет v6:
+            <pre><code>/ipv6/settings set forward=no</code></pre>
+            Или заблокировать через <code>/ipv6/firewall</code>. Иначе IPv6-трафик к dual-stack destination'ам пройдёт мимо VPN.
+        </li>
+    </ul>
 
     <h2>Проверка</h2>
     <p>Убедитесь, что маршруты применились:</p>

@@ -277,7 +277,41 @@ journalctl -u vpn-routes.service</code></pre>
         <strong>Why not <code>@reboot</code> cron?</strong> The cron daemon usually starts before the VPN tunnel is up &mdash; <code>ip route add</code> runs against an interface that doesn&rsquo;t exist yet, fails silently, and you discover broken routes only after a reboot. systemd&rsquo;s <code>After=</code> + <code>Requisite=</code> waits for the VPN unit and eliminates the race. <code>BindsTo=</code> also stops the routes when the VPN goes down.
     </div>
 
-        <h2>Verify</h2>
+    <h2 id="dns-leak">DNS leak &mdash; required reading</h2>
+    <p>This guide routes traffic <em>by IP</em>. <strong>It does not route DNS.</strong> Your browser still asks the system resolver (usually your ISP&rsquo;s, learned via DHCP) for <code>example.com</code> first &mdash; only the resulting IP traffic is encrypted through the VPN. The ISP sees which sites you visit even though the data is encrypted.</p>
+    <p>Three options, by threat model:</p>
+    <ol>
+        <li><strong>Hide DNS from ISP fully (split-DNS).</strong> On systemd-resolved, route DNS for tunneled domains through the VPN&rsquo;s resolver only:
+            <pre><code>sudo resolvectl dns wg0 10.0.0.1
+sudo resolvectl domain wg0 ~example.com ~another-site.com</code></pre>
+            Now <code>example.com</code> queries go through the VPN, everything else uses the default resolver. Replace <code>10.0.0.1</code> with your VPN provider&rsquo;s internal DNS.
+        </li>
+        <li><strong>Reduce ISP visibility (public DoH/DoT).</strong> Point the system resolver at a public encrypted resolver:
+            <pre><code>sudo resolvectl dns wg0 1.1.1.1#cloudflare-dns.com
+sudo resolvectl dnsovertls wg0 yes</code></pre>
+            ISP no longer sees domain queries; the public resolver does.
+        </li>
+        <li><strong>Accept the leak.</strong> If your goal is content access, not surveillance avoidance, this is fine &mdash; the data path is still encrypted, only the lookup metadata leaks.</li>
+    </ol>
+    <p>Verify the current state with <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> or <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> &mdash; the resolver shown should belong to your VPN or chosen public DoH provider, not your ISP. Locally, <code>resolvectl status</code> shows the per-link DNS configuration.</p>
+
+    <h2 id="ipv6">IPv6 dual-stack bypass</h2>
+    <p>If the destination has an <code>AAAA</code> record (most popular sites do — Cloudflare, Google, AWS are all dual-stack), the OS prefers IPv6 over IPv4 (RFC 6724). Routes added via this guide are <strong>IPv4-only</strong> &mdash; IPv6 traffic skips the VPN entirely and exits via your ISP&rsquo;s default v6 route. Result: VPN <em>looks</em> active but does nothing for dual-stack destinations.</p>
+    <p>Quick check from the same machine after the VPN is up:</p>
+    <pre><code>curl -6 -s -o /dev/null -w "remote=%{remote_ip}\n" https://example.com
+ip -6 route get $(dig +short AAAA example.com | head -1)</code></pre>
+    <p>If the IPv6 trace doesn&rsquo;t go through your VPN interface, you&rsquo;re bypassing the tunnel. Two fixes:</p>
+    <ul>
+        <li><strong>Route v6 through the VPN too</strong> (if your provider has an IPv6 endpoint). Generate IPv6 routes in NetRoute Pro &mdash; same flow, different prefixes (e.g. <code>2606:4700::/32</code>).</li>
+        <li><strong>Disable IPv6 system-wide</strong>:
+            <pre><code>sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+# Persistent: echo the same lines into /etc/sysctl.d/99-disable-ipv6.conf</code></pre>
+            All traffic falls back to v4 and gets tunneled correctly.
+        </li>
+    </ul>
+
+    <h2>Verify</h2>
     <p>Check that the routes are in the kernel table:</p>
     <pre><code>ip route show | grep 10.8.0.1</code></pre>
     <p>All added subnets should appear, bound to your VPN gateway.</p>

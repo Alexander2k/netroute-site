@@ -241,6 +241,24 @@
         <li>Save</li>
     </ol>
 
+    <h2 id="dns-leak">DNS leak &mdash; required reading</h2>
+    <p>Static routes on Keenetic forward traffic <em>by IP</em>. <strong>They do not route DNS.</strong> A LAN client still asks Keenetic&rsquo;s DNS proxy (which by default forwards to your ISP) for <code>example.com</code> first &mdash; only the resulting IP traffic goes through the VPN. The ISP sees which sites are visited even though the data is encrypted.</p>
+    <p>Three options, by threat model:</p>
+    <ol>
+        <li><strong>Hide DNS from ISP fully.</strong> In <strong>Internet → Other connections → your VPN interface</strong>, mark it as the priority connection for DNS, OR set static DNS servers in <strong>Network rules → Internet safety</strong> pointing at your VPN provider&rsquo;s internal resolver (e.g. <code>10.0.0.1</code>). Keenetic will route DNS queries through the tunnel.</li>
+        <li><strong>Reduce ISP visibility (public DoH/DoT).</strong> Keenetic supports DoH/DoT natively in <strong>Network rules → Internet safety → DNS-over-HTTPS / DNS-over-TLS</strong>. Add Cloudflare (<code>1.1.1.1</code>), AdGuard (<code>94.140.14.140</code>), or Quad9 (<code>9.9.9.9</code>) as the system resolver.</li>
+        <li><strong>Accept the leak.</strong> Default behaviour &mdash; only the data path is encrypted, lookups stay with your ISP.</li>
+    </ol>
+    <p>Verify from a LAN client at <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> &mdash; the resolver shown should belong to your VPN or chosen DoH, not your ISP. On Keenetic itself, check active DNS servers under <strong>System dashboard → DNS</strong>.</p>
+
+    <h2 id="ipv6">IPv6 dual-stack bypass</h2>
+    <p>Static IPv4 routes cover IPv4 traffic only. If a destination has an <code>AAAA</code> record (most popular sites do), LAN clients prefer IPv6 (RFC 6724) and the request goes via your ISP&rsquo;s IPv6 default route &mdash; bypassing the VPN.</p>
+    <p>Two fixes on Keenetic:</p>
+    <ul>
+        <li><strong>Generate IPv6 routes in NetRoute Pro</strong> if your VPN has an IPv6 endpoint &mdash; same flow, different prefixes (<code>2606:4700::/32</code>, <code>2001:4860::/32</code>, etc). Import as a separate <code>.bat</code> with the same VPN-interface binding.</li>
+        <li><strong>Disable IPv6 globally</strong> in <strong>Internet → Connections → IPv6</strong> if your VPN doesn&rsquo;t support v6. All traffic falls back to v4 and gets tunneled correctly.</li>
+    </ul>
+
     <h2>Verify</h2>
     <p>After import, check that routes applied: they appear in <strong>Routing → IPv4 routes</strong> list bound to your VPN interface.</p>
     <p>Verify traffic goes through the VPN — from a LAN client:</p>

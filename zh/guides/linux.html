@@ -271,7 +271,41 @@ journalctl -u vpn-routes.service</code></pre>
         <strong>为什么不用 <code>@reboot</code> cron？</strong> cron 守护进程通常在 VPN 隧道建立前启动 &mdash; <code>ip route add</code> 对尚不存在的接口运行，悄悄失败，你只在下次重启时才发现路由失效。systemd 的 <code>After=</code> 和 <code>Requisite=</code> 会等待 VPN 单元，消除竞态。<code>BindsTo=</code> 也在 VPN 关闭时停止路由。
     </div>
 
-        <h2>验证</h2>
+    <h2 id="dns-leak">DNS 泄漏 &mdash; 必读</h2>
+    <p>本指南按 <em>IP</em> 路由流量。<strong>它不路由 DNS。</strong>浏览器仍然向系统解析器（通常是 ISP 的，通过 DHCP 获得）询问 <code>example.com</code> 的 IP &mdash; 只有结果 IP 流量才通过 VPN 加密。即使数据加密，ISP 仍能看到你访问哪些站点。</p>
+    <p>根据你的威胁模型，三种选择：</p>
+    <ol>
+        <li><strong>对 ISP 完全隐藏 DNS（split-DNS）。</strong>在 systemd-resolved 中为隧道域名配置每接口 DNS：
+            <pre><code>sudo resolvectl dns wg0 10.0.0.1
+sudo resolvectl domain wg0 ~example.com ~another-site.com</code></pre>
+            现在 <code>example.com</code> 查询走 VPN，其他走默认解析器。把 <code>10.0.0.1</code> 替换为你 VPN 提供商的内部 DNS。
+        </li>
+        <li><strong>降低 ISP 可见性（公共 DoH/DoT）。</strong>把系统解析器指向公共加密解析器：
+            <pre><code>sudo resolvectl dns wg0 1.1.1.1#cloudflare-dns.com
+sudo resolvectl dnsovertls wg0 yes</code></pre>
+            ISP 不再看到域名查询；公共解析器会看到。
+        </li>
+        <li><strong>接受泄漏。</strong>如果你的目标是访问内容而非规避监控，这没问题 &mdash; 数据路径仍然加密，只有查询元数据泄露。</li>
+    </ol>
+    <p>验证当前状态：<a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> 或 <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> &mdash; 显示的解析器应属于你的 VPN 或所选公共 DoH，而非 ISP。本地用 <code>resolvectl status</code> 查看每接口 DNS 配置。</p>
+
+    <h2 id="ipv6">IPv6 双栈绕过</h2>
+    <p>如果目标有 <code>AAAA</code> 记录（大多数热门站点都有 &mdash; Cloudflare、Google、AWS 都是双栈），系统按 RFC 6724 优先选择 IPv6。本指南添加的路由是<strong>仅 IPv4</strong> &mdash; IPv6 流量完全绕过 VPN，通过 ISP 默认 v6 路由出去。结果：VPN <em>看起来</em>在工作，但对双栈目标毫无作用。</p>
+    <p>VPN 启动后快速检查：</p>
+    <pre><code>curl -6 -s -o /dev/null -w "remote=%{remote_ip}\n" https://example.com
+ip -6 route get $(dig +short AAAA example.com | head -1)</code></pre>
+    <p>如果 IPv6 路径不经过 VPN 接口，说明在绕过隧道。两种解决方案：</p>
+    <ul>
+        <li><strong>v6 也走 VPN</strong>（如果你的提供商有 IPv6 端点）。在 NetRoute Pro 中生成 IPv6 路由 &mdash; 同样流程，不同前缀（<code>2606:4700::/32</code> 等）。</li>
+        <li><strong>系统级禁用 IPv6</strong>：
+            <pre><code>sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+# 持久化：把同样的行写入 /etc/sysctl.d/99-disable-ipv6.conf</code></pre>
+            所有流量回退到 v4 并被正确隧道化。
+        </li>
+    </ul>
+
+    <h2>验证</h2>
     <pre><code>ip route show | grep 10.8.0.1</code></pre>
     <p>您应该看到所有通过 VPN 网关路由的子网。</p>
 

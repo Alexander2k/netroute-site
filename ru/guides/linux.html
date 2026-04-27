@@ -276,7 +276,41 @@ journalctl -u vpn-routes.service</code></pre>
         <strong>Почему не <code>@reboot</code> cron?</strong> Cron-демон обычно стартует до поднятия VPN-туннеля &mdash; <code>ip route add</code> запускается против ещё не существующего интерфейса, тихо падает, и вы обнаруживаете сломанные маршруты только при следующей перезагрузке. <code>After=</code> и <code>Requisite=</code> в systemd ждут VPN-юнит и убирают race. <code>BindsTo=</code> также останавливает маршруты когда VPN падает.
     </div>
 
-        <h2>Проверка</h2>
+    <h2 id="dns-leak">DNS leak &mdash; обязательно прочитать</h2>
+    <p>Эта инструкция направляет трафик <em>по IP</em>. <strong>Она не направляет DNS.</strong> Ваш браузер всё равно спрашивает у системного резолвера (обычно это резолвер ISP, полученный по DHCP), какой IP у <code>example.com</code> &mdash; через VPN идёт только сам IP-трафик. ISP видит какие сайты вы посещаете, даже если данные зашифрованы.</p>
+    <p>Три варианта в зависимости от модели угроз:</p>
+    <ol>
+        <li><strong>Полностью спрятать DNS от ISP (split-DNS).</strong> На systemd-resolved настройте per-link DNS только для тунелированных доменов:
+            <pre><code>sudo resolvectl dns wg0 10.0.0.1
+sudo resolvectl domain wg0 ~example.com ~another-site.com</code></pre>
+            Теперь запросы про <code>example.com</code> идут через VPN, остальное &mdash; через дефолтный резолвер. Замените <code>10.0.0.1</code> на внутренний DNS вашего VPN-провайдера.
+        </li>
+        <li><strong>Снизить видимость для ISP (публичный DoH/DoT).</strong> Направьте системный резолвер на публичный шифрованный DNS:
+            <pre><code>sudo resolvectl dns wg0 1.1.1.1#cloudflare-dns.com
+sudo resolvectl dnsovertls wg0 yes</code></pre>
+            ISP больше не видит запросы доменов; их видит публичный резолвер.
+        </li>
+        <li><strong>Принять leak.</strong> Если цель &mdash; обход блокировок, а не уход от слежки, это нормально &mdash; данные идут шифрованно, утекает только метаданные lookup'ов.</li>
+    </ol>
+    <p>Проверить текущее состояние: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> или <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> &mdash; показанный резолвер должен принадлежать вашему VPN или выбранному DoH, не ISP. Локально <code>resolvectl status</code> показывает per-link DNS-конфигурацию.</p>
+
+    <h2 id="ipv6">IPv6 dual-stack bypass</h2>
+    <p>Если у destination есть <code>AAAA</code>-запись (а у большинства популярных сайтов есть &mdash; Cloudflare, Google, AWS все dual-stack), ОС предпочитает IPv6 поверх IPv4 (RFC 6724). Маршруты добавленные по этой инструкции &mdash; <strong>только IPv4</strong> &mdash; IPv6-трафик пройдёт мимо VPN через дефолтный v6-маршрут ISP. Итог: VPN <em>выглядит</em> работающим, но для dual-stack сайтов не делает ничего.</p>
+    <p>Быстрая проверка после поднятия VPN:</p>
+    <pre><code>curl -6 -s -o /dev/null -w "remote=%{remote_ip}\n" https://example.com
+ip -6 route get $(dig +short AAAA example.com | head -1)</code></pre>
+    <p>Если IPv6-trace не идёт через VPN-интерфейс &mdash; вы обходите туннель. Два варианта решения:</p>
+    <ul>
+        <li><strong>Маршрутизировать v6 через VPN тоже</strong> (если провайдер поддерживает IPv6). Сгенерируйте IPv6-маршруты в NetRoute Pro &mdash; тот же flow, другие префиксы (<code>2606:4700::/32</code> и т.п.).</li>
+        <li><strong>Отключить IPv6 системно</strong>:
+            <pre><code>sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+# Постоянно: те же строки в /etc/sysctl.d/99-disable-ipv6.conf</code></pre>
+            Весь трафик откатывается на v4 и корректно тунелируется.
+        </li>
+    </ul>
+
+    <h2>Проверка</h2>
     <pre><code>ip route show | grep 10.8.0.1</code></pre>
     <p>Все нужные подсети должны быть привязаны к IP VPN-шлюза.</p>
 

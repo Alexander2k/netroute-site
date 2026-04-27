@@ -238,6 +238,32 @@ route 172.67.0.0 255.255.0.0
 push "route 172.67.0.0 255.255.0.0"</code></pre>
     <p>Ventaja: no tienes que editar el <code>.ovpn</code> de cada cliente. Requiere reinicio del servicio del servidor.</p>
 
+    <h2 id="dns-leak">DNS leak &mdash; lectura obligatoria</h2>
+    <p>Esta guía enruta tráfico <em>por IP</em>. <strong>No enruta DNS.</strong> El navegador sigue preguntando al resolver del sistema (normalmente del ISP) por <code>example.com</code> &mdash; sólo el tráfico IP pasa por el túnel. Con <code>route-nopull</code> es peor: el DNS empujado por el servidor también se descarta, así que todo el DNS va al resolver por defecto.</p>
+    <p>Tres opciones, según el modelo de amenazas:</p>
+    <ol>
+        <li><strong>Ocultar DNS al ISP usando el resolver de la VPN.</strong> Usa <code>pull-filter</code> selectivo en lugar de <code>route-nopull</code> completo &mdash; descarta sólo el redirect-gateway, conserva el push de DNS:
+            <pre><code>pull-filter ignore "redirect-gateway"
+pull-filter accept "dhcp-option DNS"</code></pre>
+            En Windows <em>además</em> añade <code>block-outside-dns</code> para evitar que el SO consulte el DNS del DHCP en paralelo.
+        </li>
+        <li><strong>Reducir visibilidad para el ISP (DoH/DoT público).</strong> Configura a nivel de SO un resolver público cifrado (Cloudflare 1.1.1.1, AdGuard, Quad9). El ISP deja de ver las consultas; el resolver público sí las ve.</li>
+        <li><strong>Aceptar la fuga.</strong> Si tu objetivo es acceder a contenido, no evitar vigilancia, está bien &mdash; sólo se cifra el tráfico.</li>
+    </ol>
+    <p>Verifica con <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> o <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> &mdash; el resolver mostrado debe coincidir con el que configuraste, no con el del ISP.</p>
+
+    <h2 id="ipv6">Fuga por IPv6 dual-stack</h2>
+    <p>La directiva <code>route</code> es sólo IPv4. Si el destino tiene un registro <code>AAAA</code> (la mayoría de sitios populares lo tienen), el SO prefiere IPv6 sobre IPv4 (RFC 6724) &mdash; ese tráfico salta el túnel y sale por la ruta v6 por defecto del ISP.</p>
+    <p>Dos soluciones:</p>
+    <ul>
+        <li><strong>Replica las rutas para v6</strong> (si tu VPN soporta IPv6) usando <code>route-ipv6</code>:
+            <pre><code>route-ipv6 2606:4700::/32
+route-ipv6 2001:4860::/32</code></pre>
+            Para todo el tráfico v6 por el túnel: añade <code>redirect-gateway ipv6</code> (o pulsa server-side).
+        </li>
+        <li><strong>Bloquea v6 por completo</strong> si tu VPN no tiene endpoint IPv6 &mdash; deshabilita IPv6 en el SO o añade una regla de firewall que rechace v6 saliente. De lo contrario los sitios dual-stack siguen filtrando.</li>
+    </ul>
+
     <h2>Verificar</h2>
     <p>Tras reconectar, comprueba la tabla de enrutamiento:</p>
     <pre><code>route print              # Windows

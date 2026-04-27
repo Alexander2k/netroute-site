@@ -239,10 +239,40 @@ PersistentKeepalive = 25</code></pre>
         <li><strong>Mobile:</strong> disable and re-enable the tunnel switch</li>
     </ul>
 
+    <h2 id="dns-leak">DNS leak &mdash; required reading</h2>
+    <p>WireGuard&rsquo;s <code>AllowedIPs</code> routes traffic <em>by IP</em>. <strong>It does not route DNS.</strong> Your browser still asks the system resolver (usually your ISP&rsquo;s, learned via DHCP) for <code>example.com</code> first &mdash; only the resulting IP traffic flows through the tunnel. The ISP sees which sites you visit even though the data is encrypted.</p>
+    <p>Three options, by threat model:</p>
+    <ol>
+        <li><strong>Hide DNS from ISP fully (split-DNS via wg-quick).</strong> Add a <code>DNS = </code> line under <code>[Interface]</code> &mdash; wg-quick configures it at tunnel up:
+            <pre><code>[Interface]
+PrivateKey = ...
+Address    = 10.0.0.2/24
+DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
+            The <code>~domain</code> entries make systemd-resolved use the VPN&rsquo;s DNS only for those domains (split-DNS). Without them, all DNS goes through the VPN.
+        </li>
+        <li><strong>Reduce ISP visibility (public DoH/DoT).</strong> Use a public resolver for everything:
+            <pre><code>DNS = 1.1.1.1, 1.0.0.1</code></pre>
+            ISP no longer sees domain queries; Cloudflare does.
+        </li>
+        <li><strong>Accept the leak.</strong> Skip the <code>DNS</code> line entirely &mdash; only the data path is encrypted, lookups stay on your default resolver. Fine for unblocking-only use cases.</li>
+    </ol>
+    <p>Verify with <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> or <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> &mdash; the resolver shown should belong to your VPN provider or chosen DoH, not your ISP.</p>
+
+    <h2 id="ipv6">IPv6 dual-stack bypass</h2>
+    <p>WireGuard&rsquo;s <code>AllowedIPs</code> entries are <strong>address-family specific</strong>. If you listed only IPv4 prefixes, traffic to the same domain over IPv6 (which most modern sites prefer per RFC 6724) bypasses the tunnel and exits via your ISP&rsquo;s default v6 route.</p>
+    <p>Two fixes:</p>
+    <ul>
+        <li><strong>Route v6 too</strong> (if your VPN has an IPv6 endpoint). Add v6 prefixes alongside v4:
+            <pre><code>AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 2606:4700::/32, 2001:4860::/32</code></pre>
+            For full v6 traffic through the tunnel: <code>AllowedIPs = 0.0.0.0/0, ::/0</code>.
+        </li>
+        <li><strong>Disable IPv6 system-wide</strong> if your VPN doesn&rsquo;t support v6. On Linux: <code>sysctl net.ipv6.conf.all.disable_ipv6=1</code>. On Windows: disable IPv6 on the active adapter. On routers: per-WAN IPv6 toggle. All traffic falls back to v4 and gets tunneled.</li>
+    </ul>
+
     <h2>Verify</h2>
-    <p>Run <code>sudo wg show</code> — the peer should be listed with the new <code>allowed ips</code> values:</p>
+    <p>Run <code>sudo wg show</code> &mdash; the peer should be listed with the new <code>allowed ips</code> values:</p>
     <pre><code>sudo wg show</code></pre>
-    <p>You can also confirm routing with <code>ip route</code> (Linux/macOS) or <code>route print</code> (Windows) — the listed subnets should point through your WireGuard interface.</p>
+    <p>You can also confirm routing with <code>ip route</code> (Linux/macOS) or <code>route print</code> (Windows) &mdash; the listed subnets should point through your WireGuard interface.</p>
 
     <h2>Common issues</h2>
 

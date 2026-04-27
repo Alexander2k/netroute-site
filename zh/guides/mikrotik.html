@@ -204,7 +204,7 @@
         <li>在 Chrome 中打开目标网站</li>
         <li>启动 NetRoute Pro 扩展</li>
         <li>选择 <strong>MikroTik</strong> 平台</li>
-        <li>网关：您的 VPN 接口的 IP（与 Keenetic 不同，这里会使用该网关）</li>
+        <li>网关：填入 <strong>VPN 接口名称</strong>（例如 <code>wg-out</code>、<code>ovpn-out</code>、<code>l2tp-out1</code>）—— 推荐形式。接口名形式不受 VPN 提供商如何分配对端 IP 影响。使用网关 IP（<code>10.0.0.1</code>）仅在该 IP 是 &ldquo;directly reachable&rdquo; 时有效；对于典型的商业 WireGuard 配置（Mullvad、ProtonVPN、IVPN），对端被分配为 <code>/32</code>，IP 形式会返回 <code>gateway not directly reachable</code>。</li>
         <li>选择聚合掩码 <code>/24</code>（推荐）</li>
         <li>点击 <strong>Analyze Website</strong> → 下载 .rsc</li>
     </ol>
@@ -226,8 +226,9 @@
     <p>所有路由一次性应用。</p>
 
     <h3>.rsc 文件内容示例</h3>
-    <pre><code>/ip route add dst-address=104.21.32.0/24 gateway=10.0.0.1
-/ip route add dst-address=172.67.182.0/24 gateway=10.0.0.1</code></pre>
+    <pre><code>/ip route add dst-address=104.21.32.0/24 gateway=wg-out
+/ip route add dst-address=172.67.182.0/24 gateway=wg-out</code></pre>
+    <p>将 <code>wg-out</code> 替换为你 VPN 接口的实际名称（通过 <code>/interface print</code> 查看）。</p>
 
     <h2>替代方案：地址列表 + 路由规则</h2>
     <p>如果您希望通过策略路由实现更灵活的分流，可以使用地址列表：</p>
@@ -244,6 +245,37 @@
         <li>复制 <code>AllowedIPs</code> 行</li>
         <li>在 MikroTik 中：<code>/interface/wireguard/peers/set [find] allowed-address=...</code></li>
     </ol>
+
+    <h2 id="dns-leak">DNS 泄漏 &mdash; 必读</h2>
+    <p>RouterOS 的静态路由按 <em>IP</em> 转发流量。<strong>不转发 DNS。</strong>LAN 客户端仍然向路由器的 DNS 服务（默认转发到 ISP）询问 <code>example.com</code> 的 IP &mdash; 只有结果 IP 流量才通过 VPN。即使数据加密，ISP 仍能看到访问哪些站点。</p>
+    <p>根据威胁模型，三种选择：</p>
+    <ol>
+        <li><strong>对 ISP 完全隐藏 DNS（split-DNS）。</strong>强制路由器的 DNS 服务使用你 VPN 提供商的内部解析器：
+            <pre><code>/ip dns set servers=10.0.0.1 allow-remote-requests=yes</code></pre>
+            如仅特定域名走 VPN 端解析器，使用静态 DNS 规则：
+            <pre><code>/ip dns static add type=FWD name=example.com forward-to=10.0.0.1</code></pre>
+        </li>
+        <li><strong>降低 ISP 可见性（DoH）。</strong>RouterOS 7+ 原生支持 DoH：
+            <pre><code>/ip dns set use-doh-server=https://cloudflare-dns.com/dns-query verify-doh-cert=yes</code></pre>
+            如需可换为 AdGuard（<code>https://dns.adguard-dns.com/dns-query</code>）或 Quad9（<code>https://dns.quad9.net/dns-query</code>）。RouterOS 6 无原生 DoH &mdash; 升级或接受泄漏。
+        </li>
+        <li><strong>接受泄漏。</strong>默认行为 &mdash; 仅加密数据路径。</li>
+    </ol>
+    <p>从 LAN 客户端访问 <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> 验证。在路由器上，DNS 状态用 <code>/ip dns print</code> 查看，缓存用 <code>/ip dns cache print</code>。</p>
+
+    <h2 id="ipv6">IPv6 双栈绕过</h2>
+    <p><code>/ip route</code> 仅适用于 IPv4。RouterOS 通过 <code>/ipv6/route</code> 管理 IPv6。如果目标有 <code>AAAA</code> 记录（大多数现代站点都有），LAN 客户端偏好 IPv6，请求通过 ISP 的 IPv6 默认路由发出 &mdash; 绕过 VPN。</p>
+    <p>两种解决方案：</p>
+    <ul>
+        <li><strong>为 v6 镜像路由</strong>（如果你的 VPN 有 IPv6 端点）：
+            <pre><code>/ipv6/route add dst-address=2606:4700::/32 gateway=wg-out
+/ipv6/route add dst-address=2001:4860::/32 gateway=wg-out</code></pre>
+        </li>
+        <li><strong>禁用 IPv6 转发</strong>，如果 VPN 没有 v6：
+            <pre><code>/ipv6/settings set forward=no</code></pre>
+            或在 <code>/ipv6/firewall</code> 阻止。否则到双栈目标的 IPv6 流量会绕过 VPN。
+        </li>
+    </ul>
 
     <h2>验证</h2>
     <p>导入后，检查路由已应用：</p>

@@ -240,7 +240,33 @@ route 172.67.0.0 255.255.0.0
     <p>如果您控制 OpenVPN 服务器，可以将路由推送到所有客户端。在服务器配置中：</p>
     <pre><code>push "route 104.21.32.0 255.255.255.0"
 push "route 172.67.0.0 255.255.0.0"</code></pre>
-    <p>客户端连接时自动接收路由 — 无需编辑每个 <code>.ovpn</code>。</p>
+    <p>客户端连接时自动接收路由 &mdash; 无需编辑每个 <code>.ovpn</code>。</p>
+
+    <h2 id="dns-leak">DNS 泄漏 &mdash; 必读</h2>
+    <p>本指南按 <em>IP</em> 路由流量。<strong>它不路由 DNS。</strong>浏览器仍然向系统解析器（通常是 ISP 的）询问 <code>example.com</code> 的 IP &mdash; 只有结果 IP 流量才通过隧道。使用 <code>route-nopull</code> 时情况更糟：服务端推送的 DNS 也被丢弃，所有 DNS 走默认解析器。</p>
+    <p>根据你的威胁模型，三种选择：</p>
+    <ol>
+        <li><strong>使用 VPN 解析器对 ISP 隐藏 DNS。</strong>用选择性 <code>pull-filter</code> 替代完整的 <code>route-nopull</code> &mdash; 仅丢弃 redirect-gateway，保留 DNS 推送：
+            <pre><code>pull-filter ignore "redirect-gateway"
+pull-filter accept "dhcp-option DNS"</code></pre>
+            在 Windows 上，<em>同时</em>添加 <code>block-outside-dns</code> 防止系统并行向 DHCP 提供的 DNS 发起查询。
+        </li>
+        <li><strong>降低 ISP 可见性（公共 DoH/DoT）。</strong>在系统级配置公共加密解析器（Cloudflare 1.1.1.1、AdGuard、Quad9）。ISP 不再看到域名查询；公共解析器会看到。</li>
+        <li><strong>接受泄漏。</strong>如果你的目标是访问内容而非规避监控，这没问题 &mdash; 数据路径仍然加密。</li>
+    </ol>
+    <p>用 <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> 或 <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> 验证 &mdash; 显示的解析器应与你配置的一致，而非 ISP。</p>
+
+    <h2 id="ipv6">IPv6 双栈绕过</h2>
+    <p>OpenVPN 的 <code>route</code> 指令仅适用于 IPv4。如果目标有 <code>AAAA</code> 记录（大多数热门站点都有），系统按 RFC 6724 优先选择 IPv6 &mdash; 该流量绕过隧道，从 ISP 默认 v6 路由出去。</p>
+    <p>两种解决方案：</p>
+    <ul>
+        <li><strong>为 v6 镜像路由</strong>（如果 VPN 支持 IPv6）使用 <code>route-ipv6</code>：
+            <pre><code>route-ipv6 2606:4700::/32
+route-ipv6 2001:4860::/32</code></pre>
+            全部 v6 流量走隧道：添加 <code>redirect-gateway ipv6</code>（或服务端推送）。
+        </li>
+        <li><strong>完全阻止 v6</strong>，如果 VPN 没有 IPv6 端点 &mdash; 在系统上禁用 IPv6 或用防火墙规则拒绝 v6 出站。否则双栈站点会静默泄漏。</li>
+    </ul>
 
     <h2>验证</h2>
     <p>连接后检查路由表：</p>

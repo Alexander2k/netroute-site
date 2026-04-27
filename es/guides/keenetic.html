@@ -241,6 +241,24 @@
         <li>Guarda</li>
     </ol>
 
+    <h2 id="dns-leak">DNS leak &mdash; lectura obligatoria</h2>
+    <p>Las rutas estáticas en Keenetic reenvían tráfico <em>por IP</em>. <strong>No enrutan DNS.</strong> Un cliente LAN sigue preguntando al proxy DNS de Keenetic (que por defecto reenvía al ISP) por <code>example.com</code> &mdash; sólo el tráfico IP resultante pasa por la VPN. El ISP ve qué sitios se visitan aunque los datos estén cifrados.</p>
+    <p>Tres opciones, según el modelo de amenazas:</p>
+    <ol>
+        <li><strong>Ocultar DNS del ISP totalmente.</strong> En <strong>Internet → Other connections → tu interfaz VPN</strong>, márcala como prioritaria para DNS, O define DNS estáticos en <strong>Network rules → Internet safety</strong> apuntando al resolver interno de tu proveedor VPN (ej. <code>10.0.0.1</code>). Keenetic enviará las consultas DNS por el túnel.</li>
+        <li><strong>Reducir visibilidad para el ISP (DoH/DoT público).</strong> Keenetic soporta DoH/DoT nativamente en <strong>Network rules → Internet safety → DNS-over-HTTPS / DNS-over-TLS</strong>. Añade Cloudflare (<code>1.1.1.1</code>), AdGuard (<code>94.140.14.140</code>) o Quad9 (<code>9.9.9.9</code>) como resolver del sistema.</li>
+        <li><strong>Aceptar la fuga.</strong> Comportamiento por defecto &mdash; sólo se cifra el tráfico, los lookups van al ISP.</li>
+    </ol>
+    <p>Verifica desde un cliente LAN en <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> &mdash; el resolver mostrado debe pertenecer a tu VPN o DoH elegido, no al ISP. En Keenetic, los DNS activos se ven en <strong>System dashboard → DNS</strong>.</p>
+
+    <h2 id="ipv6">Fuga por IPv6 dual-stack</h2>
+    <p>Las rutas estáticas IPv4 sólo cubren tráfico IPv4. Si un destino tiene registro <code>AAAA</code> (la mayoría de sitios populares lo tienen), los clientes LAN prefieren IPv6 (RFC 6724) y la solicitud sale por la ruta IPv6 por defecto del ISP &mdash; eludiendo la VPN.</p>
+    <p>Dos soluciones en Keenetic:</p>
+    <ul>
+        <li><strong>Genera rutas IPv6 en NetRoute Pro</strong> si tu VPN tiene endpoint IPv6 &mdash; mismo flujo, prefijos distintos (<code>2606:4700::/32</code>, <code>2001:4860::/32</code>, etc). Impórtalas como <code>.bat</code> separado con el mismo enlace al interfaz VPN.</li>
+        <li><strong>Deshabilita IPv6 globalmente</strong> en <strong>Internet → Connections → IPv6</strong> si tu VPN no soporta v6. Todo el tráfico cae a v4 y se tuneliza correctamente.</li>
+    </ul>
+
     <h2>Verificar</h2>
     <p>Después del import, comprueba que las rutas se aplicaron: aparecen en la lista <strong>Enrutamiento → rutas IPv4</strong> enlazadas a tu interfaz VPN.</p>
     <p>Verifica que el tráfico va por la VPN — desde un cliente LAN:</p>

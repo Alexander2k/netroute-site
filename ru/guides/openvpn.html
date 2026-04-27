@@ -245,7 +245,33 @@ route 172.67.182.0 255.255.255.0
     <p>Если у вас админский доступ к серверу OpenVPN, добавьте директивы в конфиг сервера:</p>
     <pre><code>push "route 104.21.32.0 255.255.255.0"
 push "route 172.67.182.0 255.255.255.0"</code></pre>
-    <p>Клиенты получат маршруты автоматически при подключении — править клиент-конфиги не потребуется.</p>
+    <p>Клиенты получат маршруты автоматически при подключении &mdash; править клиент-конфиги не потребуется.</p>
+
+    <h2 id="dns-leak">DNS leak &mdash; обязательно прочитать</h2>
+    <p>Эта инструкция направляет трафик <em>по IP</em>. <strong>DNS она не направляет.</strong> Браузер всё равно спрашивает у системного резолвера (обычно ISP) какой IP у <code>example.com</code> &mdash; через туннель идёт только IP-трафик. С <code>route-nopull</code> ситуация хуже: server-pushed DNS тоже отбрасывается, и все DNS-запросы уходят на дефолтный резолвер.</p>
+    <p>Три варианта в зависимости от модели угроз:</p>
+    <ol>
+        <li><strong>Спрятать DNS от ISP через VPN-резолвер.</strong> Используйте selective <code>pull-filter</code> вместо полного <code>route-nopull</code> &mdash; отбрасываем только редирект всего трафика, оставляем DNS-push:
+            <pre><code>pull-filter ignore "redirect-gateway"
+pull-filter accept "dhcp-option DNS"</code></pre>
+            На Windows <em>дополнительно</em> добавьте <code>block-outside-dns</code>, чтобы ОС не делала параллельные запросы к DHCP-резолверу.
+        </li>
+        <li><strong>Снизить видимость для ISP (публичный DoH/DoT).</strong> Настройте на уровне ОС публичный шифрованный резолвер (Cloudflare 1.1.1.1, AdGuard, Quad9). ISP больше не видит запросы доменов; видит публичный резолвер.</li>
+        <li><strong>Принять leak.</strong> Если цель &mdash; обход блокировок, не уход от слежки, это нормально &mdash; данные идут шифрованно.</li>
+    </ol>
+    <p>Проверить: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> или <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> &mdash; резолвер в результате должен совпадать с тем что вы настроили, не с ISP.</p>
+
+    <h2 id="ipv6">IPv6 dual-stack bypass</h2>
+    <p>Директива <code>route</code> в OpenVPN &mdash; только для IPv4. Если у destination есть <code>AAAA</code>-запись (а у большинства популярных сайтов есть), ОС предпочитает IPv6 поверх IPv4 (RFC 6724) &mdash; этот трафик пройдёт мимо туннеля через дефолтный v6-маршрут ISP.</p>
+    <p>Два варианта решения:</p>
+    <ul>
+        <li><strong>Зеркалировать маршруты для v6</strong> (если VPN поддерживает IPv6) через <code>route-ipv6</code>:
+            <pre><code>route-ipv6 2606:4700::/32
+route-ipv6 2001:4860::/32</code></pre>
+            Для всего v6 через туннель: <code>redirect-gateway ipv6</code> (или server-side push).
+        </li>
+        <li><strong>Заблокировать v6 полностью</strong> если у VPN нет IPv6-endpoint &mdash; либо отключить IPv6 на ОС, либо firewall-правилом резать v6-исходящие. Иначе dual-stack сайты тихо leak'ают.</li>
+    </ul>
 
     <h2>Проверка</h2>
     <p>После подключения проверьте таблицу маршрутизации:</p>

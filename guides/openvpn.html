@@ -239,7 +239,33 @@ route 162.159.135.0 255.255.255.0
     <p>If you're the VPN administrator and want to push routes to <em>all</em> clients automatically, add this to the server config:</p>
     <pre><code>push "route 104.21.32.0 255.255.255.0"
 push "route 172.67.182.0 255.255.255.0"</code></pre>
-    <p>Clients receive the routes on connect — no client-side edits needed.</p>
+    <p>Clients receive the routes on connect &mdash; no client-side edits needed.</p>
+
+    <h2 id="dns-leak">DNS leak &mdash; required reading</h2>
+    <p>This guide routes traffic <em>by IP</em>. <strong>It does not route DNS.</strong> Your browser still asks the system resolver (usually your ISP&rsquo;s) for <code>example.com</code> first &mdash; only the resulting IP traffic flows through the tunnel. With <code>route-nopull</code> the situation is worse: server-pushed DNS is also dropped, so all DNS goes via your default resolver.</p>
+    <p>Three options, by threat model:</p>
+    <ol>
+        <li><strong>Hide DNS from ISP via VPN&rsquo;s resolver.</strong> Use selective <code>pull-filter</code> instead of full <code>route-nopull</code> &mdash; drop only the all-traffic redirect, keep the DNS push:
+            <pre><code>pull-filter ignore "redirect-gateway"
+pull-filter accept "dhcp-option DNS"</code></pre>
+            On Windows, <em>also</em> add <code>block-outside-dns</code> to prevent the OS from querying DHCP-provided DNS in parallel.
+        </li>
+        <li><strong>Reduce ISP visibility (public DoH/DoT).</strong> Configure a public encrypted resolver at the OS level (Cloudflare 1.1.1.1, AdGuard, Quad9). ISP no longer sees domain queries; the public resolver does.</li>
+        <li><strong>Accept the leak.</strong> If your goal is content access, not surveillance avoidance, this is fine &mdash; the data path is still encrypted.</li>
+    </ol>
+    <p>Verify with <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> or <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> &mdash; the resolver shown should match what you configured, not your ISP.</p>
+
+    <h2 id="ipv6">IPv6 dual-stack bypass</h2>
+    <p>The <code>route</code> directive is IPv4-only. If a destination has an <code>AAAA</code> record (most popular sites do), the OS prefers IPv6 over IPv4 per RFC 6724 &mdash; that traffic skips the tunnel and exits via your ISP&rsquo;s default v6 route.</p>
+    <p>Two fixes:</p>
+    <ul>
+        <li><strong>Mirror your routes for v6</strong> (if your VPN supports IPv6) using <code>route-ipv6</code>:
+            <pre><code>route-ipv6 2606:4700::/32
+route-ipv6 2001:4860::/32</code></pre>
+            For full v6 traffic via tunnel: add <code>redirect-gateway ipv6</code> (or push it server-side).
+        </li>
+        <li><strong>Block v6 entirely</strong> if your VPN has no IPv6 endpoint &mdash; either disable IPv6 on the OS, or add a firewall rule rejecting IPv6 outbound. Otherwise dual-stacked sites silently leak.</li>
+    </ul>
 
     <h2>Verify</h2>
     <p>After reconnecting, check that the routes are installed:</p>

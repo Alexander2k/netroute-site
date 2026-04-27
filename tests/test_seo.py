@@ -432,6 +432,18 @@ def check_guide_examples(path: str, content: str, fails: Failures):
         fails.add(path, 'guide page has examples anchor but no github.com link')
 
 
+def check_guide_dns_leak_section(path: str, content: str, fails: Failures):
+    """Every guide leaf must carry a DNS-leak warning section anchored as
+    id="dns-leak". Routing by IP does not route DNS — the user's resolver
+    still leaks domain queries to the ISP. Without this section the whole
+    "split tunneling" claim is misleading.
+    """
+    if not _is_guide_leaf(path):
+        return
+    if not re.search(r'<(?:h2|h3|section)[^>]*\bid="dns-leak"', content):
+        fails.add(path, 'guide page missing id="dns-leak" warning section')
+
+
 def check_keenetic_guide_correct_cli(path: str, content: str, fails: Failures):
     """Keenetic guide must not present PowerShell `New-NetRoute -destinationprefix`
     syntax as Keenetic CLI — that's a Windows PowerShell cmdlet, not RouterOS-style
@@ -645,6 +657,7 @@ def main():
         check_csp_meta(path, content, fails)
         check_linux_guide_persistence(path, content, fails)
         check_keenetic_guide_correct_cli(path, content, fails)
+        check_guide_dns_leak_section(path, content, fails)
         check_openvpn_guide_correct_route_nopull(path, content, fails)
         check_wireguard_guide_dns_leak(path, content, fails)
         check_mikrotik_routeros_version(path, content, fails)

@@ -203,7 +203,7 @@
         <li>Abre el sitio objetivo en Chrome</li>
         <li>Lanza la extensión <strong>NetRoute Pro</strong></li>
         <li>Selecciona la plataforma <strong>MikroTik</strong></li>
-        <li>En el campo gateway, indica la IP de tu interfaz VPN (aquí <strong>sí</strong> se usa, a diferencia de Keenetic)</li>
+        <li>En el campo gateway, indica el <strong>nombre de la interfaz VPN</strong> (por ejemplo <code>wg-out</code>, <code>ovpn-out</code>, <code>l2tp-out1</code>) — forma recomendada. La forma con nombre de interfaz funciona independientemente de cómo el proveedor VPN asigne la IP del peer. Usar una IP gateway (<code>10.0.0.1</code>) sólo funciona si esa IP es &ldquo;directly reachable&rdquo;; para configuraciones WireGuard comerciales típicas (Mullvad, ProtonVPN, IVPN) el peer se asigna como <code>/32</code> y la forma con IP fallará con <code>gateway not directly reachable</code>.</li>
         <li>Elige máscara de agregación <code>/24</code> (recomendado)</li>
         <li>Haz clic en <strong>Analyze Website</strong></li>
         <li>Descarga el archivo <code>.rsc</code> generado</li>
@@ -228,8 +228,9 @@
     <p>RouterOS procesa el archivo línea a línea y añade cada ruta al sistema.</p>
 
     <p>Ejemplo del contenido de un <code>.rsc</code> generado:</p>
-    <pre><code>/ip route add dst-address=104.21.32.0/24 gateway=10.0.0.1
-/ip route add dst-address=172.67.182.0/24 gateway=10.0.0.1</code></pre>
+    <pre><code>/ip route add dst-address=104.21.32.0/24 gateway=wg-out
+/ip route add dst-address=172.67.182.0/24 gateway=wg-out</code></pre>
+    <p>Sustituye <code>wg-out</code> por el nombre real de tu interfaz VPN (visible en <code>/interface print</code>).</p>
 
     <div class="callout">
         <strong>Por qué esto es cómodo:</strong> sin entrada manual de cientos de rutas — <code>/import</code> aplica todo en segundos. Puedes regenerar el archivo cuando cambien las IPs y reimportarlo.
@@ -256,6 +257,37 @@
             <pre><code>/interface/wireguard/peers/set [find] allowed-address=104.21.32.0/24,172.67.182.0/24</code></pre>
         </li>
     </ol>
+
+    <h2 id="dns-leak">DNS leak &mdash; lectura obligatoria</h2>
+    <p>Las rutas estáticas en RouterOS reenvían tráfico <em>por IP</em>. <strong>No enrutan DNS.</strong> Un cliente LAN sigue preguntando al servicio DNS del router (que por defecto reenvía al ISP) por <code>example.com</code> &mdash; sólo el tráfico IP resultante pasa por la VPN. El ISP ve qué sitios se visitan aunque los datos estén cifrados.</p>
+    <p>Tres opciones, según el modelo de amenazas:</p>
+    <ol>
+        <li><strong>Ocultar DNS del ISP totalmente (split-DNS).</strong> Fuerza al servicio DNS del router a usar el resolver interno de tu proveedor VPN:
+            <pre><code>/ip dns set servers=10.0.0.1 allow-remote-requests=yes</code></pre>
+            Para dominios concretos vía resolver de la VPN, usa reglas DNS estáticas:
+            <pre><code>/ip dns static add type=FWD name=example.com forward-to=10.0.0.1</code></pre>
+        </li>
+        <li><strong>Reducir visibilidad para el ISP (DoH).</strong> RouterOS 7+ soporta DoH nativamente:
+            <pre><code>/ip dns set use-doh-server=https://cloudflare-dns.com/dns-query verify-doh-cert=yes</code></pre>
+            Sustituye por AdGuard (<code>https://dns.adguard-dns.com/dns-query</code>) o Quad9 (<code>https://dns.quad9.net/dns-query</code>) si lo prefieres. RouterOS 6 no tiene DoH nativo &mdash; o actualizas, o aceptas la fuga.
+        </li>
+        <li><strong>Aceptar la fuga.</strong> Comportamiento por defecto &mdash; sólo se cifra el tráfico.</li>
+    </ol>
+    <p>Verifica desde un cliente LAN en <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a>. En el router, el estado de DNS se ve con <code>/ip dns print</code>, la caché con <code>/ip dns cache print</code>.</p>
+
+    <h2 id="ipv6">Fuga por IPv6 dual-stack</h2>
+    <p><code>/ip route</code> es sólo IPv4. RouterOS gestiona IPv6 vía <code>/ipv6/route</code>. Si un destino tiene registro <code>AAAA</code> (la mayoría de sitios modernos lo tienen), los clientes LAN prefieren IPv6 y la solicitud va por la ruta IPv6 por defecto del ISP &mdash; eludiendo la VPN.</p>
+    <p>Dos soluciones:</p>
+    <ul>
+        <li><strong>Replica las rutas para v6</strong> (si tu VPN tiene endpoint IPv6):
+            <pre><code>/ipv6/route add dst-address=2606:4700::/32 gateway=wg-out
+/ipv6/route add dst-address=2001:4860::/32 gateway=wg-out</code></pre>
+        </li>
+        <li><strong>Deshabilita el forwarding IPv6</strong> si tu VPN no tiene v6:
+            <pre><code>/ipv6/settings set forward=no</code></pre>
+            O bloquea v6 en <code>/ipv6/firewall</code>. De lo contrario el tráfico IPv6 a destinos dual-stack salta la VPN.
+        </li>
+    </ul>
 
     <h2>Verificar</h2>
     <p>Comprueba que las rutas están activas:</p>

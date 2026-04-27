@@ -239,6 +239,36 @@ PersistentKeepalive = 25</code></pre>
         <li><strong>Móvil:</strong> usa el interruptor off/on del túnel</li>
     </ul>
 
+    <h2 id="dns-leak">DNS leak &mdash; lectura obligatoria</h2>
+    <p>WireGuard mediante <code>AllowedIPs</code> enruta tráfico <em>por IP</em>. <strong>No enruta DNS.</strong> Tu navegador sigue preguntando al resolver del sistema (normalmente del ISP, vía DHCP) por <code>example.com</code> &mdash; sólo el tráfico IP resultante pasa por el túnel. El ISP ve qué sitios visitas aunque los datos estén cifrados.</p>
+    <p>Tres opciones, según el modelo de amenazas:</p>
+    <ol>
+        <li><strong>Ocultar DNS del ISP totalmente (split-DNS via wg-quick).</strong> Añade una línea <code>DNS = </code> en <code>[Interface]</code> &mdash; wg-quick la aplica al levantar el túnel:
+            <pre><code>[Interface]
+PrivateKey = ...
+Address    = 10.0.0.2/24
+DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
+            Las entradas <code>~dominio</code> hacen que systemd-resolved use el DNS de la VPN sólo para esos dominios (split-DNS). Sin ellas, todo el DNS pasa por la VPN.
+        </li>
+        <li><strong>Reducir visibilidad para el ISP (DoH/DoT público).</strong> Usa un resolver público para todo:
+            <pre><code>DNS = 1.1.1.1, 1.0.0.1</code></pre>
+            El ISP deja de ver consultas de dominio; Cloudflare sí.
+        </li>
+        <li><strong>Aceptar la fuga.</strong> Omite la línea <code>DNS</code> &mdash; sólo se cifra el tráfico, los lookups quedan en el resolver por defecto. Aceptable si sólo quieres desbloquear contenido.</li>
+    </ol>
+    <p>Verifica con <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> o <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> &mdash; el resolver mostrado debe ser el de tu VPN o DoH elegido, no el del ISP.</p>
+
+    <h2 id="ipv6">Fuga por IPv6 dual-stack</h2>
+    <p>Las entradas <code>AllowedIPs</code> de WireGuard <strong>son específicas de la familia de direcciones</strong>. Si sólo listaste prefijos IPv4, el tráfico al mismo dominio por IPv6 (preferido por la mayoría de sitios modernos según RFC 6724) elude el túnel y sale por la ruta v6 por defecto del ISP.</p>
+    <p>Dos soluciones:</p>
+    <ul>
+        <li><strong>Enrutar v6 también</strong> (si tu VPN tiene endpoint IPv6). Añade prefijos v6 junto a v4:
+            <pre><code>AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 2606:4700::/32, 2001:4860::/32</code></pre>
+            Para todo el tráfico v6 por el túnel: <code>AllowedIPs = 0.0.0.0/0, ::/0</code>.
+        </li>
+        <li><strong>Deshabilitar IPv6 a nivel de sistema</strong> si tu VPN no soporta v6. En Linux: <code>sysctl net.ipv6.conf.all.disable_ipv6=1</code>. En Windows: deshabilita IPv6 en el adaptador activo. En routers: toggle IPv6 por WAN. Todo el tráfico cae a v4 y se tuneliza.</li>
+    </ul>
+
     <h2>Verificar</h2>
     <p>Comprueba que los cambios se aplicaron:</p>
     <pre><code>sudo wg show</code></pre>

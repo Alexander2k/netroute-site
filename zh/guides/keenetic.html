@@ -242,6 +242,24 @@
         <li>保存</li>
     </ol>
 
+    <h2 id="dns-leak">DNS 泄漏 &mdash; 必读</h2>
+    <p>Keenetic 的静态路由按 <em>IP</em> 转发流量。<strong>不转发 DNS。</strong>LAN 客户端仍然向 Keenetic 的 DNS 代理（默认转发到 ISP）询问 <code>example.com</code> 的 IP &mdash; 只有结果 IP 流量才通过 VPN。即使数据加密，ISP 仍能看到访问哪些站点。</p>
+    <p>根据威胁模型，三种选择：</p>
+    <ol>
+        <li><strong>对 ISP 完全隐藏 DNS。</strong>在 <strong>Internet → Other connections → 你的 VPN 接口</strong> 中将其设为优先 DNS 连接，或者在 <strong>Network rules → Internet safety</strong> 中设置静态 DNS 指向 VPN 提供商的内部解析器（例如 <code>10.0.0.1</code>）。Keenetic 会通过隧道路由 DNS 查询。</li>
+        <li><strong>降低 ISP 可见性（公共 DoH/DoT）。</strong>Keenetic 在 <strong>Network rules → Internet safety → DNS-over-HTTPS / DNS-over-TLS</strong> 原生支持 DoH/DoT。添加 Cloudflare（<code>1.1.1.1</code>）、AdGuard（<code>94.140.14.140</code>）或 Quad9（<code>9.9.9.9</code>）作为系统解析器。</li>
+        <li><strong>接受泄漏。</strong>默认行为 &mdash; 仅加密数据路径，查询仍走 ISP。</li>
+    </ol>
+    <p>从 LAN 客户端访问 <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> 验证 &mdash; 显示的解析器应属于你的 VPN 或所选 DoH，而非 ISP。在 Keenetic 上，活动 DNS 服务器可在 <strong>System dashboard → DNS</strong> 中查看。</p>
+
+    <h2 id="ipv6">IPv6 双栈绕过</h2>
+    <p>静态 IPv4 路由仅覆盖 IPv4 流量。如果目标有 <code>AAAA</code> 记录（大多数热门站点都有），LAN 客户端按 RFC 6724 偏好 IPv6 &mdash; 请求通过 ISP 的 IPv6 默认路由发出，绕过 VPN。</p>
+    <p>Keenetic 上的两种解决方案：</p>
+    <ul>
+        <li><strong>在 NetRoute Pro 中生成 IPv6 路由</strong>，如果你的 VPN 有 IPv6 端点 &mdash; 同样流程，不同前缀（<code>2606:4700::/32</code>、<code>2001:4860::/32</code> 等）。作为单独的 <code>.bat</code> 导入，绑定到同一 VPN 接口。</li>
+        <li><strong>全局禁用 IPv6</strong>，在 <strong>Internet → Connections → IPv6</strong>，如果你的 VPN 不支持 v6。所有流量回退到 v4 并被正确隧道化。</li>
+    </ul>
+
     <h2>验证</h2>
     <p>导入后，检查路由已应用：它们会出现在 <strong>路由 → IPv4 路由</strong> 列表中，绑定到您的 VPN 接口。</p>
     <p>验证流量通过 VPN — 从 LAN 客户端：</p>

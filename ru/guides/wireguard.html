@@ -242,6 +242,36 @@ PersistentKeepalive = 25</code></pre>
         <li><strong>Android / iOS:</strong> отключите и включите переключатель туннеля</li>
     </ul>
 
+    <h2 id="dns-leak">DNS leak &mdash; обязательно прочитать</h2>
+    <p>WireGuard через <code>AllowedIPs</code> направляет трафик <em>по IP</em>. <strong>DNS он не направляет.</strong> Браузер всё равно спрашивает у системного резолвера (обычно ISP, через DHCP) какой IP у <code>example.com</code> &mdash; через туннель идёт только сам IP-трафик. ISP видит какие сайты вы посещаете, даже если данные зашифрованы.</p>
+    <p>Три варианта в зависимости от модели угроз:</p>
+    <ol>
+        <li><strong>Полностью спрятать DNS от ISP (split-DNS через wg-quick).</strong> Добавьте строку <code>DNS = </code> в <code>[Interface]</code> &mdash; wg-quick применит её при подъёме туннеля:
+            <pre><code>[Interface]
+PrivateKey = ...
+Address    = 10.0.0.2/24
+DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
+            Записи <code>~домен</code> заставляют systemd-resolved использовать VPN-DNS только для этих доменов (split-DNS). Без них через VPN-DNS пойдут все запросы.
+        </li>
+        <li><strong>Снизить видимость для ISP (публичный DoH/DoT).</strong> Используйте публичный резолвер для всего:
+            <pre><code>DNS = 1.1.1.1, 1.0.0.1</code></pre>
+            ISP больше не видит запросы; их видит Cloudflare.
+        </li>
+        <li><strong>Принять leak.</strong> Уберите строку <code>DNS</code> совсем &mdash; шифруется только данные, lookup'ы остаются на дефолтном резолвере. Подходит для случая "просто разблокировать сайт".</li>
+    </ol>
+    <p>Проверить: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> или <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> &mdash; показанный резолвер должен принадлежать вашему VPN-провайдеру или выбранному DoH, не ISP.</p>
+
+    <h2 id="ipv6">IPv6 dual-stack bypass</h2>
+    <p>Записи <code>AllowedIPs</code> в WireGuard <strong>специфичны для address family</strong>. Если вы перечислили только IPv4-префиксы, трафик к тому же домену через IPv6 (а его большинство современных сайтов предпочитают согласно RFC 6724) пройдёт мимо туннеля через дефолтный v6-маршрут ISP.</p>
+    <p>Два варианта решения:</p>
+    <ul>
+        <li><strong>Маршрутизировать v6 тоже</strong> (если у вашего VPN есть IPv6-endpoint). Добавьте v6-префиксы рядом с v4:
+            <pre><code>AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 2606:4700::/32, 2001:4860::/32</code></pre>
+            Для всего v6 через туннель: <code>AllowedIPs = 0.0.0.0/0, ::/0</code>.
+        </li>
+        <li><strong>Отключить IPv6 системно</strong> если VPN не поддерживает v6. На Linux: <code>sysctl net.ipv6.conf.all.disable_ipv6=1</code>. На Windows: отключить IPv6 на активном адаптере. На роутерах: per-WAN переключатель IPv6. Весь трафик откатится на v4 и будет тунелирован.</li>
+    </ul>
+
     <h2>Проверка</h2>
     <p>Команда <code>sudo wg show</code> отобразит пира с применёнными <code>allowed ips</code>:</p>
     <pre><code>sudo wg show</code></pre>

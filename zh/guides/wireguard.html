@@ -247,6 +247,36 @@ PersistentKeepalive = 25</code></pre>
         <li><strong>移动端：</strong>将开关切换 off/on</li>
     </ul>
 
+    <h2 id="dns-leak">DNS 泄漏 &mdash; 必读</h2>
+    <p>WireGuard 通过 <code>AllowedIPs</code> 按 <em>IP</em> 路由流量。<strong>它不路由 DNS。</strong>浏览器仍然向系统解析器（通常是 ISP 的，通过 DHCP 获得）询问 <code>example.com</code> 的 IP &mdash; 只有结果 IP 流量才通过隧道。即使数据加密，ISP 仍能看到你访问哪些站点。</p>
+    <p>根据你的威胁模型，三种选择：</p>
+    <ol>
+        <li><strong>对 ISP 完全隐藏 DNS（通过 wg-quick 实现 split-DNS）。</strong>在 <code>[Interface]</code> 下添加 <code>DNS = </code> 行 &mdash; wg-quick 会在隧道建立时应用：
+            <pre><code>[Interface]
+PrivateKey = ...
+Address    = 10.0.0.2/24
+DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
+            <code>~域名</code> 条目让 systemd-resolved 仅对这些域名使用 VPN 的 DNS（split-DNS）。没有它们时，所有 DNS 都走 VPN。
+        </li>
+        <li><strong>降低 ISP 可见性（公共 DoH/DoT）。</strong>对所有查询使用公共解析器：
+            <pre><code>DNS = 1.1.1.1, 1.0.0.1</code></pre>
+            ISP 不再看到域名查询；Cloudflare 会看到。
+        </li>
+        <li><strong>接受泄漏。</strong>完全省略 <code>DNS</code> 行 &mdash; 只加密数据路径，查询仍走默认解析器。仅作内容解锁场景下可以接受。</li>
+    </ol>
+    <p>用 <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> 或 <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> 验证 &mdash; 显示的解析器应属于你的 VPN 提供商或所选 DoH，而非 ISP。</p>
+
+    <h2 id="ipv6">IPv6 双栈绕过</h2>
+    <p>WireGuard 的 <code>AllowedIPs</code> 条目<strong>对地址族敏感</strong>。如果你只列出 IPv4 前缀，到同一域名的 IPv6 流量（按 RFC 6724，大多数现代站点都偏好 v6）会绕过隧道，从 ISP 默认 v6 路由出去。</p>
+    <p>两种解决方案：</p>
+    <ul>
+        <li><strong>v6 也走 VPN</strong>（如果你的 VPN 有 IPv6 端点）。在 v4 旁边添加 v6 前缀：
+            <pre><code>AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 2606:4700::/32, 2001:4860::/32</code></pre>
+            全部 v6 流量走隧道：<code>AllowedIPs = 0.0.0.0/0, ::/0</code>。
+        </li>
+        <li><strong>系统级禁用 IPv6</strong>，如果 VPN 不支持 v6。Linux：<code>sysctl net.ipv6.conf.all.disable_ipv6=1</code>。Windows：在活动适配器上禁用 IPv6。路由器：每个 WAN 上的 IPv6 开关。所有流量回退到 v4 并被隧道化。</li>
+    </ul>
+
     <h2>验证</h2>
     <p>运行以下命令确认应用的 AllowedIPs：</p>
     <pre><code>sudo wg show</code></pre>
