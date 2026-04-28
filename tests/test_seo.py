@@ -549,6 +549,70 @@ def check_no_render_blocking_css(path: str, content: str, fails: Failures):
         fails.add(path, f'render-blocking stylesheet: {b}')
 
 
+def _resolve_relative_url(from_path: str, href: str) -> tuple[str, str]:
+    """Resolve a relative href from `from_path` to (target_file_abs, anchor)."""
+    if '#' in href:
+        path_part, anchor = href.split('#', 1)
+    else:
+        path_part, anchor = href, ''
+    if not path_part:
+        return from_path, anchor
+    base_dir = os.path.dirname(from_path)
+    target = os.path.normpath(os.path.join(base_dir, path_part))
+    # Trailing slash means index.html
+    if path_part.endswith('/') or os.path.isdir(target):
+        target = os.path.join(target, 'index.html')
+    return target, anchor
+
+
+def _extract_anchors(content: str) -> set:
+    """Return all id="..." values from the file."""
+    return set(re.findall(r'\bid="([^"]+)"', content))
+
+
+def check_internal_links(fails: Failures):
+    """Walk every <a href="..."> in every HTML file. For relative hrefs:
+        1) the target file must exist on disk
+        2) any #anchor must match an id="..." on the target page
+       External (http/https/mailto/tel) hrefs are out of scope here.
+    """
+    files = collect_html_files()
+    # Cache anchor sets per file to avoid re-reading
+    anchor_cache: dict[str, set] = {}
+
+    for path in files:
+        with open(path) as f:
+            content = f.read()
+        for href in re.findall(r'<a [^>]*href="([^"]+)"', content):
+            # Skip external schemes and javascript/mailto
+            if re.match(r'^(https?:|mailto:|tel:|javascript:|data:)', href):
+                continue
+            # Skip pure anchors (within same page) — handle via target = path
+            if href.startswith('#'):
+                anchor = href[1:]
+                anchors = anchor_cache.setdefault(path, _extract_anchors(content))
+                if anchor and anchor not in anchors:
+                    fails.add(path, f'broken self-anchor link: #{anchor}')
+                continue
+            target, anchor = _resolve_relative_url(path, href)
+            # Make sure target is inside the repo
+            if not target.startswith(ROOT):
+                fails.add(path, f'link escapes repo root: {href} -> {target}')
+                continue
+            if not os.path.exists(target):
+                fails.add(path, f'broken link: {href} -> {os.path.relpath(target, ROOT)} (file missing)')
+                continue
+            # If target is a non-HTML asset (e.g. .png, .css), anchor doesn't apply
+            if not target.endswith('.html'):
+                continue
+            if anchor:
+                if target not in anchor_cache:
+                    with open(target) as tf:
+                        anchor_cache[target] = _extract_anchors(tf.read())
+                if anchor not in anchor_cache[target]:
+                    fails.add(path, f'broken anchor: {href} -> {os.path.relpath(target, ROOT)} has no id="{anchor}"')
+
+
 def check_404_navigation(fails: Failures):
     """404.html must offer navigation back to key destinations: home,
     guides hub, and ideally the 5 platform guides — so a wrong URL still
@@ -663,6 +727,7 @@ def main():
         check_mikrotik_routeros_version(path, content, fails)
     check_sitemap(fails)
     check_404_navigation(fails)
+    check_internal_links(fails)
 
     if fails:
         print(f'\n❌ {len(fails)} failure(s):\n')
