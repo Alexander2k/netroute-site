@@ -258,6 +258,15 @@ DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
     </ol>
     <p>Verify with <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> or <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> &mdash; the resolver shown should belong to your VPN provider or chosen DoH, not your ISP.</p>
 
+    <h2 id="webrtc-leak">Browser-level IP leaks (WebRTC)</h2>
+    <p>Even with split tunneling correctly configured at the OS level, JavaScript on a webpage can use <strong>WebRTC</strong> to discover your real local and public IP addresses through STUN/ICE, bypassing the VPN. This is by design (P2P video/audio needs direct addresses), not a bug &mdash; but it&rsquo;s a leak the VPN cannot prevent at the network layer.</p>
+    <ul>
+        <li><strong>Chrome/Edge:</strong> open <code>chrome://flags/#enable-webrtc-hide-local-ips-with-mdns</code> and enable. Hides the local IP behind a per-session mDNS hostname.</li>
+        <li><strong>Firefox:</strong> <code>about:config</code> &rarr; set <code>media.peerconnection.enabled</code> to <code>false</code> if you don&rsquo;t use any WebRTC apps. More granular control via per-site policy.</li>
+        <li><strong>uBlock Origin (any browser):</strong> Settings &rarr; Privacy &rarr; enable &ldquo;Prevent WebRTC from leaking local IP addresses&rdquo;.</li>
+        <li>Test at <a href="https://browserleaks.com/webrtc" target="_blank" rel="noopener">browserleaks.com/webrtc</a> &mdash; the public IP shown should match your VPN exit, not your ISP.</li>
+    </ul>
+
     <h2 id="ipv6">IPv6 dual-stack bypass</h2>
     <p>WireGuard&rsquo;s <code>AllowedIPs</code> entries are <strong>address-family specific</strong>. If you listed only IPv4 prefixes, traffic to the same domain over IPv6 (which most modern sites prefer per RFC 6724) bypasses the tunnel and exits via your ISP&rsquo;s default v6 route.</p>
     <p>Two fixes:</p>
@@ -281,6 +290,20 @@ PostUp = iptables -I OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT
 PostDown = iptables -D OUTPUT ! -o %i -d 1.1.1.0/24 -j REJECT
 PostDown = iptables -D OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT</code></pre>
     <p><code>%i</code> is replaced by the actual interface name (e.g. <code>wg0</code>). When the tunnel is up, traffic flows through it; when it goes down via <code>wg-quick down</code>, the rules are removed. If the tunnel <em>crashes</em> without running <code>PostDown</code>, those CIDRs stay blocked &mdash; which is the safe failure mode (block, don&rsquo;t leak).</p>
+
+    <h2 id="table-off">Advanced: <code>Table = off</code></h2>
+    <p>By default, <code>wg-quick</code> installs a route for every CIDR in <code>AllowedIPs</code> into the main routing table. Setting <code>Table = off</code> under <code>[Interface]</code> tells wg-quick to <strong>skip route installation entirely</strong> &mdash; you manage routing yourself via <code>PostUp</code>/<code>PostDown</code>. Useful when you need policy routing (route based on source IP, mark, or process), a custom routing table, or integration with frr/bird/quagga.</p>
+    <pre><code>[Interface]
+PrivateKey = ...
+Address    = 10.0.0.2/24
+Table      = off       # do not auto-install routes
+
+# Manage your own routes — typical policy routing example:
+PostUp = ip route add 1.1.1.0/24 dev %i table 100
+PostUp = ip rule  add from 192.168.1.100 lookup 100
+PostDown = ip rule  del from 192.168.1.100 lookup 100
+PostDown = ip route flush table 100</code></pre>
+    <p>Most users don&rsquo;t need this &mdash; the default behaviour (auto-install routes from <code>AllowedIPs</code>) is what NetRoute Pro&rsquo;s output expects.</p>
 
     <h2>Verify</h2>
     <p>Run <code>sudo wg show</code> &mdash; the peer should be listed with the new <code>allowed ips</code> values:</p>

@@ -261,6 +261,15 @@ DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
     </ol>
     <p>Проверить: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> или <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> &mdash; показанный резолвер должен принадлежать вашему VPN-провайдеру или выбранному DoH, не ISP.</p>
 
+    <h2 id="webrtc-leak">Утечки IP в браузере (WebRTC)</h2>
+    <p>Даже когда split tunneling корректно настроен на уровне ОС, JavaScript на странице может через <strong>WebRTC</strong> (STUN/ICE) узнать ваш реальный локальный и публичный IP, минуя VPN. Это by design (для P2P видео/аудио нужны прямые адреса), не баг &mdash; но это утечка которую VPN не может предотвратить на сетевом уровне.</p>
+    <ul>
+        <li><strong>Chrome/Edge:</strong> откройте <code>chrome://flags/#enable-webrtc-hide-local-ips-with-mdns</code> и включите. Скрывает локальный IP за per-session mDNS-hostname.</li>
+        <li><strong>Firefox:</strong> <code>about:config</code> &rarr; установите <code>media.peerconnection.enabled</code> в <code>false</code>, если не пользуетесь WebRTC-приложениями. Более точечно &mdash; через per-site policy.</li>
+        <li><strong>uBlock Origin (любой браузер):</strong> Settings &rarr; Privacy &rarr; включите &laquo;Prevent WebRTC from leaking local IP addresses&raquo;.</li>
+        <li>Тест на <a href="https://browserleaks.com/webrtc" target="_blank" rel="noopener">browserleaks.com/webrtc</a> &mdash; публичный IP должен соответствовать VPN exit, не ISP.</li>
+    </ul>
+
     <h2 id="ipv6">IPv6 dual-stack bypass</h2>
     <p>Записи <code>AllowedIPs</code> в WireGuard <strong>специфичны для address family</strong>. Если вы перечислили только IPv4-префиксы, трафик к тому же домену через IPv6 (а его большинство современных сайтов предпочитают согласно RFC 6724) пройдёт мимо туннеля через дефолтный v6-маршрут ISP.</p>
     <p>Два варианта решения:</p>
@@ -284,6 +293,20 @@ PostUp = iptables -I OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT
 PostDown = iptables -D OUTPUT ! -o %i -d 1.1.1.0/24 -j REJECT
 PostDown = iptables -D OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT</code></pre>
     <p><code>%i</code> заменяется на реальное имя интерфейса (например <code>wg0</code>). Когда туннель поднят, трафик идёт через него; при <code>wg-quick down</code> правила удаляются. Если туннель <em>падает аварийно</em> без выполнения <code>PostDown</code> &mdash; CIDR'ы остаются заблокированы, что и есть безопасный failure mode (блок, не leak).</p>
+
+    <h2 id="table-off">Для продвинутых: <code>Table = off</code></h2>
+    <p>По умолчанию <code>wg-quick</code> добавляет маршрут для каждого CIDR из <code>AllowedIPs</code> в главную таблицу маршрутизации. <code>Table = off</code> под <code>[Interface]</code> отключает автоматическую установку маршрутов &mdash; вы управляете routing'ом сами через <code>PostUp</code>/<code>PostDown</code>. Полезно когда нужен policy routing (по source IP, fwmark, процессу), кастомная routing-таблица или интеграция с frr/bird/quagga.</p>
+    <pre><code>[Interface]
+PrivateKey = ...
+Address    = 10.0.0.2/24
+Table      = off       # не устанавливать маршруты автоматически
+
+# Управляйте маршрутами сами — пример policy routing:
+PostUp = ip route add 1.1.1.0/24 dev %i table 100
+PostUp = ip rule  add from 192.168.1.100 lookup 100
+PostDown = ip rule  del from 192.168.1.100 lookup 100
+PostDown = ip route flush table 100</code></pre>
+    <p>Большинству это не нужно &mdash; дефолтное поведение (автоинсталл маршрутов из <code>AllowedIPs</code>) и есть то, на что рассчитан вывод NetRoute Pro.</p>
 
     <h2>Проверка</h2>
     <p>Команда <code>sudo wg show</code> отобразит пира с применёнными <code>allowed ips</code>:</p>

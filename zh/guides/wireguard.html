@@ -266,6 +266,15 @@ DNS        = 10.0.0.1, ~example.com, ~another-site.com</code></pre>
     </ol>
     <p>用 <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> 或 <a href="https://browserleaks.com/dns" target="_blank" rel="noopener">browserleaks.com/dns</a> 验证 &mdash; 显示的解析器应属于你的 VPN 提供商或所选 DoH，而非 ISP。</p>
 
+    <h2 id="webrtc-leak">浏览器层 IP 泄漏（WebRTC）</h2>
+    <p>即使在 OS 层面正确配置了分流，网页中的 JavaScript 仍可通过 <strong>WebRTC</strong>（STUN/ICE）发现你的真实本地与公网 IP，绕过 VPN。这是设计使然（P2P 音视频需要直接地址），并非 bug &mdash; 但 VPN 无法在网络层阻止这种泄漏。</p>
+    <ul>
+        <li><strong>Chrome/Edge：</strong>打开 <code>chrome://flags/#enable-webrtc-hide-local-ips-with-mdns</code> 并启用。本地 IP 被会话级 mDNS 主机名隐藏。</li>
+        <li><strong>Firefox：</strong><code>about:config</code> &rarr; 将 <code>media.peerconnection.enabled</code> 设为 <code>false</code>，如果你不使用 WebRTC 应用。可通过 per-site 策略更细化。</li>
+        <li><strong>uBlock Origin（任何浏览器）：</strong>Settings &rarr; Privacy &rarr; 启用 &ldquo;Prevent WebRTC from leaking local IP addresses&rdquo;。</li>
+        <li>在 <a href="https://browserleaks.com/webrtc" target="_blank" rel="noopener">browserleaks.com/webrtc</a> 测试 &mdash; 显示的公网 IP 应与 VPN 出口一致，而非 ISP。</li>
+    </ul>
+
     <h2 id="ipv6">IPv6 双栈绕过</h2>
     <p>WireGuard 的 <code>AllowedIPs</code> 条目<strong>对地址族敏感</strong>。如果你只列出 IPv4 前缀，到同一域名的 IPv6 流量（按 RFC 6724，大多数现代站点都偏好 v6）会绕过隧道，从 ISP 默认 v6 路由出去。</p>
     <p>两种解决方案：</p>
@@ -289,6 +298,20 @@ PostUp = iptables -I OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT
 PostDown = iptables -D OUTPUT ! -o %i -d 1.1.1.0/24 -j REJECT
 PostDown = iptables -D OUTPUT ! -o %i -d 8.8.8.0/24 -j REJECT</code></pre>
     <p><code>%i</code> 会替换为实际接口名（如 <code>wg0</code>）。隧道启动后，流量经它通过；通过 <code>wg-quick down</code> 关闭时，规则被移除。如果隧道<em>异常崩溃</em>而未执行 <code>PostDown</code>，这些 CIDR 仍被阻断 &mdash; 这是安全的故障模式（阻断、不泄漏）。</p>
+
+    <h2 id="table-off">高级：<code>Table = off</code></h2>
+    <p>默认情况下 <code>wg-quick</code> 会把 <code>AllowedIPs</code> 中的每个 CIDR 安装到主路由表。在 <code>[Interface]</code> 下设置 <code>Table = off</code> 让 wg-quick <strong>完全不安装路由</strong> &mdash; 你通过 <code>PostUp</code>/<code>PostDown</code> 自行管理。适用于需要策略路由（按源 IP、fwmark、进程）、自定义路由表或与 frr/bird/quagga 集成的场景。</p>
+    <pre><code>[Interface]
+PrivateKey = ...
+Address    = 10.0.0.2/24
+Table      = off       # 不自动安装路由
+
+# 自行管理路由 — 策略路由示例：
+PostUp = ip route add 1.1.1.0/24 dev %i table 100
+PostUp = ip rule  add from 192.168.1.100 lookup 100
+PostDown = ip rule  del from 192.168.1.100 lookup 100
+PostDown = ip route flush table 100</code></pre>
+    <p>大多数用户不需要 &mdash; 默认行为（从 <code>AllowedIPs</code> 自动安装路由）正是 NetRoute Pro 输出所期望的。</p>
 
     <h2>验证</h2>
     <p>运行以下命令确认应用的 AllowedIPs：</p>
