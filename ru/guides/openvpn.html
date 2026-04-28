@@ -204,7 +204,7 @@ route 172.67.182.0 255.255.255.0
     </ol>
 
     <div class="callout">
-        <strong>Совет:</strong> включите <strong>RIPE BGP оптимизацию</strong> для стабильных BGP-префиксов — подсети не ломаются при ротации IP у Cloudflare/Fastly.
+        <strong>Совет:</strong> включите <strong>RIPE BGP оптимизацию</strong> для стабильных BGP-префиксов &mdash; подсети не ломаются при ротации IP у Cloudflare/Fastly. <strong>Важно:</strong> RIPE BGP возвращает <em>все</em> префиксы анонсируемые ASN &mdash; для multi-tenant CDN (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) это десятки тысяч IP, покрывающих несвязанные сайты. BGP-оптимизация подходит для single-tenant ASN; для shared CDN оставьте обычную /24 CIDR-агрегацию.
     </div>
 
     <h2>Шаг 2. Отредактируйте <code>.ovpn</code></h2>

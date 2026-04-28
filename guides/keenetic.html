@@ -202,7 +202,7 @@
     </ol>
 
     <div class="callout">
-        <strong>Tip:</strong> enable <strong>RIPE BGP optimization</strong> in the extension — it replaces individual IPs with real announced BGP prefixes. This gives stable routes that don't break when Cloudflare/Fastly rotate IPs.
+        <strong>Tip:</strong> enable <strong>RIPE BGP optimization</strong> in the extension &mdash; it replaces individual IPs with real announced BGP prefixes. This gives stable routes that don&rsquo;t break when Cloudflare/Fastly rotate IPs. <strong>Caveat:</strong> RIPE BGP returns <em>all</em> prefixes announced by the destination AS &mdash; for multi-tenant CDNs (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) that&rsquo;s tens of thousands of IPs covering unrelated sites. Use BGP optimization for single-tenant ASes; keep plain /24 CIDR aggregation for shared CDNs.
     </div>
 
     <h2>Step 2. Open the Routing section in Keenetic</h2>

@@ -89,7 +89,7 @@
     <ul>
         <li><strong>DNS-over-HTTPS查询</strong> 发送至Cloudflare (1.1.1.1)、Google (8.8.8.8)和AdGuard (94.140.14.140) — 用于将域名解析为IP地址</li>
         <li><strong>RIPE Stat API</strong> (stat.ripe.net) — 用于获取BGP前缀信息以优化路由（可选）</li>
-        <li><strong>ip-api.com</strong> — 用于查询已解析IP的ASN/组织信息（可选）</li>
+        <li><strong>ip-api.com</strong> &mdash; 用于查询已解析 IP 的 ASN/组织信息（可选）。<em>声明：</em>ip-api.com 可能会按其自身隐私政策记录查询。免费层仅支持 HTTP，与本站点的 <code>upgrade-insecure-requests</code> CSP 冲突 &mdash; 该查询从扩展本身发出，而非网站。如不希望存在第三方可见性，请在扩展设置中禁用 ASN 查询。</li>
     </ul>
     <p>这些请求仅包含在当前网页上发现的域名或IP地址。不包含任何个人信息。</p>
 

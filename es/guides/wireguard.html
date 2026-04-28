@@ -199,7 +199,7 @@
     </ol>
 
     <div class="callout">
-        <strong>Consejo:</strong> activa <strong>optimización RIPE BGP</strong> en la extensión — reemplaza IPs individuales con prefijos BGP anunciados reales, dando rutas estables que no se rompen cuando Cloudflare/Fastly rotan IPs.
+        <strong>Consejo:</strong> activa <strong>optimización RIPE BGP</strong> en la extensión &mdash; reemplaza IPs individuales con prefijos BGP anunciados reales, dando rutas estables que no se rompen cuando Cloudflare/Fastly rotan IPs. <strong>Importante:</strong> RIPE BGP devuelve <em>todos</em> los prefijos anunciados por el AS &mdash; para CDN multi-tenant (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) son decenas de miles de IPs cubriendo sitios sin relación. Usa optimización BGP para AS single-tenant; mantén /24 CIDR para CDN compartidos.
     </div>
 
     <h2>Paso 2. Pega en config del peer</h2>

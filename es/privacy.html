@@ -88,7 +88,7 @@
     <ul>
         <li><strong>Consultas DNS-over-HTTPS</strong> a Cloudflare (1.1.1.1), Google (8.8.8.8) y AdGuard (94.140.14.140) — para resolver nombres de dominio a direcciones IP</li>
         <li><strong>RIPE Stat API</strong> (stat.ripe.net) — para obtener información de prefijos BGP para optimización de rutas (opcional)</li>
-        <li><strong>ip-api.com</strong> — para buscar información ASN/organización de IPs resueltas (opcional)</li>
+        <li><strong>ip-api.com</strong> &mdash; para buscar información ASN/organización de IPs resueltas (opcional). <em>Aviso:</em> ip-api.com puede registrar consultas según su propia política de privacidad. La capa gratuita es HTTP-only, lo cual entra en conflicto con la CSP del sitio (<code>upgrade-insecure-requests</code>) &mdash; el lookup se ejecuta desde la extensión, no desde la web. Desactiva el ASN lookup en los ajustes de la extensión si no quieres esta visibilidad para un tercero.</li>
     </ul>
     <p>Estas solicitudes contienen solo nombres de dominio o direcciones IP descubiertas en la página web actual. No se incluye información personal.</p>
 

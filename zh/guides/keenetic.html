@@ -203,7 +203,7 @@
     </ol>
 
     <div class="callout">
-        <strong>提示：</strong>在扩展中启用 <strong>RIPE BGP 优化</strong> — 它会用真实公告的 BGP 前缀替换单个 IP。这提供稳定的路由，不会因 Cloudflare/Fastly 轮换 IP 而失效。
+        <strong>提示：</strong>在扩展中启用 <strong>RIPE BGP 优化</strong> &mdash; 它会用真实公告的 BGP 前缀替换单个 IP。这提供稳定的路由，不会因 Cloudflare/Fastly 轮换 IP 而失效。<strong>注意：</strong>RIPE BGP 会返回该 AS 公告的<em>所有</em>前缀 &mdash; 对于多租户 CDN（Cloudflare AS13335、AWS AS16509、DigitalOcean AS14061）可能是数万个 IP，涵盖无关站点。BGP 优化适合单租户 AS；多租户 CDN 请保持常规 /24 CIDR 聚合。
     </div>
 
     <h2>步骤 2. 打开 Keenetic 的路由部分</h2>

@@ -90,7 +90,7 @@
     <ul>
         <li><strong>DNS-over-HTTPS queries</strong> to Cloudflare (1.1.1.1), Google (8.8.8.8), and AdGuard (94.140.14.140) — to resolve domain names to IP addresses</li>
         <li><strong>RIPE Stat API</strong> (stat.ripe.net) — to fetch BGP prefix information for route optimization (optional, user-enabled)</li>
-        <li><strong>ip-api.com</strong> — to look up ASN/organization info for resolved IPs (optional)</li>
+        <li><strong>ip-api.com</strong> &mdash; to look up ASN/organization info for resolved IPs (optional, user-enabled). <em>Disclosure:</em> ip-api.com may log queries per their own privacy policy. The free tier is HTTP-only, which conflicts with this site&rsquo;s <code>upgrade-insecure-requests</code> CSP &mdash; the lookup runs from the extension itself, not the site. Disable ASN lookup in extension settings if you don&rsquo;t want that third-party visibility.</li>
     </ul>
     <p>These requests contain only domain names or IP addresses discovered on the current webpage. No personal information is included.</p>
 

@@ -204,7 +204,7 @@ route 172.67.0.0 255.255.0.0
 route 162.159.128.0 255.255.224.0</code></pre>
 
     <div class="callout">
-        <strong>Consejo:</strong> activa <strong>optimización RIPE BGP</strong> en la extensión — genera prefijos BGP anunciados estables en lugar de IPs individuales, evitando que las rutas se rompan cuando CDNs rotan IPs.
+        <strong>Consejo:</strong> activa <strong>optimización RIPE BGP</strong> en la extensión &mdash; genera prefijos BGP anunciados estables en lugar de IPs individuales, evitando que las rutas se rompan cuando CDNs rotan IPs. <strong>Importante:</strong> RIPE BGP devuelve <em>todos</em> los prefijos anunciados por el AS &mdash; para CDN multi-tenant (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) son decenas de miles de IPs cubriendo sitios sin relación. Usa optimización BGP para AS single-tenant; mantén /24 CIDR para CDN compartidos.
     </div>
 
     <h2>Paso 2. Edita el archivo .ovpn</h2>

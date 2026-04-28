@@ -202,7 +202,7 @@
     </ol>
 
     <div class="callout">
-        <strong>Совет:</strong> включите <strong>RIPE BGP оптимизацию</strong> в расширении — она заменит отдельные IP на реальные BGP-префиксы провайдера. Это даст стабильные маршруты, которые не ломаются при ротации IP у Cloudflare/Fastly.
+        <strong>Совет:</strong> включите <strong>RIPE BGP оптимизацию</strong> в расширении &mdash; она заменит отдельные IP на реальные BGP-префиксы провайдера. Это даст стабильные маршруты, которые не ломаются при ротации IP у Cloudflare/Fastly. <strong>Важно:</strong> RIPE BGP возвращает <em>все</em> префиксы анонсируемые ASN &mdash; для multi-tenant CDN (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) это десятки тысяч IP, покрывающих несвязанные сайты. BGP-оптимизация подходит для single-tenant ASN; для shared CDN оставьте обычную /24 CIDR-агрегацию.
     </div>
 
     <h2>Шаг 2. Откройте раздел Маршрутизация на Keenetic</h2>
