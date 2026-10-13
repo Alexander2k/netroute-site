@@ -93,7 +93,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
         --md-primary: #a8c7fa;
         --md-on-primary: #062e6f;
         --md-primary-container: #0842a0;
@@ -129,6 +129,45 @@
         --cyan: #d3e3fd;
     }
 }
+
+/* Theme chosen with the top-bar button (theme.js) wins over the system preference */
+:root[data-theme="dark"] {
+    --md-primary: #a8c7fa;
+    --md-on-primary: #062e6f;
+    --md-primary-container: #0842a0;
+    --md-on-primary-container: #d3e3fd;
+    --md-secondary-container: #004a77;
+    --md-on-secondary-container: #c2e7ff;
+    --md-background: #131314;
+    --md-surface: #1e1f20;
+    --md-surface-container-low: #1b1b1b;
+    --md-surface-container: #28292a;
+    --md-surface-container-high: #333537;
+    --md-surface-container-highest: #3c4043;
+    --md-on-surface: #e3e3e3;
+    --md-on-surface-variant: #c4c7c5;
+    --md-outline: #8e918f;
+    --md-outline-variant: #444746;
+    --md-success: #6dd58c;
+    --md-success-container: #0f5223;
+    --md-on-success-container: #c4eed0;
+    --md-error: #f2b8b5;
+    --md-warning: #fdd663;
+    --md-orange: #ffb77c;
+    --md-orange-container: #7a3d00;
+    --md-on-orange-container: #ffdcc2;
+    --md-shape-blob-1: #0842a0;
+    --md-shape-blob-2: #0f5223;
+    --md-shape-blob-3: #004a77;
+    --md-state-hover: rgba(227, 227, 227, .08);
+    --md-state-press: rgba(227, 227, 227, .12);
+    --md-elev-1: 0 1px 2px rgba(0, 0, 0, .5), 0 1px 3px 1px rgba(0, 0, 0, .3);
+    --md-elev-2: 0 1px 2px rgba(0, 0, 0, .5), 0 2px 6px 2px rgba(0, 0, 0, .3);
+    --md-elev-3: 0 4px 8px 3px rgba(0, 0, 0, .3), 0 1px 3px rgba(0, 0, 0, .5);
+    --cyan: #d3e3fd;
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
 
 /* ==========================================================================
    Base
@@ -356,6 +395,45 @@ img { max-width: 100%; display: block; }
     0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--md-orange) 55%, transparent); }
     12%, 100% { box-shadow: 0 0 0 10px transparent; }
 }
+
+/* Theme toggle (added by theme.js): sun in the light theme, moon in the dark one */
+.theme-toggle {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    margin-left: 6px;
+    display: inline-grid;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--md-on-surface-variant);
+    cursor: pointer;
+    transition: background var(--md-dur-short) var(--md-standard), border-radius var(--md-dur-medium) var(--md-spring);
+}
+.theme-toggle:hover { background: var(--md-state-hover); color: var(--md-on-surface); }
+.theme-toggle:active { border-radius: 12px; background: var(--md-state-press); }
+.theme-toggle svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform var(--md-dur-long) var(--md-spring);
+}
+.theme-toggle:hover svg { transform: rotate(-24deg) scale(1.06); }
+.theme-toggle .theme-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-toggle .theme-sun { display: none; }
+    :root:not([data-theme="light"]) .theme-toggle .theme-moon { display: block; }
+}
+:root[data-theme="dark"] .theme-toggle .theme-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .theme-moon { display: block; }
+
+/* View transition for the theme switch: theme.js animates the new snapshot as a growing circle */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 
 /* Language menu */
 .lang-switch { position: relative; margin-left: 6px; }
@@ -1191,6 +1269,7 @@ a.feature-card h3 { color: var(--md-on-surface); }
     .nav-links > a.nav-cta { margin-left: 6px; padding: 0 16px; }
     .lang-switch { margin-left: 0; }
     .lang-current { padding: 0 10px 0 12px; }
+    .theme-toggle { width: 36px; height: 36px; margin-left: 0; }
 }
 
 @media (max-width: 420px) {
