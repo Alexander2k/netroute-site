@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Split Tunneling en WireGuard con AllowedIPs — Guía paso a paso | NetRoute Pro</title>
     <meta name="description" content="Enruta sitios específicos por WireGuard VPN configurando AllowedIPs. Genera la lista desde dominios en NetRoute Pro, pega en el config del peer, reinicia el túnel.">
     <meta name="keywords" content="wireguard allowedips generador, wireguard split tunnel, wireguard enrutamiento por dominio, wg-quick allowedips, wireguard config peer">
@@ -199,7 +199,7 @@
     </ol>
 
     <div class="callout">
-        <strong>Consejo:</strong> activa <strong>optimización RIPE BGP</strong> en la extensión &mdash; reemplaza IPs individuales con prefijos BGP anunciados reales, dando rutas estables que no se rompen cuando Cloudflare/Fastly rotan IPs. <strong>Importante:</strong> RIPE BGP devuelve <em>todos</em> los prefijos anunciados por el AS &mdash; para CDN multi-tenant (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) son decenas de miles de IPs cubriendo sitios sin relación. Usa optimización BGP para AS single-tenant; mantén /24 CIDR para CDN compartidos.
+        <strong>Consejo:</strong> elige <strong>Optimización de rutas &rarr; Prefijo BGP</strong> en la extensión &mdash; reemplaza IPs individuales con prefijos BGP anunciados reales, dando rutas estables que no se rompen cuando Cloudflare/Fastly rotan IPs. <strong>Importante:</strong> los modos <strong>AS completo</strong> y <strong>AS + Colapsar</strong> devuelven <em>todos</em> los prefijos anunciados por el AS &mdash; para CDN multi-tenant (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) son decenas de miles de IPs cubriendo sitios sin relación. Usa optimización BGP para AS single-tenant; mantén /24 CIDR para CDN compartidos.
     </div>
 
     <h2>Paso 2. Pega en config del peer</h2>

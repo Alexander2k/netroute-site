@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Split Tunneling в WireGuard через AllowedIPs — инструкция | NetRoute Pro</title>
     <meta name="description" content="Направьте отдельные сайты через WireGuard VPN настройкой AllowedIPs. Сгенерируйте список из доменов в NetRoute Pro, вставьте в конфиг пира, перезапустите туннель.">
     <meta name="keywords" content="wireguard allowedips генератор, wireguard split tunnel, wireguard маршрутизация по доменам, wg-quick allowedips, wireguard конфиг пира, выборочная маршрутизация wireguard">
@@ -201,7 +201,7 @@
     </ol>
 
     <div class="callout">
-        <strong>Совет:</strong> включите <strong>RIPE BGP оптимизацию</strong> &mdash; она подставит реальные BGP-префиксы провайдера. Получите стабильные подсети, которые не ломаются при ротации IP у Cloudflare/Fastly. <strong>Важно:</strong> RIPE BGP возвращает <em>все</em> префиксы анонсируемые ASN &mdash; для multi-tenant CDN (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) это десятки тысяч IP, покрывающих несвязанные сайты. BGP-оптимизация подходит для single-tenant ASN; для shared CDN оставьте обычную /24 CIDR-агрегацию.
+        <strong>Совет:</strong> выберите <strong>Оптимизация маршрутов &rarr; BGP Prefix</strong> &mdash; она подставит реальные BGP-префиксы провайдера. Получите стабильные подсети, которые не ломаются при ротации IP у Cloudflare/Fastly. <strong>Важно:</strong> режимы <strong>Вся AS</strong> и <strong>AS + Схлоп</strong> возвращают <em>все</em> префиксы, анонсируемые ASN &mdash; для multi-tenant CDN (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) это десятки тысяч IP, покрывающих несвязанные сайты. BGP-оптимизация подходит для single-tenant ASN; для shared CDN оставьте обычную /24 CIDR-агрегацию.
     </div>
 
     <h2>Шаг 2. Вставьте AllowedIPs в конфиг пира</h2>

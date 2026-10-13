@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>WireGuard 分流（AllowedIPs）— 分步指南 | NetRoute Pro</title>
     <meta name="description" content="如何通过设置 AllowedIPs 将特定网站通过 WireGuard VPN 路由。在 NetRoute Pro 中从域名生成 AllowedIPs，粘贴到对端配置中，重启隧道。适用于 Linux、Windows、macOS、Android、iOS 和路由器。">
     <meta name="keywords" content="wireguard allowedips 生成器, wireguard 分流, wireguard 按域名路由, wg-quick allowedips, wireguard 对端配置">
@@ -207,7 +207,7 @@
     </ol>
 
     <div class="callout">
-        <strong>提示：</strong>启用 <strong>RIPE BGP 优化</strong> 获得稳定前缀 &mdash; 它会用真实公告的 BGP 前缀替换单个 IP，当 CDN 轮换 IP 时路由不会失效。<strong>注意：</strong>RIPE BGP 会返回该 AS 公告的<em>所有</em>前缀 &mdash; 对于多租户 CDN（Cloudflare AS13335、AWS AS16509、DigitalOcean AS14061）可能是数万个 IP，涵盖无关站点。BGP 优化适合单租户 AS；多租户 CDN 请保持常规 /24 CIDR 聚合。
+        <strong>提示：</strong>选择 <strong>路由优化 &rarr; BGP 前缀</strong> 获得稳定前缀 &mdash; 它会用真实公告的 BGP 前缀替换单个 IP，当 CDN 轮换 IP 时路由不会失效。<strong>注意：</strong><strong>完整 AS</strong> 和 <strong>AS + 压缩</strong> 模式会返回该 AS 公告的<em>所有</em>前缀 &mdash; 对于多租户 CDN（Cloudflare AS13335、AWS AS16509、DigitalOcean AS14061）可能是数万个 IP，涵盖无关站点。BGP 优化适合单租户 AS；多租户 CDN 请保持常规 /24 CIDR 聚合。
     </div>
 
     <h2>步骤 2. 粘贴到对端配置</h2>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>向 OpenVPN 客户端配置添加路由 — 分步指南 | NetRoute Pro</title>
     <meta name="description" content="如何向 OpenVPN .ovpn 配置添加选择性路由。在 NetRoute Pro 中生成 route 指令，粘贴到客户端配置，重新连接。非常适合分流。">
     <meta name="keywords" content="openvpn route 指令, openvpn 分流, openvpn 客户端路由, openvpn push route, ovpn 配置路由">
@@ -203,7 +203,7 @@ route 172.67.0.0 255.255.0.0
 route 198.41.128.0 255.255.128.0</code></pre>
 
     <div class="callout">
-        <strong>提示：</strong>启用 <strong>RIPE BGP 优化</strong> 获得稳定的 BGP 公告前缀 &mdash; CDN IP 轮换时路由不会失效。<strong>注意：</strong>RIPE BGP 会返回该 AS 公告的<em>所有</em>前缀 &mdash; 对于多租户 CDN（Cloudflare AS13335、AWS AS16509、DigitalOcean AS14061）可能是数万个 IP，涵盖无关站点。BGP 优化适合单租户 AS；多租户 CDN 请保持常规 /24 CIDR 聚合。
+        <strong>提示：</strong>选择 <strong>路由优化 &rarr; BGP 前缀</strong> 获得稳定的 BGP 公告前缀 &mdash; CDN IP 轮换时路由不会失效。<strong>注意：</strong><strong>完整 AS</strong> 和 <strong>AS + 压缩</strong> 模式会返回该 AS 公告的<em>所有</em>前缀 &mdash; 对于多租户 CDN（Cloudflare AS13335、AWS AS16509、DigitalOcean AS14061）可能是数万个 IP，涵盖无关站点。BGP 优化适合单租户 AS；多租户 CDN 请保持常规 /24 CIDR 聚合。
     </div>
 
     <h2>步骤 2. 编辑 <code>.ovpn</code></h2>

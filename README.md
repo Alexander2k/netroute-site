@@ -2,7 +2,7 @@
 
 **Smart Route Generation for Network Engineers**
 
-Chrome extension that discovers domains on any webpage, resolves IPs via racing DNS queries, and generates optimized routing commands for 8 platforms.
+Chrome extension that discovers domains on any webpage, resolves IPs via racing DNS queries, and generates optimized routing commands for 9 platforms.
 
 **🌐 Live site:** [alexander2k.github.io/netroute-site](https://alexander2k.github.io/netroute-site/)
 **🧩 Chrome Web Store:** [NetRoute Pro](https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla)
@@ -12,13 +12,17 @@ Chrome extension that discovers domains on any webpage, resolves IPs via racing 
 ## Features
 
 - **Network Sniffer** — captures dynamic background requests (AJAX, CDN, API) in real-time via Service Worker
-- **DNS Racing** — queries Cloudflare, Google, AdGuard simultaneously via `Promise.any` — first response wins
+- **DNS Racing** — queries Cloudflare, Google, Quad9, AdGuard simultaneously via `Promise.any` — first response wins; custom DoH servers can be added
+- **Works when DoH is blocked** — falls back to the IPs the browser itself connected to and resolves the rest through the system resolver
 - **CIDR Aggregation** — merges individual IPs into optimized subnets (IPv4 bitmask + IPv6 BigInt)
-- **RIPE BGP Optimization** — fetches real BGP prefixes from RIPE Stat API to replace /32s with announced routes
+- **Route Optimization (RIPE BGP)** — BGP prefix per IP, every prefix the AS announces, or AS prefixes collapsed to fit a route limit
 - **ASN Lookup** — batch IP-to-ASN resolution (e.g. `AS13335 (Cloudflare)`)
 - **Bulk Scan** — paste a list of URLs, generate aggregated routes for all hostnames at once
 - **Domain Blacklist** — exclude analytics/trackers, syncs across devices via Chrome Cloud Sync
-- **Pro Export** — download as `.bat`, `.sh`, or `.rsc` with proper headers and verification commands
+- **Pro Export** — download as `.bat`, `.sh`, `.rsc`, `.conf`, `.ovpn` and more with headers and verification commands; files are named after the site (`example_com_route.bat`)
+- **Keenetic Export** — `.bat` import format with every route commented with its domains and ASN
+- **Scan History** — the last 10 scans, ready to copy or download again
+- **Custom Templates** — your own route syntax with `{{network}}`, `{{cidr}}`, `{{gateway}}` and other macros
 
 ## Supported Platforms
 
@@ -32,6 +36,7 @@ Chrome extension that discovers domains on any webpage, resolves IPs via racing 
 | **Juniper** | `set routing-options static route` | `set rib inet6.0 static route` |
 | **WireGuard** | `AllowedIPs = {net}/{cidr}` | `AllowedIPs = {addr}` |
 | **OpenVPN** | `route {net} {mask}` | `route-ipv6` |
+| **Keenetic** | `route ADD {net} MASK {mask} {gw}` | IPv4 only |
 
 ## Screenshots
 

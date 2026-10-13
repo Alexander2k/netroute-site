@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Importar rutas en MikroTik mediante script .rsc — Guía paso a paso | NetRoute Pro</title>
     <meta name="description" content="Cómo añadir rutas en MikroTik RouterOS. Genera script .rsc en NetRoute Pro, impórtalo vía Files o terminal. Soporta address lists y rutas directas.">
     <meta name="keywords" content="mikrotik rutas, mikrotik rsc importar, mikrotik ip route add, mikrotik address list, mikrotik vpn rutas, routeros ruta estática, mikrotik import file">
@@ -210,7 +210,7 @@
     </ol>
 
     <div class="callout">
-        <strong>Consejo:</strong> activa <strong>optimización RIPE BGP</strong> en la extensión para sustituir IPs individuales con prefijos BGP anunciados reales. Esto da rutas estables frente a rotaciones de IPs de Cloudflare/Fastly. <strong>Importante:</strong> RIPE BGP devuelve <em>todos</em> los prefijos anunciados por el AS &mdash; para CDN multi-tenant (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) son decenas de miles de IPs cubriendo sitios sin relación. Usa optimización BGP para AS single-tenant; mantén /24 CIDR para CDN compartidos.
+        <strong>Consejo:</strong> elige <strong>Optimización de rutas &rarr; Prefijo BGP</strong> en la extensión para sustituir IPs individuales con prefijos BGP anunciados reales. Esto da rutas estables frente a rotaciones de IPs de Cloudflare/Fastly. <strong>Importante:</strong> los modos <strong>AS completo</strong> y <strong>AS + Colapsar</strong> devuelven <em>todos</em> los prefijos anunciados por el AS &mdash; para CDN multi-tenant (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) son decenas de miles de IPs cubriendo sitios sin relación. Usa optimización BGP para AS single-tenant; mantén /24 CIDR para CDN compartidos.
     </div>
 
     <h2>Paso 2. Sube el archivo a MikroTik</h2>
@@ -310,7 +310,7 @@ traceroute example.com  # Linux/macOS</code></pre>
     </ul>
 
     <h3>Las IPs del sitio cambian constantemente</h3>
-    <p>CDNs rotan IPs con frecuencia. Regenera el <code>.rsc</code> con <strong>optimización RIPE BGP</strong> activada — usa prefijos anunciados en BGP que cubren todo el rango del proveedor.</p>
+    <p>CDNs rotan IPs con frecuencia. Regenera el <code>.rsc</code> con <strong>Optimización de rutas &rarr; Prefijo BGP</strong> — usa prefijos anunciados en BGP que cubren todo el rango del proveedor.</p>
 
     <h3>Demasiadas rutas</h3>
     <p>MikroTik maneja miles de rutas estáticas sin problemas. Si llegas a decenas de miles, considera el enfoque <strong>WireGuard AllowedIPs</strong> o reduce la lista con agregación BGP.</p>

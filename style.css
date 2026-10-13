@@ -738,6 +738,7 @@ a.feature-card h3 { color: var(--md-on-surface); }
 .platform-table tbody tr { transition: background var(--md-dur-short) var(--md-standard); }
 .platform-table tbody tr:hover { background: var(--md-state-hover); }
 .platform-table td code { font-size: 13px; background: transparent; padding: 0; color: var(--md-on-surface-variant); }
+.platform-table td:last-child { font-size: 13px; color: var(--md-on-surface-variant); }
 
 .platform-badge {
     display: inline-flex;

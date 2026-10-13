@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>隐私政策 — NetRoute Pro</title>
     <meta name="description" content="NetRoute Pro 隐私政策。无跟踪、无分析、不收集个人数据。所有处理都在您的浏览器中本地进行。">
     <meta name="robots" content="index, follow">
@@ -69,7 +69,7 @@
 <div class="policy">
     <a href="index.html" class="back">&larr; 返回首页</a>
     <h1>隐私政策</h1>
-    <p class="date">最后更新：2026年3月30日</p>
+    <p class="date">最后更新：2026年10月13日</p>
 
     <h2>概述</h2>
     <p>NetRoute Pro是一款浏览器扩展，它能发现网页上的域名，将其解析为IP地址，并生成路由命令。您的隐私对我们很重要。此扩展完全在您的浏览器中本地运行。</p>
@@ -87,19 +87,21 @@
     <h2>网络请求</h2>
     <p>扩展进行以下网络请求，均为其核心功能所必需：</p>
     <ul>
-        <li><strong>DNS-over-HTTPS查询</strong> 发送至Cloudflare (1.1.1.1)、Google (8.8.8.8)和AdGuard (94.140.14.140) — 用于将域名解析为IP地址</li>
-        <li><strong>RIPE Stat API</strong> (stat.ripe.net) — 用于获取BGP前缀信息以优化路由（可选）</li>
-        <li><strong>ip-api.com</strong> &mdash; 用于查询已解析 IP 的 ASN/组织信息（可选）。<em>声明：</em>ip-api.com 可能会按其自身隐私政策记录查询。免费层仅支持 HTTP，与本站点的 <code>upgrade-insecure-requests</code> CSP 冲突 &mdash; 该查询从扩展本身发出，而非网站。如不希望存在第三方可见性，请在扩展设置中禁用 ASN 查询。</li>
+        <li><strong>DNS-over-HTTPS查询</strong> 发送至Cloudflare (1.1.1.1)、Google (8.8.8.8)、Quad9 (9.9.9.9)和AdGuard (94.140.14.140)，以及您添加的自定义DoH服务器 &mdash; 用于解析页面上发现的域名</li>
+        <li><strong>ip-api.com</strong> &mdash; 每次扫描时查询已解析服务器IP的ASN/组织信息（结果缓存24小时）。免费层仅支持HTTP，因此这些IP地址以未加密方式传输，ip-api.com 可能会按其自身隐私政策记录查询。该查询由扩展本身发出，而非本网站。</li>
+        <li><strong>RIPE Stat API</strong> (stat.ripe.net) &mdash; 已解析IP的BGP前缀及其AS公告的前缀，仅在<strong>路由优化</strong>选择了“关闭”以外的模式时</li>
+        <li><strong>被扫描的网站本身</strong> &mdash; 对任何DoH解析器都无法解析的域名发送<code>HEAD</code>请求（例如您的网络封锁了DoH），由系统解析器提供其IP；仅在启用<strong>Ping检查</strong>时，向已解析的IP发送<code>HEAD</code>请求</li>
     </ul>
-    <p>这些请求仅包含在当前网页上发现的域名或IP地址。不包含任何个人信息。</p>
+    <p>这些请求仅包含在被扫描网页上发现的域名和IP地址。不包含任何个人信息、Cookie或凭据。</p>
 
     <h2>本地存储</h2>
-    <p>扩展使用<code>chrome.storage.local</code>和可选的<code>chrome.storage.sync</code>来存储：</p>
+    <p>扩展使用<code>chrome.storage.local</code>、<code>chrome.storage.session</code>和可选的<code>chrome.storage.sync</code>来存储：</p>
     <ul>
-        <li>用户偏好设置（主题、DNS提供商、导出设置）</li>
-        <li>域名黑名单</li>
-        <li>扫描历史（最近10次，本地存储）</li>
-        <li>DNS和BGP缓存（带TTL过期）</li>
+        <li>用户偏好设置（主题、DNS提供商、路由优化、导出设置）</li>
+        <li>域名黑名单和自定义DNS服务器</li>
+        <li>扫描历史（最近10次：页面URL、域名和路由；本地存储）</li>
+        <li>DNS、ASN和BGP缓存（带TTL过期）</li>
+        <li>每个打开的标签页请求过的域名和服务器IP（<code>chrome.storage.session</code>：仅在内存中，关闭标签页或浏览器时删除）</li>
     </ul>
     <p>所有数据都保存在您的设备上（如果您启用Chrome Sync，则通过Google账户同步）。我们无法访问这些数据。</p>
 
@@ -108,9 +110,9 @@
         <li><strong>activeTab</strong> — 访问当前标签页的URL以进行域名扫描</li>
         <li><strong>scripting</strong> — 从当前页面提取域名</li>
         <li><strong>storage</strong> — 本地保存设置和缓存</li>
-        <li><strong>downloads</strong> — 导出路由文件（.bat、.sh、.rsc）</li>
-        <li><strong>webRequest</strong> — 捕获网络请求以发现域名</li>
-        <li><strong>host_permissions（所有URL）</strong> — 执行DNS-over-HTTPS查询以解析域名</li>
+        <li><strong>downloads</strong> — 导出路由文件（.bat、.sh、.rsc、.conf、.ovpn等）</li>
+        <li><strong>webRequest</strong> — 查看页面请求了哪些域名以及浏览器连接了哪些服务器IP；此列表保留在浏览器中</li>
+        <li><strong>host_permissions（所有URL）</strong> — 用于上述DNS-over-HTTPS、ASN和RIPE请求以及对被扫描网站的请求</li>
     </ul>
 
     <h2>第三方服务</h2>

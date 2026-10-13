@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Free WireGuard, Keenetic, MikroTik & Cisco Route Generator — NetRoute Pro Chrome Extension</title>
     <meta name="description" content="Free Chrome extension that generates VPN split tunneling routes from any website. WireGuard AllowedIPs, Keenetic .bat, MikroTik .rsc, Cisco, OpenVPN. Privacy-first.">
     <meta name="keywords" content="route generator, vpn route generator, domain to ip route, split tunnel vpn by domain, wireguard allowedips calculator, wireguard allowedips generator, wireguard allowedips from domains, mikrotik route add, mikrotik domain bypass, mikrotik address list generator, keenetic vpn routes, openwrt route generator, vpn split tunneling routes, generate ip routes from domains, cisco ip route generator, openvpn route generator, CIDR aggregation tool, BGP route optimization, DNS resolver chrome extension, domain based routing, selective vpn routing, network route automation, vpn uk, uk vpn routes, vpn split tunnel uk">
@@ -59,7 +59,7 @@
         "alternateName": ["NetRoute", "Net Route Pro", "netroute", "Net Route"],
         "applicationCategory": "BrowserApplication",
         "operatingSystem": "Chrome",
-        "description": "Free domain to IP route generator. Chrome extension for VPN split tunneling: discover domains, resolve IPs, generate routing commands for MikroTik, Cisco, Juniper, WireGuard AllowedIPs, OpenVPN, Windows, Linux, macOS. CIDR aggregation and BGP optimization.",
+        "description": "Free domain to IP route generator. Chrome extension for VPN split tunneling: discover domains, resolve IPs, generate routing commands for MikroTik, Cisco, Juniper, WireGuard AllowedIPs, OpenVPN, Keenetic, Windows, Linux, macOS. CIDR aggregation and BGP optimization.",
         "url": "https://alexander2k.github.io/netroute-site/",
         "downloadUrl": "https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla",
         "sameAs": [
@@ -67,7 +67,7 @@
             "https://github.com/Alexander2k/netroute-site"
         ],
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
-        "softwareVersion": "4.0",
+        "softwareVersion": "4.1.2",
         "offers": {
             "@type": "Offer",
             "price": "0",
@@ -75,13 +75,15 @@
         },
         "featureList": [
             "Network sniffing via Service Worker",
-            "DNS racing (Cloudflare, Google, AdGuard)",
+            "DNS racing (Cloudflare, Google, Quad9, AdGuard) and custom DoH servers",
+            "Fallback to the browser’s own connections when DoH is blocked",
             "CIDR aggregation (IPv4 + IPv6)",
-            "RIPE BGP optimization",
+            "Route optimization via RIPE Stat (BGP prefix, full AS, AS + collapse)",
             "ASN lookup",
             "Bulk URL scanning",
             "Domain blacklist with Chrome Sync",
-            "Export as .bat, .sh, .rsc"
+            "Scan history with file download",
+            "Export as .bat, .sh, .rsc, .conf, .ovpn and Keenetic .bat"
         ]
     }
     </script>
@@ -119,7 +121,7 @@
                 "name": "What platforms does NetRoute Pro support?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "NetRoute Pro generates routing commands for 8 platforms: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), and OpenVPN. Both IPv4 and IPv6 are supported."
+                    "text": "NetRoute Pro generates routing commands for 9 platforms: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), OpenVPN, and Keenetic, plus your own custom template. Both IPv4 and IPv6 are supported (the Keenetic format is IPv4 only)."
                 }
             },
             {
@@ -135,7 +137,7 @@
                 "name": "How does NetRoute Pro generate routes from a website?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "NetRoute Pro discovers all domains on a webpage (including AJAX, CDN, and API requests via Service Worker), resolves them to IP addresses using racing DNS queries to Cloudflare, Google, and AdGuard, then aggregates IPs into optimized CIDR subnets and generates platform-specific routing commands."
+                    "text": "NetRoute Pro discovers all domains on a webpage (including AJAX, CDN, and API requests via Service Worker), resolves them to IP addresses using racing DNS-over-HTTPS queries to Cloudflare, Google, Quad9, and AdGuard (falling back to the browser’s own connections when DoH is blocked), then aggregates IPs into optimized CIDR subnets and generates platform-specific routing commands."
                 }
             },
             {
@@ -151,7 +153,7 @@
                 "name": "Does NetRoute Pro collect any personal data?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "No. NetRoute Pro works entirely locally in your browser. It does not collect, store, or transmit any personal data. The only network requests are DNS queries and optional RIPE/ASN lookups for the extension's core functionality."
+                    "text": "No. NetRoute Pro has no accounts, analytics, or servers of its own: settings, cache, and scan history stay in your browser. To do its job it sends the scanned hostnames to DNS-over-HTTPS resolvers, looks up the ASN of resolved server IPs at ip-api.com, queries RIPE Stat when route optimization is on, and connects to the scanned sites directly when DoH is blocked or the ping check is enabled. Details are in the privacy policy."
                 }
             }
         ]
@@ -178,7 +180,7 @@
         <a href="./" class="logo">
             <span class="logo-icon">&#9678;</span>
             <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
-            <span class="logo-ver">v4.0</span>
+            <span class="logo-ver">v4.1.2</span>
         </a>
         <div class="nav-links">
             <a href="#features">Features</a>
@@ -211,7 +213,7 @@
         </h1>
         <p class="hero-sub">
             Discover every domain on a webpage. Resolve to IPs.<br>
-            Generate optimized routing commands for <strong>8 platforms</strong> instantly.
+            Generate optimized routing commands for <strong>9 platforms</strong> instantly.
         </p>
         <div class="hero-actions">
             <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">
@@ -224,10 +226,10 @@
                 <span class="terminal-dot dot-r"></span>
                 <span class="terminal-dot dot-y"></span>
                 <span class="terminal-dot dot-g"></span>
-                <span class="terminal-title">route-output.sh</span>
+                <span class="terminal-title">example_com_route.sh</span>
             </div>
-            <pre class="terminal-body"><code><span class="t-comment"># Generated by NetRoute Pro — 2024-03-30</span>
-<span class="t-comment">#!/bin/bash</span>
+            <pre class="terminal-body"><code><span class="t-comment">#!/bin/bash</span>
+<span class="t-comment"># NetRoute v4.1.2 — generated 2026-10-13</span>
 
 <span class="t-cmd">ip route add</span> <span class="t-ip">104.21.32.0/24</span> via <span class="t-gw">10.0.0.1</span>
 <span class="t-cmd">ip route add</span> <span class="t-ip">172.67.182.0/24</span> via <span class="t-gw">10.0.0.1</span>
@@ -259,7 +261,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 019-9"/></svg>
             </div>
             <h3>DNS Racing</h3>
-            <p>Queries Cloudflare, Google, AdGuard simultaneously via <code>Promise.any</code>. First response wins.</p>
+            <p>Queries Cloudflare, Google, Quad9, and AdGuard simultaneously via <code>Promise.any</code>. First response wins. Add your own DoH servers too.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
@@ -272,8 +274,8 @@
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
-            <h3>RIPE BGP Optimization</h3>
-            <p>Fetches real BGP prefixes from RIPE Stat API to replace individual /32s with announced routes.</p>
+            <h3>Route Optimization (RIPE BGP)</h3>
+            <p>The BGP prefix of each IP, every prefix its AS announces, or AS prefixes collapsed to fit a route limit. Data from RIPE Stat.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
@@ -287,7 +289,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M4 7V4a2 2 0 012-2h8.5L20 7.5V20a2 2 0 01-2 2H6a2 2 0 01-2-2v-3"/><polyline points="14 2 14 8 20 8"/><path d="M1 15h10M8 12l3 3-3 3"/></svg>
             </div>
             <h3>Pro Export</h3>
-            <p>Download as <code>.bat</code>, <code>.sh</code>, or <code>.rsc</code> with proper headers, shebangs, and verification commands.</p>
+            <p>Download as <code>.bat</code>, <code>.sh</code>, <code>.rsc</code>, <code>.conf</code>, <code>.ovpn</code> and more, with headers and verification commands. Files are named after the site: <code>example_com_route.bat</code>.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
@@ -302,6 +304,34 @@
             </div>
             <h3>Domain Blacklist</h3>
             <p>Exclude analytics, trackers, and unwanted domains. Syncs across devices via Chrome Cloud Sync.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M3 12a9 9 0 0115.5-6.3L21 8M21 3v5h-5M21 12a9 9 0 01-15.5 6.3L3 16M3 21v-5h5"/></svg>
+            </div>
+            <h3>Works When DoH Is Blocked</h3>
+            <p>If every DNS-over-HTTPS resolver is blocked, falls back to the IPs your browser already connected to and resolves the rest through the system resolver.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 17h.01M10 17h.01M12 13V8M8.5 10.5a5 5 0 017 0M5.5 7.5a9 9 0 0113 0"/></svg>
+            </div>
+            <h3>Keenetic Export</h3>
+            <p>The Keenetic <code>.bat</code> import format, with every route commented with its domains and ASN.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </div>
+            <h3>Scan History</h3>
+            <p>The last 10 scans stay in the extension: reopen, copy, or download the routes as <code>cryptocompare_com_route.bat</code>.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M8 4c-2 0-3 1-3 3v2c0 1.5-1 3-2 3 1 0 2 1.5 2 3v2c0 2 1 3 3 3M16 4c2 0 3 1 3 3v2c0 1.5 1 3 2 3-1 0-2 1.5-2 3v2c0 2-1 3-3 3"/></svg>
+            </div>
+            <h3>Custom Templates</h3>
+            <p>Your own route syntax with <code>{{network}}</code>, <code>{{cidr}}</code>, <code>{{gateway}}</code> and other macros.</p>
         </div>
     </div>
 </section>
@@ -366,7 +396,7 @@
 <section class="platforms" id="platforms">
     <div class="section-header">
         <span class="section-tag">// supported formats</span>
-        <h2>8 Platform Formats</h2>
+        <h2>9 Platform Formats</h2>
         <p>Native command syntax for every major OS and network equipment vendor.</p>
     </div>
     <div class="platform-table-wrap">
@@ -410,6 +440,11 @@
                     <td><code>set rib inet6.0 static route</code></td>
                 </tr>
                 <tr>
+                    <td><span class="platform-badge badge-hw">Keenetic</span></td>
+                    <td><code>route ADD {net} MASK {mask} {gw}</code></td>
+                    <td>IPv4 only</td>
+                </tr>
+                <tr>
                     <td><span class="platform-badge badge-vpn">WireGuard</span></td>
                     <td><code>AllowedIPs = {net}/{cidr}</code></td>
                     <td><code>AllowedIPs = {addr}</code></td>
@@ -427,7 +462,7 @@
 <!-- STATS BAR -->
 <section class="stats-bar">
     <div class="stat">
-        <span class="stat-value">8</span>
+        <span class="stat-value">9</span>
         <span class="stat-label">Platform Formats</span>
     </div>
     <div class="stat">
@@ -439,11 +474,11 @@
         <span class="stat-label">+IPv6 Support</span>
     </div>
     <div class="stat">
-        <span class="stat-value">4</span>
+        <span class="stat-value">7</span>
         <span class="stat-label">Export Formats</span>
     </div>
     <div class="stat">
-        <span class="stat-value">3</span>
+        <span class="stat-value">4</span>
         <span class="stat-label">DNS Providers</span>
     </div>
 </section>
@@ -488,7 +523,7 @@
     <div class="faq-list">
         <details class="faq-item">
             <summary>What platforms does NetRoute Pro support?</summary>
-            <div class="faq-answer">NetRoute Pro generates routing commands for 8 platforms: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), and OpenVPN. Both IPv4 and IPv6 are supported.</div>
+            <div class="faq-answer">NetRoute Pro generates routing commands for 9 platforms: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), OpenVPN, and Keenetic, plus your own custom template. Both IPv4 and IPv6 are supported (the Keenetic format is IPv4 only).</div>
         </details>
         <details class="faq-item">
             <summary>Is NetRoute Pro free?</summary>
@@ -496,7 +531,7 @@
         </details>
         <details class="faq-item">
             <summary>How does NetRoute Pro generate routes from a website?</summary>
-            <div class="faq-answer">NetRoute Pro discovers all domains on a webpage (including AJAX, CDN, and API requests via Service Worker), resolves them to IP addresses using racing DNS queries to Cloudflare, Google, and AdGuard, then aggregates IPs into optimized CIDR subnets and generates platform-specific routing commands.</div>
+            <div class="faq-answer">NetRoute Pro discovers all domains on a webpage (including AJAX, CDN, and API requests via Service Worker), resolves them to IP addresses using racing DNS-over-HTTPS queries to Cloudflare, Google, Quad9, and AdGuard (falling back to the browser’s own connections when DoH is blocked), then aggregates IPs into optimized CIDR subnets and generates platform-specific routing commands.</div>
         </details>
         <details class="faq-item">
             <summary>Can I use NetRoute Pro for VPN split tunneling?</summary>
@@ -504,7 +539,7 @@
         </details>
         <details class="faq-item">
             <summary>Does NetRoute Pro collect any personal data?</summary>
-            <div class="faq-answer">No. NetRoute Pro works entirely locally in your browser. It does not collect, store, or transmit any personal data. The only network requests are DNS queries and optional RIPE/ASN lookups for the extension's core functionality.</div>
+            <div class="faq-answer">No. NetRoute Pro has no accounts, analytics, or servers of its own: settings, cache, and scan history stay in your browser. To do its job it sends the scanned hostnames to DNS-over-HTTPS resolvers, looks up the ASN of resolved server IPs at ip-api.com, queries RIPE Stat when route optimization is on, and connects to the scanned sites directly when DoH is blocked or the ping check is enabled. Details are in the privacy policy.</div>
         </details>
     </div>
 </section>
@@ -544,7 +579,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <span>NetRoute Pro v4.0.0</span>
+        <span>NetRoute Pro v4.1.2</span>
     </div>
 </footer>
 

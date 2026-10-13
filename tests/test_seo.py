@@ -519,9 +519,10 @@ def check_linux_guide_persistence(path: str, content: str, fails: Failures):
 
 def check_csp_meta(path: str, content: str, fails: Failures):
     """Each HTML file must declare a Content-Security-Policy via <meta http-equiv>.
-    Required directives: default-src, frame-ancestors (clickjacking defense),
-    base-uri (prevents <base> injection). Static hosting can't set HTTP headers,
-    so meta-CSP is our only knob.
+    Required directives: default-src, base-uri (prevents <base> injection).
+    Static hosting can't set HTTP headers, so meta-CSP is our only knob.
+    frame-ancestors must NOT be used: browsers ignore it in <meta> and log a
+    console error on every page (clickjacking defense needs an HTTP header).
     """
     m = re.search(
         r'<meta\s+http-equiv="Content-Security-Policy"\s+content="([^"]+)"',
@@ -531,9 +532,11 @@ def check_csp_meta(path: str, content: str, fails: Failures):
         fails.add(path, 'missing <meta http-equiv="Content-Security-Policy">')
         return
     policy = m.group(1)
-    for directive in ('default-src', 'frame-ancestors', 'base-uri'):
+    for directive in ('default-src', 'base-uri'):
         if directive not in policy:
             fails.add(path, f'CSP missing directive "{directive}"')
+    if 'frame-ancestors' in policy:
+        fails.add(path, 'CSP has "frame-ancestors", which is ignored in <meta> and only logs an error')
 
 
 def check_no_render_blocking_css(path: str, content: str, fails: Failures):

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Privacy Policy — NetRoute Pro</title>
     <meta name="description" content="NetRoute Pro privacy policy. No tracking, no analytics, no personal data collection. All processing happens locally in your browser.">
     <meta name="robots" content="index, follow">
@@ -70,7 +70,7 @@
 <div class="policy">
     <a href="index.html" class="back">&larr; Back to Home</a>
     <h1>Privacy Policy</h1>
-    <p class="date">Last updated: March 30, 2026</p>
+    <p class="date">Last updated: October 13, 2026</p>
 
     <h2>Overview</h2>
     <p>NetRoute Pro is a browser extension that discovers domains on webpages, resolves them to IP addresses, and generates routing commands. Your privacy is important to us. This extension is designed to work entirely locally in your browser.</p>
@@ -88,19 +88,21 @@
     <h2>Network Requests</h2>
     <p>The extension makes the following network requests, all essential to its core functionality:</p>
     <ul>
-        <li><strong>DNS-over-HTTPS queries</strong> to Cloudflare (1.1.1.1), Google (8.8.8.8), and AdGuard (94.140.14.140) — to resolve domain names to IP addresses</li>
-        <li><strong>RIPE Stat API</strong> (stat.ripe.net) — to fetch BGP prefix information for route optimization (optional, user-enabled)</li>
-        <li><strong>ip-api.com</strong> &mdash; to look up ASN/organization info for resolved IPs (optional, user-enabled). <em>Disclosure:</em> ip-api.com may log queries per their own privacy policy. The free tier is HTTP-only, which conflicts with this site&rsquo;s <code>upgrade-insecure-requests</code> CSP &mdash; the lookup runs from the extension itself, not the site. Disable ASN lookup in extension settings if you don&rsquo;t want that third-party visibility.</li>
+        <li><strong>DNS-over-HTTPS queries</strong> to Cloudflare (1.1.1.1), Google (8.8.8.8), Quad9 (9.9.9.9), and AdGuard (94.140.14.140), plus any custom DoH server you add &mdash; to resolve the hostnames found on the page</li>
+        <li><strong>ip-api.com</strong> &mdash; ASN/organization lookup for the resolved server IPs, on every scan (results are cached for 24 hours). The free tier works over plain HTTP, so these IP addresses travel unencrypted, and ip-api.com may log queries per its own privacy policy. The lookup runs from the extension itself, not from this site.</li>
+        <li><strong>RIPE Stat API</strong> (stat.ripe.net) &mdash; BGP prefixes of the resolved IPs and the prefixes announced by their AS, only when a <strong>Route Optimization</strong> mode other than Off is selected</li>
+        <li><strong>The scanned sites themselves</strong> &mdash; a <code>HEAD</code> request to each hostname no DoH resolver could answer (for example when DoH is blocked on your network), so the system resolver supplies its IP; and, only when <strong>Ping check</strong> is enabled, <code>HEAD</code> requests to the resolved IPs</li>
     </ul>
-    <p>These requests contain only domain names or IP addresses discovered on the current webpage. No personal information is included.</p>
+    <p>These requests contain only hostnames and IP addresses discovered on the scanned page. No personal information, cookies, or credentials are included.</p>
 
     <h2>Local Storage</h2>
-    <p>The extension uses <code>chrome.storage.local</code> and optionally <code>chrome.storage.sync</code> to store:</p>
+    <p>The extension uses <code>chrome.storage.local</code>, <code>chrome.storage.session</code>, and optionally <code>chrome.storage.sync</code> to store:</p>
     <ul>
-        <li>User preferences (theme, DNS provider, export settings)</li>
-        <li>Domain blacklist</li>
-        <li>Scan history (last 10 scans, stored locally)</li>
-        <li>DNS and BGP cache (with TTL expiration)</li>
+        <li>User preferences (theme, DNS provider, route optimization, export settings)</li>
+        <li>Domain blacklist and custom DNS servers</li>
+        <li>Scan history (last 10 scans: page URL, domains, and routes; stored locally)</li>
+        <li>DNS, ASN, and BGP cache (with TTL expiration)</li>
+        <li>Hostnames and server IPs requested by each open tab (<code>chrome.storage.session</code>: in memory only, removed when the tab is closed or the browser exits)</li>
     </ul>
     <p>All data stays on your device (or syncs via your Google account if you enable Chrome Sync). We have no access to this data.</p>
 
@@ -109,9 +111,9 @@
         <li><strong>activeTab</strong> — to access the current tab's URL for domain scanning</li>
         <li><strong>scripting</strong> — to extract domains from the current page</li>
         <li><strong>storage</strong> — to save settings and cache locally</li>
-        <li><strong>downloads</strong> — to export route files (.bat, .sh, .rsc)</li>
-        <li><strong>webRequest</strong> — to capture network requests for domain discovery</li>
-        <li><strong>host_permissions (all URLs)</strong> — to make DNS-over-HTTPS queries to resolve domains</li>
+        <li><strong>downloads</strong> — to export route files (.bat, .sh, .rsc, .conf, .ovpn and others)</li>
+        <li><strong>webRequest</strong> — to see which hostnames a page requests and which server IPs the browser connected to; this list stays in the browser</li>
+        <li><strong>host_permissions (all URLs)</strong> — for the DNS-over-HTTPS, ASN, and RIPE requests and the requests to scanned sites described above</li>
     </ul>
 
     <h2>Third-Party Services</h2>

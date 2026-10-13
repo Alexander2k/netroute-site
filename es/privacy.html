@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Política de privacidad — NetRoute Pro</title>
     <meta name="description" content="Política de privacidad de NetRoute Pro. Sin rastreo, sin analíticas, sin recopilación de datos personales. Todo el procesamiento es local en tu navegador.">
     <meta name="robots" content="index, follow">
@@ -68,7 +68,7 @@
 <div class="policy">
     <a href="index.html" class="back">&larr; Volver al inicio</a>
     <h1>Política de privacidad</h1>
-    <p class="date">Última actualización: 30 de marzo de 2026</p>
+    <p class="date">Última actualización: 13 de octubre de 2026</p>
 
     <h2>Descripción general</h2>
     <p>NetRoute Pro es una extensión de navegador que descubre dominios en páginas web, los resuelve a direcciones IP y genera comandos de enrutamiento. Tu privacidad es importante para nosotros. Esta extensión está diseñada para funcionar completamente de forma local en tu navegador.</p>
@@ -86,19 +86,21 @@
     <h2>Solicitudes de red</h2>
     <p>La extensión realiza las siguientes solicitudes de red, todas esenciales para su funcionalidad principal:</p>
     <ul>
-        <li><strong>Consultas DNS-over-HTTPS</strong> a Cloudflare (1.1.1.1), Google (8.8.8.8) y AdGuard (94.140.14.140) — para resolver nombres de dominio a direcciones IP</li>
-        <li><strong>RIPE Stat API</strong> (stat.ripe.net) — para obtener información de prefijos BGP para optimización de rutas (opcional)</li>
-        <li><strong>ip-api.com</strong> &mdash; para buscar información ASN/organización de IPs resueltas (opcional). <em>Aviso:</em> ip-api.com puede registrar consultas según su propia política de privacidad. La capa gratuita es HTTP-only, lo cual entra en conflicto con la CSP del sitio (<code>upgrade-insecure-requests</code>) &mdash; el lookup se ejecuta desde la extensión, no desde la web. Desactiva el ASN lookup en los ajustes de la extensión si no quieres esta visibilidad para un tercero.</li>
+        <li><strong>Consultas DNS-over-HTTPS</strong> a Cloudflare (1.1.1.1), Google (8.8.8.8), Quad9 (9.9.9.9) y AdGuard (94.140.14.140), además de los servidores DoH que añadas &mdash; para resolver los dominios encontrados en la página</li>
+        <li><strong>ip-api.com</strong> &mdash; consulta de ASN/organización de las IPs de servidor resueltas, en cada escaneo (los resultados se guardan en caché 24 horas). La capa gratuita funciona solo por HTTP, así que estas direcciones IP viajan sin cifrar, e ip-api.com puede registrar consultas según su propia política. La consulta la hace la propia extensión, no este sitio.</li>
+        <li><strong>RIPE Stat API</strong> (stat.ripe.net) &mdash; prefijos BGP de las IPs resueltas y los prefijos anunciados por su AS, solo si en <strong>Optimización de rutas</strong> eliges un modo distinto de «Desactivado»</li>
+        <li><strong>Los propios sitios escaneados</strong> &mdash; una solicitud <code>HEAD</code> a cada dominio que ningún resolver DoH pudo resolver (por ejemplo, si DoH está bloqueado en tu red), para que el DNS del sistema aporte su IP; y, solo con la <strong>comprobación de ping</strong> activada, solicitudes <code>HEAD</code> a las IPs resueltas</li>
     </ul>
-    <p>Estas solicitudes contienen solo nombres de dominio o direcciones IP descubiertas en la página web actual. No se incluye información personal.</p>
+    <p>Estas solicitudes contienen solo nombres de dominio y direcciones IP descubiertas en la página escaneada. No se incluyen datos personales, cookies ni credenciales.</p>
 
     <h2>Almacenamiento local</h2>
-    <p>La extensión usa <code>chrome.storage.local</code> y opcionalmente <code>chrome.storage.sync</code> para almacenar:</p>
+    <p>La extensión usa <code>chrome.storage.local</code>, <code>chrome.storage.session</code> y opcionalmente <code>chrome.storage.sync</code> para almacenar:</p>
     <ul>
-        <li>Preferencias del usuario (tema, proveedor DNS, configuración de exportación)</li>
-        <li>Lista negra de dominios</li>
-        <li>Historial de escaneos (últimos 10, almacenados localmente)</li>
-        <li>Caché DNS y BGP (con expiración TTL)</li>
+        <li>Preferencias del usuario (tema, proveedor DNS, optimización de rutas, configuración de exportación)</li>
+        <li>Lista negra de dominios y servidores DNS propios</li>
+        <li>Historial de escaneos (últimos 10: URL de la página, dominios y rutas; almacenados localmente)</li>
+        <li>Caché DNS, ASN y BGP (con expiración TTL)</li>
+        <li>Dominios e IPs de servidor solicitados por cada pestaña abierta (<code>chrome.storage.session</code>: solo en memoria, se borran al cerrar la pestaña o el navegador)</li>
     </ul>
     <p>Todos los datos permanecen en tu dispositivo (o se sincronizan a través de tu cuenta de Google si habilitas Chrome Sync). No tenemos acceso a estos datos.</p>
 
@@ -107,9 +109,9 @@
         <li><strong>activeTab</strong> — para acceder a la URL de la pestaña actual para escaneo de dominios</li>
         <li><strong>scripting</strong> — para extraer dominios de la página actual</li>
         <li><strong>storage</strong> — para guardar configuración y caché localmente</li>
-        <li><strong>downloads</strong> — para exportar archivos de rutas (.bat, .sh, .rsc)</li>
-        <li><strong>webRequest</strong> — para capturar solicitudes de red para descubrimiento de dominios</li>
-        <li><strong>host_permissions (todas las URLs)</strong> — para realizar consultas DNS-over-HTTPS para resolver dominios</li>
+        <li><strong>downloads</strong> — para exportar archivos de rutas (.bat, .sh, .rsc, .conf, .ovpn y otros)</li>
+        <li><strong>webRequest</strong> — para ver qué dominios solicita una página y a qué IPs de servidor se conectó el navegador; esta lista se queda en el navegador</li>
+        <li><strong>host_permissions (todas las URLs)</strong> — para las solicitudes DNS-over-HTTPS, ASN y RIPE y las solicitudes a sitios escaneados descritas arriba</li>
     </ul>
 
     <h2>Servicios de terceros</h2>

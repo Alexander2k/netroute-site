@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Import Routes on MikroTik via .rsc Script — Step-by-Step Guide | NetRoute Pro</title>
     <meta name="description" content="How to add routes on MikroTik RouterOS. Generate .rsc script in NetRoute Pro, import via Files or terminal. Supports address lists and direct routes.">
     <meta name="keywords" content="mikrotik routes, mikrotik rsc import, mikrotik ip route add, mikrotik address list, mikrotik vpn routes, mikrotik domain bypass, routeros static route, mikrotik import file">
@@ -210,7 +210,7 @@
     </ol>
 
     <div class="callout">
-        <strong>Tip:</strong> enable <strong>RIPE BGP optimization</strong> in the extension &mdash; it replaces individual IPs with real announced BGP prefixes. This gives stable routes that don&rsquo;t break when Cloudflare, Fastly, or other CDNs rotate IPs. <strong>Caveat:</strong> RIPE BGP returns <em>all</em> prefixes announced by the destination AS &mdash; for multi-tenant CDNs (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) that&rsquo;s tens of thousands of IPs covering unrelated sites. Use BGP optimization for single-tenant ASes; keep plain /24 CIDR aggregation for shared CDNs.
+        <strong>Tip:</strong> choose <strong>Route Optimization &rarr; BGP Prefix</strong> in the extension &mdash; it replaces individual IPs with real announced BGP prefixes. This gives stable routes that don&rsquo;t break when Cloudflare, Fastly, or other CDNs rotate IPs. <strong>Caveat:</strong> the <strong>Full AS</strong> and <strong>AS + Collapse</strong> modes return <em>all</em> prefixes announced by the destination AS &mdash; for multi-tenant CDNs (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) that&rsquo;s tens of thousands of IPs covering unrelated sites. Use BGP optimization for single-tenant ASes; keep plain /24 CIDR aggregation for shared CDNs.
     </div>
 
     <h2>Step 2. Upload the file to MikroTik</h2>
@@ -312,7 +312,7 @@ traceroute example.com  # Linux/macOS</code></pre>
     </ul>
 
     <h3>Website IP changed — route stopped working</h3>
-    <p>CDNs rotate IPs periodically. Regenerate the <code>.rsc</code> in NetRoute Pro with <strong>RIPE BGP optimization</strong> enabled — it substitutes announced BGP prefixes that cover all provider IPs and stay stable over time.</p>
+    <p>CDNs rotate IPs periodically. Regenerate the <code>.rsc</code> in NetRoute Pro with <strong>Route Optimization &rarr; BGP Prefix</strong> — it substitutes announced BGP prefixes that cover all provider IPs and stay stable over time.</p>
 
     <h3>Too many routes</h3>
     <p>MikroTik handles thousands of static routes without issues on any modern hardware. If your route table grows to tens of thousands, consider the WireGuard <code>AllowedIPs</code> approach or BGP (see below) instead.</p>

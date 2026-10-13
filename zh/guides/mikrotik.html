@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>通过 .rsc 脚本导入路由到 MikroTik — 分步指南 | NetRoute Pro</title>
     <meta name="description" content="如何在 MikroTik RouterOS 上添加路由。在 NetRoute Pro 中生成 .rsc 脚本，通过 Files 或终端导入。支持地址列表和直接路由。">
     <meta name="keywords" content="mikrotik 路由, mikrotik rsc 导入, mikrotik ip route add, mikrotik 地址列表, mikrotik vpn 路由, routeros 静态路由">
@@ -210,7 +210,7 @@
     </ol>
 
     <div class="callout">
-        <strong>提示：</strong>在扩展中启用 <strong>RIPE BGP 优化</strong> &mdash; 它会用真实公告的 BGP 前缀替换单个 IP，路由保持稳定，不会因 Cloudflare/Fastly 轮换 IP 而失效。<strong>注意：</strong>RIPE BGP 会返回该 AS 公告的<em>所有</em>前缀 &mdash; 对于多租户 CDN（Cloudflare AS13335、AWS AS16509、DigitalOcean AS14061）可能是数万个 IP，涵盖无关站点。BGP 优化适合单租户 AS；多租户 CDN 请保持常规 /24 CIDR 聚合。
+        <strong>提示：</strong>在扩展中选择 <strong>路由优化 &rarr; BGP 前缀</strong> &mdash; 它会用真实公告的 BGP 前缀替换单个 IP，路由保持稳定，不会因 Cloudflare/Fastly 轮换 IP 而失效。<strong>注意：</strong><strong>完整 AS</strong> 和 <strong>AS + 压缩</strong> 模式会返回该 AS 公告的<em>所有</em>前缀 &mdash; 对于多租户 CDN（Cloudflare AS13335、AWS AS16509、DigitalOcean AS14061）可能是数万个 IP，涵盖无关站点。BGP 优化适合单租户 AS；多租户 CDN 请保持常规 /24 CIDR 聚合。
     </div>
 
     <h2>步骤 2. 上传文件到 MikroTik</h2>
@@ -297,7 +297,7 @@
     </ul>
 
     <h3>网站 IP 轮换</h3>
-    <p>CDN（Cloudflare、Fastly 等）会定期轮换 IP。使用 NetRoute Pro 扩展中的 <strong>RIPE BGP 优化</strong> 重新生成 .rsc — 它会用公告的 BGP 前缀替换单个 IP。</p>
+    <p>CDN（Cloudflare、Fastly 等）会定期轮换 IP。使用 NetRoute Pro 扩展中的 <strong>路由优化 &rarr; BGP 前缀</strong> 重新生成 .rsc — 它会用公告的 BGP 前缀替换单个 IP。</p>
 
     <h3>路由太多</h3>
     <p>MikroTik 可处理数千条静态路由而没有问题。如果需要更多 — 使用 WireGuard AllowedIPs 方法，或切换到地址列表 + 策略路由。</p>

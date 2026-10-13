@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Генератор маршрутов для Keenetic, MikroTik, Cisco, WireGuard — NetRoute Pro | Расширение Chrome</title>
     <meta name="description" content="Бесплатное расширение Chrome для генерации маршрутов VPN из доменов. Keenetic .bat, MikroTik .rsc, Cisco, WireGuard AllowedIPs, OpenVPN. Обход блокировок без сбора данных.">
     <meta name="keywords" content="генератор маршрутов, генератор маршрутов для роутера, маршруты из доменов, обход блокировок маршруты, выборочная маршрутизация VPN, маршрутизация трафика через VPN, keenetic маршруты vpn, keenetic обход блокировок, openwrt маршруты по доменам, mikrotik маршруты по доменам, mikrotik address list генератор, wireguard allowedips генератор, vpn split tunneling, cisco ip route, openvpn маршруты, CIDR агрегация, BGP оптимизация, DNS резолвер, селективная маршрутизация">
@@ -58,7 +58,7 @@
         "applicationCategory": "BrowserApplication",
         "operatingSystem": "Chrome",
         "inLanguage": "ru",
-        "description": "Бесплатный генератор маршрутов из доменов. Расширение Chrome для VPN split tunneling: обнаружение доменов, резолвинг IP, генерация команд маршрутизации для MikroTik, Cisco, Juniper, WireGuard AllowedIPs, OpenVPN, Windows, Linux, macOS.",
+        "description": "Бесплатный генератор маршрутов из доменов. Расширение Chrome для VPN split tunneling: обнаружение доменов, резолвинг IP, генерация команд маршрутизации для MikroTik, Cisco, Juniper, WireGuard AllowedIPs, OpenVPN, Keenetic, Windows, Linux, macOS.",
         "url": "https://alexander2k.github.io/netroute-site/ru/",
         "downloadUrl": "https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla",
         "sameAs": [
@@ -66,7 +66,7 @@
             "https://github.com/Alexander2k/netroute-site"
         ],
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
-        "softwareVersion": "4.0",
+        "softwareVersion": "4.1.2",
         "offers": {
             "@type": "Offer",
             "price": "0",
@@ -74,13 +74,15 @@
         },
         "featureList": [
             "Перехват сетевых запросов через Service Worker",
-            "DNS racing (Cloudflare, Google, AdGuard)",
+            "DNS racing (Cloudflare, Google, Quad9, AdGuard) и свои DoH-серверы",
+            "Соединения браузера как запасной источник IP при блокировке DoH",
             "CIDR агрегация (IPv4 + IPv6)",
-            "RIPE BGP оптимизация",
+            "Оптимизация маршрутов через RIPE Stat (BGP-префикс, вся AS, AS + схлоп)",
             "ASN поиск",
             "Массовое сканирование URL",
             "Чёрный список доменов с Chrome Sync",
-            "Экспорт в .bat, .sh, .rsc"
+            "История сканирований со скачиванием файлов",
+            "Экспорт в .bat, .sh, .rsc, .conf, .ovpn и .bat для Keenetic"
         ]
     }
     </script>
@@ -118,7 +120,7 @@
                 "name": "Какие платформы поддерживает NetRoute Pro?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "NetRoute Pro генерирует команды маршрутизации для 8 платформ: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs) и OpenVPN. Поддерживаются IPv4 и IPv6."
+                    "text": "NetRoute Pro генерирует команды маршрутизации для 9 платформ: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), OpenVPN и Keenetic, а также по вашему собственному шаблону. Поддерживаются IPv4 и IPv6 (формат Keenetic — только IPv4)."
                 }
             },
             {
@@ -134,7 +136,7 @@
                 "name": "Как NetRoute Pro генерирует маршруты с сайта?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Расширение находит все домены на веб-странице (включая AJAX, CDN и API запросы через Service Worker), резолвит их в IP-адреса параллельными DNS-запросами к Cloudflare, Google и AdGuard, агрегирует IP в оптимизированные CIDR-подсети и генерирует команды маршрутизации для выбранной платформы."
+                    "text": "Расширение находит все домены на веб-странице (включая AJAX, CDN и API запросы через Service Worker), резолвит их в IP-адреса параллельными DNS-over-HTTPS запросами к Cloudflare, Google, Quad9 и AdGuard (если DoH заблокирован — берёт IP из соединений самого браузера), агрегирует IP в оптимизированные CIDR-подсети и генерирует команды маршрутизации для выбранной платформы."
                 }
             },
             {
@@ -150,7 +152,7 @@
                 "name": "Собирает ли NetRoute Pro персональные данные?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Нет. Расширение работает полностью локально в браузере. Не собирает, не хранит и не передаёт персональные данные. Единственные сетевые запросы — DNS-запросы и опциональные RIPE/ASN-лукапы для работы расширения."
+                    "text": "Нет. У NetRoute Pro нет аккаунтов, аналитики и своих серверов: настройки, кеш и история сканов хранятся в браузере. Для работы расширение отправляет найденные домены DNS-over-HTTPS серверам, узнаёт ASN найденных IP через ip-api.com, обращается к RIPE Stat при включённой оптимизации маршрутов и подключается к самим сканируемым сайтам, если DoH заблокирован или включена проверка доступности. Подробности — в политике конфиденциальности."
                 }
             }
         ]
@@ -177,7 +179,7 @@
         <a href="./" class="logo">
             <span class="logo-icon">&#9678;</span>
             <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
-            <span class="logo-ver">v4.0</span>
+            <span class="logo-ver">v4.1.2</span>
         </a>
         <div class="nav-links">
             <a href="#features">Возможности</a>
@@ -209,7 +211,7 @@
         </h1>
         <p class="hero-sub">
             Находит все домены на странице. Резолвит в IP.<br>
-            Генерирует оптимизированные команды маршрутизации для <strong>8 платформ</strong> мгновенно.
+            Генерирует оптимизированные команды маршрутизации для <strong>9 платформ</strong> мгновенно.
         </p>
         <div class="hero-actions">
             <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">
@@ -222,10 +224,10 @@
                 <span class="terminal-dot dot-r"></span>
                 <span class="terminal-dot dot-y"></span>
                 <span class="terminal-dot dot-g"></span>
-                <span class="terminal-title">route-output.sh</span>
+                <span class="terminal-title">example_com_route.sh</span>
             </div>
-            <pre class="terminal-body"><code><span class="t-comment"># Generated by NetRoute Pro — 2024-03-30</span>
-<span class="t-comment">#!/bin/bash</span>
+            <pre class="terminal-body"><code><span class="t-comment">#!/bin/bash</span>
+<span class="t-comment"># NetRoute v4.1.2 — generated 2026-10-13</span>
 
 <span class="t-cmd">ip route add</span> <span class="t-ip">104.21.32.0/24</span> via <span class="t-gw">10.0.0.1</span>
 <span class="t-cmd">ip route add</span> <span class="t-ip">172.67.182.0/24</span> via <span class="t-gw">10.0.0.1</span>
@@ -257,7 +259,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 019-9"/></svg>
             </div>
             <h3>DNS Racing</h3>
-            <p>Запрашивает Cloudflare, Google, AdGuard одновременно через <code>Promise.any</code>. Побеждает первый ответ.</p>
+            <p>Запрашивает Cloudflare, Google, Quad9 и AdGuard одновременно через <code>Promise.any</code>. Побеждает первый ответ. Можно добавить свои DoH-серверы.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
@@ -270,8 +272,8 @@
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
-            <h3>RIPE BGP оптимизация</h3>
-            <p>Получает реальные BGP-префиксы из RIPE Stat API для замены отдельных /32 на анонсированные маршруты.</p>
+            <h3>Оптимизация маршрутов (RIPE BGP)</h3>
+            <p>BGP-префикс каждого IP, все префиксы его AS или префиксы AS, сжатые до лимита маршрутов. Данные из RIPE Stat.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
@@ -285,7 +287,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M4 7V4a2 2 0 012-2h8.5L20 7.5V20a2 2 0 01-2 2H6a2 2 0 01-2-2v-3"/><polyline points="14 2 14 8 20 8"/><path d="M1 15h10M8 12l3 3-3 3"/></svg>
             </div>
             <h3>Pro экспорт</h3>
-            <p>Скачивайте как <code>.bat</code>, <code>.sh</code> или <code>.rsc</code> с правильными заголовками и командами проверки.</p>
+            <p>Скачивайте как <code>.bat</code>, <code>.sh</code>, <code>.rsc</code>, <code>.conf</code>, <code>.ovpn</code> и другие, с заголовками и командами проверки. Файл называется по сайту: <code>example_com_route.bat</code>.</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
@@ -300,6 +302,34 @@
             </div>
             <h3>Чёрный список доменов</h3>
             <p>Исключайте аналитику, трекеры и ненужные домены. Синхронизация между устройствами через Chrome Cloud Sync.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M3 12a9 9 0 0115.5-6.3L21 8M21 3v5h-5M21 12a9 9 0 01-15.5 6.3L3 16M3 21v-5h5"/></svg>
+            </div>
+            <h3>Работает при блокировке DoH</h3>
+            <p>Если все DNS-over-HTTPS серверы заблокированы, берёт IP из соединений самого браузера, а остальное резолвит через системный DNS.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 17h.01M10 17h.01M12 13V8M8.5 10.5a5 5 0 017 0M5.5 7.5a9 9 0 0113 0"/></svg>
+            </div>
+            <h3>Экспорт для Keenetic</h3>
+            <p>Формат <code>.bat</code> для импорта в Keenetic: у каждого маршрута комментарий с доменами и ASN.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </div>
+            <h3>История сканирований</h3>
+            <p>Последние 10 сканов хранятся в расширении: откройте, скопируйте или скачайте маршруты файлом <code>cryptocompare_com_route.bat</code>.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M8 4c-2 0-3 1-3 3v2c0 1.5-1 3-2 3 1 0 2 1.5 2 3v2c0 2 1 3 3 3M16 4c2 0 3 1 3 3v2c0 1.5 1 3 2 3-1 0-2 1.5-2 3v2c0 2-1 3-3 3"/></svg>
+            </div>
+            <h3>Свои шаблоны</h3>
+            <p>Свой синтаксис маршрутов с макросами <code>{{network}}</code>, <code>{{cidr}}</code>, <code>{{gateway}}</code> и другими.</p>
         </div>
     </div>
 </section>
@@ -330,7 +360,7 @@
             <div class="step-number">02</div>
             <div class="step-content">
                 <h3>Настройте и сканируйте</h3>
-                <p>Выберите целевую ОС, маску подсети, шлюз и фильтр доменов. Нажмите <strong>Analyze Website</strong>.</p>
+                <p>Выберите целевую ОС, маску подсети, шлюз и фильтр доменов. Нажмите <strong>Анализировать сайт</strong>.</p>
             </div>
             <div class="step-visual">
                 <pre><code><span class="t-comment"># Scan config</span>
@@ -347,7 +377,7 @@
             <div class="step-number">03</div>
             <div class="step-content">
                 <h3>Скопируйте или экспортируйте</h3>
-                <p>Заберите сгенерированные маршруты из вкладки Routes. Скопируйте в буфер обмена или экспортируйте как скрипт.</p>
+                <p>Заберите сгенерированные маршруты из вкладки «Маршруты». Скопируйте в буфер обмена или экспортируйте как скрипт.</p>
             </div>
             <div class="step-visual">
                 <pre><code><span class="t-comment"># Output: 12 routes generated</span>
@@ -364,7 +394,7 @@
 <section class="platforms" id="platforms">
     <div class="section-header">
         <span class="section-tag">// поддерживаемые форматы</span>
-        <h2>8 форматов платформ</h2>
+        <h2>9 форматов платформ</h2>
         <p>Нативный синтаксис команд для всех основных ОС и сетевого оборудования.</p>
     </div>
     <div class="platform-table-wrap">
@@ -408,6 +438,11 @@
                     <td><code>set rib inet6.0 static route</code></td>
                 </tr>
                 <tr>
+                    <td><span class="platform-badge badge-hw">Keenetic</span></td>
+                    <td><code>route ADD {net} MASK {mask} {gw}</code></td>
+                    <td>только IPv4</td>
+                </tr>
+                <tr>
                     <td><span class="platform-badge badge-vpn">WireGuard</span></td>
                     <td><code>AllowedIPs = {net}/{cidr}</code></td>
                     <td><code>AllowedIPs = {addr}</code></td>
@@ -425,7 +460,7 @@
 <!-- STATS BAR -->
 <section class="stats-bar">
     <div class="stat">
-        <span class="stat-value">8</span>
+        <span class="stat-value">9</span>
         <span class="stat-label">Форматов платформ</span>
     </div>
     <div class="stat">
@@ -437,11 +472,11 @@
         <span class="stat-label">+IPv6 поддержка</span>
     </div>
     <div class="stat">
-        <span class="stat-value">4</span>
-        <span class="stat-label">Формата экспорта</span>
+        <span class="stat-value">7</span>
+        <span class="stat-label">Форматов экспорта</span>
     </div>
     <div class="stat">
-        <span class="stat-value">3</span>
+        <span class="stat-value">4</span>
         <span class="stat-label">DNS провайдера</span>
     </div>
 </section>
@@ -486,7 +521,7 @@
     <div class="faq-list">
         <details class="faq-item">
             <summary>Какие платформы поддерживает NetRoute Pro?</summary>
-            <div class="faq-answer">NetRoute Pro генерирует команды маршрутизации для 8 платформ: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs) и OpenVPN. Поддерживаются IPv4 и IPv6.</div>
+            <div class="faq-answer">NetRoute Pro генерирует команды маршрутизации для 9 платформ: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), OpenVPN и Keenetic, а также по вашему собственному шаблону. Поддерживаются IPv4 и IPv6 (формат Keenetic — только IPv4).</div>
         </details>
         <details class="faq-item">
             <summary>NetRoute Pro бесплатный?</summary>
@@ -494,7 +529,7 @@
         </details>
         <details class="faq-item">
             <summary>Как NetRoute Pro генерирует маршруты с сайта?</summary>
-            <div class="faq-answer">Расширение находит все домены на веб-странице (включая AJAX, CDN и API запросы через Service Worker), резолвит их в IP-адреса параллельными DNS-запросами к Cloudflare, Google и AdGuard, агрегирует IP в оптимизированные CIDR-подсети и генерирует команды маршрутизации для выбранной платформы.</div>
+            <div class="faq-answer">Расширение находит все домены на веб-странице (включая AJAX, CDN и API запросы через Service Worker), резолвит их в IP-адреса параллельными DNS-over-HTTPS запросами к Cloudflare, Google, Quad9 и AdGuard (если DoH заблокирован — берёт IP из соединений самого браузера), агрегирует IP в оптимизированные CIDR-подсети и генерирует команды маршрутизации для выбранной платформы.</div>
         </details>
         <details class="faq-item">
             <summary>Можно ли использовать для VPN split tunneling?</summary>
@@ -502,7 +537,7 @@
         </details>
         <details class="faq-item">
             <summary>Собирает ли NetRoute Pro персональные данные?</summary>
-            <div class="faq-answer">Нет. Расширение работает полностью локально в браузере. Не собирает, не хранит и не передаёт персональные данные. Единственные сетевые запросы — DNS-запросы и опциональные RIPE/ASN-лукапы для работы расширения.</div>
+            <div class="faq-answer">Нет. У NetRoute Pro нет аккаунтов, аналитики и своих серверов: настройки, кеш и история сканов хранятся в браузере. Для работы расширение отправляет найденные домены DNS-over-HTTPS серверам, узнаёт ASN найденных IP через ip-api.com, обращается к RIPE Stat при включённой оптимизации маршрутов и подключается к самим сканируемым сайтам, если DoH заблокирован или включена проверка доступности. Подробности — в политике конфиденциальности.</div>
         </details>
     </div>
 </section>
@@ -541,7 +576,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <span>NetRoute Pro v4.0.0</span>
+        <span>NetRoute Pro v4.1.2</span>
     </div>
 </footer>
 

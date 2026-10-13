@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>WireGuard、Keenetic、MikroTik、Cisco 路由生成器 — NetRoute Pro Chrome 扩展</title>
     <meta name="description" content="免费Chrome扩展：从网站域名生成VPN分流路由。支持WireGuard AllowedIPs、Keenetic .bat、MikroTik .rsc、Cisco、OpenVPN。隐私优先，无数据收集。">
     <meta name="keywords" content="路由生成器, 域名转IP路由, wireguard allowedips生成器, mikrotik路由, vpn分流路由, cisco ip route生成器, openvpn路由, CIDR聚合工具, BGP路由优化, DNS解析器, 网络路由自动化, 选择性VPN路由">
@@ -61,7 +61,7 @@
         "applicationCategory": "BrowserApplication",
         "operatingSystem": "Chrome",
         "inLanguage": "zh",
-        "description": "免费域名转IP路由生成器。Chrome扩展用于VPN分流：发现域名、解析IP、为MikroTik、Cisco、Juniper、WireGuard AllowedIPs、OpenVPN、Windows、Linux、macOS生成路由命令。CIDR聚合和BGP优化。",
+        "description": "免费域名转IP路由生成器。Chrome扩展用于VPN分流：发现域名、解析IP、为MikroTik、Cisco、Juniper、WireGuard AllowedIPs、OpenVPN、Keenetic、Windows、Linux、macOS生成路由命令。CIDR聚合和BGP优化。",
         "url": "https://alexander2k.github.io/netroute-site/zh/",
         "downloadUrl": "https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla",
         "sameAs": [
@@ -69,7 +69,7 @@
             "https://github.com/Alexander2k/netroute-site"
         ],
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
-        "softwareVersion": "4.0",
+        "softwareVersion": "4.1.2",
         "offers": {
             "@type": "Offer",
             "price": "0",
@@ -77,13 +77,15 @@
         },
         "featureList": [
             "通过Service Worker进行网络嗅探",
-            "DNS竞速（Cloudflare、Google、AdGuard）",
+            "DNS竞速（Cloudflare、Google、Quad9、AdGuard）和自定义DoH服务器",
+            "DoH被封锁时改用浏览器自身的连接",
             "CIDR聚合（IPv4 + IPv6）",
-            "RIPE BGP优化",
+            "通过RIPE Stat进行路由优化（BGP前缀、完整AS、AS + 压缩）",
             "ASN查询",
             "批量URL扫描",
             "域名黑名单与Chrome同步",
-            "导出为 .bat、.sh、.rsc"
+            "扫描历史并可下载文件",
+            "导出为 .bat、.sh、.rsc、.conf、.ovpn 和 Keenetic .bat"
         ]
     }
     </script>
@@ -121,7 +123,7 @@
                 "name": "NetRoute Pro 支持哪些平台？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "NetRoute Pro 为 8 个平台生成路由命令：Windows、Linux、macOS、MikroTik、Cisco、Juniper、WireGuard（AllowedIPs）和 OpenVPN。支持 IPv4 和 IPv6。"
+                    "text": "NetRoute Pro 为 9 个平台生成路由命令：Windows、Linux、macOS、MikroTik、Cisco、Juniper、WireGuard（AllowedIPs）、OpenVPN 和 Keenetic，并支持自定义模板。支持 IPv4 和 IPv6（Keenetic 格式仅支持 IPv4）。"
                 }
             },
             {
@@ -137,7 +139,7 @@
                 "name": "NetRoute Pro 如何从网站生成路由？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "NetRoute Pro 发现网页上的所有域名（包括通过 Service Worker 的 AJAX、CDN 和 API 请求），使用并行 DNS 查询到 Cloudflare、Google 和 AdGuard 将其解析为 IP 地址，将 IP 聚合为优化的 CIDR 子网，并生成特定于平台的路由命令。"
+                    "text": "NetRoute Pro 发现网页上的所有域名（包括通过 Service Worker 的 AJAX、CDN 和 API 请求），使用并行 DNS-over-HTTPS 查询到 Cloudflare、Google、Quad9 和 AdGuard 将其解析为 IP 地址（DoH 被封锁时改用浏览器自身的连接），将 IP 聚合为优化的 CIDR 子网，并生成特定于平台的路由命令。"
                 }
             },
             {
@@ -153,7 +155,7 @@
                 "name": "NetRoute Pro 会收集个人数据吗？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "不会。NetRoute Pro 完全在您的浏览器中本地运行。它不收集、存储或传输任何个人数据。唯一的网络请求是用于扩展核心功能的 DNS 查询和可选的 RIPE/ASN 查询。"
+                    "text": "不会。NetRoute Pro 没有账户、分析或自己的服务器：设置、缓存和扫描历史都保存在您的浏览器中。为完成工作，它会把扫描到的域名发送给 DNS-over-HTTPS 解析器，通过 ip-api.com 查询已解析 IP 的 ASN，在启用路由优化时查询 RIPE Stat，并在 DoH 被封锁或启用 ping 检查时直接连接被扫描的网站。详情见隐私政策。"
                 }
             }
         ]
@@ -180,7 +182,7 @@
         <a href="./" class="logo">
             <span class="logo-icon">&#9678;</span>
             <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
-            <span class="logo-ver">v4.0</span>
+            <span class="logo-ver">v4.1.2</span>
         </a>
         <div class="nav-links">
             <a href="#features">功能</a>
@@ -212,7 +214,7 @@
         </h1>
         <p class="hero-sub">
             发现网页上的每个域名。解析为IP。<br>
-            为<strong>8个平台</strong>即时生成优化的路由命令。
+            为<strong>9个平台</strong>即时生成优化的路由命令。
         </p>
         <div class="hero-actions">
             <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">
@@ -225,10 +227,10 @@
                 <span class="terminal-dot dot-r"></span>
                 <span class="terminal-dot dot-y"></span>
                 <span class="terminal-dot dot-g"></span>
-                <span class="terminal-title">route-output.sh</span>
+                <span class="terminal-title">example_com_route.sh</span>
             </div>
-            <pre class="terminal-body"><code><span class="t-comment"># Generated by NetRoute Pro — 2024-03-30</span>
-<span class="t-comment">#!/bin/bash</span>
+            <pre class="terminal-body"><code><span class="t-comment">#!/bin/bash</span>
+<span class="t-comment"># NetRoute v4.1.2 — generated 2026-10-13</span>
 
 <span class="t-cmd">ip route add</span> <span class="t-ip">104.21.32.0/24</span> via <span class="t-gw">10.0.0.1</span>
 <span class="t-cmd">ip route add</span> <span class="t-ip">172.67.182.0/24</span> via <span class="t-gw">10.0.0.1</span>
@@ -260,7 +262,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 019-9"/></svg>
             </div>
             <h3>DNS竞速</h3>
-            <p>同时查询Cloudflare、Google、AdGuard，通过<code>Promise.any</code>，最快响应获胜。</p>
+            <p>同时查询Cloudflare、Google、Quad9和AdGuard，通过<code>Promise.any</code>，最快响应获胜。可添加自定义DoH服务器。</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
@@ -273,8 +275,8 @@
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
-            <h3>RIPE BGP优化</h3>
-            <p>从RIPE Stat API获取真实BGP前缀，用已公告路由替换单个/32。</p>
+            <h3>路由优化（RIPE BGP）</h3>
+            <p>每个IP的BGP前缀、其AS公告的全部前缀，或压缩到路由数量限制内的AS前缀。数据来自RIPE Stat。</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
@@ -288,7 +290,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M4 7V4a2 2 0 012-2h8.5L20 7.5V20a2 2 0 01-2 2H6a2 2 0 01-2-2v-3"/><polyline points="14 2 14 8 20 8"/><path d="M1 15h10M8 12l3 3-3 3"/></svg>
             </div>
             <h3>专业导出</h3>
-            <p>下载为<code>.bat</code>、<code>.sh</code>或<code>.rsc</code>，包含正确的文件头和验证命令。</p>
+            <p>下载为<code>.bat</code>、<code>.sh</code>、<code>.rsc</code>、<code>.conf</code>、<code>.ovpn</code>等格式，包含文件头和验证命令。文件以网站命名：<code>example_com_route.bat</code>。</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
@@ -303,6 +305,34 @@
             </div>
             <h3>域名黑名单</h3>
             <p>排除分析、追踪器和不需要的域名。通过Chrome Cloud Sync跨设备同步。</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M3 12a9 9 0 0115.5-6.3L21 8M21 3v5h-5M21 12a9 9 0 01-15.5 6.3L3 16M3 21v-5h5"/></svg>
+            </div>
+            <h3>DoH被封锁时仍可用</h3>
+            <p>当所有DNS-over-HTTPS解析器都被封锁时，改用浏览器已连接的IP，其余通过系统解析器解析。</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 17h.01M10 17h.01M12 13V8M8.5 10.5a5 5 0 017 0M5.5 7.5a9 9 0 0113 0"/></svg>
+            </div>
+            <h3>Keenetic导出</h3>
+            <p>Keenetic导入用的<code>.bat</code>格式，每条路由附带其域名和ASN注释。</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </div>
+            <h3>扫描历史</h3>
+            <p>扩展保留最近10次扫描：随时打开、复制或将路由下载为<code>cryptocompare_com_route.bat</code>。</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M8 4c-2 0-3 1-3 3v2c0 1.5-1 3-2 3 1 0 2 1.5 2 3v2c0 2 1 3 3 3M16 4c2 0 3 1 3 3v2c0 1.5 1 3 2 3-1 0-2 1.5-2 3v2c0 2-1 3-3 3"/></svg>
+            </div>
+            <h3>自定义模板</h3>
+            <p>使用<code>{{network}}</code>、<code>{{cidr}}</code>、<code>{{gateway}}</code>等宏定义自己的路由语法。</p>
         </div>
     </div>
 </section>
@@ -333,7 +363,7 @@
             <div class="step-number">02</div>
             <div class="step-content">
                 <h3>配置并扫描</h3>
-                <p>选择目标操作系统、合并掩码、网关和域名过滤器。点击<strong>Analyze Website</strong>。</p>
+                <p>选择目标操作系统、合并掩码、网关和域名过滤器。点击<strong>分析网站</strong>。</p>
             </div>
             <div class="step-visual">
                 <pre><code><span class="t-comment"># Scan config</span>
@@ -350,7 +380,7 @@
             <div class="step-number">03</div>
             <div class="step-content">
                 <h3>复制或导出</h3>
-                <p>从Routes标签页获取生成的路由。复制到剪贴板或导出为脚本文件。</p>
+                <p>从「路由」标签页获取生成的路由。复制到剪贴板或导出为脚本文件。</p>
             </div>
             <div class="step-visual">
                 <pre><code><span class="t-comment"># Output: 12 routes generated</span>
@@ -367,7 +397,7 @@
 <section class="platforms" id="platforms">
     <div class="section-header">
         <span class="section-tag">// 支持格式</span>
-        <h2>8种平台格式</h2>
+        <h2>9种平台格式</h2>
         <p>支持所有主要操作系统和网络设备厂商的原生命令语法。</p>
     </div>
     <div class="platform-table-wrap">
@@ -411,6 +441,11 @@
                     <td><code>set rib inet6.0 static route</code></td>
                 </tr>
                 <tr>
+                    <td><span class="platform-badge badge-hw">Keenetic</span></td>
+                    <td><code>route ADD {net} MASK {mask} {gw}</code></td>
+                    <td>仅 IPv4</td>
+                </tr>
+                <tr>
                     <td><span class="platform-badge badge-vpn">WireGuard</span></td>
                     <td><code>AllowedIPs = {net}/{cidr}</code></td>
                     <td><code>AllowedIPs = {addr}</code></td>
@@ -428,7 +463,7 @@
 <!-- STATS BAR -->
 <section class="stats-bar">
     <div class="stat">
-        <span class="stat-value">8</span>
+        <span class="stat-value">9</span>
         <span class="stat-label">平台格式</span>
     </div>
     <div class="stat">
@@ -440,11 +475,11 @@
         <span class="stat-label">+IPv6支持</span>
     </div>
     <div class="stat">
-        <span class="stat-value">4</span>
+        <span class="stat-value">7</span>
         <span class="stat-label">种导出格式</span>
     </div>
     <div class="stat">
-        <span class="stat-value">3</span>
+        <span class="stat-value">4</span>
         <span class="stat-label">个DNS提供商</span>
     </div>
 </section>
@@ -489,7 +524,7 @@
     <div class="faq-list">
         <details class="faq-item">
             <summary>NetRoute Pro 支持哪些平台？</summary>
-            <div class="faq-answer">NetRoute Pro 为 8 个平台生成路由命令：Windows、Linux、macOS、MikroTik、Cisco、Juniper、WireGuard（AllowedIPs）和 OpenVPN。支持 IPv4 和 IPv6。</div>
+            <div class="faq-answer">NetRoute Pro 为 9 个平台生成路由命令：Windows、Linux、macOS、MikroTik、Cisco、Juniper、WireGuard（AllowedIPs）、OpenVPN 和 Keenetic，并支持自定义模板。支持 IPv4 和 IPv6（Keenetic 格式仅支持 IPv4）。</div>
         </details>
         <details class="faq-item">
             <summary>NetRoute Pro 是免费的吗？</summary>
@@ -497,7 +532,7 @@
         </details>
         <details class="faq-item">
             <summary>NetRoute Pro 如何从网站生成路由？</summary>
-            <div class="faq-answer">NetRoute Pro 发现网页上的所有域名（包括通过 Service Worker 的 AJAX、CDN 和 API 请求），使用并行 DNS 查询到 Cloudflare、Google 和 AdGuard 将其解析为 IP 地址，将 IP 聚合为优化的 CIDR 子网，并生成特定于平台的路由命令。</div>
+            <div class="faq-answer">NetRoute Pro 发现网页上的所有域名（包括通过 Service Worker 的 AJAX、CDN 和 API 请求），使用并行 DNS-over-HTTPS 查询到 Cloudflare、Google、Quad9 和 AdGuard 将其解析为 IP 地址（DoH 被封锁时改用浏览器自身的连接），将 IP 聚合为优化的 CIDR 子网，并生成特定于平台的路由命令。</div>
         </details>
         <details class="faq-item">
             <summary>可以用于 VPN 分流吗？</summary>
@@ -505,7 +540,7 @@
         </details>
         <details class="faq-item">
             <summary>NetRoute Pro 会收集个人数据吗？</summary>
-            <div class="faq-answer">不会。NetRoute Pro 完全在您的浏览器中本地运行。它不收集、存储或传输任何个人数据。唯一的网络请求是用于扩展核心功能的 DNS 查询和可选的 RIPE/ASN 查询。</div>
+            <div class="faq-answer">不会。NetRoute Pro 没有账户、分析或自己的服务器：设置、缓存和扫描历史都保存在您的浏览器中。为完成工作，它会把扫描到的域名发送给 DNS-over-HTTPS 解析器，通过 ip-api.com 查询已解析 IP 的 ASN，在启用路由优化时查询 RIPE Stat，并在 DoH 被封锁或启用 ping 检查时直接连接被扫描的网站。详情见隐私政策。</div>
         </details>
     </div>
 </section>
@@ -544,7 +579,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <span>NetRoute Pro v4.0.0</span>
+        <span>NetRoute Pro v4.1.2</span>
     </div>
 </footer>
 

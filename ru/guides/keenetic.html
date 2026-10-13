@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Маршруты для роутера Keenetic из BAT-файла — пошаговая инструкция | NetRoute Pro</title>
     <meta name="description" content="Маршруты для роутера Keenetic из BAT-файла: сгенерируйте в NetRoute Pro и загрузите одним кликом с привязкой к VPN-интерфейсу. Обход блокировок по доменам, без ручного route add.">
     <meta name="keywords" content="маршруты для keenetic bat, маршруты для роутера keenetic, keenetic bat файл, keenetic загрузить bat, keenetic импорт маршрутов, keenetic обход блокировок, keenetic vpn маршруты, keenetic route add, keenetic домены через vpn, keenetic static route, кинетик маршруты">
@@ -71,7 +71,7 @@
             {
                 "@type": "HowToStep",
                 "name": "Сгенерируйте .bat файл в NetRoute Pro",
-                "text": "Откройте целевой сайт в Chrome, запустите расширение NetRoute Pro. Выберите платформу Windows, нажмите Analyze Website и скачайте файл .bat."
+                "text": "Откройте целевой сайт в Chrome, запустите расширение NetRoute Pro. Выберите платформу Keenetic (или Windows), нажмите «Анализировать сайт» и скачайте файл .bat."
             },
             {
                 "@type": "HowToStep",
@@ -194,7 +194,7 @@
     <ol>
         <li>Откройте нужный сайт в Chrome (например, заблокированный ресурс)</li>
         <li>Нажмите на иконку NetRoute Pro в панели расширений</li>
-        <li>Выберите платформу <strong>Windows</strong> — именно этот формат принимает Keenetic</li>
+        <li>Выберите платформу <strong>Keenetic</strong> — она пишет формат Windows <code>route ADD</code>, который принимает Keenetic, и подписывает каждый маршрут доменами (платформа <strong>Windows</strong> тоже подойдёт)</li>
         <li>Шлюз можно оставить любой (например <code>0.0.0.0</code>) — при импорте с привязкой к интерфейсу Keenetic его проигнорирует</li>
         <li>Задайте маску агрегации (рекомендуется <code>/24</code>)</li>
         <li>Нажмите <strong>Analyze Website</strong></li>
@@ -202,7 +202,7 @@
     </ol>
 
     <div class="callout">
-        <strong>Совет:</strong> включите <strong>RIPE BGP оптимизацию</strong> в расширении &mdash; она заменит отдельные IP на реальные BGP-префиксы провайдера. Это даст стабильные маршруты, которые не ломаются при ротации IP у Cloudflare/Fastly. <strong>Важно:</strong> RIPE BGP возвращает <em>все</em> префиксы анонсируемые ASN &mdash; для multi-tenant CDN (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) это десятки тысяч IP, покрывающих несвязанные сайты. BGP-оптимизация подходит для single-tenant ASN; для shared CDN оставьте обычную /24 CIDR-агрегацию.
+        <strong>Совет:</strong> выберите <strong>Оптимизация маршрутов &rarr; BGP Prefix</strong> в расширении &mdash; она заменит отдельные IP на реальные BGP-префиксы провайдера. Это даст стабильные маршруты, которые не ломаются при ротации IP у Cloudflare/Fastly. <strong>Важно:</strong> режимы <strong>Вся AS</strong> и <strong>AS + Схлоп</strong> возвращают <em>все</em> префиксы, анонсируемые ASN &mdash; для multi-tenant CDN (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) это десятки тысяч IP, покрывающих несвязанные сайты. BGP-оптимизация подходит для single-tenant ASN; для shared CDN оставьте обычную /24 CIDR-агрегацию.
     </div>
 
     <h2>Шаг 2. Откройте раздел Маршрутизация на Keenetic</h2>
@@ -281,7 +281,7 @@ show interface stat &lt;VPN_IF&gt;   # RX/TX байты должны расти 
     <h2>Частые вопросы</h2>
 
     <h3>IP сайта изменился — маршрут не работает</h3>
-    <p>CDN вроде Cloudflare и Fastly периодически меняют IP. Пересоздайте <code>.bat</code> в NetRoute Pro с включённой <strong>RIPE BGP оптимизацией</strong> — она подставит анонсированные BGP-префиксы, которые покрывают все IP провайдера.</p>
+    <p>CDN вроде Cloudflare и Fastly периодически меняют IP. Пересоздайте <code>.bat</code> в NetRoute Pro с режимом <strong>Оптимизация маршрутов &rarr; BGP Prefix</strong> — она подставит анонсированные BGP-префиксы, которые покрывают все IP провайдера.</p>
 
     <h3>Слишком много маршрутов</h3>
     <p>Keenetic без проблем держит сотни статических маршрутов. Если нужно больше — используйте подход с WireGuard AllowedIPs.</p>

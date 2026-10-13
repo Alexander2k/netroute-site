@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>从 .bat 文件导入路由到 Keenetic — 分步指南 | NetRoute Pro</title>
     <meta name="description" content="如何通过 .bat 文件将路由上传到 Keenetic。在 NetRoute Pro 中生成路由，一键导入并绑定到 VPN 接口。通过域名为网站路由流量到 VPN。">
     <meta name="keywords" content="keenetic 路由, keenetic 上传 bat, keenetic 导入路由, keenetic vpn 路由, keenetic route add, keenetic 静态路由, keenetic 分流">
@@ -71,7 +71,7 @@
             {
                 "@type": "HowToStep",
                 "name": "在 NetRoute Pro 中生成 .bat 文件",
-                "text": "在 Chrome 中打开目标网站，启动 NetRoute Pro。选择 Windows 平台，点击 Analyze Website，下载 .bat 文件。"
+                "text": "在 Chrome 中打开目标网站，启动 NetRoute Pro。选择 Keenetic 平台（或 Windows），点击“分析网站”，下载 .bat 文件。"
             },
             {
                 "@type": "HowToStep",
@@ -195,7 +195,7 @@
     <ol>
         <li>在 Chrome 中打开目标网站</li>
         <li>点击扩展栏中的 NetRoute Pro 图标</li>
-        <li>选择 <strong>Windows</strong> 平台 — 这是 Keenetic 接受的格式</li>
+        <li>选择 <strong>Keenetic</strong> 平台 — 它输出 Keenetic 接受的 Windows <code>route ADD</code> 格式，并为每条路由注明其域名（<strong>Windows</strong> 平台同样可用）</li>
         <li>网关可以是任意值（例如 <code>0.0.0.0</code>）— 上传时绑定到接口时 Keenetic 会忽略它</li>
         <li>选择聚合掩码（推荐 <code>/24</code>）</li>
         <li>点击 <strong>Analyze Website</strong></li>
@@ -203,7 +203,7 @@
     </ol>
 
     <div class="callout">
-        <strong>提示：</strong>在扩展中启用 <strong>RIPE BGP 优化</strong> &mdash; 它会用真实公告的 BGP 前缀替换单个 IP。这提供稳定的路由，不会因 Cloudflare/Fastly 轮换 IP 而失效。<strong>注意：</strong>RIPE BGP 会返回该 AS 公告的<em>所有</em>前缀 &mdash; 对于多租户 CDN（Cloudflare AS13335、AWS AS16509、DigitalOcean AS14061）可能是数万个 IP，涵盖无关站点。BGP 优化适合单租户 AS；多租户 CDN 请保持常规 /24 CIDR 聚合。
+        <strong>提示：</strong>在扩展中选择 <strong>路由优化 &rarr; BGP 前缀</strong> &mdash; 它会用真实公告的 BGP 前缀替换单个 IP。这提供稳定的路由，不会因 Cloudflare/Fastly 轮换 IP 而失效。<strong>注意：</strong><strong>完整 AS</strong> 和 <strong>AS + 压缩</strong> 模式会返回该 AS 公告的<em>所有</em>前缀 &mdash; 对于多租户 CDN（Cloudflare AS13335、AWS AS16509、DigitalOcean AS14061）可能是数万个 IP，涵盖无关站点。BGP 优化适合单租户 AS；多租户 CDN 请保持常规 /24 CIDR 聚合。
     </div>
 
     <h2>步骤 2. 打开 Keenetic 的路由部分</h2>
@@ -282,7 +282,7 @@ show interface stat &lt;VPN_IF&gt;   # LAN 客户端浏览时 RX/TX 字节应增
     <h2>常见问题</h2>
 
     <h3>网站 IP 改变 — 路由停止工作</h3>
-    <p>Cloudflare、Fastly 等 CDN 会定期轮换 IP。在 NetRoute Pro 中启用 <strong>RIPE BGP 优化</strong> 重新生成 <code>.bat</code> — 它会用公告的 BGP 前缀替换，覆盖所有提供商 IP。</p>
+    <p>Cloudflare、Fastly 等 CDN 会定期轮换 IP。在 NetRoute Pro 中选择 <strong>路由优化 &rarr; BGP 前缀</strong> 重新生成 <code>.bat</code> — 它会用公告的 BGP 前缀替换，覆盖所有提供商 IP。</p>
 
     <h3>路由太多</h3>
     <p>Keenetic 可以处理数百条静态路由而没有问题。如果需要更多 — 使用 WireGuard AllowedIPs 方法。</p>

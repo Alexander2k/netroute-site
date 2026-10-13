@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Политика конфиденциальности — NetRoute Pro</title>
     <meta name="description" content="Политика конфиденциальности NetRoute Pro. Без отслеживания, без аналитики, без сбора персональных данных. Вся обработка происходит локально в браузере.">
     <meta name="robots" content="index, follow">
@@ -68,7 +68,7 @@
 <div class="policy">
     <a href="index.html" class="back">&larr; На главную</a>
     <h1>Политика конфиденциальности</h1>
-    <p class="date">Последнее обновление: 30 марта 2026</p>
+    <p class="date">Последнее обновление: 13 октября 2026</p>
 
     <h2>Обзор</h2>
     <p>NetRoute Pro — это расширение для браузера, которое обнаруживает домены на веб-страницах, резолвит их в IP-адреса и генерирует команды маршрутизации. Ваша конфиденциальность важна для нас. Это расширение работает полностью локально в вашем браузере.</p>
@@ -86,19 +86,21 @@
     <h2>Сетевые запросы</h2>
     <p>Расширение выполняет следующие сетевые запросы, необходимые для его основной функциональности:</p>
     <ul>
-        <li><strong>DNS-over-HTTPS запросы</strong> к Cloudflare (1.1.1.1), Google (8.8.8.8) и AdGuard (94.140.14.140) — для резолвинга доменных имён в IP-адреса</li>
-        <li><strong>RIPE Stat API</strong> (stat.ripe.net) — для получения информации о BGP-префиксах для оптимизации маршрутов (опционально)</li>
-        <li><strong>ip-api.com</strong> &mdash; для поиска ASN/организации для разрешённых IP (опционально). <em>Disclosure:</em> ip-api.com может логировать запросы согласно своей privacy policy. Free tier работает только по HTTP, что конфликтует с CSP этого сайта (<code>upgrade-insecure-requests</code>) &mdash; lookup выполняется из расширения, не с сайта. Отключите ASN lookup в настройках расширения, если не хотите видимости со стороны третьей стороны.</li>
+        <li><strong>DNS-over-HTTPS запросы</strong> к Cloudflare (1.1.1.1), Google (8.8.8.8), Quad9 (9.9.9.9) и AdGuard (94.140.14.140), а также к добавленным вами DoH-серверам &mdash; чтобы резолвить домены, найденные на странице</li>
+        <li><strong>ip-api.com</strong> &mdash; поиск ASN и организации для найденных IP-адресов серверов, при каждом сканировании (результаты кешируются на 24 часа). Бесплатный тариф работает только по HTTP, поэтому эти IP-адреса передаются без шифрования, а ip-api.com может логировать запросы согласно своей политике. Запрос выполняет само расширение, а не этот сайт.</li>
+        <li><strong>RIPE Stat API</strong> (stat.ripe.net) &mdash; BGP-префиксы найденных IP и префиксы, анонсируемые их AS, только если в <strong>Оптимизации маршрутов</strong> выбран режим, отличный от «Выкл»</li>
+        <li><strong>Сами сканируемые сайты</strong> &mdash; запрос <code>HEAD</code> к каждому домену, который не смог разрешить ни один DoH-сервер (например, если DoH заблокирован в вашей сети), чтобы IP подсказал системный DNS; и только при включённой <strong>проверке доступности</strong> &mdash; запросы <code>HEAD</code> к найденным IP</li>
     </ul>
-    <p>Эти запросы содержат только доменные имена или IP-адреса, обнаруженные на текущей веб-странице. Никакая персональная информация не включается.</p>
+    <p>Эти запросы содержат только доменные имена и IP-адреса, обнаруженные на сканируемой странице. Персональные данные, cookies и учётные данные не передаются.</p>
 
     <h2>Локальное хранилище</h2>
-    <p>Расширение использует <code>chrome.storage.local</code> и опционально <code>chrome.storage.sync</code> для хранения:</p>
+    <p>Расширение использует <code>chrome.storage.local</code>, <code>chrome.storage.session</code> и опционально <code>chrome.storage.sync</code> для хранения:</p>
     <ul>
-        <li>Пользовательских настроек (тема, DNS-провайдер, параметры экспорта)</li>
-        <li>Чёрного списка доменов</li>
-        <li>Истории сканирований (последние 10, хранятся локально)</li>
-        <li>DNS и BGP кеша (с TTL истечением)</li>
+        <li>Пользовательских настроек (тема, DNS-провайдер, оптимизация маршрутов, параметры экспорта)</li>
+        <li>Чёрного списка доменов и своих DNS-серверов</li>
+        <li>Истории сканирований (последние 10: адрес страницы, домены и маршруты; хранятся локально)</li>
+        <li>Кеша DNS, ASN и BGP (с истечением по TTL)</li>
+        <li>Доменов и IP серверов, к которым обращалась каждая открытая вкладка (<code>chrome.storage.session</code>: только в памяти, удаляются при закрытии вкладки или браузера)</li>
     </ul>
     <p>Все данные остаются на вашем устройстве (или синхронизируются через ваш аккаунт Google, если включена Chrome Sync). Мы не имеем доступа к этим данным.</p>
 
@@ -107,9 +109,9 @@
         <li><strong>activeTab</strong> — для доступа к URL текущей вкладки для сканирования доменов</li>
         <li><strong>scripting</strong> — для извлечения доменов с текущей страницы</li>
         <li><strong>storage</strong> — для сохранения настроек и кеша локально</li>
-        <li><strong>downloads</strong> — для экспорта файлов маршрутов (.bat, .sh, .rsc)</li>
-        <li><strong>webRequest</strong> — для перехвата сетевых запросов при обнаружении доменов</li>
-        <li><strong>host_permissions (все URL)</strong> — для выполнения DNS-over-HTTPS запросов для резолвинга доменов</li>
+        <li><strong>downloads</strong> — для экспорта файлов маршрутов (.bat, .sh, .rsc, .conf, .ovpn и других)</li>
+        <li><strong>webRequest</strong> — чтобы видеть, к каким доменам обращается страница и к каким IP серверов подключился браузер; этот список остаётся в браузере</li>
+        <li><strong>host_permissions (все URL)</strong> — для DNS-over-HTTPS, ASN и RIPE запросов и запросов к сканируемым сайтам, описанных выше</li>
     </ul>
 
     <h2>Сторонние сервисы</h2>

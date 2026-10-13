@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>Import Routes on Keenetic from .bat File — Step-by-Step Guide | NetRoute Pro</title>
     <meta name="description" content="How to upload routes to Keenetic via .bat file. Generate routes in NetRoute Pro, import in one click with VPN interface binding. Route websites by domain through VPN.">
     <meta name="keywords" content="keenetic routes, keenetic upload bat, keenetic import routes, keenetic vpn routes, keenetic route add, keenetic static route, keenetic route file, keenetic split tunnel">
@@ -71,7 +71,7 @@
             {
                 "@type": "HowToStep",
                 "name": "Generate a .bat file in NetRoute Pro",
-                "text": "Open the target website in Chrome, launch NetRoute Pro. Select Windows platform, click Analyze Website, and download as .bat."
+                "text": "Open the target website in Chrome, launch NetRoute Pro. Select the Keenetic platform (or Windows), click Analyze Website, and download the .bat file."
             },
             {
                 "@type": "HowToStep",
@@ -194,7 +194,7 @@
     <ol>
         <li>Open the target website in Chrome</li>
         <li>Click the NetRoute Pro icon in your extensions</li>
-        <li>Select the <strong>Windows</strong> platform — that's the format Keenetic accepts</li>
+        <li>Select the <strong>Keenetic</strong> platform — it writes the Windows <code>route ADD</code> format Keenetic accepts and comments every route with its domains (the <strong>Windows</strong> platform works too)</li>
         <li>Gateway can be any value (e.g. <code>0.0.0.0</code>) — Keenetic ignores it when you bind to an interface on upload</li>
         <li>Choose aggregation mask (recommended <code>/24</code>)</li>
         <li>Click <strong>Analyze Website</strong></li>
@@ -202,7 +202,7 @@
     </ol>
 
     <div class="callout">
-        <strong>Tip:</strong> enable <strong>RIPE BGP optimization</strong> in the extension &mdash; it replaces individual IPs with real announced BGP prefixes. This gives stable routes that don&rsquo;t break when Cloudflare/Fastly rotate IPs. <strong>Caveat:</strong> RIPE BGP returns <em>all</em> prefixes announced by the destination AS &mdash; for multi-tenant CDNs (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) that&rsquo;s tens of thousands of IPs covering unrelated sites. Use BGP optimization for single-tenant ASes; keep plain /24 CIDR aggregation for shared CDNs.
+        <strong>Tip:</strong> choose <strong>Route Optimization &rarr; BGP Prefix</strong> in the extension &mdash; it replaces individual IPs with real announced BGP prefixes. This gives stable routes that don&rsquo;t break when Cloudflare/Fastly rotate IPs. <strong>Caveat:</strong> the <strong>Full AS</strong> and <strong>AS + Collapse</strong> modes return <em>all</em> prefixes announced by the destination AS &mdash; for multi-tenant CDNs (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) that&rsquo;s tens of thousands of IPs covering unrelated sites. Use BGP optimization for single-tenant ASes; keep plain /24 CIDR aggregation for shared CDNs.
     </div>
 
     <h2>Step 2. Open the Routing section in Keenetic</h2>
@@ -281,7 +281,7 @@ show interface stat &lt;VPN_IF&gt;   # RX/TX bytes should grow as the LAN client
     <h2>Common issues</h2>
 
     <h3>Website IP changed — route stopped working</h3>
-    <p>CDNs like Cloudflare and Fastly rotate IPs periodically. Regenerate the <code>.bat</code> in NetRoute Pro with <strong>RIPE BGP optimization</strong> enabled — it substitutes announced BGP prefixes that cover all provider IPs.</p>
+    <p>CDNs like Cloudflare and Fastly rotate IPs periodically. Regenerate the <code>.bat</code> in NetRoute Pro with <strong>Route Optimization &rarr; BGP Prefix</strong> — it substitutes announced BGP prefixes that cover all provider IPs.</p>
 
     <h3>Too many routes</h3>
     <p>Keenetic handles hundreds of static routes without issues. If you need more — use the WireGuard AllowedIPs approach.</p>

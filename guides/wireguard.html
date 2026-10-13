@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <title>WireGuard Split Tunneling with AllowedIPs — Step-by-Step Guide | NetRoute Pro</title>
     <meta name="description" content="Route specific websites through WireGuard VPN via AllowedIPs. Generate the list from domains in NetRoute Pro, paste into peer config, restart tunnel — split tunneling done.">
     <meta name="keywords" content="wireguard allowedips generator, wireguard split tunnel, wireguard routing by domain, wg-quick allowedips, wireguard peer config, wireguard selective routing">
@@ -199,7 +199,7 @@
     <pre><code>AllowedIPs = 104.21.32.0/24, 172.67.182.0/24, 162.159.135.0/24, ...</code></pre>
 
     <div class="callout">
-        <strong>Tip:</strong> enable <strong>RIPE BGP optimization</strong> in the extension &mdash; it replaces individual IPs with real announced BGP prefixes, giving stable subnets that don&rsquo;t break when Cloudflare/Fastly rotate IPs. <strong>Caveat:</strong> RIPE BGP returns <em>all</em> prefixes announced by the destination AS &mdash; for multi-tenant CDNs (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) that&rsquo;s tens of thousands of IPs covering unrelated sites. Use BGP optimization for single-tenant ASes; keep plain /24 CIDR aggregation for shared CDNs.
+        <strong>Tip:</strong> choose <strong>Route Optimization &rarr; BGP Prefix</strong> in the extension &mdash; it replaces individual IPs with real announced BGP prefixes, giving stable subnets that don&rsquo;t break when Cloudflare/Fastly rotate IPs. <strong>Caveat:</strong> the <strong>Full AS</strong> and <strong>AS + Collapse</strong> modes return <em>all</em> prefixes announced by the destination AS &mdash; for multi-tenant CDNs (Cloudflare AS13335, AWS AS16509, DigitalOcean AS14061) that&rsquo;s tens of thousands of IPs covering unrelated sites. Use BGP optimization for single-tenant ASes; keep plain /24 CIDR aggregation for shared CDNs.
     </div>
 
     <h2>Step 2. Paste into your peer config</h2>
