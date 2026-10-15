@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../../theme.js"></script>
-    <title>WireGuard 分流（AllowedIPs）— 分步指南 | NetRoute Pro</title>
-    <meta name="description" content="如何通过设置 AllowedIPs 将特定网站通过 WireGuard VPN 路由。在 NetRoute Pro 中从域名生成 AllowedIPs，粘贴到对端配置中，重启隧道。适用于 Linux、Windows、macOS、Android、iOS 和路由器。">
+    <title>WireGuard 分流（AllowedIPs）— 分步指南 | NetRoute</title>
+    <meta name="description" content="如何通过设置 AllowedIPs 将特定网站通过 WireGuard VPN 路由。在 NetRoute 中从域名生成 AllowedIPs，粘贴到对端配置中，重启隧道。适用于 Linux、Windows、macOS、Android、iOS 和路由器。">
     <meta name="keywords" content="wireguard allowedips 生成器, wireguard 分流, wireguard 按域名路由, wg-quick allowedips, wireguard 对端配置">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/zh/guides/wireguard.html">
@@ -18,7 +18,7 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="WireGuard 分流（AllowedIPs）">
-    <meta property="og:description" content="在 NetRoute Pro 中从域名生成 AllowedIPs，粘贴到对端配置中，重启隧道。">
+    <meta property="og:description" content="在 NetRoute 中从域名生成 AllowedIPs，粘贴到对端配置中，重启隧道。">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/zh/guides/wireguard.html">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
@@ -66,13 +66,13 @@
         "@context": "https://schema.org",
         "@type": "HowTo",
         "name": "如何为 WireGuard 配置 AllowedIPs 分流",
-        "description": "分步指南：在 NetRoute Pro 中生成 AllowedIPs，粘贴到 WireGuard 对端配置，重启隧道。",
+        "description": "分步指南：在 NetRoute 中生成 AllowedIPs，粘贴到 WireGuard 对端配置，重启隧道。",
         "inLanguage": "zh",
         "totalTime": "PT3M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "在 NetRoute Pro 中生成 AllowedIPs",
+                "name": "在 NetRoute 中生成 AllowedIPs",
                 "text": "打开目标网站，启动扩展，选择 WireGuard 平台，点击 Analyze Website，复制 AllowedIPs 行。"
             },
             {
@@ -94,19 +94,19 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "WireGuard 分流（AllowedIPs）— 分步指南",
-        "description": "如何通过设置 AllowedIPs 将特定网站通过 WireGuard VPN 路由。在 NetRoute Pro 中从域名生成 AllowedIPs，粘贴到对端配置中，重启隧道。适用于 Linux、Windows、macOS、Android、iOS 和路由器。",
+        "description": "如何通过设置 AllowedIPs 将特定网站通过 WireGuard VPN 路由。在 NetRoute 中从域名生成 AllowedIPs，粘贴到对端配置中，重启隧道。适用于 Linux、Windows、macOS、Android、iOS 和路由器。",
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
         "inLanguage": "zh",
         "datePublished": "2026-04-20",
         "dateModified": "2026-04-27",
         "author": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/",
             "logo": {
                 "@type": "ImageObject",
@@ -152,7 +152,7 @@
     <div class="topbar-inner">
         <a href="../" class="logo">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
         </a>
         <div class="nav-links">
             <a href="../">首页</a>
@@ -172,7 +172,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; 返回首页</a>
     <h1>WireGuard 分流（AllowedIPs）</h1>
-    <p class="lead">在 WireGuard 中，<code>AllowedIPs</code> 参数同时充当 ACL 过滤器和路由表。NetRoute Pro 从任何网站的域名生成可直接粘贴的 AllowedIPs 字符串 — 无需额外的 <code>ip route</code> 命令，只需编辑对端配置并重新加载。</p>
+    <p class="lead">在 WireGuard 中，<code>AllowedIPs</code> 参数同时充当 ACL 过滤器和路由表。NetRoute 从任何网站的域名生成可直接粘贴的 AllowedIPs 字符串 — 无需额外的 <code>ip route</code> 命令，只需编辑对端配置并重新加载。</p>
 
     <section id="syntax" class="syntax-block">
         <h2>命令语法</h2>
@@ -194,14 +194,14 @@
                 <li>支持 WireGuard 的路由器（OpenWrt、MikroTik、Keenetic 等）</li>
             </ul>
         </li>
-        <li>已安装 <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome 扩展</li>
+        <li>已安装 <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> Chrome 扩展</li>
         <li>对 WireGuard 对端配置的编辑权限</li>
     </ul>
 
-    <h2>步骤 1. 在 NetRoute Pro 中生成 AllowedIPs</h2>
+    <h2>步骤 1. 在 NetRoute 中生成 AllowedIPs</h2>
     <ol>
         <li>在 Chrome 中打开目标网站</li>
-        <li>点击扩展栏中的 NetRoute Pro 图标</li>
+        <li>点击扩展栏中的 NetRoute 图标</li>
         <li>选择 <strong>WireGuard</strong> 平台</li>
         <li>点击 <strong>Analyze Website</strong></li>
         <li>复制 <strong>AllowedIPs</strong> 行</li>
@@ -312,7 +312,7 @@ PostUp = ip route add 1.1.1.0/24 dev %i table 100
 PostUp = ip rule  add from 192.168.1.100 lookup 100
 PostDown = ip rule  del from 192.168.1.100 lookup 100
 PostDown = ip route flush table 100</code></pre>
-    <p>大多数用户不需要 &mdash; 默认行为（从 <code>AllowedIPs</code> 自动安装路由）正是 NetRoute Pro 输出所期望的。</p>
+    <p>大多数用户不需要 &mdash; 默认行为（从 <code>AllowedIPs</code> 自动安装路由）正是 NetRoute 输出所期望的。</p>
 
     <h2>验证</h2>
     <p>运行以下命令确认应用的 AllowedIPs：</p>
@@ -341,13 +341,13 @@ MTU = 1380     # 先试 1380；如果页面仍卡，降到 1280 / 1200</code></p
     <p>检查逗号和换行符 — AllowedIPs 必须是逗号分隔的 CIDR 列表。移除隐藏的空格、BOM 字符或多余的换行。</p>
 
     <h2 id="examples">配置文件示例</h2>
-    <p>带注释的可编辑模板。将示例路由替换为 NetRoute Pro 为目标网站生成的输出。</p>
+    <p>带注释的可编辑模板。将示例路由替换为 NetRoute 为目标网站生成的输出。</p>
     <ul>
         <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/wireguard-split-tunnel.conf" target="_blank" rel="noopener"><code>wireguard-split-tunnel.conf</code></a> — WireGuard 对等配置，通过 <code>AllowedIPs</code> 实现分流</li>
     </ul>
     <pre><code><!-- EMBED:wireguard-split-tunnel.conf -->
 # Example WireGuard peer config with split tunneling.
-# Generated by NetRoute Pro: https://alexander2k.github.io/netroute-site/
+# Generated by NetRoute: https://alexander2k.github.io/netroute-site/
 #
 # AllowedIPs in [Peer] section doubles as both an ACL and routing table.
 # Only the listed networks are sent through the tunnel — everything else
@@ -363,14 +363,14 @@ PublicKey           = YOUR_SERVER_PUBLIC_KEY
 Endpoint            = your.vpn.server:51820
 PersistentKeepalive = 25
 
-# Networks to route via VPN — add/remove based on NetRoute Pro output.
+# Networks to route via VPN — add/remove based on NetRoute output.
 AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 162.159.0.0/16
 
 # To route everything via VPN, use: AllowedIPs = 0.0.0.0/0, ::/0
 # Apply with: sudo wg-quick down wg0 &amp;&amp; sudo wg-quick up wg0
 <!-- /EMBED --></code></pre>
 
-    <p class="callout"><strong>提示：</strong>需要不带注释行的配置？在 NetRoute Pro 选项中取消勾选 <strong>「在导出文件中包含注释」</strong>，扩展将仅导出路由命令。适用于不支持注释的路由器。</p>
+    <p class="callout"><strong>提示：</strong>需要不带注释行的配置？在 NetRoute 选项中取消勾选 <strong>「在导出文件中包含注释」</strong>，扩展将仅导出路由命令。适用于不支持注释的路由器。</p>
 
     <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">在 GitHub 上查看所有示例 &rarr;</a></p>
 
@@ -392,7 +392,7 @@ AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 162.159.0.0/16
 
     <div class="cta-block">
         <h3>准备好尝试了吗？</h3>
-        <p>NetRoute Pro — 免费的 Chrome 扩展，可从任何网站生成路由。</p>
+        <p>NetRoute — 免费的 Chrome 扩展，可从任何网站生成路由。</p>
         <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">安装扩展</a>
     </div>
 

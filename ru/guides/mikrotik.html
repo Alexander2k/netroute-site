@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../../theme.js"></script>
-    <title>Импорт маршрутов на MikroTik через .rsc скрипт — инструкция | NetRoute Pro</title>
-    <meta name="description" content="Как добавить маршруты на MikroTik RouterOS. Сгенерируйте .rsc скрипт в NetRoute Pro, импортируйте через Files или терминал. Поддержка address lists и прямых маршрутов.">
+    <title>Импорт маршрутов на MikroTik через .rsc скрипт — инструкция | NetRoute</title>
+    <meta name="description" content="Как добавить маршруты на MikroTik RouterOS. Сгенерируйте .rsc скрипт в NetRoute, импортируйте через Files или терминал. Поддержка address lists и прямых маршрутов.">
     <meta name="keywords" content="mikrotik маршруты, mikrotik rsc импорт, mikrotik ip route add, mikrotik address list, mikrotik vpn маршруты, mikrotik обход блокировок, routeros статический маршрут, mikrotik import file">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/guides/mikrotik.html">
@@ -18,7 +18,7 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="Импорт маршрутов на MikroTik через .rsc скрипт">
-    <meta property="og:description" content="Загрузите сгенерированные в NetRoute Pro маршруты на MikroTik через .rsc скрипт — Files или терминал.">
+    <meta property="og:description" content="Загрузите сгенерированные в NetRoute маршруты на MikroTik через .rsc скрипт — Files или терминал.">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/ru/guides/mikrotik.html">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
@@ -65,14 +65,14 @@
         "@context": "https://schema.org",
         "@type": "HowTo",
         "name": "Как импортировать маршруты на MikroTik",
-        "description": "Пошаговая инструкция: сгенерируйте .rsc скрипт в NetRoute Pro, загрузите его на MikroTik и импортируйте командой /import.",
+        "description": "Пошаговая инструкция: сгенерируйте .rsc скрипт в NetRoute, загрузите его на MikroTik и импортируйте командой /import.",
         "inLanguage": "ru",
         "totalTime": "PT3M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "Сгенерируйте .rsc в NetRoute Pro",
-                "text": "Откройте целевой сайт в Chrome, запустите расширение NetRoute Pro, выберите платформу MikroTik, нажмите Analyze Website и скачайте файл .rsc."
+                "name": "Сгенерируйте .rsc в NetRoute",
+                "text": "Откройте целевой сайт в Chrome, запустите расширение NetRoute, выберите платформу MikroTik, нажмите Analyze Website и скачайте файл .rsc."
             },
             {
                 "@type": "HowToStep",
@@ -93,19 +93,19 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "Импорт маршрутов на MikroTik через .rsc скрипт — инструкция",
-        "description": "Как добавить маршруты на MikroTik RouterOS. Сгенерируйте .rsc скрипт в NetRoute Pro, импортируйте через Files или терминал. Поддержка address lists и прямых маршрутов.",
+        "description": "Как добавить маршруты на MikroTik RouterOS. Сгенерируйте .rsc скрипт в NetRoute, импортируйте через Files или терминал. Поддержка address lists и прямых маршрутов.",
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
         "inLanguage": "ru",
         "datePublished": "2026-04-20",
         "dateModified": "2026-04-27",
         "author": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/",
             "logo": {
                 "@type": "ImageObject",
@@ -150,7 +150,7 @@
     <div class="topbar-inner">
         <a href="../" class="logo">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
         </a>
         <div class="nav-links">
             <a href="../">Главная</a>
@@ -170,7 +170,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; На главную</a>
     <h1>Импорт маршрутов на MikroTik через .rsc скрипт</h1>
-    <p class="lead">MikroTik умеет импортировать <code>.rsc</code> скрипты с командами маршрутизации. NetRoute Pro генерирует именно такой формат — достаточно скачать, загрузить и импортировать.</p>
+    <p class="lead">MikroTik умеет импортировать <code>.rsc</code> скрипты с командами маршрутизации. NetRoute генерирует именно такой формат — достаточно скачать, загрузить и импортировать.</p>
 
     <section id="syntax" class="syntax-block">
         <h2>Синтаксис команды</h2>
@@ -178,7 +178,7 @@
         <pre><code>/ip route add dst-address=&lt;CIDR&gt; gateway=&lt;GATEWAY&gt; distance=1</code></pre>
         <p><strong>Пример:</strong></p>
         <pre><code>/ip route add dst-address=1.1.1.0/24 gateway=wg-out distance=1</code></pre>
-        <p>NetRoute Pro генерирует эти команды в <code>.rsc</code>-файл, который импортируется через <code>/import file=routes.rsc</code> в терминале роутера.</p>
+        <p>NetRoute генерирует эти команды в <code>.rsc</code>-файл, который импортируется через <code>/import file=routes.rsc</code> в терминале роутера.</p>
     </section>
     <div class="callout">
         <strong>Замечания по версиям RouterOS:</strong>
@@ -195,14 +195,14 @@
     <ul>
         <li>Роутер MikroTik с RouterOS 6.x или 7.x</li>
         <li>Настроенный VPN-туннель (WireGuard, OpenVPN, IKEv2, L2TP и т.д.)</li>
-        <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> в Chrome</li>
+        <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> в Chrome</li>
         <li>Доступ через WinBox, WebFig или SSH</li>
     </ul>
 
-    <h2>Шаг 1. Сгенерируйте .rsc в NetRoute Pro</h2>
+    <h2>Шаг 1. Сгенерируйте .rsc в NetRoute</h2>
     <ol>
         <li>Откройте нужный сайт в Chrome</li>
-        <li>Запустите расширение <strong>NetRoute Pro</strong></li>
+        <li>Запустите расширение <strong>NetRoute</strong></li>
         <li>Выберите платформу <strong>MikroTik</strong></li>
         <li>Укажите шлюз как <strong>имя VPN-интерфейса</strong> (например <code>wg-out</code>, <code>ovpn-out</code>, <code>l2tp-out1</code>) — рекомендуемая форма. Имя интерфейса работает независимо от того как VPN-провайдер раздаёт peer IP. Указание IP-адреса (<code>10.0.0.1</code>) сработает только если этот IP &laquo;directly reachable&raquo;; для типичных коммерческих WireGuard-настроек (Mullvad, ProtonVPN, IVPN) peer назначается как <code>/32</code> и форма с IP вернёт <code>gateway not directly reachable</code>.</li>
         <li>Маска агрегации <code>/24</code> (рекомендуется)</li>
@@ -254,7 +254,7 @@
     <h2>Альтернатива: WireGuard AllowedIPs</h2>
     <p>Если используете WireGuard, можно обойтись без статических маршрутов и задать подсети прямо в параметре <code>AllowedIPs</code> пира:</p>
     <ol>
-        <li>В NetRoute Pro выберите платформу <strong>WireGuard</strong></li>
+        <li>В NetRoute выберите платформу <strong>WireGuard</strong></li>
         <li>Скопируйте строку <code>AllowedIPs</code></li>
         <li>В MikroTik выполните:
             <pre><code>/interface/wireguard/peers/set [find] allowed-address=...</code></pre>
@@ -313,7 +313,7 @@ traceroute example.com  # Linux/macOS</code></pre>
     </ul>
 
     <h3>IP ротируется — маршрут не работает</h3>
-    <p>CDN вроде Cloudflare и Fastly периодически меняют IP. Пересоздайте <code>.rsc</code> в NetRoute Pro с режимом <strong>Оптимизация маршрутов &rarr; BGP Prefix</strong> — подставятся BGP-префиксы провайдера.</p>
+    <p>CDN вроде Cloudflare и Fastly периодически меняют IP. Пересоздайте <code>.rsc</code> в NetRoute с режимом <strong>Оптимизация маршрутов &rarr; BGP Prefix</strong> — подставятся BGP-префиксы провайдера.</p>
 
     <h3>Слишком много маршрутов</h3>
     <p>MikroTik без проблем держит тысячи статических маршрутов. Если нужно покрыть действительно большие объёмы — используйте WireGuard с соответствующими AllowedIPs.</p>
@@ -322,13 +322,13 @@ traceroute example.com  # Linux/macOS</code></pre>
     <p>Для больших масштабов можно настроить BGP-пиринг и получать маршруты динамически от внешнего источника. Для большинства сценариев этого не требуется — импорт <code>.rsc</code> покрывает задачу целиком.</p>
 
     <h2 id="examples">Пример конфигурационного файла</h2>
-    <p>Готовый шаблон с комментариями. Замените примеры маршрутов выводом NetRoute Pro для ваших сайтов.</p>
+    <p>Готовый шаблон с комментариями. Замените примеры маршрутов выводом NetRoute для ваших сайтов.</p>
     <ul>
         <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/mikrotik-routes.rsc" target="_blank" rel="noopener"><code>mikrotik-routes.rsc</code></a> — RouterOS-скрипт <code>/import</code> с определениями маршрутов</li>
     </ul>
     <pre><code><!-- EMBED:mikrotik-routes.rsc -->
 # Example .rsc file for /import on MikroTik RouterOS.
-# Generated by NetRoute Pro: https://alexander2k.github.io/netroute-site/
+# Generated by NetRoute: https://alexander2k.github.io/netroute-site/
 #
 # Format: /ip route add dst-address=&lt;CIDR&gt; gateway=&lt;INTERFACE_OR_IP&gt; distance=&lt;METRIC&gt;
 # Adjust gateway= to your VPN interface name (e.g. wg-out, ovpn-out, l2tp-out)
@@ -344,7 +344,7 @@ add dst-address=162.159.0.0/16 gateway=wg-out distance=1
 #   /import file=routes.rsc
 <!-- /EMBED --></code></pre>
 
-    <p class="callout"><strong>Подсказка:</strong> Нужен конфиг без строк-комментариев? В настройках NetRoute Pro снимите галочку <strong>«Включать комментарии в экспортируемые файлы»</strong> &mdash; расширение выгрузит только команды маршрутизации. Полезно для роутеров, которые не принимают комментарии.</p>
+    <p class="callout"><strong>Подсказка:</strong> Нужен конфиг без строк-комментариев? В настройках NetRoute снимите галочку <strong>«Включать комментарии в экспортируемые файлы»</strong> &mdash; расширение выгрузит только команды маршрутизации. Полезно для роутеров, которые не принимают комментарии.</p>
 
     <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Все примеры конфигов на GitHub &rarr;</a></p>
 
@@ -365,7 +365,7 @@ add dst-address=162.159.0.0/16 gateway=wg-out distance=1
 
     <div class="cta-block">
         <h3>Готовы попробовать?</h3>
-        <p>NetRoute Pro — бесплатное расширение Chrome для генерации маршрутов из любого сайта.</p>
+        <p>NetRoute — бесплатное расширение Chrome для генерации маршрутов из любого сайта.</p>
         <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Установить расширение</a>
     </div>
 

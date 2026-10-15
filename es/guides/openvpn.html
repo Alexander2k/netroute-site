@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../../theme.js"></script>
-    <title>Añadir rutas al config cliente de OpenVPN — Guía paso a paso | NetRoute Pro</title>
-    <meta name="description" content="Cómo añadir rutas selectivas al config .ovpn de OpenVPN. Genera directivas route en NetRoute Pro, pega en client config, reconecta. Ideal para split tunneling.">
+    <title>Añadir rutas al config cliente de OpenVPN — Guía paso a paso | NetRoute</title>
+    <meta name="description" content="Cómo añadir rutas selectivas al config .ovpn de OpenVPN. Genera directivas route en NetRoute, pega en client config, reconecta. Ideal para split tunneling.">
     <meta name="keywords" content="openvpn route directiva, openvpn split tunnel, openvpn cliente rutas, openvpn push route, ovpn config rutas">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/es/guides/openvpn.html">
@@ -18,7 +18,7 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="Añadir rutas al config cliente de OpenVPN">
-    <meta property="og:description" content="Genera directivas route en NetRoute Pro, pégalas en tu .ovpn y tendrás split tunneling en minutos.">
+    <meta property="og:description" content="Genera directivas route en NetRoute, pégalas en tu .ovpn y tendrás split tunneling en minutos.">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/es/guides/openvpn.html">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
@@ -66,14 +66,14 @@
         "@context": "https://schema.org",
         "@type": "HowTo",
         "name": "Cómo añadir rutas al config cliente de OpenVPN",
-        "description": "Guía paso a paso: genera directivas route en NetRoute Pro, pégalas en el archivo .ovpn y reconecta la VPN.",
+        "description": "Guía paso a paso: genera directivas route en NetRoute, pégalas en el archivo .ovpn y reconecta la VPN.",
         "inLanguage": "es",
         "totalTime": "PT3M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "Genera directivas route en NetRoute Pro",
-                "text": "Abre el sitio web objetivo en Chrome, lanza NetRoute Pro, selecciona plataforma OpenVPN, haz clic en Analyze Website y copia el output."
+                "name": "Genera directivas route en NetRoute",
+                "text": "Abre el sitio web objetivo en Chrome, lanza NetRoute, selecciona plataforma OpenVPN, haz clic en Analyze Website y copia el output."
             },
             {
                 "@type": "HowToStep",
@@ -94,19 +94,19 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "Añadir rutas al config cliente de OpenVPN — Guía paso a paso",
-        "description": "Cómo añadir rutas selectivas al config .ovpn de OpenVPN. Genera directivas route en NetRoute Pro, pega en client config, reconecta. Ideal para split tunneling.",
+        "description": "Cómo añadir rutas selectivas al config .ovpn de OpenVPN. Genera directivas route en NetRoute, pega en client config, reconecta. Ideal para split tunneling.",
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
         "inLanguage": "es",
         "datePublished": "2026-04-20",
         "dateModified": "2026-04-27",
         "author": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/",
             "logo": {
                 "@type": "ImageObject",
@@ -151,7 +151,7 @@
     <div class="topbar-inner">
         <a href="../" class="logo">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
         </a>
         <div class="nav-links">
             <a href="../">Inicio</a>
@@ -171,7 +171,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; Volver al inicio</a>
     <h1>Añadir rutas al config cliente de OpenVPN</h1>
-    <p class="lead">OpenVPN admite directivas <code>route</code> por subred en el config cliente. NetRoute Pro genera estas directivas desde los dominios de cualquier sitio — añádelas a tu <code>.ovpn</code> y tendrás split tunneling en minutos.</p>
+    <p class="lead">OpenVPN admite directivas <code>route</code> por subred en el config cliente. NetRoute genera estas directivas desde los dominios de cualquier sitio — añádelas a tu <code>.ovpn</code> y tendrás split tunneling en minutos.</p>
 
     <section id="syntax" class="syntax-block">
         <h2>Sintaxis del comando</h2>
@@ -188,13 +188,13 @@
         <li>OpenVPN 2.4 o superior</li>
         <li>Acceso al archivo <code>.ovpn</code> del cliente</li>
         <li>Cliente OpenVPN (OpenVPN Connect, OpenVPN GUI, <code>openvpn</code> CLI, Tunnelblick, etc.)</li>
-        <li>Extensión <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> instalada en Chrome</li>
+        <li>Extensión <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> instalada en Chrome</li>
     </ul>
 
-    <h2>Paso 1. Genera directivas route en NetRoute Pro</h2>
+    <h2>Paso 1. Genera directivas route en NetRoute</h2>
     <ol>
         <li>Abre el sitio web objetivo en Chrome</li>
-        <li>Lanza la extensión NetRoute Pro</li>
+        <li>Lanza la extensión NetRoute</li>
         <li>Selecciona la plataforma <strong>OpenVPN</strong></li>
         <li>Haz clic en <strong>Analyze Website</strong></li>
         <li>Copia el output generado</li>
@@ -298,13 +298,13 @@ netstat -rn              # macOS</code></pre>
     <p>Versión de OpenVPN antigua. Actualiza a 2.4+.</p>
 
     <h2 id="examples">Archivo de configuración de ejemplo</h2>
-    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute Pro para tus sitios.</p>
+    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute para tus sitios.</p>
     <ul>
         <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/openvpn-routes.ovpn" target="_blank" rel="noopener"><code>openvpn-routes.ovpn</code></a> — Fragmento de config cliente OpenVPN con directivas <code>route</code></li>
     </ul>
     <pre><code><!-- EMBED:openvpn-routes.ovpn -->
 # Example OpenVPN client config snippet for split tunneling.
-# Generated by NetRoute Pro: https://alexander2k.github.io/netroute-site/
+# Generated by NetRoute: https://alexander2k.github.io/netroute-site/
 #
 # Append these directives to your existing client .ovpn file. With route-nopull
 # the server's pushed routes are ignored — only the explicit `route` lines below
@@ -313,7 +313,7 @@ netstat -rn              # macOS</code></pre>
 route-nopull
 
 # Format: route &lt;NETWORK&gt; &lt;NETMASK&gt;
-# Replace these example networks with output from NetRoute Pro.
+# Replace these example networks with output from NetRoute.
 route 1.1.1.0   255.255.255.0
 route 8.8.8.0   255.255.255.0
 route 162.159.0.0 255.255.0.0
@@ -321,7 +321,7 @@ route 162.159.0.0 255.255.0.0
 # Verify after reconnect: openvpn3 sessions-list  (or)  netstat -rn
 <!-- /EMBED --></code></pre>
 
-    <p class="callout"><strong>Consejo:</strong> ¿Necesitas un config sin estas líneas de comentarios? En las opciones de NetRoute Pro desactiva <strong>«Incluir comentarios en archivos exportados»</strong> &mdash; la extensión exportará solo los comandos de rutas. Útil para routers que no toleran comentarios.</p>
+    <p class="callout"><strong>Consejo:</strong> ¿Necesitas un config sin estas líneas de comentarios? En las opciones de NetRoute desactiva <strong>«Incluir comentarios en archivos exportados»</strong> &mdash; la extensión exportará solo los comandos de rutas. Útil para routers que no toleran comentarios.</p>
 
     <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Ver todos los ejemplos en GitHub &rarr;</a></p>
 
@@ -342,7 +342,7 @@ route 162.159.0.0 255.255.0.0
 
     <div class="cta-block">
         <h3>¿Listo para probar?</h3>
-        <p>NetRoute Pro — extensión gratuita de Chrome para generar rutas desde cualquier sitio web.</p>
+        <p>NetRoute — extensión gratuita de Chrome para generar rutas desde cualquier sitio web.</p>
         <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Instalar extensión</a>
     </div>
 

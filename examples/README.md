@@ -1,6 +1,6 @@
-# NetRoute Pro — Example Config Files
+# NetRoute — Example Config Files
 
-Ready-to-edit configuration templates for each platform supported by [NetRoute Pro](https://alexander2k.github.io/netroute-site/).
+Ready-to-edit configuration templates for each platform supported by [NetRoute](https://alexander2k.github.io/netroute-site/).
 
 | File | Platform | Format |
 |---|---|---|
@@ -10,6 +10,6 @@ Ready-to-edit configuration templates for each platform supported by [NetRoute P
 | [`linux-routes.sh`](linux-routes.sh) | Linux | Bash + `ip route` |
 | [`openvpn-routes.ovpn`](openvpn-routes.ovpn) | OpenVPN | Client config snippet |
 
-Each file contains inline comments explaining the syntax and how to apply it. Replace the example IPs/CIDRs with output from the [NetRoute Pro Chrome extension](https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla) for your target sites.
+Each file contains inline comments explaining the syntax and how to apply it. Replace the example IPs/CIDRs with output from the [NetRoute Chrome extension](https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla) for your target sites.
 
 See full step-by-step guides at [alexander2k.github.io/netroute-site/guides/](https://alexander2k.github.io/netroute-site/guides/).

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../theme.js"></script>
-    <title>Generador de rutas WireGuard, Keenetic, MikroTik, Cisco — NetRoute Pro | Extensión Chrome</title>
+    <title>Generador de rutas WireGuard, Keenetic, MikroTik, Cisco — NetRoute | Extensión Chrome</title>
     <meta name="description" content="Extensión gratuita de Chrome para generar rutas VPN split tunneling desde dominios. WireGuard AllowedIPs, Keenetic, MikroTik, Cisco, OpenVPN. Sin recopilación de datos.">
     <meta name="keywords" content="generador de rutas, dominio a ruta ip, wireguard allowedips generador, mikrotik rutas, vpn split tunneling rutas, cisco ip route generador, openvpn rutas, agregación CIDR, optimización BGP, resolución DNS, automatización de rutas de red, enrutamiento selectivo VPN">
     <meta name="author" content="Alexander2k">
@@ -19,14 +19,14 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="NetRoute Pro — Generador de rutas VPN desde dominios (extensión Chrome)">
+    <meta property="og:title" content="NetRoute — Generador de rutas VPN desde dominios (extensión Chrome)">
     <meta property="og:description" content="Genera rutas VPN desde cualquier sitio web en un clic. WireGuard, Keenetic, MikroTik, Cisco, OpenVPN. Extensión gratuita de Chrome enfocada en privacidad.">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/es/">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
     <meta property="og:image:height" content="560">
-    <meta property="og:image:alt" content="NetRoute Pro — extensión de Chrome para generación de rutas VPN">
-    <meta property="og:site_name" content="NetRoute Pro">
+    <meta property="og:image:alt" content="NetRoute — extensión de Chrome para generación de rutas VPN">
+    <meta property="og:site_name" content="NetRoute">
     <meta property="og:locale" content="es_ES">
     <meta property="og:locale:alternate" content="en_US">
     <meta property="og:locale:alternate" content="ru_RU">
@@ -34,7 +34,7 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="NetRoute Pro — Generador de rutas VPN desde dominios (extensión Chrome)">
+    <meta name="twitter:title" content="NetRoute — Generador de rutas VPN desde dominios (extensión Chrome)">
     <meta name="twitter:description" content="Genera rutas VPN desde cualquier sitio web en un clic. WireGuard, Keenetic, MikroTik, Cisco, OpenVPN. Extensión gratuita de Chrome enfocada en privacidad.">
     <meta name="twitter:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
 
@@ -54,7 +54,7 @@
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "NetRoute Pro",
+        "name": "NetRoute",
         "alternateName": ["NetRoute", "Net Route Pro", "netroute", "Net Route"],
         "applicationCategory": "BrowserApplication",
         "operatingSystem": "Chrome",
@@ -91,7 +91,7 @@
     {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "NetRoute Pro",
+        "name": "NetRoute",
         "alternateName": [
             "NetRoute",
             "Net Route Pro",
@@ -118,26 +118,26 @@
         "mainEntity": [
             {
                 "@type": "Question",
-                "name": "¿Qué plataformas soporta NetRoute Pro?",
+                "name": "¿Qué plataformas soporta NetRoute?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "NetRoute Pro genera comandos de enrutamiento para 9 plataformas: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), OpenVPN y Keenetic, además de tu propia plantilla. Compatible con IPv4 e IPv6 (el formato Keenetic es solo IPv4)."
+                    "text": "NetRoute genera comandos de enrutamiento para 9 plataformas: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), OpenVPN y Keenetic, además de tu propia plantilla. Compatible con IPv4 e IPv6 (el formato Keenetic es solo IPv4)."
                 }
             },
             {
                 "@type": "Question",
-                "name": "¿NetRoute Pro es gratis?",
+                "name": "¿NetRoute es gratis?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Sí, NetRoute Pro es completamente gratis. No requiere registro ni suscripción."
+                    "text": "Sí, NetRoute es completamente gratis. No requiere registro ni suscripción."
                 }
             },
             {
                 "@type": "Question",
-                "name": "¿Cómo genera NetRoute Pro rutas desde un sitio web?",
+                "name": "¿Cómo genera NetRoute rutas desde un sitio web?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "NetRoute Pro descubre todos los dominios de una página web (incluyendo solicitudes AJAX, CDN y API mediante Service Worker), los resuelve a direcciones IP usando consultas DNS-over-HTTPS en paralelo a Cloudflare, Google, Quad9 y AdGuard (si DoH está bloqueado, usa las conexiones del propio navegador), agrega los IPs en subredes CIDR optimizadas y genera comandos de enrutamiento específicos de la plataforma."
+                    "text": "NetRoute descubre todos los dominios de una página web (incluyendo solicitudes AJAX, CDN y API mediante Service Worker), los resuelve a direcciones IP usando consultas DNS-over-HTTPS en paralelo a Cloudflare, Google, Quad9 y AdGuard (si DoH está bloqueado, usa las conexiones del propio navegador), agrega los IPs en subredes CIDR optimizadas y genera comandos de enrutamiento específicos de la plataforma."
                 }
             },
             {
@@ -145,15 +145,15 @@
                 "name": "¿Se puede usar para VPN split tunneling?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Sí, NetRoute Pro es ideal para enrutamiento selectivo VPN. Genera WireGuard AllowedIPs, directivas route de OpenVPN y comandos de enrutamiento del sistema que te permiten enrutar solo el tráfico de sitios específicos a través de tu VPN."
+                    "text": "Sí, NetRoute es ideal para enrutamiento selectivo VPN. Genera WireGuard AllowedIPs, directivas route de OpenVPN y comandos de enrutamiento del sistema que te permiten enrutar solo el tráfico de sitios específicos a través de tu VPN."
                 }
             },
             {
                 "@type": "Question",
-                "name": "¿NetRoute Pro recopila datos personales?",
+                "name": "¿NetRoute recopila datos personales?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "No. NetRoute Pro no tiene cuentas, analítica ni servidores propios: la configuración, la caché y el historial de escaneos se quedan en tu navegador. Para funcionar envía los dominios escaneados a resolvers DNS-over-HTTPS, consulta el ASN de las IPs resueltas en ip-api.com, consulta RIPE Stat cuando la optimización de rutas está activa y se conecta directamente a los sitios escaneados si DoH está bloqueado o la comprobación de ping está activada. Los detalles están en la política de privacidad."
+                    "text": "No. NetRoute no tiene cuentas, analítica ni servidores propios: la configuración, la caché y el historial de escaneos se quedan en tu navegador. Para funcionar envía los dominios escaneados a resolvers DNS-over-HTTPS, consulta el ASN de las IPs resueltas en ip-api.com, consulta RIPE Stat cuando la optimización de rutas está activa y se conecta directamente a los sitios escaneados si DoH está bloqueado o la comprobación de ping está activada. Los detalles están en la política de privacidad."
                 }
             }
         ]
@@ -179,7 +179,7 @@
     <div class="topbar-inner">
         <a href="./" class="logo">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
             <span class="logo-ver">v4.1.2</span>
         </a>
         <div class="nav-links">
@@ -288,7 +288,7 @@
             <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M4 7V4a2 2 0 012-2h8.5L20 7.5V20a2 2 0 01-2 2H6a2 2 0 01-2-2v-3"/><polyline points="14 2 14 8 20 8"/><path d="M1 15h10M8 12l3 3-3 3"/></svg>
             </div>
-            <h3>Exportación Pro</h3>
+            <h3>Exportación de archivos</h3>
             <p>Descarga como <code>.bat</code>, <code>.sh</code>, <code>.rsc</code>, <code>.conf</code>, <code>.ovpn</code> y más, con encabezados y comandos de verificación. El archivo lleva el nombre del sitio: <code>example_com_route.bat</code>.</p>
         </div>
         <div class="feature-card">
@@ -351,7 +351,7 @@
             </div>
             <div class="step-visual">
                 <pre><code><span class="t-comment"># chrome://extensions</span>
-<span class="t-cmd">NetRoute Pro</span> <span class="t-gw">enabled</span>
+<span class="t-cmd">NetRoute</span> <span class="t-gw">enabled</span>
 <span class="t-ip">ID: abc123def456</span></code></pre>
             </div>
         </div>
@@ -493,7 +493,7 @@
     <div class="features-grid">
         <a class="feature-card" href="guides/keenetic.html" style="text-decoration:none;display:block;">
             <h3>Keenetic &mdash; carga .bat</h3>
-            <p>Genera un <code>.bat</code> en NetRoute Pro y cárgalo en Keenetic con enlace a la interfaz VPN.</p>
+            <p>Genera un <code>.bat</code> en NetRoute y cárgalo en Keenetic con enlace a la interfaz VPN.</p>
         </a>
         <a class="feature-card" href="guides/mikrotik.html" style="text-decoration:none;display:block;">
             <h3>MikroTik &mdash; importar .rsc</h3>
@@ -522,24 +522,24 @@
     </div>
     <div class="faq-list">
         <details class="faq-item">
-            <summary>¿Qué plataformas soporta NetRoute Pro?</summary>
-            <div class="faq-answer">NetRoute Pro genera comandos de enrutamiento para 9 plataformas: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), OpenVPN y Keenetic, además de tu propia plantilla. Compatible con IPv4 e IPv6 (el formato Keenetic es solo IPv4).</div>
+            <summary>¿Qué plataformas soporta NetRoute?</summary>
+            <div class="faq-answer">NetRoute genera comandos de enrutamiento para 9 plataformas: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), OpenVPN y Keenetic, además de tu propia plantilla. Compatible con IPv4 e IPv6 (el formato Keenetic es solo IPv4).</div>
         </details>
         <details class="faq-item">
-            <summary>¿NetRoute Pro es gratis?</summary>
-            <div class="faq-answer">Sí, NetRoute Pro es completamente gratis. No requiere registro ni suscripción.</div>
+            <summary>¿NetRoute es gratis?</summary>
+            <div class="faq-answer">Sí, NetRoute es completamente gratis. No requiere registro ni suscripción.</div>
         </details>
         <details class="faq-item">
-            <summary>¿Cómo genera NetRoute Pro rutas desde un sitio web?</summary>
-            <div class="faq-answer">NetRoute Pro descubre todos los dominios de una página web (incluyendo solicitudes AJAX, CDN y API mediante Service Worker), los resuelve a direcciones IP usando consultas DNS-over-HTTPS en paralelo a Cloudflare, Google, Quad9 y AdGuard (si DoH está bloqueado, usa las conexiones del propio navegador), agrega los IPs en subredes CIDR optimizadas y genera comandos de enrutamiento específicos de la plataforma.</div>
+            <summary>¿Cómo genera NetRoute rutas desde un sitio web?</summary>
+            <div class="faq-answer">NetRoute descubre todos los dominios de una página web (incluyendo solicitudes AJAX, CDN y API mediante Service Worker), los resuelve a direcciones IP usando consultas DNS-over-HTTPS en paralelo a Cloudflare, Google, Quad9 y AdGuard (si DoH está bloqueado, usa las conexiones del propio navegador), agrega los IPs en subredes CIDR optimizadas y genera comandos de enrutamiento específicos de la plataforma.</div>
         </details>
         <details class="faq-item">
             <summary>¿Se puede usar para VPN split tunneling?</summary>
-            <div class="faq-answer">Sí, NetRoute Pro es ideal para enrutamiento selectivo VPN. Genera WireGuard AllowedIPs, directivas route de OpenVPN y comandos de enrutamiento del sistema que te permiten enrutar solo el tráfico de sitios específicos a través de tu VPN.</div>
+            <div class="faq-answer">Sí, NetRoute es ideal para enrutamiento selectivo VPN. Genera WireGuard AllowedIPs, directivas route de OpenVPN y comandos de enrutamiento del sistema que te permiten enrutar solo el tráfico de sitios específicos a través de tu VPN.</div>
         </details>
         <details class="faq-item">
-            <summary>¿NetRoute Pro recopila datos personales?</summary>
-            <div class="faq-answer">No. NetRoute Pro no tiene cuentas, analítica ni servidores propios: la configuración, la caché y el historial de escaneos se quedan en tu navegador. Para funcionar envía los dominios escaneados a resolvers DNS-over-HTTPS, consulta el ASN de las IPs resueltas en ip-api.com, consulta RIPE Stat cuando la optimización de rutas está activa y se conecta directamente a los sitios escaneados si DoH está bloqueado o la comprobación de ping está activada. Los detalles están en la política de privacidad.</div>
+            <summary>¿NetRoute recopila datos personales?</summary>
+            <div class="faq-answer">No. NetRoute no tiene cuentas, analítica ni servidores propios: la configuración, la caché y el historial de escaneos se quedan en tu navegador. Para funcionar envía los dominios escaneados a resolvers DNS-over-HTTPS, consulta el ASN de las IPs resueltas en ip-api.com, consulta RIPE Stat cuando la optimización de rutas está activa y se conecta directamente a los sitios escaneados si DoH está bloqueado o la comprobación de ping está activada. Los detalles están en la política de privacidad.</div>
         </details>
     </div>
 </section>
@@ -549,7 +549,7 @@
     <div class="footer-inner">
         <div class="footer-brand">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
             <p class="footer-desc">Extensión Chrome para generación de rutas de red.<br>Diseñada para ingenieros que construyen infraestructura.</p>
         </div>
         <div class="footer-links">
@@ -578,7 +578,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <span>NetRoute Pro v4.1.2</span>
+        <span>NetRoute v4.1.2</span>
     </div>
 </footer>
 

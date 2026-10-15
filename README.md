@@ -1,13 +1,13 @@
-# NetRoute Pro
+# NetRoute
 
 **Smart Route Generation for Network Engineers**
 
 Chrome extension that discovers domains on any webpage, resolves IPs via racing DNS queries, and generates optimized routing commands for 9 platforms.
 
 **🌐 Live site:** [alexander2k.github.io/netroute-site](https://alexander2k.github.io/netroute-site/)
-**🧩 Chrome Web Store:** [NetRoute Pro](https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla)
+**🧩 Chrome Web Store:** [NetRoute](https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla)
 
-![NetRoute Pro Banner](screenshots/promo-large.png)
+![NetRoute Banner](screenshots/promo-large.png)
 
 ## Features
 
@@ -19,7 +19,7 @@ Chrome extension that discovers domains on any webpage, resolves IPs via racing 
 - **ASN Lookup** — batch IP-to-ASN resolution (e.g. `AS13335 (Cloudflare)`)
 - **Bulk Scan** — paste a list of URLs, generate aggregated routes for all hostnames at once
 - **Domain Blacklist** — exclude analytics/trackers, syncs across devices via Chrome Cloud Sync
-- **Pro Export** — download as `.bat`, `.sh`, `.rsc`, `.conf`, `.ovpn` and more with headers and verification commands; files are named after the site (`example_com_route.bat`)
+- **File Export** — download as `.bat`, `.sh`, `.rsc`, `.conf`, `.ovpn` and more with headers and verification commands; files are named after the site (`example_com_route.bat`)
 - **Keenetic Export** — `.bat` import format with every route commented with its domains and ASN
 - **Scan History** — the last 10 scans, ready to copy or download again
 - **Custom Templates** — your own route syntax with `{{network}}`, `{{cidr}}`, `{{gateway}}` and other macros
@@ -40,14 +40,20 @@ Chrome extension that discovers domains on any webpage, resolves IPs via racing 
 
 ## Screenshots
 
-### Routes Generation
-![Routes Tab](screenshots/popup-dark-routes.png)
+### Routes from any website
+![Routes generated for a github.com page](screenshots/screenshot-1.png)
 
-### Domain Discovery
-![Domains Tab](screenshots/popup-dark-domains.png)
+### Domains, IPs and network owners
+![Domains tab with ASN badges and per-domain selection](screenshots/screenshot-2.png)
 
-### Extension in Browser
-![Extension View](screenshots/screenshot-ext-dark-routes.png)
+### Route optimization with BGP data
+![Route optimization modes: off, BGP prefix, full AS, AS + collapse](screenshots/screenshot-3.png)
+
+### Scan history with file download
+![Scan history with copy and download](screenshots/screenshot-4.png)
+
+### Keenetic import with comments
+![Keenetic .bat output with a comment per route](screenshots/screenshot-5.png)
 
 ## How It Works
 

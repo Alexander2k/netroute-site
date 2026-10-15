@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../../theme.js"></script>
-    <title>Añadir rutas en Linux mediante script .sh — Guía paso a paso | NetRoute Pro</title>
-    <meta name="description" content="Cómo aplicar rutas generadas en Linux. Ejecuta el script .sh de NetRoute Pro, haz las rutas persistentes con systemd-networkd, NetworkManager o cron. Sirve para Ubuntu, Debian, Fedora, Arch.">
+    <title>Añadir rutas en Linux mediante script .sh — Guía paso a paso | NetRoute</title>
+    <meta name="description" content="Cómo aplicar rutas generadas en Linux. Ejecuta el script .sh de NetRoute, haz las rutas persistentes con systemd-networkd, NetworkManager o cron. Sirve para Ubuntu, Debian, Fedora, Arch.">
     <meta name="keywords" content="linux ip route add script, linux vpn split tunnel, systemd-networkd rutas estáticas, networkmanager rutas, rutas persistentes linux">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/es/guides/linux.html">
@@ -18,7 +18,7 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="Añadir rutas en Linux mediante script .sh">
-    <meta property="og:description" content="Ejecuta el script .sh de NetRoute Pro y haz las rutas persistentes con systemd-networkd, NetworkManager o cron.">
+    <meta property="og:description" content="Ejecuta el script .sh de NetRoute y haz las rutas persistentes con systemd-networkd, NetworkManager o cron.">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/es/guides/linux.html">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
@@ -66,14 +66,14 @@
         "@context": "https://schema.org",
         "@type": "HowTo",
         "name": "Cómo añadir rutas en Linux mediante script .sh",
-        "description": "Guía paso a paso: genera un script .sh en NetRoute Pro, hazlo ejecutable y ejecútalo con sudo.",
+        "description": "Guía paso a paso: genera un script .sh en NetRoute, hazlo ejecutable y ejecútalo con sudo.",
         "inLanguage": "es",
         "totalTime": "PT2M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "Genera un script .sh en NetRoute Pro",
-                "text": "Abre el sitio web objetivo en Chrome, lanza NetRoute Pro, selecciona plataforma Linux, especifica el gateway VPN, haz clic en Analyze Website y descarga routes.sh."
+                "name": "Genera un script .sh en NetRoute",
+                "text": "Abre el sitio web objetivo en Chrome, lanza NetRoute, selecciona plataforma Linux, especifica el gateway VPN, haz clic en Analyze Website y descarga routes.sh."
             },
             {
                 "@type": "HowToStep",
@@ -94,19 +94,19 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "Añadir rutas en Linux mediante script .sh — Guía paso a paso",
-        "description": "Cómo aplicar rutas generadas en Linux. Ejecuta el script .sh de NetRoute Pro, haz las rutas persistentes con systemd-networkd, NetworkManager o cron. Sirve para Ubuntu, Debian, Fedora, Arch.",
+        "description": "Cómo aplicar rutas generadas en Linux. Ejecuta el script .sh de NetRoute, haz las rutas persistentes con systemd-networkd, NetworkManager o cron. Sirve para Ubuntu, Debian, Fedora, Arch.",
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
         "inLanguage": "es",
         "datePublished": "2026-04-20",
         "dateModified": "2026-04-27",
         "author": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/",
             "logo": {
                 "@type": "ImageObject",
@@ -151,7 +151,7 @@
     <div class="topbar-inner">
         <a href="../" class="logo">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
         </a>
         <div class="nav-links">
             <a href="../">Inicio</a>
@@ -171,7 +171,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; Volver al inicio</a>
     <h1>Añadir rutas en Linux mediante script .sh</h1>
-    <p class="lead">NetRoute Pro genera un script Bash simple con comandos <code>ip route add</code>. Se aplica con un solo comando. Hacer las rutas persistentes entre reinicios requiere un paso extra según tu distribución.</p>
+    <p class="lead">NetRoute genera un script Bash simple con comandos <code>ip route add</code>. Se aplica con un solo comando. Hacer las rutas persistentes entre reinicios requiere un paso extra según tu distribución.</p>
 
     <section id="syntax" class="syntax-block">
         <h2>Sintaxis del comando</h2>
@@ -179,7 +179,7 @@
         <pre><code>ip route replace &lt;CIDR&gt; via &lt;GATEWAY&gt; dev &lt;VPN_IF&gt;</code></pre>
         <p><strong>Ejemplo:</strong></p>
         <pre><code>ip route replace 1.1.1.0/24 via 10.0.0.1 dev wg0</code></pre>
-        <p>Ejecuta como root o con <code>sudo</code>. NetRoute Pro las genera en un script <code>.sh</code> &mdash; aplícalas con <code>bash routes.sh</code>. <code>replace</code> es idempotente: crea la ruta si no existe y la actualiza si existe, así que re-ejecutar el script es seguro; <code>add</code> fallaría con <code>RTNETLINK answers: File exists</code> en duplicados (y junto a <code>set -e</code> abortaría el script).</p>
+        <p>Ejecuta como root o con <code>sudo</code>. NetRoute las genera en un script <code>.sh</code> &mdash; aplícalas con <code>bash routes.sh</code>. <code>replace</code> es idempotente: crea la ruta si no existe y la actualiza si existe, así que re-ejecutar el script es seguro; <code>add</code> fallaría con <code>RTNETLINK answers: File exists</code> en duplicados (y junto a <code>set -e</code> abortaría el script).</p>
     </section>
 
 
@@ -188,13 +188,13 @@
         <li><code>iproute2</code> (preinstalado en casi todas las distros: Ubuntu, Debian, Fedora, Arch)</li>
         <li>Acceso root/sudo</li>
         <li>Interfaz VPN configurada y funcional (WireGuard, OpenVPN, IKEv2, etc.)</li>
-        <li>Extensión <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> instalada en Chrome</li>
+        <li>Extensión <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> instalada en Chrome</li>
     </ul>
 
-    <h2>Paso 1. Genera .sh en NetRoute Pro</h2>
+    <h2>Paso 1. Genera .sh en NetRoute</h2>
     <ol>
         <li>Abre el sitio web objetivo en Chrome</li>
-        <li>Lanza la extensión NetRoute Pro</li>
+        <li>Lanza la extensión NetRoute</li>
         <li>Selecciona la plataforma <strong>Linux</strong></li>
         <li>Introduce el gateway VPN (p.ej. <code>10.8.0.1</code>)</li>
         <li>Haz clic en <strong>Analyze Website</strong></li>
@@ -303,7 +303,7 @@ sudo resolvectl dnsovertls wg0 yes</code></pre>
 ip -6 route get $(dig +short AAAA example.com | head -1)</code></pre>
     <p>Si la traza IPv6 no pasa por tu interfaz VPN, estás eludiendo el túnel. Dos soluciones:</p>
     <ul>
-        <li><strong>Enrutar v6 por la VPN también</strong> (si tu proveedor tiene endpoint IPv6). Genera rutas IPv6 en NetRoute Pro &mdash; mismo flujo, prefijos distintos (<code>2606:4700::/32</code>, etc).</li>
+        <li><strong>Enrutar v6 por la VPN también</strong> (si tu proveedor tiene endpoint IPv6). Genera rutas IPv6 en NetRoute &mdash; mismo flujo, prefijos distintos (<code>2606:4700::/32</code>, etc).</li>
         <li><strong>Deshabilitar IPv6 a nivel de sistema</strong>:
             <pre><code>sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
 sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
@@ -331,7 +331,7 @@ sudo iptables -I OUTPUT ! -o wg0 -d 8.8.8.0/24 -j REJECT</code></pre>
     <pre><code>traceroute example.com</code></pre>
 
     <h2>Revertir</h2>
-    <p>El script guarda un snapshot de la tabla de rutas en <code>/tmp/route-table.&lt;timestamp&gt;.txt</code> antes de aplicar cambios &mdash; útil para diagnosticar qué cambió. Para eliminar las rutas añadidas por NetRoute Pro, borra cada prefijo:</p>
+    <p>El script guarda un snapshot de la tabla de rutas en <code>/tmp/route-table.&lt;timestamp&gt;.txt</code> antes de aplicar cambios &mdash; útil para diagnosticar qué cambió. Para eliminar las rutas añadidas por NetRoute, borra cada prefijo:</p>
     <pre><code>for cidr in 1.1.1.0/24 8.8.8.0/24 162.159.0.0/16; do
     sudo ip route del "$cidr" 2&gt;/dev/null || true
 done</code></pre>
@@ -351,14 +351,14 @@ done</code></pre>
     <p>No configuraste persistencia. Elige una de las tres opciones del Paso 3.</p>
 
     <h2 id="examples">Archivo de configuración de ejemplo</h2>
-    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute Pro para tus sitios.</p>
+    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute para tus sitios.</p>
     <ul>
         <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/linux-routes.sh" target="_blank" rel="noopener"><code>linux-routes.sh</code></a> — Script Bash con comandos <code>ip route add</code></li>
     </ul>
     <pre><code><!-- EMBED:linux-routes.sh -->
 #!/bin/bash
 # Example Linux routing script for split tunneling.
-# Generated by NetRoute Pro: https://alexander2k.github.io/netroute-site/
+# Generated by NetRoute: https://alexander2k.github.io/netroute-site/
 #
 # Run as root or with sudo. Routes added here last until reboot —
 # for persistence see the Linux guide (systemd-networkd / NetworkManager).
@@ -390,7 +390,7 @@ ip route replace 162.159.0.0/16 via "$GW" dev "$DEV"
 #   done
 <!-- /EMBED --></code></pre>
 
-    <p class="callout"><strong>Consejo:</strong> ¿Necesitas un config sin estas líneas de comentarios? En las opciones de NetRoute Pro desactiva <strong>«Incluir comentarios en archivos exportados»</strong> &mdash; la extensión exportará solo los comandos de rutas. Útil para routers que no toleran comentarios.</p>
+    <p class="callout"><strong>Consejo:</strong> ¿Necesitas un config sin estas líneas de comentarios? En las opciones de NetRoute desactiva <strong>«Incluir comentarios en archivos exportados»</strong> &mdash; la extensión exportará solo los comandos de rutas. Útil para routers que no toleran comentarios.</p>
 
     <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Ver todos los ejemplos en GitHub &rarr;</a></p>
 
@@ -412,7 +412,7 @@ ip route replace 162.159.0.0/16 via "$GW" dev "$DEV"
 
     <div class="cta-block">
         <h3>¿Listo para probar?</h3>
-        <p>NetRoute Pro — extensión gratuita de Chrome para generar rutas desde cualquier sitio web.</p>
+        <p>NetRoute — extensión gratuita de Chrome para generar rutas desde cualquier sitio web.</p>
         <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Instalar extensión</a>
     </div>
 

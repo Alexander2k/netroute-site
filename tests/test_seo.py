@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SEO/structural test suite for NetRoute Pro static site.
+SEO/structural test suite for NetRoute static site.
 
 Run: python3 tests/test_seo.py
 Exit code: 0 = all pass, 1 = failures.

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../../theme.js"></script>
-    <title>Importar rutas en Keenetic desde archivo .bat — Guía paso a paso | NetRoute Pro</title>
-    <meta name="description" content="Cómo cargar rutas en Keenetic mediante archivo .bat. Genera rutas en NetRoute Pro e impórtalas en un clic con enlace a la interfaz VPN. Rutas de sitios web por dominio a través de VPN.">
+    <title>Importar rutas en Keenetic desde archivo .bat — Guía paso a paso | NetRoute</title>
+    <meta name="description" content="Cómo cargar rutas en Keenetic mediante archivo .bat. Genera rutas en NetRoute e impórtalas en un clic con enlace a la interfaz VPN. Rutas de sitios web por dominio a través de VPN.">
     <meta name="keywords" content="keenetic rutas, keenetic cargar bat, keenetic importar rutas, keenetic vpn rutas, keenetic route add, keenetic static route, keenetic archivo rutas, keenetic split tunnel">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/es/guides/keenetic.html">
@@ -18,7 +18,7 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="Importar rutas en Keenetic desde archivo .bat">
-    <meta property="og:description" content="Carga las rutas generadas en NetRoute Pro a Keenetic en un clic con enlace a la interfaz VPN.">
+    <meta property="og:description" content="Carga las rutas generadas en NetRoute a Keenetic en un clic con enlace a la interfaz VPN.">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/es/guides/keenetic.html">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
@@ -65,14 +65,14 @@
         "@context": "https://schema.org",
         "@type": "HowTo",
         "name": "Cómo importar rutas en Keenetic",
-        "description": "Guía paso a paso: genera un archivo .bat en NetRoute Pro y cárgalo en Keenetic con enlace a la interfaz VPN.",
+        "description": "Guía paso a paso: genera un archivo .bat en NetRoute y cárgalo en Keenetic con enlace a la interfaz VPN.",
         "inLanguage": "es",
         "totalTime": "PT2M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "Genera un archivo .bat en NetRoute Pro",
-                "text": "Abre el sitio web objetivo en Chrome, lanza NetRoute Pro. Selecciona la plataforma Keenetic (o Windows), haz clic en «Analizar sitio web» y descarga el archivo .bat."
+                "name": "Genera un archivo .bat en NetRoute",
+                "text": "Abre el sitio web objetivo en Chrome, lanza NetRoute. Selecciona la plataforma Keenetic (o Windows), haz clic en «Analizar sitio web» y descarga el archivo .bat."
             },
             {
                 "@type": "HowToStep",
@@ -93,19 +93,19 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "Importar rutas en Keenetic desde archivo .bat — Guía paso a paso",
-        "description": "Cómo cargar rutas en Keenetic mediante archivo .bat. Genera rutas en NetRoute Pro e impórtalas en un clic con enlace a la interfaz VPN. Rutas de sitios web por dominio a través de VPN.",
+        "description": "Cómo cargar rutas en Keenetic mediante archivo .bat. Genera rutas en NetRoute e impórtalas en un clic con enlace a la interfaz VPN. Rutas de sitios web por dominio a través de VPN.",
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
         "inLanguage": "es",
         "datePublished": "2026-04-20",
         "dateModified": "2026-04-27",
         "author": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/",
             "logo": {
                 "@type": "ImageObject",
@@ -150,7 +150,7 @@
     <div class="topbar-inner">
         <a href="../" class="logo">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
         </a>
         <div class="nav-links">
             <a href="../">Inicio</a>
@@ -170,7 +170,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; Volver al inicio</a>
     <h1>Importar rutas en Keenetic desde archivo .bat</h1>
-    <p class="lead">Keenetic puede cargar un archivo en formato <code>route ADD</code> de Windows y aplicar automáticamente todas las rutas a una interfaz seleccionada. NetRoute Pro genera exactamente ese archivo — solo tienes que descargarlo y subirlo.</p>
+    <p class="lead">Keenetic puede cargar un archivo en formato <code>route ADD</code> de Windows y aplicar automáticamente todas las rutas a una interfaz seleccionada. NetRoute genera exactamente ese archivo — solo tienes que descargarlo y subirlo.</p>
 
     <section id="syntax" class="syntax-block">
         <h2>Sintaxis del comando</h2>
@@ -178,7 +178,7 @@
         <pre><code>(config)&gt; ip route &lt;CIDR&gt; &lt;VPN_IF&gt;</code></pre>
         <p><strong>Ejemplo:</strong></p>
         <pre><code>(config)&gt; ip route 1.1.1.0/24 Wireguard0</code></pre>
-        <p><strong>Línea <code>.bat</code> equivalente</strong> (formato Windows <code>route ADD</code> &mdash; lo que genera NetRoute Pro y acepta Keenetic al cargar desde la web UI):</p>
+        <p><strong>Línea <code>.bat</code> equivalente</strong> (formato Windows <code>route ADD</code> &mdash; lo que genera NetRoute y acepta Keenetic al cargar desde la web UI):</p>
         <pre><code>route ADD 1.1.1.0 MASK 255.255.255.0 0.0.0.0</code></pre>
         <p>La carga del <code>.bat</code> vincula las rutas al interfaz VPN seleccionada automáticamente &mdash; el valor de gateway en cada línea se ignora. Para uso puntual desde CLI, la forma <code>(config)&gt; ip route</code> es la exacta.</p>
     </section>
@@ -187,14 +187,14 @@
     <h2>Requisitos previos</h2>
     <ul>
         <li>Router Keenetic con un túnel VPN configurado (WireGuard, OpenVPN, IKEv2, OpenConnect, etc.)</li>
-        <li>Extensión <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> instalada en Chrome</li>
+        <li>Extensión <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> instalada en Chrome</li>
         <li>Acceso a la interfaz web del router (normalmente <code>http://my.keenetic.net</code>)</li>
     </ul>
 
-    <h2>Paso 1. Genera un archivo .bat en NetRoute Pro</h2>
+    <h2>Paso 1. Genera un archivo .bat en NetRoute</h2>
     <ol>
         <li>Abre el sitio web objetivo en Chrome</li>
-        <li>Haz clic en el icono de NetRoute Pro en tus extensiones</li>
+        <li>Haz clic en el icono de NetRoute en tus extensiones</li>
         <li>Selecciona la plataforma <strong>Keenetic</strong> — escribe el formato <code>route ADD</code> de Windows que acepta Keenetic y comenta cada ruta con sus dominios (la plataforma <strong>Windows</strong> también sirve)</li>
         <li>El gateway puede ser cualquier valor (p.ej. <code>0.0.0.0</code>) — Keenetic lo ignora cuando enlazas a una interfaz al subir</li>
         <li>Elige máscara de agregación (recomendado <code>/24</code>)</li>
@@ -236,7 +236,7 @@
     <h2>Alternativa para WireGuard: AllowedIPs</h2>
     <p>Si usas WireGuard, puedes omitir las rutas estáticas y poner las subredes directamente en AllowedIPs del peer:</p>
     <ol>
-        <li>En NetRoute Pro, selecciona la plataforma <strong>WireGuard</strong></li>
+        <li>En NetRoute, selecciona la plataforma <strong>WireGuard</strong></li>
         <li>Copia la línea <code>AllowedIPs</code></li>
         <li>En Keenetic: <strong>Internet → WireGuard</strong> → configuración del peer → pega en <strong>Allowed IPs</strong></li>
         <li>Guarda</li>
@@ -256,7 +256,7 @@
     <p>Las rutas estáticas IPv4 sólo cubren tráfico IPv4. Si un destino tiene registro <code>AAAA</code> (la mayoría de sitios populares lo tienen), los clientes LAN prefieren IPv6 (RFC 6724) y la solicitud sale por la ruta IPv6 por defecto del ISP &mdash; eludiendo la VPN.</p>
     <p>Dos soluciones en Keenetic:</p>
     <ul>
-        <li><strong>Genera rutas IPv6 en NetRoute Pro</strong> si tu VPN tiene endpoint IPv6 &mdash; mismo flujo, prefijos distintos (<code>2606:4700::/32</code>, <code>2001:4860::/32</code>, etc). Impórtalas como <code>.bat</code> separado con el mismo enlace al interfaz VPN.</li>
+        <li><strong>Genera rutas IPv6 en NetRoute</strong> si tu VPN tiene endpoint IPv6 &mdash; mismo flujo, prefijos distintos (<code>2606:4700::/32</code>, <code>2001:4860::/32</code>, etc). Impórtalas como <code>.bat</code> separado con el mismo enlace al interfaz VPN.</li>
         <li><strong>Deshabilita IPv6 globalmente</strong> en <strong>Internet → Connections → IPv6</strong> si tu VPN no soporta v6. Todo el tráfico cae a v4 y se tuneliza correctamente.</li>
     </ul>
 
@@ -282,7 +282,7 @@ show interface stat &lt;VPN_IF&gt;   # los bytes RX/TX deben crecer al navegar e
     <h2>Problemas comunes</h2>
 
     <h3>La IP del sitio cambió — la ruta dejó de funcionar</h3>
-    <p>CDNs como Cloudflare y Fastly rotan IPs periódicamente. Regenera el <code>.bat</code> en NetRoute Pro con <strong>Optimización de rutas &rarr; Prefijo BGP</strong> — sustituirá con prefijos BGP anunciados que cubren todas las IPs del proveedor.</p>
+    <p>CDNs como Cloudflare y Fastly rotan IPs periódicamente. Regenera el <code>.bat</code> en NetRoute con <strong>Optimización de rutas &rarr; Prefijo BGP</strong> — sustituirá con prefijos BGP anunciados que cubren todas las IPs del proveedor.</p>
 
     <h3>Demasiadas rutas</h3>
     <p>Keenetic maneja cientos de rutas estáticas sin problemas. Si necesitas más — usa el enfoque WireGuard AllowedIPs.</p>
@@ -299,18 +299,18 @@ show interface stat &lt;VPN_IF&gt;   # los bytes RX/TX deben crecer al navegar e
     <p>Para automatizar o gestionar rutas programáticamente, conecta por SSH/Telnet y usa comandos <code>ip route</code> en modo config. Pero para la mayoría de casos, la subida de .bat es suficiente.</p>
 
     <h2 id="examples">Archivo de configuración de ejemplo</h2>
-    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute Pro para tus sitios.</p>
+    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute para tus sitios.</p>
     <ul>
         <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/keenetic-routes.bat" target="_blank" rel="noopener"><code>keenetic-routes.bat</code></a> — Formato <code>route ADD</code> de Windows listo para cargar en Keenetic</li>
     </ul>
     <pre><code><!-- EMBED:keenetic-routes.bat -->
 @echo off
 REM Example .bat file for upload to Keenetic router.
-REM Generated by NetRoute Pro: https://alexander2k.github.io/netroute-site/
+REM Generated by NetRoute: https://alexander2k.github.io/netroute-site/
 REM
 REM Format: route ADD &lt;network&gt; MASK &lt;netmask&gt; &lt;gateway&gt;
 REM Gateway can be 0.0.0.0 — Keenetic ignores it when you bind to an interface on upload.
-REM Replace these example routes with output from NetRoute Pro for your target sites.
+REM Replace these example routes with output from NetRoute for your target sites.
 
 route ADD 1.1.1.0 MASK 255.255.255.0 0.0.0.0
 route ADD 8.8.8.0 MASK 255.255.255.0 0.0.0.0
@@ -320,7 +320,7 @@ REM Upload via Keenetic web UI:
 REM   System -&gt; Routing -&gt; Upload .bat -&gt; select VPN interface -&gt; confirm.
 <!-- /EMBED --></code></pre>
 
-    <p class="callout"><strong>Consejo:</strong> ¿Necesitas un config sin estas líneas de comentarios? En las opciones de NetRoute Pro desactiva <strong>«Incluir comentarios en archivos exportados»</strong> &mdash; la extensión exportará solo los comandos de rutas. Útil para routers que no toleran comentarios.</p>
+    <p class="callout"><strong>Consejo:</strong> ¿Necesitas un config sin estas líneas de comentarios? En las opciones de NetRoute desactiva <strong>«Incluir comentarios en archivos exportados»</strong> &mdash; la extensión exportará solo los comandos de rutas. Útil para routers que no toleran comentarios.</p>
 
     <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Ver todos los ejemplos en GitHub &rarr;</a></p>
 
@@ -341,7 +341,7 @@ REM   System -&gt; Routing -&gt; Upload .bat -&gt; select VPN interface -&gt; co
 
     <div class="cta-block">
         <h3>¿Listo para probar?</h3>
-        <p>NetRoute Pro — extensión gratuita de Chrome para generar rutas desde cualquier sitio web.</p>
+        <p>NetRoute — extensión gratuita de Chrome para generar rutas desde cualquier sitio web.</p>
         <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Instalar extensión</a>
     </div>
 

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../../theme.js"></script>
-    <title>Split Tunneling в WireGuard через AllowedIPs — инструкция | NetRoute Pro</title>
-    <meta name="description" content="Направьте отдельные сайты через WireGuard VPN настройкой AllowedIPs. Сгенерируйте список из доменов в NetRoute Pro, вставьте в конфиг пира, перезапустите туннель.">
+    <title>Split Tunneling в WireGuard через AllowedIPs — инструкция | NetRoute</title>
+    <meta name="description" content="Направьте отдельные сайты через WireGuard VPN настройкой AllowedIPs. Сгенерируйте список из доменов в NetRoute, вставьте в конфиг пира, перезапустите туннель.">
     <meta name="keywords" content="wireguard allowedips генератор, wireguard split tunnel, wireguard маршрутизация по доменам, wg-quick allowedips, wireguard конфиг пира, выборочная маршрутизация wireguard">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/guides/wireguard.html">
@@ -18,7 +18,7 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="Split Tunneling в WireGuard через AllowedIPs">
-    <meta property="og:description" content="Генерируйте AllowedIPs из доменов в NetRoute Pro, вставляйте в конфиг пира WireGuard — split tunneling без дополнительных команд маршрутизации.">
+    <meta property="og:description" content="Генерируйте AllowedIPs из доменов в NetRoute, вставляйте в конфиг пира WireGuard — split tunneling без дополнительных команд маршрутизации.">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/ru/guides/wireguard.html">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
@@ -66,14 +66,14 @@
         "@context": "https://schema.org",
         "@type": "HowTo",
         "name": "Split Tunneling в WireGuard через AllowedIPs",
-        "description": "Пошаговая инструкция: сгенерируйте AllowedIPs в NetRoute Pro, вставьте в конфиг пира WireGuard и перезапустите туннель.",
+        "description": "Пошаговая инструкция: сгенерируйте AllowedIPs в NetRoute, вставьте в конфиг пира WireGuard и перезапустите туннель.",
         "inLanguage": "ru",
         "totalTime": "PT2M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "Сгенерируйте AllowedIPs в NetRoute Pro",
-                "text": "Откройте нужный сайт, запустите расширение NetRoute Pro, выберите платформу WireGuard, нажмите Analyze Website и скопируйте готовую строку AllowedIPs."
+                "name": "Сгенерируйте AllowedIPs в NetRoute",
+                "text": "Откройте нужный сайт, запустите расширение NetRoute, выберите платформу WireGuard, нажмите Analyze Website и скопируйте готовую строку AllowedIPs."
             },
             {
                 "@type": "HowToStep",
@@ -94,19 +94,19 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "Split Tunneling в WireGuard через AllowedIPs — инструкция",
-        "description": "Направьте отдельные сайты через WireGuard VPN настройкой AllowedIPs. Сгенерируйте список из доменов в NetRoute Pro, вставьте в конфиг пира, перезапустите туннель.",
+        "description": "Направьте отдельные сайты через WireGuard VPN настройкой AllowedIPs. Сгенерируйте список из доменов в NetRoute, вставьте в конфиг пира, перезапустите туннель.",
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
         "inLanguage": "ru",
         "datePublished": "2026-04-20",
         "dateModified": "2026-04-27",
         "author": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/",
             "logo": {
                 "@type": "ImageObject",
@@ -151,7 +151,7 @@
     <div class="topbar-inner">
         <a href="../" class="logo">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
         </a>
         <div class="nav-links">
             <a href="../">Главная</a>
@@ -171,7 +171,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; На главную</a>
     <h1>Split Tunneling в WireGuard через AllowedIPs</h1>
-    <p class="lead">В WireGuard параметр <code>AllowedIPs</code> одновременно и ACL-фильтр, и таблица маршрутизации. NetRoute Pro генерирует готовую строку <code>AllowedIPs</code> из доменов любого сайта — дополнительные <code>ip route</code> команды не нужны, просто отредактируйте конфиг пира и перезапустите туннель.</p>
+    <p class="lead">В WireGuard параметр <code>AllowedIPs</code> одновременно и ACL-фильтр, и таблица маршрутизации. NetRoute генерирует готовую строку <code>AllowedIPs</code> из доменов любого сайта — дополнительные <code>ip route</code> команды не нужны, просто отредактируйте конфиг пира и перезапустите туннель.</p>
 
     <section id="syntax" class="syntax-block">
         <h2>Синтаксис команды</h2>
@@ -186,14 +186,14 @@
     <h2>Что понадобится</h2>
     <ul>
         <li>Любой клиент WireGuard: <code>wg-quick</code> на Linux, WireGuard GUI на Windows/macOS, мобильные приложения Android/iOS или роутер с WireGuard</li>
-        <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> в Chrome</li>
+        <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> в Chrome</li>
         <li>Доступ к конфигу пира (файл <code>.conf</code> или настройки в GUI)</li>
     </ul>
 
-    <h2>Шаг 1. Сгенерируйте AllowedIPs в NetRoute Pro</h2>
+    <h2>Шаг 1. Сгенерируйте AllowedIPs в NetRoute</h2>
     <ol>
         <li>Откройте нужный сайт в Chrome</li>
-        <li>Нажмите на иконку NetRoute Pro в панели расширений</li>
+        <li>Нажмите на иконку NetRoute в панели расширений</li>
         <li>Выберите платформу <strong>WireGuard</strong></li>
         <li>Нажмите <strong>Analyze Website</strong></li>
         <li>Скопируйте полученную строку вида:
@@ -307,7 +307,7 @@ PostUp = ip route add 1.1.1.0/24 dev %i table 100
 PostUp = ip rule  add from 192.168.1.100 lookup 100
 PostDown = ip rule  del from 192.168.1.100 lookup 100
 PostDown = ip route flush table 100</code></pre>
-    <p>Большинству это не нужно &mdash; дефолтное поведение (автоинсталл маршрутов из <code>AllowedIPs</code>) и есть то, на что рассчитан вывод NetRoute Pro.</p>
+    <p>Большинству это не нужно &mdash; дефолтное поведение (автоинсталл маршрутов из <code>AllowedIPs</code>) и есть то, на что рассчитан вывод NetRoute.</p>
 
     <h2>Проверка</h2>
     <p>Команда <code>sudo wg show</code> отобразит пира с применёнными <code>allowed ips</code>:</p>
@@ -339,13 +339,13 @@ MTU = 1380     # попробуйте 1380, далее 1280 / 1200 если ст
     <p>Проверьте запятые и переносы строк в конфиге: подсети в одну строку, разделены запятой с пробелом. Никаких лишних переносов внутри значения.</p>
 
     <h2 id="examples">Пример конфигурационного файла</h2>
-    <p>Готовый шаблон с комментариями. Замените примеры маршрутов выводом NetRoute Pro для ваших сайтов.</p>
+    <p>Готовый шаблон с комментариями. Замените примеры маршрутов выводом NetRoute для ваших сайтов.</p>
     <ul>
         <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/wireguard-split-tunnel.conf" target="_blank" rel="noopener"><code>wireguard-split-tunnel.conf</code></a> — Конфиг пира WireGuard со сплит-туннелем через <code>AllowedIPs</code></li>
     </ul>
     <pre><code><!-- EMBED:wireguard-split-tunnel.conf -->
 # Example WireGuard peer config with split tunneling.
-# Generated by NetRoute Pro: https://alexander2k.github.io/netroute-site/
+# Generated by NetRoute: https://alexander2k.github.io/netroute-site/
 #
 # AllowedIPs in [Peer] section doubles as both an ACL and routing table.
 # Only the listed networks are sent through the tunnel — everything else
@@ -361,14 +361,14 @@ PublicKey           = YOUR_SERVER_PUBLIC_KEY
 Endpoint            = your.vpn.server:51820
 PersistentKeepalive = 25
 
-# Networks to route via VPN — add/remove based on NetRoute Pro output.
+# Networks to route via VPN — add/remove based on NetRoute output.
 AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 162.159.0.0/16
 
 # To route everything via VPN, use: AllowedIPs = 0.0.0.0/0, ::/0
 # Apply with: sudo wg-quick down wg0 &amp;&amp; sudo wg-quick up wg0
 <!-- /EMBED --></code></pre>
 
-    <p class="callout"><strong>Подсказка:</strong> Нужен конфиг без строк-комментариев? В настройках NetRoute Pro снимите галочку <strong>«Включать комментарии в экспортируемые файлы»</strong> &mdash; расширение выгрузит только команды маршрутизации. Полезно для роутеров, которые не принимают комментарии.</p>
+    <p class="callout"><strong>Подсказка:</strong> Нужен конфиг без строк-комментариев? В настройках NetRoute снимите галочку <strong>«Включать комментарии в экспортируемые файлы»</strong> &mdash; расширение выгрузит только команды маршрутизации. Полезно для роутеров, которые не принимают комментарии.</p>
 
     <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Все примеры конфигов на GitHub &rarr;</a></p>
 
@@ -390,7 +390,7 @@ AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 162.159.0.0/16
 
     <div class="cta-block">
         <h3>Готовы попробовать?</h3>
-        <p>NetRoute Pro — бесплатное расширение Chrome для генерации маршрутов из любого сайта.</p>
+        <p>NetRoute — бесплатное расширение Chrome для генерации маршрутов из любого сайта.</p>
         <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Установить расширение</a>
     </div>
 

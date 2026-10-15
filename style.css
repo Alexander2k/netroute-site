@@ -296,6 +296,12 @@ img { max-width: 100%; display: block; }
     transition: transform var(--md-dur-medium) var(--md-spring);
 }
 .logo:hover .logo-icon { transform: rotate(40deg) scale(1.06); }
+/* The extension icon: brand blue in both themes, white ring and dot (the glyph stays in the markup as a text fallback) */
+.logo-icon {
+    background: radial-gradient(circle closest-side, #ffffff 0 20%, transparent 21% 39.5%, #ffffff 40.5% 56.5%, transparent 57.5%), #0b57d0;
+    color: transparent;
+    font-size: 0;
+}
 
 .logo-text {
     font-size: 19px;

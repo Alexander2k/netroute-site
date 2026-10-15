@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../../theme.js"></script>
-    <title>从 .bat 文件导入路由到 Keenetic — 分步指南 | NetRoute Pro</title>
-    <meta name="description" content="如何通过 .bat 文件将路由上传到 Keenetic。在 NetRoute Pro 中生成路由，一键导入并绑定到 VPN 接口。通过域名为网站路由流量到 VPN。">
+    <title>从 .bat 文件导入路由到 Keenetic — 分步指南 | NetRoute</title>
+    <meta name="description" content="如何通过 .bat 文件将路由上传到 Keenetic。在 NetRoute 中生成路由，一键导入并绑定到 VPN 接口。通过域名为网站路由流量到 VPN。">
     <meta name="keywords" content="keenetic 路由, keenetic 上传 bat, keenetic 导入路由, keenetic vpn 路由, keenetic route add, keenetic 静态路由, keenetic 分流">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/zh/guides/keenetic.html">
@@ -18,7 +18,7 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="从 .bat 文件导入路由到 Keenetic">
-    <meta property="og:description" content="一键将 NetRoute Pro 生成的路由上传到 Keenetic，并绑定到 VPN 接口。">
+    <meta property="og:description" content="一键将 NetRoute 生成的路由上传到 Keenetic，并绑定到 VPN 接口。">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/zh/guides/keenetic.html">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
@@ -65,14 +65,14 @@
         "@context": "https://schema.org",
         "@type": "HowTo",
         "name": "如何在 Keenetic 上导入路由",
-        "description": "分步指南：在 NetRoute Pro 中生成 .bat 文件并将其上传到 Keenetic，绑定到 VPN 接口。",
+        "description": "分步指南：在 NetRoute 中生成 .bat 文件并将其上传到 Keenetic，绑定到 VPN 接口。",
         "inLanguage": "zh",
         "totalTime": "PT2M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "在 NetRoute Pro 中生成 .bat 文件",
-                "text": "在 Chrome 中打开目标网站，启动 NetRoute Pro。选择 Keenetic 平台（或 Windows），点击“分析网站”，下载 .bat 文件。"
+                "name": "在 NetRoute 中生成 .bat 文件",
+                "text": "在 Chrome 中打开目标网站，启动 NetRoute。选择 Keenetic 平台（或 Windows），点击“分析网站”，下载 .bat 文件。"
             },
             {
                 "@type": "HowToStep",
@@ -93,19 +93,19 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "从 .bat 文件导入路由到 Keenetic — 分步指南",
-        "description": "如何通过 .bat 文件将路由上传到 Keenetic。在 NetRoute Pro 中生成路由，一键导入并绑定到 VPN 接口。通过域名为网站路由流量到 VPN。",
+        "description": "如何通过 .bat 文件将路由上传到 Keenetic。在 NetRoute 中生成路由，一键导入并绑定到 VPN 接口。通过域名为网站路由流量到 VPN。",
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
         "inLanguage": "zh",
         "datePublished": "2026-04-20",
         "dateModified": "2026-04-27",
         "author": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/",
             "logo": {
                 "@type": "ImageObject",
@@ -151,7 +151,7 @@
     <div class="topbar-inner">
         <a href="../" class="logo">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
         </a>
         <div class="nav-links">
             <a href="../">首页</a>
@@ -171,7 +171,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; 返回首页</a>
     <h1>从 .bat 文件导入路由到 Keenetic</h1>
-    <p class="lead">Keenetic 可以上传 Windows <code>route ADD</code> 格式的文件并自动将所有路由应用到选定的接口。NetRoute Pro 正是生成此类文件 — 您只需下载并上传即可。</p>
+    <p class="lead">Keenetic 可以上传 Windows <code>route ADD</code> 格式的文件并自动将所有路由应用到选定的接口。NetRoute 正是生成此类文件 — 您只需下载并上传即可。</p>
 
     <section id="syntax" class="syntax-block">
         <h2>命令语法</h2>
@@ -179,7 +179,7 @@
         <pre><code>(config)&gt; ip route &lt;CIDR&gt; &lt;VPN_IF&gt;</code></pre>
         <p><strong>示例：</strong></p>
         <pre><code>(config)&gt; ip route 1.1.1.0/24 Wireguard0</code></pre>
-        <p><strong>等效的 <code>.bat</code> 行</strong>（Windows <code>route ADD</code> 格式 &mdash; NetRoute Pro 生成的格式，Keenetic 通过 Web 界面接受上传）：</p>
+        <p><strong>等效的 <code>.bat</code> 行</strong>（Windows <code>route ADD</code> 格式 &mdash; NetRoute 生成的格式，Keenetic 通过 Web 界面接受上传）：</p>
         <pre><code>route ADD 1.1.1.0 MASK 255.255.255.0 0.0.0.0</code></pre>
         <p>上传 <code>.bat</code> 时路由会自动绑定到所选的 VPN 接口 &mdash; 每行的 gateway 值被忽略。如果仅在 CLI 中临时使用，<code>(config)&gt; ip route</code> 形式是准确的。</p>
     </section>
@@ -188,14 +188,14 @@
     <h2>准备工作</h2>
     <ul>
         <li>已配置 VPN 隧道（WireGuard、OpenVPN、IKEv2、OpenConnect 等）的 Keenetic 路由器</li>
-        <li>已安装 <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome 扩展</li>
+        <li>已安装 <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> Chrome 扩展</li>
         <li>访问路由器网页界面（通常为 <code>http://my.keenetic.net</code>）</li>
     </ul>
 
-    <h2>步骤 1. 在 NetRoute Pro 中生成 .bat 文件</h2>
+    <h2>步骤 1. 在 NetRoute 中生成 .bat 文件</h2>
     <ol>
         <li>在 Chrome 中打开目标网站</li>
-        <li>点击扩展栏中的 NetRoute Pro 图标</li>
+        <li>点击扩展栏中的 NetRoute 图标</li>
         <li>选择 <strong>Keenetic</strong> 平台 — 它输出 Keenetic 接受的 Windows <code>route ADD</code> 格式，并为每条路由注明其域名（<strong>Windows</strong> 平台同样可用）</li>
         <li>网关可以是任意值（例如 <code>0.0.0.0</code>）— 上传时绑定到接口时 Keenetic 会忽略它</li>
         <li>选择聚合掩码（推荐 <code>/24</code>）</li>
@@ -237,7 +237,7 @@
     <h2>WireGuard 替代方案：AllowedIPs</h2>
     <p>如果您使用 WireGuard，可以完全跳过静态路由，直接在 peer 的 AllowedIPs 中设置子网：</p>
     <ol>
-        <li>在 NetRoute Pro 中选择 <strong>WireGuard</strong> 平台</li>
+        <li>在 NetRoute 中选择 <strong>WireGuard</strong> 平台</li>
         <li>复制 <code>AllowedIPs</code> 行</li>
         <li>在 Keenetic 中：<strong>Internet → WireGuard</strong> → peer 设置 → 粘贴到 <strong>Allowed IPs</strong></li>
         <li>保存</li>
@@ -257,7 +257,7 @@
     <p>静态 IPv4 路由仅覆盖 IPv4 流量。如果目标有 <code>AAAA</code> 记录（大多数热门站点都有），LAN 客户端按 RFC 6724 偏好 IPv6 &mdash; 请求通过 ISP 的 IPv6 默认路由发出，绕过 VPN。</p>
     <p>Keenetic 上的两种解决方案：</p>
     <ul>
-        <li><strong>在 NetRoute Pro 中生成 IPv6 路由</strong>，如果你的 VPN 有 IPv6 端点 &mdash; 同样流程，不同前缀（<code>2606:4700::/32</code>、<code>2001:4860::/32</code> 等）。作为单独的 <code>.bat</code> 导入，绑定到同一 VPN 接口。</li>
+        <li><strong>在 NetRoute 中生成 IPv6 路由</strong>，如果你的 VPN 有 IPv6 端点 &mdash; 同样流程，不同前缀（<code>2606:4700::/32</code>、<code>2001:4860::/32</code> 等）。作为单独的 <code>.bat</code> 导入，绑定到同一 VPN 接口。</li>
         <li><strong>全局禁用 IPv6</strong>，在 <strong>Internet → Connections → IPv6</strong>，如果你的 VPN 不支持 v6。所有流量回退到 v4 并被正确隧道化。</li>
     </ul>
 
@@ -283,7 +283,7 @@ show interface stat &lt;VPN_IF&gt;   # LAN 客户端浏览时 RX/TX 字节应增
     <h2>常见问题</h2>
 
     <h3>网站 IP 改变 — 路由停止工作</h3>
-    <p>Cloudflare、Fastly 等 CDN 会定期轮换 IP。在 NetRoute Pro 中选择 <strong>路由优化 &rarr; BGP 前缀</strong> 重新生成 <code>.bat</code> — 它会用公告的 BGP 前缀替换，覆盖所有提供商 IP。</p>
+    <p>Cloudflare、Fastly 等 CDN 会定期轮换 IP。在 NetRoute 中选择 <strong>路由优化 &rarr; BGP 前缀</strong> 重新生成 <code>.bat</code> — 它会用公告的 BGP 前缀替换，覆盖所有提供商 IP。</p>
 
     <h3>路由太多</h3>
     <p>Keenetic 可以处理数百条静态路由而没有问题。如果需要更多 — 使用 WireGuard AllowedIPs 方法。</p>
@@ -300,18 +300,18 @@ show interface stat &lt;VPN_IF&gt;   # LAN 客户端浏览时 RX/TX 字节应增
     <p>要以编程方式自动化或管理路由，请通过 SSH/Telnet 连接并在 config 模式下使用 <code>ip route</code> 命令。但在大多数情况下，.bat 上传就足够了。</p>
 
     <h2 id="examples">配置文件示例</h2>
-    <p>带注释的可编辑模板。将示例路由替换为 NetRoute Pro 为目标网站生成的输出。</p>
+    <p>带注释的可编辑模板。将示例路由替换为 NetRoute 为目标网站生成的输出。</p>
     <ul>
         <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/keenetic-routes.bat" target="_blank" rel="noopener"><code>keenetic-routes.bat</code></a> — Windows <code>route ADD</code> 格式，可上传到 Keenetic</li>
     </ul>
     <pre><code><!-- EMBED:keenetic-routes.bat -->
 @echo off
 REM Example .bat file for upload to Keenetic router.
-REM Generated by NetRoute Pro: https://alexander2k.github.io/netroute-site/
+REM Generated by NetRoute: https://alexander2k.github.io/netroute-site/
 REM
 REM Format: route ADD &lt;network&gt; MASK &lt;netmask&gt; &lt;gateway&gt;
 REM Gateway can be 0.0.0.0 — Keenetic ignores it when you bind to an interface on upload.
-REM Replace these example routes with output from NetRoute Pro for your target sites.
+REM Replace these example routes with output from NetRoute for your target sites.
 
 route ADD 1.1.1.0 MASK 255.255.255.0 0.0.0.0
 route ADD 8.8.8.0 MASK 255.255.255.0 0.0.0.0
@@ -321,7 +321,7 @@ REM Upload via Keenetic web UI:
 REM   System -&gt; Routing -&gt; Upload .bat -&gt; select VPN interface -&gt; confirm.
 <!-- /EMBED --></code></pre>
 
-    <p class="callout"><strong>提示：</strong>需要不带注释行的配置？在 NetRoute Pro 选项中取消勾选 <strong>「在导出文件中包含注释」</strong>，扩展将仅导出路由命令。适用于不支持注释的路由器。</p>
+    <p class="callout"><strong>提示：</strong>需要不带注释行的配置？在 NetRoute 选项中取消勾选 <strong>「在导出文件中包含注释」</strong>，扩展将仅导出路由命令。适用于不支持注释的路由器。</p>
 
     <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">在 GitHub 上查看所有示例 &rarr;</a></p>
 
@@ -342,7 +342,7 @@ REM   System -&gt; Routing -&gt; Upload .bat -&gt; select VPN interface -&gt; co
 
     <div class="cta-block">
         <h3>准备好尝试了吗？</h3>
-        <p>NetRoute Pro — 免费的 Chrome 扩展，可从任何网站生成路由。</p>
+        <p>NetRoute — 免费的 Chrome 扩展，可从任何网站生成路由。</p>
         <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">安装扩展</a>
     </div>
 

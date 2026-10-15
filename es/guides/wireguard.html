@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../../theme.js"></script>
-    <title>Split Tunneling en WireGuard con AllowedIPs — Guía paso a paso | NetRoute Pro</title>
-    <meta name="description" content="Enruta sitios específicos por WireGuard VPN configurando AllowedIPs. Genera la lista desde dominios en NetRoute Pro, pega en el config del peer, reinicia el túnel.">
+    <title>Split Tunneling en WireGuard con AllowedIPs — Guía paso a paso | NetRoute</title>
+    <meta name="description" content="Enruta sitios específicos por WireGuard VPN configurando AllowedIPs. Genera la lista desde dominios en NetRoute, pega en el config del peer, reinicia el túnel.">
     <meta name="keywords" content="wireguard allowedips generador, wireguard split tunnel, wireguard enrutamiento por dominio, wg-quick allowedips, wireguard config peer">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/es/guides/wireguard.html">
@@ -18,7 +18,7 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="Split Tunneling en WireGuard con AllowedIPs">
-    <meta property="og:description" content="Genera AllowedIPs desde dominios en NetRoute Pro y pégalos en el config del peer WireGuard para split tunneling.">
+    <meta property="og:description" content="Genera AllowedIPs desde dominios en NetRoute y pégalos en el config del peer WireGuard para split tunneling.">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/es/guides/wireguard.html">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
@@ -66,14 +66,14 @@
         "@context": "https://schema.org",
         "@type": "HowTo",
         "name": "Cómo hacer split tunneling en WireGuard con AllowedIPs",
-        "description": "Guía paso a paso: genera AllowedIPs en NetRoute Pro, pégalos en el config del peer WireGuard y reinicia el túnel.",
+        "description": "Guía paso a paso: genera AllowedIPs en NetRoute, pégalos en el config del peer WireGuard y reinicia el túnel.",
         "inLanguage": "es",
         "totalTime": "PT3M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "Genera AllowedIPs en NetRoute Pro",
-                "text": "Abre el sitio web objetivo en Chrome, lanza NetRoute Pro, selecciona plataforma WireGuard, haz clic en Analyze Website y copia la línea AllowedIPs."
+                "name": "Genera AllowedIPs en NetRoute",
+                "text": "Abre el sitio web objetivo en Chrome, lanza NetRoute, selecciona plataforma WireGuard, haz clic en Analyze Website y copia la línea AllowedIPs."
             },
             {
                 "@type": "HowToStep",
@@ -94,19 +94,19 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "Split Tunneling en WireGuard con AllowedIPs — Guía paso a paso",
-        "description": "Enruta sitios específicos por WireGuard VPN configurando AllowedIPs. Genera la lista desde dominios en NetRoute Pro, pega en el config del peer, reinicia el túnel.",
+        "description": "Enruta sitios específicos por WireGuard VPN configurando AllowedIPs. Genera la lista desde dominios en NetRoute, pega en el config del peer, reinicia el túnel.",
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
         "inLanguage": "es",
         "datePublished": "2026-04-20",
         "dateModified": "2026-04-27",
         "author": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/",
             "logo": {
                 "@type": "ImageObject",
@@ -151,7 +151,7 @@
     <div class="topbar-inner">
         <a href="../" class="logo">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
         </a>
         <div class="nav-links">
             <a href="../">Inicio</a>
@@ -171,7 +171,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; Volver al inicio</a>
     <h1>Split Tunneling en WireGuard con AllowedIPs</h1>
-    <p class="lead">En WireGuard el parámetro <code>AllowedIPs</code> funciona como filtro ACL y tabla de enrutamiento a la vez. NetRoute Pro genera la cadena <code>AllowedIPs</code> lista desde los dominios de cualquier sitio — no necesitas comandos <code>ip route</code> adicionales, solo edita el config del peer y recarga.</p>
+    <p class="lead">En WireGuard el parámetro <code>AllowedIPs</code> funciona como filtro ACL y tabla de enrutamiento a la vez. NetRoute genera la cadena <code>AllowedIPs</code> lista desde los dominios de cualquier sitio — no necesitas comandos <code>ip route</code> adicionales, solo edita el config del peer y recarga.</p>
 
     <section id="syntax" class="syntax-block">
         <h2>Sintaxis del comando</h2>
@@ -186,14 +186,14 @@
     <h2>Requisitos previos</h2>
     <ul>
         <li>Cualquier cliente WireGuard: <code>wg-quick</code> en Linux, WireGuard GUI en Windows/macOS, apps móviles Android/iOS, o router con soporte WireGuard</li>
-        <li>Extensión <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> instalada en Chrome</li>
+        <li>Extensión <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> instalada en Chrome</li>
         <li>Acceso al archivo de configuración o interfaz del peer</li>
     </ul>
 
-    <h2>Paso 1. Genera AllowedIPs en NetRoute Pro</h2>
+    <h2>Paso 1. Genera AllowedIPs en NetRoute</h2>
     <ol>
         <li>Abre el sitio web objetivo en Chrome</li>
-        <li>Lanza la extensión NetRoute Pro</li>
+        <li>Lanza la extensión NetRoute</li>
         <li>Selecciona la plataforma <strong>WireGuard</strong></li>
         <li>Haz clic en <strong>Analyze Website</strong></li>
         <li>Copia la línea <code>AllowedIPs</code> generada</li>
@@ -304,7 +304,7 @@ PostUp = ip route add 1.1.1.0/24 dev %i table 100
 PostUp = ip rule  add from 192.168.1.100 lookup 100
 PostDown = ip rule  del from 192.168.1.100 lookup 100
 PostDown = ip route flush table 100</code></pre>
-    <p>La mayoría no necesita esto &mdash; el comportamiento por defecto (auto-instalar rutas desde <code>AllowedIPs</code>) es lo que la salida de NetRoute Pro espera.</p>
+    <p>La mayoría no necesita esto &mdash; el comportamiento por defecto (auto-instalar rutas desde <code>AllowedIPs</code>) es lo que la salida de NetRoute espera.</p>
 
     <h2>Verificar</h2>
     <p>Comprueba que los cambios se aplicaron:</p>
@@ -326,7 +326,7 @@ MTU = 1380     # prueba 1380; baja a 1280 / 1200 si las páginas siguen colgánd
 
 
     <h3>Se perdió toda la conexión a internet</h3>
-    <p>Eliminaste <code>0.0.0.0/0</code> del <code>AllowedIPs</code> pero los prefijos listados no cubren las subredes que quieres usar. Añade las subredes específicas o regenera con más dominios en NetRoute Pro.</p>
+    <p>Eliminaste <code>0.0.0.0/0</code> del <code>AllowedIPs</code> pero los prefijos listados no cubren las subredes que quieres usar. Añade las subredes específicas o regenera con más dominios en NetRoute.</p>
 
     <h3>Android: el túnel se queda en "connecting" infinito</h3>
     <p>La app no guardó la configuración. Edita de nuevo y pulsa <strong>Save</strong> explícitamente antes de salir.</p>
@@ -342,13 +342,13 @@ MTU = 1380     # prueba 1380; baja a 1280 / 1200 si las páginas siguen colgánd
     </ul>
 
     <h2 id="examples">Archivo de configuración de ejemplo</h2>
-    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute Pro para tus sitios.</p>
+    <p>Plantilla lista para editar con comentarios. Reemplaza las rutas de ejemplo con la salida de NetRoute para tus sitios.</p>
     <ul>
         <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/wireguard-split-tunnel.conf" target="_blank" rel="noopener"><code>wireguard-split-tunnel.conf</code></a> — Config del peer WireGuard con split tunneling vía <code>AllowedIPs</code></li>
     </ul>
     <pre><code><!-- EMBED:wireguard-split-tunnel.conf -->
 # Example WireGuard peer config with split tunneling.
-# Generated by NetRoute Pro: https://alexander2k.github.io/netroute-site/
+# Generated by NetRoute: https://alexander2k.github.io/netroute-site/
 #
 # AllowedIPs in [Peer] section doubles as both an ACL and routing table.
 # Only the listed networks are sent through the tunnel — everything else
@@ -364,14 +364,14 @@ PublicKey           = YOUR_SERVER_PUBLIC_KEY
 Endpoint            = your.vpn.server:51820
 PersistentKeepalive = 25
 
-# Networks to route via VPN — add/remove based on NetRoute Pro output.
+# Networks to route via VPN — add/remove based on NetRoute output.
 AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 162.159.0.0/16
 
 # To route everything via VPN, use: AllowedIPs = 0.0.0.0/0, ::/0
 # Apply with: sudo wg-quick down wg0 &amp;&amp; sudo wg-quick up wg0
 <!-- /EMBED --></code></pre>
 
-    <p class="callout"><strong>Consejo:</strong> ¿Necesitas un config sin estas líneas de comentarios? En las opciones de NetRoute Pro desactiva <strong>«Incluir comentarios en archivos exportados»</strong> &mdash; la extensión exportará solo los comandos de rutas. Útil para routers que no toleran comentarios.</p>
+    <p class="callout"><strong>Consejo:</strong> ¿Necesitas un config sin estas líneas de comentarios? En las opciones de NetRoute desactiva <strong>«Incluir comentarios en archivos exportados»</strong> &mdash; la extensión exportará solo los comandos de rutas. Útil para routers que no toleran comentarios.</p>
 
     <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Ver todos los ejemplos en GitHub &rarr;</a></p>
 
@@ -393,7 +393,7 @@ AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 162.159.0.0/16
 
     <div class="cta-block">
         <h3>¿Listo para probar?</h3>
-        <p>NetRoute Pro — extensión gratuita de Chrome para generar rutas desde cualquier sitio web.</p>
+        <p>NetRoute — extensión gratuita de Chrome para generar rutas desde cualquier sitio web.</p>
         <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Instalar extensión</a>
     </div>
 

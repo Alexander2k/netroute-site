@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../../theme.js"></script>
-    <title>Добавление маршрутов в OpenVPN клиент-конфиг — инструкция | NetRoute Pro</title>
-    <meta name="description" content="Как добавить выборочные маршруты в .ovpn конфиг OpenVPN. Генерируем route-директивы в NetRoute Pro, вставляем в клиент-конфиг, переподключаемся. Идеально для split tunnel.">
+    <title>Добавление маршрутов в OpenVPN клиент-конфиг — инструкция | NetRoute</title>
+    <meta name="description" content="Как добавить выборочные маршруты в .ovpn конфиг OpenVPN. Генерируем route-директивы в NetRoute, вставляем в клиент-конфиг, переподключаемся. Идеально для split tunnel.">
     <meta name="keywords" content="openvpn route директива, openvpn split tunnel, openvpn клиент маршруты, openvpn push route, ovpn конфиг маршруты">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html">
@@ -18,7 +18,7 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="Добавление маршрутов в OpenVPN клиент-конфиг">
-    <meta property="og:description" content="Генерируйте route-директивы в NetRoute Pro, вставляйте в .ovpn конфиг и получайте split tunneling за минуту.">
+    <meta property="og:description" content="Генерируйте route-директивы в NetRoute, вставляйте в .ovpn конфиг и получайте split tunneling за минуту.">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/ru/guides/openvpn.html">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
@@ -66,14 +66,14 @@
         "@context": "https://schema.org",
         "@type": "HowTo",
         "name": "Добавление маршрутов в OpenVPN клиент-конфиг",
-        "description": "Пошаговая инструкция: сгенерируйте route-директивы в NetRoute Pro, отредактируйте .ovpn (уберите redirect-gateway, добавьте route-директивы) и переподключитесь.",
+        "description": "Пошаговая инструкция: сгенерируйте route-директивы в NetRoute, отредактируйте .ovpn (уберите redirect-gateway, добавьте route-директивы) и переподключитесь.",
         "inLanguage": "ru",
         "totalTime": "PT2M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "Сгенерируйте route-директивы в NetRoute Pro",
-                "text": "Запустите расширение NetRoute Pro, выберите платформу OpenVPN, нажмите Analyze Website и скопируйте список route-директив."
+                "name": "Сгенерируйте route-директивы в NetRoute",
+                "text": "Запустите расширение NetRoute, выберите платформу OpenVPN, нажмите Analyze Website и скопируйте список route-директив."
             },
             {
                 "@type": "HowToStep",
@@ -94,19 +94,19 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "Добавление маршрутов в OpenVPN клиент-конфиг — инструкция",
-        "description": "Как добавить выборочные маршруты в .ovpn конфиг OpenVPN. Генерируем route-директивы в NetRoute Pro, вставляем в клиент-конфиг, переподключаемся. Идеально для split tunnel.",
+        "description": "Как добавить выборочные маршруты в .ovpn конфиг OpenVPN. Генерируем route-директивы в NetRoute, вставляем в клиент-конфиг, переподключаемся. Идеально для split tunnel.",
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
         "inLanguage": "ru",
         "datePublished": "2026-04-20",
         "dateModified": "2026-04-27",
         "author": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/",
             "logo": {
                 "@type": "ImageObject",
@@ -151,7 +151,7 @@
     <div class="topbar-inner">
         <a href="../" class="logo">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
         </a>
         <div class="nav-links">
             <a href="../">Главная</a>
@@ -171,7 +171,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; На главную</a>
     <h1>Добавление маршрутов в OpenVPN клиент-конфиг</h1>
-    <p class="lead">OpenVPN поддерживает попоподсеточные <code>route</code> директивы в клиент-конфиге. NetRoute Pro генерирует их из доменов любого сайта — добавьте в <code>.ovpn</code> и split tunneling готов за минуту.</p>
+    <p class="lead">OpenVPN поддерживает попоподсеточные <code>route</code> директивы в клиент-конфиге. NetRoute генерирует их из доменов любого сайта — добавьте в <code>.ovpn</code> и split tunneling готов за минуту.</p>
 
     <section id="syntax" class="syntax-block">
         <h2>Синтаксис команды</h2>
@@ -188,13 +188,13 @@
         <li>OpenVPN 2.4+</li>
         <li>Доступ к вашему <code>.ovpn</code> конфигу</li>
         <li>Клиент OpenVPN: CLI, OpenVPN GUI, OpenVPN Connect или Tunnelblick (macOS)</li>
-        <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> в Chrome</li>
+        <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> в Chrome</li>
     </ul>
 
-    <h2>Шаг 1. Сгенерируйте route-директивы в NetRoute Pro</h2>
+    <h2>Шаг 1. Сгенерируйте route-директивы в NetRoute</h2>
     <ol>
         <li>Откройте нужный сайт в Chrome</li>
-        <li>Запустите расширение NetRoute Pro</li>
+        <li>Запустите расширение NetRoute</li>
         <li>Выберите платформу <strong>OpenVPN</strong></li>
         <li>Нажмите <strong>Analyze Website</strong></li>
         <li>Скопируйте результат — список вида:
@@ -230,7 +230,7 @@ remote-cert-tls server
 cipher AES-256-GCM
 verb 3
 
-# --- NetRoute Pro routes ---
+# --- NetRoute routes ---
 route 104.21.32.0 255.255.255.0
 route 172.67.182.0 255.255.255.0
 # ... остальные маршруты ...
@@ -299,13 +299,13 @@ ip route                 # Linux / macOS</code></pre>
     <p>На VPN-интерфейсе сервера не включён NAT. Правьте серверную часть: на Linux — iptables MASQUERADE для VPN-подсети, на готовых решениях — включить опцию NAT в панели.</p>
 
     <h2 id="examples">Пример конфигурационного файла</h2>
-    <p>Готовый шаблон с комментариями. Замените примеры маршрутов выводом NetRoute Pro для ваших сайтов.</p>
+    <p>Готовый шаблон с комментариями. Замените примеры маршрутов выводом NetRoute для ваших сайтов.</p>
     <ul>
         <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/openvpn-routes.ovpn" target="_blank" rel="noopener"><code>openvpn-routes.ovpn</code></a> — Фрагмент клиентского конфига OpenVPN с директивами <code>route</code></li>
     </ul>
     <pre><code><!-- EMBED:openvpn-routes.ovpn -->
 # Example OpenVPN client config snippet for split tunneling.
-# Generated by NetRoute Pro: https://alexander2k.github.io/netroute-site/
+# Generated by NetRoute: https://alexander2k.github.io/netroute-site/
 #
 # Append these directives to your existing client .ovpn file. With route-nopull
 # the server's pushed routes are ignored — only the explicit `route` lines below
@@ -314,7 +314,7 @@ ip route                 # Linux / macOS</code></pre>
 route-nopull
 
 # Format: route &lt;NETWORK&gt; &lt;NETMASK&gt;
-# Replace these example networks with output from NetRoute Pro.
+# Replace these example networks with output from NetRoute.
 route 1.1.1.0   255.255.255.0
 route 8.8.8.0   255.255.255.0
 route 162.159.0.0 255.255.0.0
@@ -322,7 +322,7 @@ route 162.159.0.0 255.255.0.0
 # Verify after reconnect: openvpn3 sessions-list  (or)  netstat -rn
 <!-- /EMBED --></code></pre>
 
-    <p class="callout"><strong>Подсказка:</strong> Нужен конфиг без строк-комментариев? В настройках NetRoute Pro снимите галочку <strong>«Включать комментарии в экспортируемые файлы»</strong> &mdash; расширение выгрузит только команды маршрутизации. Полезно для роутеров, которые не принимают комментарии.</p>
+    <p class="callout"><strong>Подсказка:</strong> Нужен конфиг без строк-комментариев? В настройках NetRoute снимите галочку <strong>«Включать комментарии в экспортируемые файлы»</strong> &mdash; расширение выгрузит только команды маршрутизации. Полезно для роутеров, которые не принимают комментарии.</p>
 
     <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Все примеры конфигов на GitHub &rarr;</a></p>
 
@@ -343,7 +343,7 @@ route 162.159.0.0 255.255.0.0
 
     <div class="cta-block">
         <h3>Готовы попробовать?</h3>
-        <p>NetRoute Pro — бесплатное расширение Chrome для генерации маршрутов из любого сайта.</p>
+        <p>NetRoute — бесплатное расширение Chrome для генерации маршрутов из любого сайта.</p>
         <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Установить расширение</a>
     </div>
 

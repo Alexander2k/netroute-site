@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../../theme.js"></script>
-    <title>通过 .rsc 脚本导入路由到 MikroTik — 分步指南 | NetRoute Pro</title>
-    <meta name="description" content="如何在 MikroTik RouterOS 上添加路由。在 NetRoute Pro 中生成 .rsc 脚本，通过 Files 或终端导入。支持地址列表和直接路由。">
+    <title>通过 .rsc 脚本导入路由到 MikroTik — 分步指南 | NetRoute</title>
+    <meta name="description" content="如何在 MikroTik RouterOS 上添加路由。在 NetRoute 中生成 .rsc 脚本，通过 Files 或终端导入。支持地址列表和直接路由。">
     <meta name="keywords" content="mikrotik 路由, mikrotik rsc 导入, mikrotik ip route add, mikrotik 地址列表, mikrotik vpn 路由, routeros 静态路由">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/zh/guides/mikrotik.html">
@@ -18,7 +18,7 @@
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="通过 .rsc 脚本导入路由到 MikroTik">
-    <meta property="og:description" content="在 NetRoute Pro 中生成 .rsc 脚本，通过 Files 或终端导入到 MikroTik RouterOS。">
+    <meta property="og:description" content="在 NetRoute 中生成 .rsc 脚本，通过 Files 或终端导入到 MikroTik RouterOS。">
     <meta property="og:url" content="https://alexander2k.github.io/netroute-site/zh/guides/mikrotik.html">
     <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta property="og:image:width" content="1400">
@@ -65,14 +65,14 @@
         "@context": "https://schema.org",
         "@type": "HowTo",
         "name": "如何在 MikroTik 上导入路由",
-        "description": "分步指南：在 NetRoute Pro 中生成 .rsc 文件，上传到 MikroTik，然后在终端中导入。",
+        "description": "分步指南：在 NetRoute 中生成 .rsc 文件，上传到 MikroTik，然后在终端中导入。",
         "inLanguage": "zh",
         "totalTime": "PT2M",
         "step": [
             {
                 "@type": "HowToStep",
-                "name": "在 NetRoute Pro 中生成 .rsc 文件",
-                "text": "在 Chrome 中打开目标网站，启动 NetRoute Pro。选择 MikroTik 平台，点击 Analyze Website，下载 .rsc 文件。"
+                "name": "在 NetRoute 中生成 .rsc 文件",
+                "text": "在 Chrome 中打开目标网站，启动 NetRoute。选择 MikroTik 平台，点击 Analyze Website，下载 .rsc 文件。"
             },
             {
                 "@type": "HowToStep",
@@ -93,19 +93,19 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "通过 .rsc 脚本导入路由到 MikroTik — 分步指南",
-        "description": "如何在 MikroTik RouterOS 上添加路由。在 NetRoute Pro 中生成 .rsc 脚本，通过 Files 或终端导入。支持地址列表和直接路由。",
+        "description": "如何在 MikroTik RouterOS 上添加路由。在 NetRoute 中生成 .rsc 脚本，通过 Files 或终端导入。支持地址列表和直接路由。",
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
         "inLanguage": "zh",
         "datePublished": "2026-04-20",
         "dateModified": "2026-04-27",
         "author": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "NetRoute Pro",
+            "name": "NetRoute",
             "url": "https://alexander2k.github.io/netroute-site/",
             "logo": {
                 "@type": "ImageObject",
@@ -151,7 +151,7 @@
     <div class="topbar-inner">
         <a href="../" class="logo">
             <span class="logo-icon">&#9678;</span>
-            <span class="logo-text">NetRoute<span class="logo-pro">Pro</span></span>
+            <span class="logo-text">NetRoute</span>
         </a>
         <div class="nav-links">
             <a href="../">首页</a>
@@ -171,7 +171,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; 返回首页</a>
     <h1>通过 .rsc 脚本导入路由到 MikroTik</h1>
-    <p class="lead">MikroTik 可以导入包含路由命令的 .rsc 脚本文件。NetRoute Pro 正是生成此格式 — 只需下载、上传并导入。</p>
+    <p class="lead">MikroTik 可以导入包含路由命令的 .rsc 脚本文件。NetRoute 正是生成此格式 — 只需下载、上传并导入。</p>
 
     <section id="syntax" class="syntax-block">
         <h2>命令语法</h2>
@@ -179,7 +179,7 @@
         <pre><code>/ip route add dst-address=&lt;CIDR&gt; gateway=&lt;GATEWAY&gt; distance=1</code></pre>
         <p><strong>示例：</strong></p>
         <pre><code>/ip route add dst-address=1.1.1.0/24 gateway=wg-out distance=1</code></pre>
-        <p>NetRoute Pro 将这些命令生成为 <code>.rsc</code> 文件，通过终端中的 <code>/import file=routes.rsc</code> 导入。</p>
+        <p>NetRoute 将这些命令生成为 <code>.rsc</code> 文件，通过终端中的 <code>/import file=routes.rsc</code> 导入。</p>
     </section>
     <div class="callout">
         <strong>RouterOS 版本说明：</strong>
@@ -196,14 +196,14 @@
     <ul>
         <li>配备 RouterOS 6.x 或 7.x 的 MikroTik 路由器</li>
         <li>已配置的 VPN 隧道</li>
-        <li>已安装 <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute Pro</a> Chrome 扩展</li>
+        <li>已安装 <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> Chrome 扩展</li>
         <li>通过 WinBox、WebFig 或 SSH 访问路由器</li>
     </ul>
 
-    <h2>步骤 1. 在 NetRoute Pro 中生成 .rsc</h2>
+    <h2>步骤 1. 在 NetRoute 中生成 .rsc</h2>
     <ol>
         <li>在 Chrome 中打开目标网站</li>
-        <li>启动 NetRoute Pro 扩展</li>
+        <li>启动 NetRoute 扩展</li>
         <li>选择 <strong>MikroTik</strong> 平台</li>
         <li>网关：填入 <strong>VPN 接口名称</strong>（例如 <code>wg-out</code>、<code>ovpn-out</code>、<code>l2tp-out1</code>）—— 推荐形式。接口名形式不受 VPN 提供商如何分配对端 IP 影响。使用网关 IP（<code>10.0.0.1</code>）仅在该 IP 是 &ldquo;directly reachable&rdquo; 时有效；对于典型的商业 WireGuard 配置（Mullvad、ProtonVPN、IVPN），对端被分配为 <code>/32</code>，IP 形式会返回 <code>gateway not directly reachable</code>。</li>
         <li>选择聚合掩码 <code>/24</code>（推荐）</li>
@@ -242,7 +242,7 @@
     <h2>替代方案：WireGuard AllowedIPs</h2>
     <p>如果您使用 WireGuard，可以完全跳过静态路由，直接在 peer 的 AllowedIPs 中设置子网：</p>
     <ol>
-        <li>在 NetRoute Pro 中选择 <strong>WireGuard</strong> 平台</li>
+        <li>在 NetRoute 中选择 <strong>WireGuard</strong> 平台</li>
         <li>复制 <code>AllowedIPs</code> 行</li>
         <li>在 MikroTik 中：<code>/interface/wireguard/peers/set [find] allowed-address=...</code></li>
     </ol>
@@ -298,7 +298,7 @@
     </ul>
 
     <h3>网站 IP 轮换</h3>
-    <p>CDN（Cloudflare、Fastly 等）会定期轮换 IP。使用 NetRoute Pro 扩展中的 <strong>路由优化 &rarr; BGP 前缀</strong> 重新生成 .rsc — 它会用公告的 BGP 前缀替换单个 IP。</p>
+    <p>CDN（Cloudflare、Fastly 等）会定期轮换 IP。使用 NetRoute 扩展中的 <strong>路由优化 &rarr; BGP 前缀</strong> 重新生成 .rsc — 它会用公告的 BGP 前缀替换单个 IP。</p>
 
     <h3>路由太多</h3>
     <p>MikroTik 可处理数千条静态路由而没有问题。如果需要更多 — 使用 WireGuard AllowedIPs 方法，或切换到地址列表 + 策略路由。</p>
@@ -307,13 +307,13 @@
     <p>对于大规模场景（数万条路由或多个站点），可以在 MikroTik 上配置 BGP 对等，从上游动态接收前缀。这超出了本指南的范围，但 RouterOS 通过 <code>/routing/bgp</code> 完全支持 BGP。</p>
 
     <h2 id="examples">配置文件示例</h2>
-    <p>带注释的可编辑模板。将示例路由替换为 NetRoute Pro 为目标网站生成的输出。</p>
+    <p>带注释的可编辑模板。将示例路由替换为 NetRoute 为目标网站生成的输出。</p>
     <ul>
         <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/mikrotik-routes.rsc" target="_blank" rel="noopener"><code>mikrotik-routes.rsc</code></a> — RouterOS <code>/import</code> 脚本，包含路由定义</li>
     </ul>
     <pre><code><!-- EMBED:mikrotik-routes.rsc -->
 # Example .rsc file for /import on MikroTik RouterOS.
-# Generated by NetRoute Pro: https://alexander2k.github.io/netroute-site/
+# Generated by NetRoute: https://alexander2k.github.io/netroute-site/
 #
 # Format: /ip route add dst-address=&lt;CIDR&gt; gateway=&lt;INTERFACE_OR_IP&gt; distance=&lt;METRIC&gt;
 # Adjust gateway= to your VPN interface name (e.g. wg-out, ovpn-out, l2tp-out)
@@ -329,7 +329,7 @@ add dst-address=162.159.0.0/16 gateway=wg-out distance=1
 #   /import file=routes.rsc
 <!-- /EMBED --></code></pre>
 
-    <p class="callout"><strong>提示：</strong>需要不带注释行的配置？在 NetRoute Pro 选项中取消勾选 <strong>「在导出文件中包含注释」</strong>，扩展将仅导出路由命令。适用于不支持注释的路由器。</p>
+    <p class="callout"><strong>提示：</strong>需要不带注释行的配置？在 NetRoute 选项中取消勾选 <strong>「在导出文件中包含注释」</strong>，扩展将仅导出路由命令。适用于不支持注释的路由器。</p>
 
     <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">在 GitHub 上查看所有示例 &rarr;</a></p>
 
@@ -350,7 +350,7 @@ add dst-address=162.159.0.0/16 gateway=wg-out distance=1
 
     <div class="cta-block">
         <h3>准备好尝试了吗？</h3>
-        <p>NetRoute Pro — 免费的 Chrome 扩展，可从任何网站生成路由。</p>
+        <p>NetRoute — 免费的 Chrome 扩展，可从任何网站生成路由。</p>
         <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">安装扩展</a>
     </div>
 
