@@ -940,9 +940,11 @@ a.feature-card h3 { color: var(--md-on-surface); }
     font-weight: 600;
     letter-spacing: -.01em;
     cursor: pointer;
-    border-radius: inherit;
-    transition: background var(--md-dur-short);
+    /* explicit: <summary> sits in the <details> shadow slot, so "inherit" would give 0 (square hover) */
+    border-radius: var(--md-shape-md);
+    transition: background var(--md-dur-short), border-radius var(--md-dur-medium) var(--md-spring);
 }
+.faq-item[open] summary { border-radius: var(--md-shape-xl) var(--md-shape-xl) var(--md-shape-sm) var(--md-shape-sm); }
 .faq-item summary::-webkit-details-marker { display: none; }
 .faq-item summary::after {
     content: '';
