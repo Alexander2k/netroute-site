@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <script src="../../theme.js"></script>
+    <title>Профиль маршрутизации Happ из любого сайта: домены и сети через прокси — инструкция | NetRoute</title>
+    <meta name="description" content="Как получить в NetRoute профиль маршрутизации Happ с доменами и сетями сайта и добавить его ссылкой happ://routing/onadd: кодирование в base64, импорт из буфера обмена или QR-кода, проверка.">
+    <meta name="keywords" content="happ маршрутизация, happ routing профиль, happ routing onadd, happ json профиль маршрутизации, happ proxysites, happ split tunneling, happ правила для сайта, happ xray маршрутизация">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/guides/happ.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/happ.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/ru/guides/happ.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Профиль маршрутизации Happ из любого сайта">
+    <meta property="og:description" content="NetRoute собирает домены и сети сайта в профиль маршрутизации Happ. Кодируете в base64, добавляете ссылкой happ://routing/onadd — только эти сайты идут через прокси.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/ru/guides/happ.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="ru_RU">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="preload" as="style" href="../../style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../../style.css"></noscript>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap"></noscript>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Главная",
+                "item": "https://alexander2k.github.io/netroute-site/ru/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Инструкции",
+                "item": "https://alexander2k.github.io/netroute-site/ru/guides/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Happ"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Как добавить в Happ профиль маршрутизации из NetRoute",
+        "description": "Сгенерируйте профиль Happ в расширении NetRoute, закодируйте JSON в base64, соберите ссылку happ://routing/onadd/{base64} и добавьте её в Happ из буфера обмена, по QR-коду или диплинком.",
+        "inLanguage": "ru",
+        "totalTime": "PT5M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Сгенерируйте профиль в NetRoute",
+                "text": "Откройте нужный сайт в Chrome, запустите NetRoute, в списке «Целевая ОС» выберите «Happ», нажмите «Анализировать сайт» и скачайте файл <сайт>_rules.json."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Соберите ссылку",
+                "text": "Закодируйте содержимое файла в base64 и допишите спереди happ://routing/onadd/ — получится ссылка, которая добавляет и сразу активирует профиль."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Добавьте ссылку в Happ",
+                "text": "Скопируйте ссылку в буфер обмена, откройте Happ и добавьте её кнопкой «+» (из буфера обмена, по QR-коду или диплинком). После изменений профиля переподключитесь."
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Профиль маршрутизации Happ из любого сайта: домены и сети через прокси — инструкция",
+        "description": "Как получить в NetRoute профиль маршрутизации Happ с доменами и сетями сайта и добавить его ссылкой happ://routing/onadd: кодирование в base64, импорт из буфера обмена или QR-кода, проверка.",
+        "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
+        "inLanguage": "ru",
+        "datePublished": "2026-10-17",
+        "dateModified": "2026-10-17",
+        "author": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://alexander2k.github.io/netroute-site/icon.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://alexander2k.github.io/netroute-site/ru/guides/happ.html"
+        }
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute</span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Главная</a>
+            <div class="lang-switch">
+                <span class="lang-current">RU</span>
+                <div class="lang-dropdown">
+                    <a href="./happ.html" class="lang-active">Русский</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; На главную</a>
+    <h1>Профиль маршрутизации Happ из любого сайта</h1>
+    <p class="lead">Happ &mdash; кроссплатформенный клиент на ядре Xray для Windows, macOS, Linux, iOS, Android и ТВ-платформ. Что пускать через прокси, он решает по <strong>профилю маршрутизации</strong>: спискам доменов и адресов. NetRoute собирает такой профиль со страницы сайта в формате JSON, а в приложение он попадает ссылкой <code>happ://routing/onadd/…</code>.</p>
+
+    <h2 id="syntax">Что внутри файла</h2>
+    <p>Профиль маршрутизации Happ &mdash; это JSON с настройками DNS, geo-файлов и шестью списками: что через прокси, что напрямую, что блокировать &mdash; отдельно для доменов и для адресов. NetRoute заполняет списки прокси и оставляет остальное в значениях, которые Happ принимает по умолчанию:</p>
+    <pre><code>{
+  "Name": "NetRoute github.com",
+  "GlobalProxy": "false",
+  "RemoteDNSType": "DoH",
+  "RemoteDNSDomain": "https://1.1.1.1/dns-query",
+  "RemoteDNSIP": "1.1.1.1",
+  "DomesticDNSType": "DoH",
+  "DomesticDNSDomain": "https://77.88.8.8/dns-query",
+  "DomesticDNSIP": "77.88.8.8",
+  "Geoipurl": "",
+  "Geositeurl": "",
+  "LastUpdated": "1760572800",
+  "DnsHosts": {},
+  "RouteOrder": "block-proxy-direct",
+  "DirectSites": [],
+  "DirectIp": ["geoip:private"],
+  "ProxySites": ["domain:github.com", "domain:githubusercontent.com"],
+  "ProxyIp": ["140.82.112.0/20", "185.199.108.0/22", "2606:50c0::/32"],
+  "BlockSites": [],
+  "BlockIp": [],
+  "DomainStrategy": "IPIfNonMatch",
+  "FakeDNS": "false"
+}</code></pre>
+    <p>Что означают поля &mdash; по документации Happ:</p>
+    <ul>
+        <li><code>GlobalProxy</code> &mdash; при <code>true</code> весь трафик по умолчанию идёт через прокси, при <code>false</code> &mdash; напрямую; это же значение определяет выход для всего, что не попало ни в одно правило. NetRoute ставит <code>false</code>: через прокси идут только перечисленные сайты.</li>
+        <li><code>ProxySites</code> / <code>ProxyIp</code> &mdash; домены и адреса, которые идут через прокси. Домены записаны в форме <code>domain:имя</code> &mdash; по документации Xray это сам домен и все его поддомены; список свёрнут, <code>www.</code> отброшен. Адреса &mdash; те же агрегированные сети, что NetRoute выдаёт маршрутами для роутера, IPv4 и IPv6.</li>
+        <li><code>DirectSites</code> / <code>DirectIp</code> и <code>BlockSites</code> / <code>BlockIp</code> &mdash; напрямую и блокировать; NetRoute оставляет напрямую только частные адреса (<code>geoip:private</code>).</li>
+        <li><code>RouteOrder</code> &mdash; порядок проверки правил: сначала блокировка, затем прокси, затем прямое подключение.</li>
+        <li><code>DomainStrategy</code> &mdash; стратегия Xray: <code>IPIfNonMatch</code> разрешает домен в адрес только если по имени правило не нашлось.</li>
+        <li><code>RemoteDNS*</code> / <code>DomesticDNS*</code> &mdash; DNS для сайтов через прокси и для остальных; <code>DoH</code> &mdash; DNS-over-HTTPS. Значения можно поменять в файле до импорта.</li>
+        <li><code>Geoipurl</code> / <code>Geositeurl</code> &mdash; ссылки на geoip.dat и geosite.dat; пустые значения Happ заполняет из профиля по умолчанию.</li>
+        <li><code>LastUpdated</code> &mdash; дата в формате Unix; профиль обновляется, если она больше предыдущей. NetRoute ставит время генерации.</li>
+        <li><code>DnsHosts</code> &mdash; ручные соответствия «домен: IP», аналог файла hosts; у NetRoute пуст.</li>
+    </ul>
+
+    <h2>Что понадобится</h2>
+    <ul>
+        <li>Приложение <a href="https://www.happ.su/main" target="_blank" rel="noopener">Happ</a> с добавленным сервером (Windows, macOS, Linux, iOS, Android, Android TV или Apple TV)</li>
+        <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> в Chrome</li>
+        <li>Способ закодировать файл в base64 &mdash; команда есть в каждой системе, примеры ниже</li>
+    </ul>
+
+    <h2>Шаг 1. Сгенерируйте профиль в NetRoute</h2>
+    <ol>
+        <li>Откройте нужный сайт в Chrome и обновите страницу, чтобы сниффер расширения увидел фоновые запросы</li>
+        <li>Запустите <strong>NetRoute</strong></li>
+        <li>В списке <strong>Целевая ОС</strong> выберите <strong>Happ</strong> &mdash; группа «Прокси-клиенты»</li>
+        <li>Поля <strong>IP шлюза</strong> и <strong>Интерфейс</strong> на этот формат не влияют</li>
+        <li>Нажмите <strong>Анализировать сайт</strong></li>
+        <li>На вкладке <strong>Домены</strong> снимите галочки с лишнего &mdash; счётчики, рекламные сети, чужие CDN; профиль пересчитается сразу</li>
+        <li>Нажмите <strong>Скачать</strong>: файл называется по сайту, например <code>github_com_rules.json</code></li>
+    </ol>
+
+    <h2>Шаг 2. Соберите ссылку happ://routing/…</h2>
+    <p>По документации Happ профиль добавляется ссылкой, где <code>{base64}</code> &mdash; JSON-профиль, преобразованный в текст base64:</p>
+    <ul>
+        <li><code>happ://routing/add/{base64}</code> &mdash; добавляет профиль в список;</li>
+        <li><code>happ://routing/onadd/{base64}</code> &mdash; добавляет и сразу активирует, даже если активен другой профиль.</li>
+    </ul>
+    <p>Закодируйте скачанный файл:</p>
+    <pre><code># Windows, PowerShell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("github_com_rules.json"))
+
+# macOS
+base64 -i github_com_rules.json
+
+# Linux
+base64 -w0 github_com_rules.json</code></pre>
+    <p>Допишите к результату префикс <code>happ://routing/onadd/</code> &mdash; одной строкой, без пробелов и переносов. Ссылка получится длинной, это нормально.</p>
+    <div class="callout">
+        Кодируйте файл локально &mdash; онлайн-кодировщики увидят список сайтов. Встроенная кнопка «Скопировать как ссылку Happ» в NetRoute запланирована.
+    </div>
+
+    <h2>Шаг 3. Добавьте ссылку в Happ</h2>
+    <p>По документации Happ ссылки принимаются тремя способами &mdash; копированием из буфера обмена, сканированием QR-кода и диплинком:</p>
+    <ol>
+        <li>Скопируйте собранную ссылку в буфер обмена</li>
+        <li>Откройте Happ и нажмите <strong>+</strong> в правом верхнем углу главного экрана</li>
+        <li>Добавьте ссылку из буфера обмена. На телефон ссылку удобно передать QR-кодом или открыть как диплинк &mdash; система предложит открыть её в Happ</li>
+        <li>Если использовали <code>onadd</code>, профиль уже активен; с <code>add</code> выберите его в списке профилей маршрутизации</li>
+        <li>Переподключитесь: по документации изменения профиля применяются после <strong>Reconnect</strong></li>
+    </ol>
+
+    <h2>Шаг 4. Проверьте</h2>
+    <p>Откройте сайт, для которого собирали профиль, &mdash; он должен открываться через прокси, а остальные сайты идти напрямую (<code>GlobalProxy: false</code>). Если наоборот &mdash; проверьте, какой профиль маршрутизации активен в Happ, и что вы переподключились после импорта.</p>
+
+    <h2>Частые проблемы</h2>
+    <h3>Ссылка не принимается</h3>
+    <p>Проверьте, что base64 получился одной строкой без переносов (в Linux для этого нужен ключ <code>-w0</code>) и что перед ним стоит ровно <code>happ://routing/onadd/</code> или <code>happ://routing/add/</code>.</p>
+
+    <h3>Профиль добавился, но ничего не изменилось</h3>
+    <p>После смены профиля Happ применяет его при переподключении. Со ссылкой <code>add</code> профиль нужно ещё выбрать активным.</p>
+
+    <h3>Сайт тянет данные с других доменов</h3>
+    <p>Их должно быть видно на вкладке <strong>Домены</strong> в NetRoute &mdash; расширение собирает домены со страницы и из её фоновых запросов. Пройдитесь по сайту перед сканом (войдите в аккаунт, откройте видео), тогда в профиль попадут и отложенные запросы. Несколько сайтов в один профиль &mdash; кнопка <strong>URL list</strong> рядом с кнопкой анализа: файл будет называться <code>bulk_N_rules.json</code>.</p>
+
+    <h3>Профиль в подписке</h3>
+    <p>По документации Happ в JSON-подписке может быть строго 0 или 1 профиль маршрутизации, а ссылку на профиль можно передавать в заголовке <code>routing</code> или прямо в теле подписки &mdash; удобно, если вы раздаёте настройки нескольким устройствам.</p>
+
+    <h2 id="dns-leak">DNS и утечки</h2>
+    <p>В профиле заданы два DNS: <code>RemoteDNS</code> для сайтов, идущих через прокси, и <code>DomesticDNS</code> для остальных &mdash; оба по DNS-over-HTTPS (Cloudflare и Яндекс в файле NetRoute). Поменяйте их в JSON до кодирования, если нужны другие резолверы. Запросы браузера при этом всё равно идут туда, куда настроен его собственный DNS: в Chrome отключите «Использовать безопасный DNS» или укажите в нём резолвер, которому доверяете, иначе Chrome разрешает имена в обход клиента.</p>
+    <p>Проверка: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> при включённом Happ должен показывать резолвер из профиля, а не провайдера.</p>
+
+    <h2 id="examples">Пример конфигурационного файла</h2>
+    <p>Готовый шаблон. Замените примеры доменов и сетей выводом NetRoute для ваших сайтов.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/happ-routing.json" target="_blank" rel="noopener"><code>happ-routing.json</code></a> &mdash; профиль маршрутизации Happ со списками <code>ProxySites</code> и <code>ProxyIp</code></li>
+    </ul>
+    <pre><code><!-- EMBED:happ-routing.json -->
+{
+  "Name": "NetRoute github.com",
+  "GlobalProxy": "false",
+  "RemoteDNSType": "DoH",
+  "RemoteDNSDomain": "https://1.1.1.1/dns-query",
+  "RemoteDNSIP": "1.1.1.1",
+  "DomesticDNSType": "DoH",
+  "DomesticDNSDomain": "https://77.88.8.8/dns-query",
+  "DomesticDNSIP": "77.88.8.8",
+  "Geoipurl": "",
+  "Geositeurl": "",
+  "LastUpdated": "1760572800",
+  "DnsHosts": {},
+  "RouteOrder": "block-proxy-direct",
+  "DirectSites": [],
+  "DirectIp": [
+    "geoip:private"
+  ],
+  "ProxySites": [
+    "domain:avatars.githubusercontent.com",
+    "domain:github.com",
+    "domain:github.githubassets.com"
+  ],
+  "ProxyIp": [
+    "140.82.112.0/20",
+    "185.199.108.0/22",
+    "2606:50c0::/32"
+  ],
+  "BlockSites": [],
+  "BlockIp": [],
+  "DomainStrategy": "IPIfNonMatch",
+  "FakeDNS": "false"
+}
+<!-- /EMBED --></code></pre>
+
+    <p class="callout"><strong>Подсказка:</strong> текстовые форматы скачиваются с шапкой-комментарием. Снимите галочку <strong>«Включать комментарии в экспортируемые файлы»</strong> в настройках NetRoute, чтобы получить только правила; JSON-форматы комментариев не содержат.</p>
+
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Все примеры конфигов на GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Официальная документация</h2>
+    <ul>
+        <li><a href="https://www.happ.su/main/ru/dev-docs/routing.md" target="_blank" rel="noopener">Happ: Геонастройки / Routing &mdash; ссылки add и onadd, поля профиля (ru)</a></li>
+        <li><a href="https://www.happ.su/main/ru/faq/adding-configuration-subscription.md" target="_blank" rel="noopener">Happ: Добавление конфигурации &mdash; буфер обмена, QR-код, диплинк (ru)</a></li>
+        <li><a href="https://www.happ.su/main/dev-docs/examples-of-links-and-parameters.md" target="_blank" rel="noopener">Happ: Examples of links and parameters (en)</a></li>
+        <li><a href="https://xtls.github.io/config/routing.html" target="_blank" rel="noopener">Xray: Routing &mdash; форма domain: и стратегии доменов (zh)</a></li>
+    </ul>
+
+    <h2 id="related">Похожие инструкции</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> &mdash; маршруты из BAT-файла</li>
+        <li><a href="./mikrotik.html">MikroTik</a> &mdash; импорт <code>.rsc</code>-скрипта в RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> &mdash; split tunneling через <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> &mdash; <code>ip route</code> через shell-скрипт</li>
+        <li><a href="./openvpn.html">OpenVPN</a> &mdash; директивы <code>route</code> в клиентском конфиге</li>
+        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; rule-set для sing-box и Hiddify</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; правила routing.rules для Xray-core, 3X-UI и v2rayN</li>
+        <li><a href="./amnezia.html">AmneziaVPN</a> &mdash; список сайтов для раздельного туннелирования</li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>Готовы попробовать?</h3>
+        <p>NetRoute — бесплатное расширение Chrome для генерации маршрутов из любого сайта.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Установить расширение</a>
+    </div>
+
+</article>
+
+</body>
+</html>

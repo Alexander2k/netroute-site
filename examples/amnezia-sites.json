@@ -1,22 +1,40 @@
 [
   {
+    "hostname": "api.github.com",
+    "ips": [
+      "140.82.112.4"
+    ],
+    "ip": "140.82.112.4"
+  },
+  {
     "hostname": "avatars.githubusercontent.com",
-    "ip": ""
+    "ips": [
+      "185.199.108.133"
+    ],
+    "ip": "185.199.108.133"
   },
   {
     "hostname": "github.com",
-    "ip": ""
+    "ips": [
+      "140.82.112.3"
+    ],
+    "ip": "140.82.112.3"
   },
   {
     "hostname": "github.githubassets.com",
-    "ip": ""
+    "ips": [
+      "185.199.108.154"
+    ],
+    "ip": "185.199.108.154"
   },
   {
     "hostname": "140.82.112.0/20",
+    "ips": [],
     "ip": ""
   },
   {
     "hostname": "185.199.108.0/22",
+    "ips": [],
     "ip": ""
   }
 ]

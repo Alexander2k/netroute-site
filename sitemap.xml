@@ -428,4 +428,34 @@
         <priority>0.8</priority>
     </url>
 
+    <!-- xray guide (RU) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/ru/guides/xray.html</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/ru/guides/xray.html"/>
+        <lastmod>2026-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- happ guide (RU) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/ru/guides/happ.html</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/ru/guides/happ.html"/>
+        <lastmod>2026-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- amnezia guide (RU) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html"/>
+        <lastmod>2026-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
 </urlset>

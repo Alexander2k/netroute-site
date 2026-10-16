@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <script src="../../theme.js"></script>
+    <title>Список сайтов AmneziaVPN из любого сайта: раздельное туннелирование по адресам — инструкция | NetRoute</title>
+    <meta name="description" content="Как получить в NetRoute файл для импорта в AmneziaVPN с адресами и подсетями сайта и включить раздельное туннелирование сайтов: режимы, импорт через меню ⋮, ограничения IPv4 и Amnezia Free.">
+    <meta name="keywords" content="amnezia split tunneling, amneziavpn раздельное туннелирование, amnezia список сайтов, amnezia импорт ip-list.json, amnezia только адреса из списка через vpn, amneziawg split tunneling сайты, amnezia подсети сервиса">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Список сайтов AmneziaVPN из любого сайта">
+    <meta property="og:description" content="NetRoute собирает адреса и подсети сайта в файл для импорта в AmneziaVPN — раздельное туннелирование сайтов за три шага.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="ru_RU">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="preload" as="style" href="../../style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../../style.css"></noscript>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap"></noscript>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Главная",
+                "item": "https://alexander2k.github.io/netroute-site/ru/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Инструкции",
+                "item": "https://alexander2k.github.io/netroute-site/ru/guides/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "AmneziaVPN"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Как импортировать список сайтов NetRoute в AmneziaVPN",
+        "description": "Сгенерируйте список AmneziaVPN в расширении NetRoute, импортируйте файл в параметрах раздельного туннелирования сайтов через меню ⋮ и включите режим «Только адреса из списка должны открываться через VPN».",
+        "inLanguage": "ru",
+        "totalTime": "PT5M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Сгенерируйте список в NetRoute",
+                "text": "Откройте нужный сайт в Chrome, запустите NetRoute, в списке «Целевая ОС» выберите «AmneziaVPN (site list)», нажмите «Анализировать сайт» и скачайте файл <сайт>_rules.json."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Импортируйте файл в AmneziaVPN",
+                "text": "Откройте параметры раздельного туннелирования сайтов, в меню ⋮ выберите импорт — «Заменить список с сайтами» или «Добавить импортированные сайты к существующим» — и укажите файл."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Включите режим и подключитесь",
+                "text": "Выберите режим «Только адреса из списка должны открываться через VPN», включите раздельное туннелирование и подключитесь к VPN."
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Список сайтов AmneziaVPN из любого сайта: раздельное туннелирование по адресам — инструкция",
+        "description": "Как получить в NetRoute файл для импорта в AmneziaVPN с адресами и подсетями сайта и включить раздельное туннелирование сайтов: режимы, импорт через меню ⋮, ограничения IPv4 и Amnezia Free.",
+        "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
+        "inLanguage": "ru",
+        "datePublished": "2026-10-17",
+        "dateModified": "2026-10-17",
+        "author": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://alexander2k.github.io/netroute-site/icon.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html"
+        }
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute</span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Главная</a>
+            <div class="lang-switch">
+                <span class="lang-current">RU</span>
+                <div class="lang-dropdown">
+                    <a href="./amnezia.html" class="lang-active">Русский</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; На главную</a>
+    <h1>Список сайтов AmneziaVPN из любого сайта</h1>
+    <p class="lead">AmneziaVPN умеет пускать через VPN только адреса из списка &mdash; это «раздельное туннелирование сайтов». Список состоит из IPv4-адресов и подсетей, и собрать его вручную для сайта с десятками доменов долго. NetRoute делает это со страницы: открыли сайт, нажали «Анализировать сайт», скачали файл для импорта.</p>
+
+    <h2 id="syntax">Что внутри файла</h2>
+    <p>Файл &mdash; JSON-массив записей в том виде, в каком AmneziaVPN сама экспортирует свой список: у каждой записи есть <code>hostname</code>, список адресов <code>ips</code> и первый из них в <code>ip</code> &mdash; для старых версий приложения.</p>
+    <pre><code>[
+  { "hostname": "api.github.com", "ips": ["140.82.112.4"], "ip": "140.82.112.4" },
+  { "hostname": "github.com", "ips": ["140.82.112.3"], "ip": "140.82.112.3" },
+  { "hostname": "140.82.112.0/20", "ips": [], "ip": "" },
+  { "hostname": "185.199.108.0/22", "ips": [], "ip": "" }
+]</code></pre>
+    <ul>
+        <li><strong>Хосты с адресами.</strong> По исходникам клиента при импорте AmneziaVPN не разрешает имена &mdash; записи сохраняются как есть, а резолв делается только при ручном добавлении сайта. Поэтому NetRoute пишет каждому хосту его IPv4-адреса, найденные при скане; хосты без IPv4-адресов в файл не попадают. Имена не сворачиваются: <code>www.ozon.ru</code> и <code>ozon.ru</code> &mdash; разные записи с разными адресами.</li>
+        <li><strong>Подсети.</strong> После хостов идут агрегированные IPv4-сети &mdash; те же, что NetRoute выдаёт маршрутами для роутера; с режимом <strong>Оптимизация маршрутов &rarr; BGP Prefix</strong> это анонсируемые префиксы провайдера, а не отдельные адреса.</li>
+        <li><strong>Только IPv4.</strong> По документации AmneziaVPN IPv6 не поддерживает; IPv6-адреса в файл не пишутся.</li>
+    </ul>
+
+    <h2>Что понадобится</h2>
+    <ul>
+        <li>Приложение <a href="https://amnezia.org/" target="_blank" rel="noopener">AmneziaVPN</a> с настроенным подключением. По документации раздельное туннелирование по адресам недоступно в Amnezia Free</li>
+        <li>Платформа с туннелированием по адресам: по документации iOS, macOS и Linux поддерживают только его, Windows и Android &mdash; и по адресам, и по приложениям</li>
+        <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> в Chrome</li>
+    </ul>
+
+    <h2>Шаг 1. Сгенерируйте список в NetRoute</h2>
+    <ol>
+        <li>Откройте нужный сайт в Chrome и обновите страницу, чтобы сниффер расширения увидел фоновые запросы</li>
+        <li>Запустите <strong>NetRoute</strong></li>
+        <li>В списке <strong>Целевая ОС</strong> выберите <strong>AmneziaVPN (site list)</strong> &mdash; группа «VPN-клиенты»</li>
+        <li>Поля <strong>IP шлюза</strong> и <strong>Интерфейс</strong> на этот формат не влияют</li>
+        <li>Нажмите <strong>Анализировать сайт</strong></li>
+        <li>На вкладке <strong>Домены</strong> снимите галочки с лишнего &mdash; счётчики, рекламные сети, чужие CDN; список пересчитается сразу</li>
+        <li>Нажмите <strong>Скачать</strong>: файл называется по сайту, например <code>github_com_rules.json</code></li>
+    </ol>
+    <div class="callout">
+        <strong>Про меняющиеся адреса.</strong> Документация AmneziaVPN предупреждает: адрес, полученный из домена, не обновляется автоматически, а большим сервисам нужны целые подсети. Поэтому перед сканом включите в настройках NetRoute <strong>Оптимизация маршрутов &rarr; BGP Prefix</strong> &mdash; в файл попадут анонсируемые подсети, которые переживут ротацию адресов у CDN.
+    </div>
+
+    <h2>Шаг 2. Импортируйте файл в AmneziaVPN</h2>
+    <p>По документации AmneziaVPN импорт списка делается из параметров раздельного туннелирования сайтов:</p>
+    <ol>
+        <li>Откройте <strong>Раздельное туннелирование</strong> и перейдите в <strong>Параметры раздельного туннелирования сайтов</strong></li>
+        <li>Нажмите значок <strong>⋮</strong> и выберите импорт: <strong>Заменить список с сайтами</strong> &mdash; если начинаете с чистого листа, или <strong>Добавить импортированные сайты к существующим</strong> &mdash; если дополняете</li>
+        <li>Укажите скачанный файл; записи появятся в списке</li>
+    </ol>
+
+    <h2>Шаг 3. Включите режим и подключитесь</h2>
+    <ol>
+        <li>Выберите режим <strong>Только адреса из списка должны открываться через VPN</strong> &mdash; через туннель пойдут только сайты из файла, остальной трафик напрямую. Второй режим, <strong>Адреса из списка не должны открываться через VPN</strong>, делает наоборот: исключает список из туннеля</li>
+        <li>Включите раздельное туннелирование сайтов</li>
+        <li>Подключитесь к VPN</li>
+    </ol>
+
+    <h2>Шаг 4. Проверьте</h2>
+    <p>Откройте сайт, для которого собирали список: он должен открываться через VPN, а сайты вне списка &mdash; напрямую. Если сайт открывается не до конца &mdash; часть его доменов не попала в список: проверьте вкладку <strong>Домены</strong> в NetRoute, пройдитесь по сайту перед сканом (войдите в аккаунт, откройте видео), чтобы сниффер увидел отложенные запросы, и импортируйте файл заново с заменой.</p>
+
+    <h2>Частые проблемы</h2>
+    <h3>Файл не импортируется</h3>
+    <p>По исходникам клиента файл должен быть JSON-массивом объектов; обычный массив строк не принимается. Файл NetRoute уже в нужной форме &mdash; проверьте, что он скачан полностью и не отредактирован в текстовом редакторе с заменой кавычек.</p>
+
+    <h3>Сайт работал, потом перестал</h3>
+    <p>Адреса у сайта сменились. Пересоберите файл в NetRoute &mdash; с включённым режимом <strong>BGP Prefix</strong> в него попадут подсети, а не отдельные адреса &mdash; и импортируйте с заменой списка.</p>
+
+    <h3>Через VPN пошло лишнее</h3>
+    <p>Документация AmneziaVPN предупреждает: широкие подсети крупных сервисов могут захватить посторонний трафик. Снимите в NetRoute галочки с чужих CDN на вкладке <strong>Домены</strong> или выключите BGP-оптимизацию для таких сайтов.</p>
+
+    <h3>Пропало подключение к своему серверу</h3>
+    <p>По документации, если адрес вашего VPN-сервера попал в одну из добавленных подсетей, подключение ломается &mdash; удалите эту подсеть из списка.</p>
+
+    <h3>Несколько сайтов в одном списке</h3>
+    <p>Нажмите <strong>URL list</strong> рядом с кнопкой анализа и вставьте список сайтов &mdash; NetRoute соберёт один файл на всех, он будет называться <code>bulk_N_rules.json</code>.</p>
+
+    <h2 id="dns-leak">DNS и утечки</h2>
+    <p>Раздельное туннелирование AmneziaVPN работает по адресам: в туннель уходит трафик к адресам из списка, а DNS-запросы браузера идут туда, куда настроен его резолвер. Если это резолвер провайдера, он видит имена сайтов, даже когда сам трафик идёт через VPN. В Chrome отключите «Использовать безопасный DNS» или укажите в нём резолвер, которому доверяете; настройки DNS самого AmneziaVPN смотрите в его документации.</p>
+    <p>Проверка: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> при подключённом VPN покажет, чей резолвер отвечает на ваши запросы.</p>
+
+    <h2 id="examples">Пример конфигурационного файла</h2>
+    <p>Готовый шаблон. Замените примеры доменов и сетей выводом NetRoute для ваших сайтов.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/amnezia-sites.json" target="_blank" rel="noopener"><code>amnezia-sites.json</code></a> &mdash; список для импорта в AmneziaVPN: хосты с адресами и подсети</li>
+    </ul>
+    <pre><code><!-- EMBED:amnezia-sites.json -->
+[
+  {
+    "hostname": "api.github.com",
+    "ips": [
+      "140.82.112.4"
+    ],
+    "ip": "140.82.112.4"
+  },
+  {
+    "hostname": "avatars.githubusercontent.com",
+    "ips": [
+      "185.199.108.133"
+    ],
+    "ip": "185.199.108.133"
+  },
+  {
+    "hostname": "github.com",
+    "ips": [
+      "140.82.112.3"
+    ],
+    "ip": "140.82.112.3"
+  },
+  {
+    "hostname": "github.githubassets.com",
+    "ips": [
+      "185.199.108.154"
+    ],
+    "ip": "185.199.108.154"
+  },
+  {
+    "hostname": "140.82.112.0/20",
+    "ips": [],
+    "ip": ""
+  },
+  {
+    "hostname": "185.199.108.0/22",
+    "ips": [],
+    "ip": ""
+  }
+]
+<!-- /EMBED --></code></pre>
+
+    <p class="callout"><strong>Подсказка:</strong> текстовые форматы скачиваются с шапкой-комментарием. Снимите галочку <strong>«Включать комментарии в экспортируемые файлы»</strong> в настройках NetRoute, чтобы получить только правила; JSON-форматы комментариев не содержат.</p>
+
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Все примеры конфигов на GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Официальная документация</h2>
+    <ul>
+        <li><a href="https://docs.amnezia.org/ru/documentation/instructions/vpn-split-tunneling" target="_blank" rel="noopener">AmneziaVPN: раздельное туннелирование &mdash; режимы, импорт, ограничения (ru)</a></li>
+        <li><a href="https://github.com/amnezia-vpn/amnezia-client" target="_blank" rel="noopener">AmneziaVPN: исходный код клиента &mdash; формат импорта в ipSplitTunnelingController (en)</a></li>
+        <li><a href="https://amnezia.org/blog/what-is-split-tunneling-and-why-you-need-it" target="_blank" rel="noopener">Amnezia: что такое split tunneling (en)</a></li>
+    </ul>
+
+    <h2 id="related">Похожие инструкции</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> &mdash; маршруты из BAT-файла</li>
+        <li><a href="./mikrotik.html">MikroTik</a> &mdash; импорт <code>.rsc</code>-скрипта в RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> &mdash; split tunneling через <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> &mdash; <code>ip route</code> через shell-скрипт</li>
+        <li><a href="./openvpn.html">OpenVPN</a> &mdash; директивы <code>route</code> в клиентском конфиге</li>
+        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; rule-set для sing-box и Hiddify</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; правила routing.rules для Xray-core, 3X-UI и v2rayN</li>
+        <li><a href="./happ.html">Happ</a> &mdash; профиль маршрутизации ссылкой happ://routing</li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>Готовы попробовать?</h3>
+        <p>NetRoute — бесплатное расширение Chrome для генерации маршрутов из любого сайта.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Установить расширение</a>
+    </div>
+
+</article>
+
+</body>
+</html>

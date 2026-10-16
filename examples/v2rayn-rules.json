@@ -1,0 +1,22 @@
+[
+  {
+    "outboundTag": "proxy",
+    "domain": [
+      "domain:avatars.githubusercontent.com",
+      "domain:github.com",
+      "domain:github.githubassets.com"
+    ],
+    "enabled": true,
+    "remarks": "NetRoute github.com domains"
+  },
+  {
+    "outboundTag": "proxy",
+    "ip": [
+      "140.82.112.0/20",
+      "185.199.108.0/22",
+      "2606:50c0::/32"
+    ],
+    "enabled": true,
+    "remarks": "NetRoute github.com networks"
+  }
+]
