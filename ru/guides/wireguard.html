@@ -173,6 +173,12 @@
     <h1>Split Tunneling в WireGuard через AllowedIPs</h1>
     <p class="lead">В WireGuard параметр <code>AllowedIPs</code> одновременно и ACL-фильтр, и таблица маршрутизации. NetRoute генерирует готовую строку <code>AllowedIPs</code> из доменов любого сайта — дополнительные <code>ip route</code> команды не нужны, просто отредактируйте конфиг пира и перезапустите туннель.</p>
 
+    <figure class="shot">
+        <img class="shot-light" src="../../screenshots/guides/ru/wireguard-light.png" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат WireGuard, результат на вкладке «Маршруты»">
+        <img class="shot-dark" src="../../screenshots/guides/ru/wireguard-dark.png" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат WireGuard, результат на вкладке «Маршруты»">
+        <figcaption>Так выглядит результат в NetRoute: формат <strong>WireGuard</strong> выбран в списке «Целевая ОС», вывод &mdash; на вкладке «Маршруты». Данные скана &mdash; страница github.com.</figcaption>
+    </figure>
+
     <section id="syntax" class="syntax-block">
         <h2>Синтаксис команды</h2>
         <p><strong>Синтаксис:</strong></p>

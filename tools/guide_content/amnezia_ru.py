@@ -114,6 +114,8 @@ PAGE = {
         {'url': 'https://github.com/amnezia-vpn/amnezia-client', 'label': 'AmneziaVPN: исходный код клиента &mdash; формат импорта в ipSplitTunnelingController (en)'},
         {'url': 'https://amnezia.org/blog/what-is-split-tunneling-and-why-you-need-it', 'label': 'Amnezia: что такое split tunneling (en)'},
     ],
+    'shot_format': 'amnezia',
+    'shot_caption': 'Попап NetRoute с форматом «AmneziaVPN (site list)»: на вкладке «Маршруты» &mdash; список для импорта, хосты с адресами и подсети. Данные скана &mdash; страница github.com.',
     'example_file': 'amnezia-sites.json',
     'example_desc': 'список для импорта в AmneziaVPN: хосты с адресами и подсети',
     'card': {

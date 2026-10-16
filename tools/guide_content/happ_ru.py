@@ -148,6 +148,8 @@ base64 -w0 github_com_rules.json</code></pre>
         {'url': 'https://www.happ.su/main/dev-docs/examples-of-links-and-parameters.md', 'label': 'Happ: Examples of links and parameters (en)'},
         {'url': 'https://xtls.github.io/config/routing.html', 'label': 'Xray: Routing &mdash; форма domain: и стратегии доменов (zh)'},
     ],
+    'shot_format': 'happ',
+    'shot_caption': 'Попап NetRoute с форматом «Happ»: на вкладке «Маршруты» &mdash; профиль маршрутизации, который остаётся закодировать в ссылку. Данные скана &mdash; страница github.com.',
     'example_file': 'happ-routing.json',
     'example_desc': 'профиль маршрутизации Happ со списками <code>ProxySites</code> и <code>ProxyIp</code>',
     'card': {

@@ -151,6 +151,8 @@ PAGE = {
         {'url': 'https://sing-box.sagernet.org/configuration/dns/rule/', 'label': 'sing-box: DNS Rule (en)'},
         {'url': 'https://github.com/hiddify/hiddify-app', 'label': 'Hiddify &mdash; README: поддерживаемые форматы конфигураций (en)'},
     ],
+    'shot_format': 'singbox',
+    'shot_caption': 'Попап NetRoute с форматом «sing-box / Hiddify / NekoBox»: на вкладке «Маршруты» &mdash; готовый rule-set, счётчик показывает число правил. Данные скана &mdash; страница github.com.',
     'example_file': 'singbox-rules.json',
     'example_desc': 'rule-set в исходном формате с правилами <code>domain_suffix</code> и <code>ip_cidr</code>',
     'card': {

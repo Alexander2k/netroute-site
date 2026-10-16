@@ -127,7 +127,7 @@
         <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/"/>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-17</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -423,7 +423,7 @@
         <loc>https://alexander2k.github.io/netroute-site/ru/guides/singbox.html</loc>
         <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/singbox.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/ru/guides/singbox.html"/>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-17</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>

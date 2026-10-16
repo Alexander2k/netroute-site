@@ -173,6 +173,12 @@
     <h1>Split Tunneling en WireGuard con AllowedIPs</h1>
     <p class="lead">En WireGuard el parámetro <code>AllowedIPs</code> funciona como filtro ACL y tabla de enrutamiento a la vez. NetRoute genera la cadena <code>AllowedIPs</code> lista desde los dominios de cualquier sitio — no necesitas comandos <code>ip route</code> adicionales, solo edita el config del peer y recarga.</p>
 
+    <figure class="shot">
+        <img class="shot-light" src="../../screenshots/guides/en/wireguard-light.png" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: formato WireGuard seleccionado y resultado en la pestaña Rutas">
+        <img class="shot-dark" src="../../screenshots/guides/en/wireguard-dark.png" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: formato WireGuard seleccionado y resultado en la pestaña Rutas">
+        <figcaption>Así se ve el resultado en NetRoute: el formato <strong>WireGuard</strong> elegido en «SO de destino», la salida en la pestaña Rutas. Datos del escaneo: una página de github.com.</figcaption>
+    </figure>
+
     <section id="syntax" class="syntax-block">
         <h2>Sintaxis del comando</h2>
         <p><strong>Sintaxis:</strong></p>

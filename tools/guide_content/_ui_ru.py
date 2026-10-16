@@ -12,6 +12,8 @@ UI = {
     'cta_h3': 'Готовы попробовать?',
     'cta_p': 'NetRoute — бесплатное расширение Chrome для генерации маршрутов из любого сайта.',
     'cta_btn': 'Установить расширение',
+    'shot_alt_default': 'Попап NetRoute после сканирования github.com: выбранный формат и готовый результат на вкладке «Маршруты»',
+    'shot_caption_default': 'Так выглядит результат в NetRoute: формат выбран в списке «Целевая ОС», вывод &mdash; на вкладке «Маршруты». Данные скана &mdash; страница github.com.',
     'classic_names': {
         'keenetic': 'Keenetic', 'mikrotik': 'MikroTik', 'wireguard': 'WireGuard', 'linux': 'Linux', 'openvpn': 'OpenVPN',
     },

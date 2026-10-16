@@ -90,6 +90,41 @@ def jsonld(obj: dict) -> str:
     return '\n'.join('    ' + line for line in text.split('\n'))
 
 
+def png_size(path: str):
+    """(width, height) of a PNG from its IHDR chunk, or None when the file is missing."""
+    if not os.path.exists(path):
+        return None
+    with open(path, 'rb') as f:
+        head = f.read(24)
+    if head[:8] != b'\x89PNG\r\n\x1a\n':
+        return None
+    return int.from_bytes(head[16:20], 'big'), int.from_bytes(head[20:24], 'big')
+
+
+def shot_figure(page: dict, ui: dict, lang: str) -> str:
+    """<figure> with the light and dark popup renders of the page's format
+    (screenshots/guides/<ru|en>/<format>-*.png, Russian popup for the Russian pages), or '' when the
+    renders are not there yet. Captured at 2x, so the intrinsic size is halved for layout."""
+    fmt = page.get('shot_format')
+    if not fmt:
+        return ''
+    shots_lang = 'ru' if lang == 'ru' else 'en'
+    rel = f'../../screenshots/guides/{shots_lang}/{fmt}'
+    light = os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-light.png')
+    dark = os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-dark.png')
+    size = png_size(light)
+    if not size or not os.path.exists(dark):
+        return ''
+    w, h = size[0] // 2, size[1] // 2
+    alt = page.get('shot_alt') or ui['shot_alt_default']
+    caption = page.get('shot_caption') or ui['shot_caption_default']
+    return (f'    <figure class="shot">\n'
+            f'        <img class="shot-light" src="{rel}-light.png" width="{w}" height="{h}" loading="lazy" alt="{alt}">\n'
+            f'        <img class="shot-dark" src="{rel}-dark.png" width="{w}" height="{h}" loading="lazy" alt="{alt}">\n'
+            f'        <figcaption>{caption}</figcaption>\n'
+            f'    </figure>\n')
+
+
 def render_page(lang: str, slug: str, page: dict, ui: dict, all_pages: dict, today: str) -> str:
     prefix, html_lang, locale, _, short = LANGS[lang]
     canonical = url_of(lang, slug)
@@ -146,9 +181,13 @@ def render_page(lang: str, slug: str, page: dict, ui: dict, all_pages: dict, tod
     })
 
     body_sections = ''
-    for sec in page['sections']:
+    figure = shot_figure(page, ui, lang)
+    for i, sec in enumerate(page['sections']):
         sid = f' id="{sec["id"]}"' if sec.get('id') else ''
         body_sections += f'\n    <h2{sid}>{sec["h2"]}</h2>\n{sec["html"].rstrip()}\n'
+        # the popup render goes right after the first section ("what is inside the file")
+        if i == 0 and figure:
+            body_sections += '\n' + figure
 
     # Related: the five classic guides (required by the tests) plus the other new guides
     related = ''

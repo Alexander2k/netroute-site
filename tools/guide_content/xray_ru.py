@@ -135,6 +135,8 @@ PAGE = {
         {'url': 'https://github.com/2dust/v2rayN/wiki/Description-of-custom-routing-rules', 'label': 'v2rayN: описание пользовательских правил маршрутизации (zh)'},
         {'url': 'https://github.com/2dust/v2rayCustomRoutingList', 'label': 'v2rayN: формат списков правил для импорта (en)'},
     ],
+    'shot_format': 'xray',
+    'shot_caption': 'Попап NetRoute с форматом «Xray / 3X-UI / Streisand»: в поле «Интерфейс» &mdash; тег proxy, на вкладке «Маршруты» &mdash; фрагмент routing.rules. Данные скана &mdash; страница github.com.',
     'example_file': 'xray-routing.json',
     'example_desc': 'фрагмент конфига Xray-core с секцией <code>routing</code>; рядом &mdash; <code>v2rayn-rules.json</code> для импорта в v2rayN',
     'card': {
