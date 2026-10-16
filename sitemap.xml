@@ -418,4 +418,14 @@
         <priority>0.8</priority>
     </url>
 
+    <!-- singbox guide (RU) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/ru/guides/singbox.html</loc>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/ru/guides/singbox.html"/>
+        <lastmod>2026-10-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
 </urlset>

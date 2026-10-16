@@ -1,0 +1,33 @@
+{
+  "Name": "NetRoute github.com",
+  "GlobalProxy": "false",
+  "RemoteDNSType": "DoH",
+  "RemoteDNSDomain": "https://1.1.1.1/dns-query",
+  "RemoteDNSIP": "1.1.1.1",
+  "DomesticDNSType": "DoH",
+  "DomesticDNSDomain": "https://77.88.8.8/dns-query",
+  "DomesticDNSIP": "77.88.8.8",
+  "Geoipurl": "",
+  "Geositeurl": "",
+  "LastUpdated": "1760572800",
+  "DnsHosts": {},
+  "RouteOrder": "block-proxy-direct",
+  "DirectSites": [],
+  "DirectIp": [
+    "geoip:private"
+  ],
+  "ProxySites": [
+    "domain:avatars.githubusercontent.com",
+    "domain:github.com",
+    "domain:github.githubassets.com"
+  ],
+  "ProxyIp": [
+    "140.82.112.0/20",
+    "185.199.108.0/22",
+    "2606:50c0::/32"
+  ],
+  "BlockSites": [],
+  "BlockIp": [],
+  "DomainStrategy": "IPIfNonMatch",
+  "FakeDNS": "false"
+}

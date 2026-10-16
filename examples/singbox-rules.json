@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain_suffix": [
+        "avatars.githubusercontent.com",
+        "github.com",
+        "github.githubassets.com"
+      ]
+    },
+    {
+      "ip_cidr": [
+        "140.82.112.0/20",
+        "185.199.108.0/22",
+        "2606:50c0::/32"
+      ]
+    }
+  ]
+}

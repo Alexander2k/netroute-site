@@ -1,0 +1,25 @@
+{
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "outboundTag": "proxy",
+        "domain": [
+          "domain:avatars.githubusercontent.com",
+          "domain:github.com",
+          "domain:github.githubassets.com"
+        ]
+      },
+      {
+        "type": "field",
+        "outboundTag": "proxy",
+        "ip": [
+          "140.82.112.0/20",
+          "185.199.108.0/22",
+          "2606:50c0::/32"
+        ]
+      }
+    ]
+  }
+}
