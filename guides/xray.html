@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <script src="../theme.js"></script>
+    <title>Xray routing rules from any website: for Xray-core, 3X-UI and v2rayN — guide | NetRoute</title>
+    <meta name="description" content="How to get Xray routing.rules with the domains and networks of a website in NetRoute and apply them in an Xray-core config, in the Xray settings of the 3X-UI panel or by importing rules into v2rayN.">
+    <meta name="keywords" content="xray routing rules, xray domain: outboundTag, xray split tunneling, 3x-ui routing rules, 3x-ui xray settings routing, v2rayn import rules, v2rayn routing setting, v2rayn custom routing rules, xray json routing">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/guides/xray.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/xray.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/xray.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/xray.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Xray routing rules from any website">
+    <meta property="og:description" content="NetRoute turns the domains and networks of a website into Xray routing.rules — for an Xray-core config, the 3X-UI panel and rule import in v2rayN.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/guides/xray.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="en_US">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preload" as="style" href="../style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../style.css"></noscript>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap"></noscript>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://alexander2k.github.io/netroute-site/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Guides",
+                "item": "https://alexander2k.github.io/netroute-site/guides/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Xray"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to apply Xray routing rules from NetRoute",
+        "description": "Generate rules in the Xray or v2rayN format with the NetRoute extension and paste them into routing.rules of an Xray-core config, into the Xray settings of the 3X-UI panel, or import them into v2rayN from the clipboard.",
+        "inLanguage": "en",
+        "totalTime": "PT5M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Generate the rules in NetRoute",
+                "text": "Open the website in Chrome, start NetRoute, pick “Xray / 3X-UI / Streisand” or “v2rayN (rules import)” under “Target OS”, put the tag of your outbound into the “Device” field (proxy by default), click “Analyze website” and download the file."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Insert the rules",
+                "text": "Xray-core and 3X-UI: add the objects from rules to the beginning of routing.rules in your config. v2rayN: Routing → Routing Setting → Import Rules From Clipboard, answer “yes” to the append question to keep the existing rules."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Check",
+                "text": "Restart Xray (the 3X-UI panel reloads it by itself) and open the site — it should go through the outbound with the given tag."
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Xray routing rules from any website: for Xray-core, 3X-UI and v2rayN — guide",
+        "description": "How to get Xray routing.rules with the domains and networks of a website in NetRoute and apply them in an Xray-core config, in the Xray settings of the 3X-UI panel or by importing rules into v2rayN.",
+        "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
+        "inLanguage": "en",
+        "datePublished": "2026-10-17",
+        "dateModified": "2026-10-17",
+        "author": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://alexander2k.github.io/netroute-site/icon.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://alexander2k.github.io/netroute-site/guides/xray.html"
+        }
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute</span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Home</a>
+            <div class="lang-switch">
+                <span class="lang-current">EN</span>
+                <div class="lang-dropdown">
+                    <a href="./xray.html" class="lang-active">English</a>
+                    <a href="../ru/guides/xray.html">Русский</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; Back to Home</a>
+    <h1>Xray routing rules from any website: Xray-core, 3X-UI, v2rayN</h1>
+    <p class="lead">Xray directs connections by <code>routing.rules</code>: lists of domains and addresses plus the tag of an outbound. NetRoute builds such rules from a website in two variants: a fragment of an Xray-core config &mdash; which also fits the 3X-UI panel, where the Xray config is edited as JSON &mdash; and a file for importing rules into v2rayN.</p>
+
+    <h2 id="syntax">What is inside the file</h2>
+    <p><strong>The “Xray / 3X-UI / Streisand” format</strong> is a fragment of an Xray-core config with a <code>routing</code> section. Domains and networks are two rules, each with its own list and a shared <code>outboundTag</code>:</p>
+    <pre><code>{
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      { "type": "field", "outboundTag": "proxy", "domain": ["domain:github.com", "domain:githubusercontent.com"] },
+      { "type": "field", "outboundTag": "proxy", "ip": ["140.82.112.0/20", "185.199.108.0/22", "2606:50c0::/32"] }
+    ]
+  }
+}</code></pre>
+    <ul>
+        <li><code>domain:name</code> &mdash; per the Xray documentation the domain itself and its subdomains. The list is folded: when <code>api.github.com</code> and <code>github.com</code> are found, only <code>github.com</code> stays; <code>www.</code> is dropped. Every domain of the scan is included, also those that did not resolve to an IP.</li>
+        <li><code>ip</code> &mdash; addresses in CIDR form; the same aggregated networks NetRoute emits as router routes, IPv4 and IPv6.</li>
+        <li><code>outboundTag</code> &mdash; the tag of the outbound from the <strong>Device</strong> field in NetRoute; <code>proxy</code> by default.</li>
+        <li><code>domainStrategy: IPIfNonMatch</code> &mdash; per the Xray documentation a domain is resolved to an address only when no rule matched by name; Xray’s own default is <code>AsIs</code>, no resolving.</li>
+    </ul>
+    <p><strong>The “v2rayN (rules import)” format</strong> is an array of rules in the shape v2rayN imports from the clipboard or a file (as in the <code>v2rayCustomRoutingList</code> repository of the v2rayN author):</p>
+    <pre><code>[
+  { "port": "", "outboundTag": "proxy", "domain": ["domain:github.com", "domain:githubusercontent.com"], "enabled": true, "remarks": "NetRoute github.com domains" },
+  { "port": "", "outboundTag": "proxy", "ip": ["140.82.112.0/20", "185.199.108.0/22", "2606:50c0::/32"], "enabled": true, "remarks": "NetRoute github.com networks" }
+]</code></pre>
+
+    <figure class="shot">
+        <img class="shot-light" src="../screenshots/guides/en/xray-light.png" width="480" height="664" loading="lazy" alt="NetRoute popup after scanning github.com: the selected format and the result on the Routes tab">
+        <img class="shot-dark" src="../screenshots/guides/en/xray-dark.png" width="480" height="664" loading="lazy" alt="NetRoute popup after scanning github.com: the selected format and the result on the Routes tab">
+        <figcaption>The NetRoute popup with the “Xray / 3X-UI / Streisand” format: the Device field holds the proxy tag, the Routes tab a routing.rules fragment. Scan data: a github.com page.</figcaption>
+    </figure>
+
+    <h2>What you need</h2>
+    <ul>
+        <li>Xray-core with a configured outbound and a known tag &mdash; on a computer, a server or in the <a href="https://github.com/MHSanaei/3x-ui" target="_blank" rel="noopener">3X-UI</a> panel</li>
+        <li>or <a href="https://github.com/2dust/v2rayN" target="_blank" rel="noopener">v2rayN</a> for Windows, Linux or macOS &mdash; a client with the Xray and sing-box cores</li>
+        <li>The <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> extension in Chrome</li>
+    </ul>
+
+    <h2>Step 1. Generate the rules in NetRoute</h2>
+    <ol>
+        <li>Open the website in Chrome and reload the page so the extension’s sniffer sees the background requests</li>
+        <li>Start <strong>NetRoute</strong></li>
+        <li>Under <strong>Target OS</strong>, “Proxy clients” group, pick <strong>Xray / 3X-UI / Streisand</strong> for an Xray-core config or <strong>v2rayN (rules import)</strong> for importing into v2rayN</li>
+        <li>In the <strong>Device</strong> field enter the tag of your outbound &mdash; the placeholder shows the default <code>proxy</code>. The <strong>Gateway IP</strong> field does not affect these formats</li>
+        <li>Click <strong>Analyze website</strong></li>
+        <li>On the <strong>Domains</strong> tab untick what you do not need &mdash; the rules update at once</li>
+        <li>Click <strong>Download</strong>: the file is named after the site, for example <code>github_com_rules.json</code></li>
+    </ol>
+
+    <h2>Step 2a. Xray-core: insert the rules into the config</h2>
+    <p>Open Xray’s <code>config.json</code> and add both objects from <code>rules</code> to the <code>routing.rules</code> array <strong>above</strong> the general rules. Per the Xray documentation rules are checked top to bottom and the first match wins; a connection that matched no rule leaves through the first outbound of the config. Make sure <code>outboundTag</code> equals the tag of your proxy outbound and that <code>domainStrategy</code> is set once in the <code>routing</code> section.</p>
+    <p>Restart Xray.</p>
+
+    <h2>Step 2b. 3X-UI: rules in the Xray settings</h2>
+    <p>3X-UI is a web panel for Xray-core servers. Per its documentation the routing rules are Xray rules with the <code>domain</code>, <code>ip</code>, <code>port</code>, <code>network</code>, <code>protocol</code>, <code>inboundTag</code>, <code>sourceIP</code> matchers and an <code>outboundTag</code> or <code>balancerTag</code> target; there is no separate per-rule editor &mdash; you edit the JSON of the config under <strong>Xray Settings</strong>, and the panel reloads Xray by itself.</p>
+    <ol>
+        <li>Open <strong>Xray Settings</strong> in the panel</li>
+        <li>Find the <code>routing.rules</code> array in the JSON and insert both objects from the NetRoute file at its beginning</li>
+        <li>Put the tag of the wanted outbound into <code>outboundTag</code> &mdash; for example a WARP connection or another server, if these sites should go that way</li>
+        <li>Save &mdash; the panel reloads Xray</li>
+    </ol>
+    <p>On a server the rule means: the clients’ traffic to these domains and networks is sent by the server to the given outbound, the rest as configured further down the rule list.</p>
+
+    <h2>Step 2c. v2rayN: importing the rules</h2>
+    <p>For v2rayN pick the <strong>v2rayN (rules import)</strong> format in NetRoute. The v2rayN interface strings to follow:</p>
+    <ol>
+        <li>Open the downloaded file and copy its contents to the clipboard</li>
+        <li>In v2rayN open <strong>Routing</strong> &rarr; <strong>Routing Setting</strong></li>
+        <li>Choose <strong>Import Rules From Clipboard</strong> (there are also <strong>Import Rules From File</strong> and <strong>Import Rules From Subscription URL</strong>)</li>
+        <li>To the question <em>“Do you want to append rules? Choose yes to append, no to replace.”</em> answer <strong>Yes</strong> to add the rules to the existing ones</li>
+        <li>Check that the rule set they landed in is marked active (<strong>Set as active rule</strong>)</li>
+    </ol>
+    <p>In v2rayN’s rule editor the same lists appear in the <strong>Domain</strong> and <strong>IP or IP CIDR</strong> fields; the entry syntax is Xray’s, and the v2rayN wiki points to the Xray documentation for it.</p>
+
+    <h2>Step 3. Check</h2>
+    <p>Open the site &mdash; it should go through the outbound with the tag from the rule, other sites as before. If the site does not open or bypasses the proxy, go through the common problems.</p>
+
+    <h2>Common problems</h2>
+    <h3>The rule does not fire</h3>
+    <p>Rules are checked top to bottom and the first match wins &mdash; if a rule above already takes this traffic (for example a general <code>geosite</code> rule), the NetRoute rule is never reached. Move the NetRoute rules up.</p>
+
+    <h3>Xray does not start after the edit</h3>
+    <p>Check the JSON: a stray comma or a second <code>routing</code> section breaks the config. Only the objects from the <code>rules</code> array go in, not the whole file.</p>
+
+    <h3>Tag not found</h3>
+    <p><code>outboundTag</code> has to equal the tag of an existing outbound literally. In NetRoute the tag is set in the <strong>Device</strong> field before the scan.</p>
+
+    <h3>Streisand</h3>
+    <p>Streisand is a client for iOS, macOS and visionOS with rule-based proxy setup (“Rule-based Proxy Setup” in its App Store description). How to add your own rules to it is described in the app’s documentation; the domain and network lists from the NetRoute file fit that purpose.</p>
+
+    <h3>Several sites in one file</h3>
+    <p>Click <strong>URL list</strong> next to the analyze button and paste the list of sites &mdash; NetRoute builds one set of rules for all of them, the file is named <code>bulk_N_rules.json</code>.</p>
+
+    <h2 id="dns-leak">DNS and leaks</h2>
+    <p>A domain rule in Xray is matched against the destination name; how and where names are resolved is decided by <code>domainStrategy</code> and the <code>dns</code> section of your config &mdash; the NetRoute rules do not change them. The browser’s queries go wherever its own DNS is configured: in Chrome turn off “Use secure DNS” or point it at a resolver you trust, otherwise Chrome resolves names past the client.</p>
+    <p>Check: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> with the client on should not show the ISP’s resolver.</p>
+
+    <h2 id="examples">Example Configuration File</h2>
+    <p>Ready-to-edit template. Replace the example domains and networks with output from NetRoute for your target sites.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/xray-routing.json" target="_blank" rel="noopener"><code>xray-routing.json</code></a> &mdash; a fragment of an Xray-core config with a <code>routing</code> section; next to it <code>v2rayn-rules.json</code> for importing into v2rayN</li>
+    </ul>
+    <pre><code><!-- EMBED:xray-routing.json -->
+
+<!-- /EMBED --></code></pre>
+
+    <p class="callout"><strong>Hint:</strong> the text formats download with a comment header. Untick <strong>“Include comments in exported files”</strong> in the NetRoute options to get the rules alone; the JSON formats never carry comments.</p>
+
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">All example configs on GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Official Documentation</h2>
+    <ul>
+        <li><a href="https://xtls.github.io/config/routing.html" target="_blank" rel="noopener">Xray: Routing &mdash; domainStrategy, rule order, the domain and ip forms (zh)</a></li>
+        <li><a href="https://github.com/MHSanaei/3x-ui" target="_blank" rel="noopener">3X-UI &mdash; README and the panel documentation</a></li>
+        <li><a href="https://github.com/MHSanaei/3x-ui/blob/main/docs/content/docs/en/operations/outbounds-routing.mdx" target="_blank" rel="noopener">3X-UI: Outbounds &amp; Routing</a></li>
+        <li><a href="https://github.com/2dust/v2rayN/wiki/Description-of-custom-routing-rules" target="_blank" rel="noopener">v2rayN: description of custom routing rules (zh)</a></li>
+        <li><a href="https://github.com/2dust/v2rayCustomRoutingList" target="_blank" rel="noopener">v2rayN: the format of the rule lists for import</a></li>
+    </ul>
+
+    <h2 id="related">Related Guides</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> &mdash; routes from a <code>.bat</code> upload</li>
+        <li><a href="./mikrotik.html">MikroTik</a> &mdash; <code>.rsc</code> script import into RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> &mdash; split tunneling via <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> &mdash; <code>ip route</code> shell script</li>
+        <li><a href="./openvpn.html">OpenVPN</a> &mdash; <code>route</code> directives in the client config</li>
+        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; rule-set for sing-box and Hiddify</li>
+        <li><a href="./happ.html">Happ</a> &mdash; routing profile as a happ://routing link</li>
+        <li><a href="./amnezia.html">AmneziaVPN</a> &mdash; site list for split tunneling</li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>Ready to try?</h3>
+        <p>NetRoute — a free Chrome extension to generate routes from any website.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Install Extension</a>
+    </div>
+
+</article>
+
+</body>
+</html>

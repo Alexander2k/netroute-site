@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <script src="../theme.js"></script>
+    <title>AmneziaVPN site list from any website: split tunneling by addresses — guide | NetRoute</title>
+    <meta name="description" content="How to get a file for import into AmneziaVPN with the addresses and subnets of a website in NetRoute and turn on split tunneling for sites: modes, import via the ⋮ menu, IPv4 and Amnezia Free limits.">
+    <meta name="keywords" content="amnezia split tunneling, amneziavpn split tunneling sites, amnezia site list, amnezia import ip-list.json, amnezia only the sites listed here, amneziawg split tunneling sites, amnezia service subnets">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/guides/amnezia.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/amnezia.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/amnezia.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AmneziaVPN site list from any website">
+    <meta property="og:description" content="NetRoute turns the addresses and subnets of a website into a file for import into AmneziaVPN — split tunneling for sites in three steps.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/guides/amnezia.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="en_US">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="preload" as="style" href="../style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../style.css"></noscript>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap"></noscript>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://alexander2k.github.io/netroute-site/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Guides",
+                "item": "https://alexander2k.github.io/netroute-site/guides/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "AmneziaVPN"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to import a NetRoute site list into AmneziaVPN",
+        "description": "Generate an AmneziaVPN list with the NetRoute extension, import the file in the split tunneling settings for sites via the ⋮ menu and turn on the mode “Only the sites listed here will be accessed through the VPN”.",
+        "inLanguage": "en",
+        "totalTime": "PT5M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Generate the list in NetRoute",
+                "text": "Open the website in Chrome, start NetRoute, pick “AmneziaVPN (site list)” under “Target OS”, click “Analyze website” and download <site>_rules.json."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Import the file into AmneziaVPN",
+                "text": "Open the split tunneling settings for sites, choose the import in the ⋮ menu — replace the list or add to the existing one — and pick the file."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Turn on the mode and connect",
+                "text": "Choose the mode “Only the sites listed here will be accessed through the VPN”, enable split tunneling and connect to the VPN."
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "AmneziaVPN site list from any website: split tunneling by addresses — guide",
+        "description": "How to get a file for import into AmneziaVPN with the addresses and subnets of a website in NetRoute and turn on split tunneling for sites: modes, import via the ⋮ menu, IPv4 and Amnezia Free limits.",
+        "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
+        "inLanguage": "en",
+        "datePublished": "2026-10-17",
+        "dateModified": "2026-10-17",
+        "author": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://alexander2k.github.io/netroute-site/icon.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://alexander2k.github.io/netroute-site/guides/amnezia.html"
+        }
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute</span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Home</a>
+            <div class="lang-switch">
+                <span class="lang-current">EN</span>
+                <div class="lang-dropdown">
+                    <a href="./amnezia.html" class="lang-active">English</a>
+                    <a href="../ru/guides/amnezia.html">Русский</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; Back to Home</a>
+    <h1>AmneziaVPN site list from any website</h1>
+    <p class="lead">AmneziaVPN can send only the addresses from a list through the VPN &mdash; split tunneling for sites. The list consists of IPv4 addresses and subnets, and building it by hand for a site with dozens of domains takes long. NetRoute does it from the page: open the site, click “Analyze website”, download the file for import.</p>
+
+    <h2 id="syntax">What is inside the file</h2>
+    <p>The file is a JSON array of entries in the shape AmneziaVPN itself exports its list: each entry has a <code>hostname</code>, the list of addresses <code>ips</code> and the first of them in <code>ip</code> &mdash; for older versions of the app.</p>
+    <pre><code>[
+  { "hostname": "api.github.com", "ips": ["140.82.112.4"], "ip": "140.82.112.4" },
+  { "hostname": "github.com", "ips": ["140.82.112.3"], "ip": "140.82.112.3" },
+  { "hostname": "140.82.112.0/20", "ips": [], "ip": "" },
+  { "hostname": "185.199.108.0/22", "ips": [], "ip": "" }
+]</code></pre>
+    <ul>
+        <li><strong>Hosts with addresses.</strong> Per the client’s source code AmneziaVPN does not resolve names on import &mdash; the entries are stored as given, and resolving happens only when a site is added by hand. So NetRoute writes every host with the IPv4 addresses found during the scan; hosts without IPv4 addresses are left out. Names are not folded: <code>www.ozon.ru</code> and <code>ozon.ru</code> are separate entries with their own addresses.</li>
+        <li><strong>Subnets.</strong> After the hosts come the aggregated IPv4 networks &mdash; the same ones NetRoute emits as router routes; with <strong>Route Optimization &rarr; BGP Prefix</strong> these are the provider’s announced prefixes rather than single addresses.</li>
+        <li><strong>IPv4 only.</strong> Per the AmneziaVPN documentation IPv6 is not supported; IPv6 addresses are not written to the file.</li>
+    </ul>
+
+    <figure class="shot">
+        <img class="shot-light" src="../screenshots/guides/en/amnezia-light.png" width="480" height="664" loading="lazy" alt="NetRoute popup after scanning github.com: the selected format and the result on the Routes tab">
+        <img class="shot-dark" src="../screenshots/guides/en/amnezia-dark.png" width="480" height="664" loading="lazy" alt="NetRoute popup after scanning github.com: the selected format and the result on the Routes tab">
+        <figcaption>The NetRoute popup with the “AmneziaVPN (site list)” format: the Routes tab holds the list for import, hosts with addresses and subnets. Scan data: a github.com page.</figcaption>
+    </figure>
+
+    <h2>What you need</h2>
+    <ul>
+        <li>The <a href="https://amnezia.org/" target="_blank" rel="noopener">AmneziaVPN</a> app with a configured connection. Per the documentation split tunneling by addresses is not available in Amnezia Free</li>
+        <li>A platform with tunneling by addresses: per the documentation iOS, macOS and Linux support only that, Windows and Android both by addresses and by apps</li>
+        <li>The <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> extension in Chrome</li>
+    </ul>
+
+    <h2>Step 1. Generate the list in NetRoute</h2>
+    <ol>
+        <li>Open the website in Chrome and reload the page so the extension’s sniffer sees the background requests</li>
+        <li>Start <strong>NetRoute</strong></li>
+        <li>Under <strong>Target OS</strong> pick <strong>AmneziaVPN (site list)</strong> &mdash; the “VPN clients” group</li>
+        <li>The <strong>Gateway IP</strong> and <strong>Device</strong> fields do not affect this format</li>
+        <li>Click <strong>Analyze website</strong></li>
+        <li>On the <strong>Domains</strong> tab untick what you do not need &mdash; counters, ad networks, third-party CDNs; the list updates at once</li>
+        <li>Click <strong>Download</strong>: the file is named after the site, for example <code>github_com_rules.json</code></li>
+    </ol>
+    <div class="callout">
+        <strong>About changing addresses.</strong> The AmneziaVPN documentation warns that an address obtained from a domain is not updated automatically, and that large services need whole subnets. So before scanning enable <strong>Route Optimization &rarr; BGP Prefix</strong> in the NetRoute options &mdash; the file then carries the announced subnets, which survive address rotation at CDNs.
+    </div>
+
+    <h2>Step 2. Import the file into AmneziaVPN</h2>
+    <p>Per the AmneziaVPN documentation the list is imported from the split tunneling settings for sites:</p>
+    <ol>
+        <li>Open <strong>Split tunneling</strong> and go to the split tunneling settings for sites</li>
+        <li>Tap the <strong>⋮</strong> icon and choose the import: replace the list &mdash; when starting from scratch, or add the imported sites to the existing ones &mdash; when extending</li>
+        <li>Pick the downloaded file; the entries appear in the list</li>
+    </ol>
+
+    <h2>Step 3. Turn on the mode and connect</h2>
+    <ol>
+        <li>Choose the mode <strong>Only the sites listed here will be accessed through the VPN</strong> &mdash; only the sites from the file go through the tunnel, the rest of the traffic goes direct. The second mode, <strong>Addresses from the list should not be accessed via VPN</strong>, does the opposite: it excludes the list from the tunnel</li>
+        <li>Enable split tunneling for sites</li>
+        <li>Connect to the VPN</li>
+    </ol>
+
+    <h2>Step 4. Check</h2>
+    <p>Open the site the list was built for: it should open through the VPN, sites outside the list direct. If the site opens only partly &mdash; some of its domains are missing from the list: check the <strong>Domains</strong> tab in NetRoute, walk through the site before scanning (sign in, open a video) so the sniffer sees the deferred requests, and import the file again, replacing the list.</p>
+
+    <h2>Common problems</h2>
+    <h3>The file does not import</h3>
+    <p>Per the client’s source code the file must be a JSON array of objects; a plain array of strings is rejected. The NetRoute file already has the right shape &mdash; check that it was downloaded completely and not edited in a text editor that replaces quotes.</p>
+
+    <h3>The site worked, then stopped</h3>
+    <p>The site’s addresses changed. Rebuild the file in NetRoute &mdash; with <strong>BGP Prefix</strong> enabled it carries subnets instead of single addresses &mdash; and import it replacing the list.</p>
+
+    <h3>Unrelated traffic went through the VPN</h3>
+    <p>The AmneziaVPN documentation warns that the wide subnets of large services can capture unrelated traffic. Untick third-party CDNs on the <strong>Domains</strong> tab in NetRoute or turn the BGP optimization off for such sites.</p>
+
+    <h3>The connection to your own server was lost</h3>
+    <p>Per the documentation, when the address of your VPN server falls inside one of the added subnets the connection breaks &mdash; remove that subnet from the list.</p>
+
+    <h3>Several sites in one list</h3>
+    <p>Click <strong>URL list</strong> next to the analyze button and paste the list of sites &mdash; NetRoute builds one file for all of them, named <code>bulk_N_rules.json</code>.</p>
+
+    <h2 id="dns-leak">DNS and leaks</h2>
+    <p>AmneziaVPN’s split tunneling works by addresses: traffic to the addresses from the list enters the tunnel, while the browser’s DNS queries go wherever its resolver is configured. When that is the ISP’s resolver, it sees the names of the sites even while the traffic itself goes through the VPN. In Chrome turn off “Use secure DNS” or point it at a resolver you trust; the DNS settings of AmneziaVPN itself are described in its documentation.</p>
+    <p>Check: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> with the VPN connected shows whose resolver answers your queries.</p>
+
+    <h2 id="examples">Example Configuration File</h2>
+    <p>Ready-to-edit template. Replace the example domains and networks with output from NetRoute for your target sites.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/amnezia-sites.json" target="_blank" rel="noopener"><code>amnezia-sites.json</code></a> &mdash; a list for import into AmneziaVPN: hosts with addresses and subnets</li>
+    </ul>
+    <pre><code><!-- EMBED:amnezia-sites.json -->
+[
+  {
+    "hostname": "api.github.com",
+    "ips": [
+      "140.82.112.4"
+    ],
+    "ip": "140.82.112.4"
+  },
+  {
+    "hostname": "avatars.githubusercontent.com",
+    "ips": [
+      "185.199.108.133"
+    ],
+    "ip": "185.199.108.133"
+  },
+  {
+    "hostname": "github.com",
+    "ips": [
+      "140.82.112.3"
+    ],
+    "ip": "140.82.112.3"
+  },
+  {
+    "hostname": "github.githubassets.com",
+    "ips": [
+      "185.199.108.154"
+    ],
+    "ip": "185.199.108.154"
+  },
+  {
+    "hostname": "140.82.112.0/20",
+    "ips": [],
+    "ip": ""
+  },
+  {
+    "hostname": "185.199.108.0/22",
+    "ips": [],
+    "ip": ""
+  }
+]
+<!-- /EMBED --></code></pre>
+
+    <p class="callout"><strong>Hint:</strong> the text formats download with a comment header. Untick <strong>“Include comments in exported files”</strong> in the NetRoute options to get the rules alone; the JSON formats never carry comments.</p>
+
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">All example configs on GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Official Documentation</h2>
+    <ul>
+        <li><a href="https://docs.amnezia.org/documentation/instructions/vpn-split-tunneling" target="_blank" rel="noopener">AmneziaVPN: split tunneling &mdash; modes, import, limits</a></li>
+        <li><a href="https://github.com/amnezia-vpn/amnezia-client" target="_blank" rel="noopener">AmneziaVPN: client source code &mdash; the import format in ipSplitTunnelingController</a></li>
+        <li><a href="https://amnezia.org/blog/what-is-split-tunneling-and-why-you-need-it" target="_blank" rel="noopener">Amnezia: what split tunneling is</a></li>
+    </ul>
+
+    <h2 id="related">Related Guides</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> &mdash; routes from a <code>.bat</code> upload</li>
+        <li><a href="./mikrotik.html">MikroTik</a> &mdash; <code>.rsc</code> script import into RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> &mdash; split tunneling via <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> &mdash; <code>ip route</code> shell script</li>
+        <li><a href="./openvpn.html">OpenVPN</a> &mdash; <code>route</code> directives in the client config</li>
+        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; rule-set for sing-box and Hiddify</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; routing.rules for Xray-core, 3X-UI and v2rayN</li>
+        <li><a href="./happ.html">Happ</a> &mdash; routing profile as a happ://routing link</li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>Ready to try?</h3>
+        <p>NetRoute — a free Chrome extension to generate routes from any website.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Install Extension</a>
+    </div>
+
+</article>
+
+</body>
+</html>

@@ -109,7 +109,8 @@ def shot_figure(page: dict, ui: dict, lang: str) -> str:
     if not fmt:
         return ''
     shots_lang = 'ru' if lang == 'ru' else 'en'
-    rel = f'../../screenshots/guides/{shots_lang}/{fmt}'
+    up = '../' if lang == 'en' else '../../'
+    rel = f'{up}screenshots/guides/{shots_lang}/{fmt}'
     light = os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-light.png')
     dark = os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-dark.png')
     size = png_size(light)
@@ -136,11 +137,13 @@ def render_page(lang: str, slug: str, page: dict, ui: dict, all_pages: dict, tod
         f'    <link rel="alternate" hreflang="{code}" href="{url_of(code, slug)}">\n' for code in present
     ) + f'    <link rel="alternate" hreflang="x-default" href="{url_of(x_default, slug)}">\n'
 
+    # English pages live in guides/ (one level below the root), the others in <lang>/guides/
+    up = '../' if lang == 'en' else '../../'
     dropdown = ''
     for code, (p, _, _, label, _) in LANGS.items():
         if code not in present:
             continue
-        href = f'./{slug}.html' if code == lang else f'../../{p}guides/{slug}.html'
+        href = f'./{slug}.html' if code == lang else f'{up}{p}guides/{slug}.html'
         cls = ' class="lang-active"' if code == lang else ''
         dropdown += f'                    <a href="{href}"{cls}>{label}</a>\n'
 
@@ -211,7 +214,7 @@ def render_page(lang: str, slug: str, page: dict, ui: dict, all_pages: dict, tod
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="{CSP}">
-    <script src="../../theme.js"></script>
+    <script src="{up}theme.js"></script>
     <title>{page['title']}</title>
     <meta name="description" content="{page['description']}">
     <meta name="keywords" content="{page['keywords']}">
@@ -228,9 +231,9 @@ def render_page(lang: str, slug: str, page: dict, ui: dict, all_pages: dict, tod
     <meta property="og:locale" content="{locale}">
     <meta name="theme-color" content="#0e1117">
 
-    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-    <link rel="preload" as="style" href="../../style.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="../../style.css"></noscript>
+    <link rel="icon" type="image/svg+xml" href="{up}favicon.svg">
+    <link rel="preload" as="style" href="{up}style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{up}style.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="{FONTS}" onload="this.onload=null;this.rel='stylesheet'">

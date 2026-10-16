@@ -16,6 +16,7 @@ Covers:
   - FAQPage: mainEntity[].name and .acceptedAnswer.text
   - SoftwareApplication: name, applicationCategory, operatingSystem, offers/aggregateRating
   - sitemap.xml: every <loc> exists as file; every content HTML appears in sitemap
+  - <img>: relative src exists, alt and width/height present
 """
 
 import html
@@ -616,6 +617,31 @@ def check_internal_links(fails: Failures):
                     fails.add(path, f'broken anchor: {href} -> {os.path.relpath(target, ROOT)} has no id="{anchor}"')
 
 
+def check_images(fails: Failures):
+    """Every <img src="..."> with a relative path must point at an existing file, and carry
+    width/height (layout stability) and alt text. The guides embed popup renders from
+    screenshots/guides/<lang>/; a wrong "../" depth would pass the link check unnoticed.
+    """
+    for path in collect_html_files():
+        with open(path, encoding='utf-8') as f:
+            content = f.read()
+        for tag in re.findall(r'<img\s[^>]*>', content):
+            m = re.search(r'\bsrc="([^"]+)"', tag)
+            if not m:
+                fails.add(path, f'<img> without src: {tag[:80]}')
+                continue
+            src = m.group(1)
+            if re.match(r'^(https?:|data:)', src):
+                continue
+            target, _ = _resolve_relative_url(path, src)
+            if not os.path.exists(target):
+                fails.add(path, f'broken image: {src} -> {os.path.relpath(target, ROOT)} (file missing)')
+            if 'alt="' not in tag:
+                fails.add(path, f'<img> without alt: {src}')
+            if 'width="' not in tag or 'height="' not in tag:
+                fails.add(path, f'<img> without width/height: {src}')
+
+
 def check_404_navigation(fails: Failures):
     """404.html must offer navigation back to key destinations: home,
     guides hub, and ideally the 5 platform guides — so a wrong URL still
@@ -731,6 +757,7 @@ def main():
     check_sitemap(fails)
     check_404_navigation(fails)
     check_internal_links(fails)
+    check_images(fails)
 
     if fails:
         print(f'\n❌ {len(fails)} failure(s):\n')

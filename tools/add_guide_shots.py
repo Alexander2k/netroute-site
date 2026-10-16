@@ -74,7 +74,9 @@ def figure(lang: str, fmt: str) -> str:
     if not size or not os.path.exists(dark):
         return ''
     w, h = size[0] // 2, size[1] // 2
-    rel = f'../../screenshots/guides/{shots_lang}/{fmt}'
+    # English guides live in guides/ (one level below the root), the others in <lang>/guides/
+    up = '../' if lang == 'en' else '../../'
+    rel = f'{up}screenshots/guides/{shots_lang}/{fmt}'
     alt = TEXT[lang]['alt'].format(name=NAMES[fmt])
     caption = TEXT[lang]['caption'].format(name=NAMES[fmt])
     return (f'    <figure class="shot">\n'
