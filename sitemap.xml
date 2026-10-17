@@ -23,7 +23,7 @@
         <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/"/>
         <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/"/>
-        <lastmod>2026-10-15</lastmod>
+        <lastmod>2026-10-17</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
@@ -423,6 +423,8 @@
         <loc>https://alexander2k.github.io/netroute-site/ru/guides/singbox.html</loc>
         <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/singbox.html"/>
         <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/singbox.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/singbox.html"/>
         <lastmod>2026-10-17</lastmod>
         <changefreq>monthly</changefreq>
@@ -434,6 +436,8 @@
         <loc>https://alexander2k.github.io/netroute-site/ru/guides/xray.html</loc>
         <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/xray.html"/>
         <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/xray.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/xray.html"/>
         <lastmod>2026-10-17</lastmod>
         <changefreq>monthly</changefreq>
@@ -445,6 +449,8 @@
         <loc>https://alexander2k.github.io/netroute-site/ru/guides/happ.html</loc>
         <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/happ.html"/>
         <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/happ.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/happ.html"/>
         <lastmod>2026-10-17</lastmod>
         <changefreq>monthly</changefreq>
@@ -456,6 +462,8 @@
         <loc>https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html</loc>
         <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/amnezia.html"/>
         <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/amnezia.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/amnezia.html"/>
         <lastmod>2026-10-17</lastmod>
         <changefreq>monthly</changefreq>
@@ -467,6 +475,8 @@
         <loc>https://alexander2k.github.io/netroute-site/guides/singbox.html</loc>
         <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/singbox.html"/>
         <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/singbox.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/singbox.html"/>
         <lastmod>2026-10-17</lastmod>
         <changefreq>monthly</changefreq>
@@ -478,6 +488,8 @@
         <loc>https://alexander2k.github.io/netroute-site/guides/xray.html</loc>
         <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/xray.html"/>
         <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/xray.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/xray.html"/>
         <lastmod>2026-10-17</lastmod>
         <changefreq>monthly</changefreq>
@@ -489,6 +501,8 @@
         <loc>https://alexander2k.github.io/netroute-site/guides/happ.html</loc>
         <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/happ.html"/>
         <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/happ.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/happ.html"/>
         <lastmod>2026-10-17</lastmod>
         <changefreq>monthly</changefreq>
@@ -500,6 +514,112 @@
         <loc>https://alexander2k.github.io/netroute-site/guides/amnezia.html</loc>
         <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/amnezia.html"/>
         <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/amnezia.html"/>
+        <lastmod>2026-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- singbox guide (ES) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/es/guides/singbox.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/singbox.html"/>
+        <lastmod>2026-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- singbox guide (ZH) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/zh/guides/singbox.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/singbox.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/singbox.html"/>
+        <lastmod>2026-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- xray guide (ES) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/es/guides/xray.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/xray.html"/>
+        <lastmod>2026-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- xray guide (ZH) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/zh/guides/xray.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/xray.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/xray.html"/>
+        <lastmod>2026-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- happ guide (ES) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/es/guides/happ.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/happ.html"/>
+        <lastmod>2026-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- happ guide (ZH) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/zh/guides/happ.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/happ.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/happ.html"/>
+        <lastmod>2026-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- amnezia guide (ES) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/es/guides/amnezia.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/amnezia.html"/>
+        <lastmod>2026-10-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- amnezia guide (ZH) -->
+    <url>
+        <loc>https://alexander2k.github.io/netroute-site/zh/guides/amnezia.html</loc>
+        <xhtml:link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/amnezia.html"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/amnezia.html"/>
         <xhtml:link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/amnezia.html"/>
         <lastmod>2026-10-17</lastmod>
         <changefreq>monthly</changefreq>

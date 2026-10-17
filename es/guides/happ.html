@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <script src="../../theme.js"></script>
+    <title>Perfil de enrutamiento de Happ desde cualquier sitio web: dominios y redes a través del proxy — guía | NetRoute</title>
+    <meta name="description" content="Cómo obtener en NetRoute un perfil de enrutamiento de Happ con dominios y redes de un sitio y añadirlo con un enlace happ://routing/onadd: base64, importación por portapapeles o QR, comprobación.">
+    <meta name="keywords" content="happ routing, happ perfil de enrutamiento, happ routing onadd, happ json perfil de enrutamiento, happ proxysites, happ split tunneling, happ reglas para un sitio web, happ xray enrutamiento">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/es/guides/happ.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/happ.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/happ.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/happ.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/happ.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/happ.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Perfil de enrutamiento de Happ desde cualquier sitio web">
+    <meta property="og:description" content="NetRoute convierte los dominios y redes de un sitio web en un perfil de enrutamiento de Happ. Codifícalo en base64, añádelo con un enlace happ://routing/onadd — solo estos sitios pasan por el proxy.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/es/guides/happ.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="es_ES">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="preload" as="style" href="../../style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../../style.css"></noscript>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap"></noscript>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Inicio",
+                "item": "https://alexander2k.github.io/netroute-site/es/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Guías",
+                "item": "https://alexander2k.github.io/netroute-site/es/guides/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Happ"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Cómo añadir a Happ un perfil de enrutamiento de NetRoute",
+        "description": "Genera un perfil de Happ con la extensión NetRoute, codifica el JSON en base64, construye el enlace happ://routing/onadd/{base64} y añádelo a Happ desde el portapapeles, por código QR o como deeplink.",
+        "inLanguage": "es",
+        "totalTime": "PT5M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Genera el perfil en NetRoute",
+                "text": "Abre el sitio web en Chrome, inicia NetRoute, elige «Happ» en «SO de destino», haz clic en «Analizar sitio web» y descarga <sitio>_rules.json."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Construye el enlace",
+                "text": "Codifica el contenido del archivo en base64 y antepón happ://routing/onadd/ — el enlace resultante añade el perfil y lo activa al instante."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Añade el enlace a Happ",
+                "text": "Copia el enlace al portapapeles, abre Happ y añádelo con el botón «+» (desde el portapapeles, por código QR o como deeplink). Reconecta después de cambiar el perfil."
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Perfil de enrutamiento de Happ desde cualquier sitio web: dominios y redes a través del proxy — guía",
+        "description": "Cómo obtener en NetRoute un perfil de enrutamiento de Happ con dominios y redes de un sitio y añadirlo con un enlace happ://routing/onadd: base64, importación por portapapeles o QR, comprobación.",
+        "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
+        "inLanguage": "es",
+        "datePublished": "2026-10-17",
+        "dateModified": "2026-10-17",
+        "author": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://alexander2k.github.io/netroute-site/icon.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://alexander2k.github.io/netroute-site/es/guides/happ.html"
+        }
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute</span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Inicio</a>
+            <div class="lang-switch">
+                <span class="lang-current">ES</span>
+                <div class="lang-dropdown">
+                    <a href="../../guides/happ.html">English</a>
+                    <a href="../../ru/guides/happ.html">Русский</a>
+                    <a href="./happ.html" class="lang-active">Español</a>
+                    <a href="../../zh/guides/happ.html">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; Volver al inicio</a>
+    <h1>Perfil de enrutamiento de Happ desde cualquier sitio web</h1>
+    <p class="lead">Happ es un cliente multiplataforma sobre el núcleo Xray para Windows, macOS, Linux, iOS, Android y plataformas de TV. Qué pasa por el proxy lo decide un <strong>perfil de enrutamiento</strong>: listas de dominios y direcciones. NetRoute construye ese perfil desde un sitio web como JSON, y entra en la app como un enlace <code>happ://routing/onadd/…</code>.</p>
+
+    <h2 id="syntax">Qué contiene el archivo</h2>
+    <p>Un perfil de enrutamiento de Happ es un documento JSON con ajustes de DNS y de archivos geo y seis listas: qué pasa por el proxy, qué va directo y qué se bloquea &mdash; por separado para dominios y para direcciones. NetRoute rellena las listas del proxy y deja el resto en valores que Happ acepta por defecto:</p>
+    <pre><code>{
+  "Name": "NetRoute github.com",
+  "GlobalProxy": "false",
+  "RemoteDNSType": "DoH",
+  "RemoteDNSDomain": "https://1.1.1.1/dns-query",
+  "RemoteDNSIP": "1.1.1.1",
+  "DomesticDNSType": "DoH",
+  "DomesticDNSDomain": "https://77.88.8.8/dns-query",
+  "DomesticDNSIP": "77.88.8.8",
+  "Geoipurl": "",
+  "Geositeurl": "",
+  "LastUpdated": "1760572800",
+  "DnsHosts": {},
+  "RouteOrder": "block-proxy-direct",
+  "DirectSites": [],
+  "DirectIp": ["geoip:private"],
+  "ProxySites": ["domain:github.com", "domain:githubusercontent.com"],
+  "ProxyIp": ["140.82.112.0/20", "185.199.108.0/22", "2606:50c0::/32"],
+  "BlockSites": [],
+  "BlockIp": [],
+  "DomainStrategy": "IPIfNonMatch",
+  "FakeDNS": "false"
+}</code></pre>
+    <p>Qué significan los campos, según la documentación de Happ:</p>
+    <ul>
+        <li><code>GlobalProxy</code> &mdash; con <code>true</code> todo el tráfico pasa por el proxy por defecto, con <code>false</code> va directo; el mismo valor fija la salida de todo lo que no coincidió con ninguna regla. NetRoute pone <code>false</code>: solo los sitios listados pasan por el proxy.</li>
+        <li><code>ProxySites</code> / <code>ProxyIp</code> &mdash; dominios y direcciones que pasan por el proxy. Los dominios se escriben como <code>domain:name</code> &mdash; según la documentación de Xray, es el dominio y todos sus subdominios; la lista está compactada, <code>www.</code> descartado. Las direcciones son las mismas redes agregadas que NetRoute emite como rutas de router, IPv4 e IPv6.</li>
+        <li><code>DirectSites</code> / <code>DirectIp</code> y <code>BlockSites</code> / <code>BlockIp</code> &mdash; directo y bloqueado; NetRoute deja en directo solo las direcciones privadas (<code>geoip:private</code>).</li>
+        <li><code>RouteOrder</code> &mdash; el orden en que se comprueban las reglas: primero bloqueo, luego proxy, luego directo.</li>
+        <li><code>DomainStrategy</code> &mdash; la estrategia de Xray: <code>IPIfNonMatch</code> resuelve un dominio a una dirección solo cuando ninguna regla coincidió por nombre.</li>
+        <li><code>RemoteDNS*</code> / <code>DomesticDNS*</code> &mdash; DNS para los sitios detrás del proxy y para el resto; <code>DoH</code> es DNS-over-HTTPS. Cambia los valores en el archivo antes de importar si quieres otros resolvers.</li>
+        <li><code>Geoipurl</code> / <code>Geositeurl</code> &mdash; enlaces a geoip.dat y geosite.dat; Happ rellena los valores vacíos desde su perfil por defecto.</li>
+        <li><code>LastUpdated</code> &mdash; una fecha Unix; el perfil se actualiza cuando es mayor que la anterior. NetRoute escribe la hora de generación.</li>
+        <li><code>DnsHosts</code> &mdash; correspondencias manuales «dominio: IP», como un archivo hosts; vacío en el perfil de NetRoute.</li>
+    </ul>
+
+    <figure class="shot">
+        <img class="shot-light" src="../../screenshots/guides/en/happ-light.png" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: el formato seleccionado y el resultado en la pestaña Rutas">
+        <img class="shot-dark" src="../../screenshots/guides/en/happ-dark.png" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: el formato seleccionado y el resultado en la pestaña Rutas">
+        <figcaption>El popup de NetRoute con el formato «Happ»: la pestaña Rutas contiene el perfil de enrutamiento que queda por codificar en un enlace. Datos del escaneo: una página de github.com.</figcaption>
+    </figure>
+
+    <h2>Qué necesitas</h2>
+    <ul>
+        <li>La app <a href="https://www.happ.su/main" target="_blank" rel="noopener">Happ</a> con un servidor añadido (Windows, macOS, Linux, iOS, Android, Android TV o Apple TV)</li>
+        <li>La extensión <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> en Chrome</li>
+        <li>Una forma de codificar un archivo en base64 &mdash; todos los sistemas tienen un comando para ello, ejemplos abajo</li>
+    </ul>
+
+    <h2>Paso 1. Genera el perfil en NetRoute</h2>
+    <ol>
+        <li>Abre el sitio web en Chrome y recarga la página para que el sniffer de la extensión vea las solicitudes en segundo plano</li>
+        <li>Inicia <strong>NetRoute</strong></li>
+        <li>En <strong>SO de destino</strong> elige <strong>Happ</strong> &mdash; el grupo «Clientes proxy»</li>
+        <li>Los campos <strong>IP de puerta de enlace</strong> y <strong>Dispositivo</strong> no afectan a este formato</li>
+        <li>Haz clic en <strong>Analizar sitio web</strong></li>
+        <li>En la pestaña <strong>Dominios</strong> desmarca lo que no necesites &mdash; contadores, redes publicitarias, CDN de terceros; el perfil se actualiza al instante</li>
+        <li>Haz clic en <strong>Descargar</strong>: el archivo recibe el nombre del sitio, por ejemplo <code>github_com_rules.json</code></li>
+    </ol>
+
+    <h2>Paso 2. Construye el enlace happ://routing/…</h2>
+    <p>Según la documentación de Happ, un perfil se añade con un enlace en el que <code>{base64}</code> es el perfil JSON convertido a texto base64:</p>
+    <ul>
+        <li><code>happ://routing/add/{base64}</code> &mdash; añade el perfil a la lista;</li>
+        <li><code>happ://routing/onadd/{base64}</code> &mdash; lo añade y lo activa al instante, incluso cuando otro perfil está activo.</li>
+    </ul>
+    <p>Codifica el archivo descargado:</p>
+    <pre><code># Windows, PowerShell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("github_com_rules.json"))
+
+# macOS
+base64 -i github_com_rules.json
+
+# Linux
+base64 -w0 github_com_rules.json</code></pre>
+    <p>Antepón <code>happ://routing/onadd/</code> al resultado &mdash; una sola línea, sin espacios ni saltos de línea. El enlace queda largo; es normal.</p>
+    <div class="callout">
+        Codifica el archivo localmente &mdash; un codificador en línea vería tu lista de sitios. Está planeado un botón integrado «Copiar como enlace de Happ» en NetRoute.
+    </div>
+
+    <h2>Paso 3. Añade el enlace a Happ</h2>
+    <p>Según la documentación de Happ, los enlaces se aceptan de tres maneras &mdash; copiados desde el portapapeles, escaneados desde un código QR y como deeplink:</p>
+    <ol>
+        <li>Copia el enlace construido al portapapeles</li>
+        <li>Abre Happ y toca <strong>+</strong> en la esquina superior derecha de la pantalla principal</li>
+        <li>Añade el enlace desde el portapapeles. A un teléfono lo más fácil es pasar el enlace como código QR o abrirlo como deeplink &mdash; el sistema ofrece abrirlo en Happ</li>
+        <li>Con <code>onadd</code> el perfil ya está activo; con <code>add</code> selecciónalo en la lista de perfiles de enrutamiento</li>
+        <li>Reconecta: según la documentación, los cambios de perfil se aplican tras <strong>Reconnect</strong> (reconectar)</li>
+    </ol>
+
+    <h2>Paso 4. Comprueba</h2>
+    <p>Abre el sitio para el que se construyó el perfil &mdash; debería abrirse a través del proxy, mientras que los demás sitios salen directamente (<code>GlobalProxy: false</code>). Si es al revés, comprueba qué perfil de enrutamiento está activo en Happ y que reconectaste tras la importación.</p>
+
+    <h2>Problemas frecuentes</h2>
+    <h3>El enlace no se acepta</h3>
+    <p>Comprueba que el base64 es una sola línea sin saltos (en Linux eso requiere el modificador <code>-w0</code>) y que va precedido exactamente de <code>happ://routing/onadd/</code> o <code>happ://routing/add/</code>.</p>
+
+    <h3>El perfil se añadió pero nada cambió</h3>
+    <p>Happ aplica un perfil cambiado al reconectar. Con un enlace <code>add</code> el perfil además tiene que seleccionarse como activo.</p>
+
+    <h3>El sitio obtiene datos de otros dominios</h3>
+    <p>Deberían verse en la pestaña <strong>Dominios</strong> de NetRoute &mdash; la extensión recoge los dominios de la página y de sus solicitudes en segundo plano. Recorre el sitio antes de escanear (inicia sesión, abre un video) para que las solicitudes diferidas también acaben en el perfil. Varios sitios en un perfil &mdash; el botón <strong>Lista de URL</strong> junto al botón de análisis: el archivo se llama <code>bulk_N_rules.json</code>.</p>
+
+    <h3>Un perfil en una suscripción</h3>
+    <p>Según la documentación de Happ, una suscripción JSON puede llevar estrictamente 0 o 1 perfil de enrutamiento, y un enlace de perfil puede pasarse en la cabecera <code>routing</code> o directamente en el cuerpo de la suscripción &mdash; práctico cuando repartes ajustes a varios dispositivos.</p>
+
+    <h2 id="dns-leak">DNS y fugas</h2>
+    <p>El perfil fija dos servidores DNS: <code>RemoteDNS</code> para los sitios detrás del proxy y <code>DomesticDNS</code> para el resto &mdash; ambos por DNS-over-HTTPS (Cloudflare y Yandex en el archivo de NetRoute). Cámbialos en el JSON antes de codificar si necesitas otros resolvers. Las consultas del navegador siguen yendo adonde esté configurado su propio DNS: en Chrome desactiva «Usar DNS seguro» o apúntalo a un resolver en el que confíes; de lo contrario Chrome resuelve los nombres saltándose el cliente.</p>
+    <p>Comprobación: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> con Happ activado debe mostrar el resolver del perfil, no el del ISP.</p>
+
+    <h2 id="examples">Archivo de configuración de ejemplo</h2>
+    <p>Plantilla lista para editar. Reemplaza los dominios y redes de ejemplo con la salida de NetRoute para tus sitios.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/happ-routing.json" target="_blank" rel="noopener"><code>happ-routing.json</code></a> &mdash; un perfil de enrutamiento de Happ con las listas <code>ProxySites</code> y <code>ProxyIp</code></li>
+    </ul>
+    <pre><code><!-- EMBED:happ-routing.json -->
+{
+  "Name": "NetRoute github.com",
+  "GlobalProxy": "false",
+  "RemoteDNSType": "DoH",
+  "RemoteDNSDomain": "https://1.1.1.1/dns-query",
+  "RemoteDNSIP": "1.1.1.1",
+  "DomesticDNSType": "DoH",
+  "DomesticDNSDomain": "https://77.88.8.8/dns-query",
+  "DomesticDNSIP": "77.88.8.8",
+  "Geoipurl": "",
+  "Geositeurl": "",
+  "LastUpdated": "1760572800",
+  "DnsHosts": {},
+  "RouteOrder": "block-proxy-direct",
+  "DirectSites": [],
+  "DirectIp": [
+    "geoip:private"
+  ],
+  "ProxySites": [
+    "domain:avatars.githubusercontent.com",
+    "domain:github.com",
+    "domain:github.githubassets.com"
+  ],
+  "ProxyIp": [
+    "140.82.112.0/20",
+    "185.199.108.0/22",
+    "2606:50c0::/32"
+  ],
+  "BlockSites": [],
+  "BlockIp": [],
+  "DomainStrategy": "IPIfNonMatch",
+  "FakeDNS": "false"
+}
+<!-- /EMBED --></code></pre>
+
+    <p class="callout"><strong>Consejo:</strong> los formatos de texto se descargan con una cabecera de comentarios. Desactiva <strong>«Incluir comentarios en archivos exportados»</strong> en las opciones de NetRoute para obtener solo las reglas; los formatos JSON nunca llevan comentarios.</p>
+
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Todos los ejemplos de configuración en GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Documentación oficial</h2>
+    <ul>
+        <li><a href="https://www.happ.su/main/dev-docs/routing.md" target="_blank" rel="noopener">Happ: Routing &mdash; los enlaces add y onadd, campos del perfil</a></li>
+        <li><a href="https://www.happ.su/main/faq/adding-configuration-subscription.md" target="_blank" rel="noopener">Happ: Adding Configuration/Subscription &mdash; portapapeles, código QR, deeplink</a></li>
+        <li><a href="https://www.happ.su/main/dev-docs/examples-of-links-and-parameters.md" target="_blank" rel="noopener">Happ: Examples of links and parameters</a></li>
+        <li><a href="https://xtls.github.io/config/routing.html" target="_blank" rel="noopener">Xray: Routing &mdash; la forma domain: y las estrategias de dominio (zh)</a></li>
+    </ul>
+
+    <h2 id="related">Guías relacionadas</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> &mdash; rutas desde un archivo <code>.bat</code></li>
+        <li><a href="./mikrotik.html">MikroTik</a> &mdash; importación de script <code>.rsc</code> en RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> &mdash; split tunneling mediante <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> &mdash; script de shell con <code>ip route</code></li>
+        <li><a href="./openvpn.html">OpenVPN</a> &mdash; directivas <code>route</code> en la configuración del cliente</li>
+        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; rule-set para sing-box y Hiddify</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; routing.rules para Xray-core, 3X-UI y v2rayN</li>
+        <li><a href="./amnezia.html">AmneziaVPN</a> &mdash; lista de sitios para split tunneling</li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>¿Listo para probar?</h3>
+        <p>NetRoute — extensión gratuita de Chrome para generar rutas desde cualquier sitio web.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Instalar extensión</a>
+    </div>
+
+</article>
+
+</body>
+</html>

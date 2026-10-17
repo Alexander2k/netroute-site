@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <script src="../../theme.js"></script>
+    <title>Rule-set de sing-box desde cualquier sitio web: dominios y redes para Hiddify y sing-box — guía | NetRoute</title>
+    <meta name="description" content="Cómo obtener en NetRoute un rule-set de sing-box con los dominios y redes de un sitio y conectarlo a un config de sing-box o Hiddify: route.rule_set, regla con action route, compilación a .srs, DNS.">
+    <meta name="keywords" content="sing-box rule-set, sing-box rule_set source, sing-box domain_suffix ip_cidr, hiddify sing-box config, sing-box srs compile, split tunneling sing-box, reglas sing-box para un sitio web, sing-box enrutar por dominio">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://alexander2k.github.io/netroute-site/es/guides/singbox.html">
+    <link rel="alternate" hreflang="en" href="https://alexander2k.github.io/netroute-site/guides/singbox.html">
+    <link rel="alternate" hreflang="ru" href="https://alexander2k.github.io/netroute-site/ru/guides/singbox.html">
+    <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/guides/singbox.html">
+    <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/guides/singbox.html">
+    <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/guides/singbox.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Rule-set de sing-box desde cualquier sitio web: dominios y redes para Hiddify y sing-box">
+    <meta property="og:description" content="NetRoute convierte los dominios y redes de un sitio web en un rule-set de sing-box. Conéctalo en route.rule_set con una regla action route, o compílalo a .srs.">
+    <meta property="og:url" content="https://alexander2k.github.io/netroute-site/es/guides/singbox.html">
+    <meta property="og:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="560">
+    <meta property="og:locale" content="es_ES">
+    <meta name="theme-color" content="#0e1117">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="preload" as="style" href="../../style.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../../style.css"></noscript>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap"></noscript>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Inicio",
+                "item": "https://alexander2k.github.io/netroute-site/es/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Guías",
+                "item": "https://alexander2k.github.io/netroute-site/es/guides/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "sing-box"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Cómo conectar un rule-set de NetRoute en sing-box",
+        "description": "Genera un rule-set en el formato de sing-box con la extensión NetRoute, describe el archivo en route.rule_set y añade una entrada en route.rules con action route y el outbound de tu proxy.",
+        "inLanguage": "es",
+        "totalTime": "PT5M",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": "Genera el rule-set en NetRoute",
+                "text": "Abre el sitio web en Chrome, inicia NetRoute, elige «sing-box / Hiddify / NekoBox» en «SO de destino», haz clic en «Analizar sitio web» y descarga <sitio>_rules.json."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Describe el archivo en la configuración de sing-box",
+                "text": "Añade en route.rule_set una entrada de type local con format source y el path al archivo (o type remote con url cuando el archivo está publicado), y en route.rules una entrada con rule_set, action route y el outbound de tu proxy."
+            },
+            {
+                "@type": "HowToStep",
+                "name": "Comprueba la configuración",
+                "text": "Ejecuta sing-box check -c config.json, inicia sing-box y abre el sitio."
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Rule-set de sing-box desde cualquier sitio web: dominios y redes para Hiddify y sing-box — guía",
+        "description": "Cómo obtener en NetRoute un rule-set de sing-box con los dominios y redes de un sitio y conectarlo a un config de sing-box o Hiddify: route.rule_set, regla con action route, compilación a .srs, DNS.",
+        "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
+        "inLanguage": "es",
+        "datePublished": "2026-10-16",
+        "dateModified": "2026-10-17",
+        "author": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "NetRoute",
+            "url": "https://alexander2k.github.io/netroute-site/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://alexander2k.github.io/netroute-site/icon.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://alexander2k.github.io/netroute-site/es/guides/singbox.html"
+        }
+    }
+    </script>
+
+    <style>
+        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
+        .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
+        .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
+        .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
+        .guide ul, .guide ol { padding-left: 24px; margin: 12px 0; }
+        .guide li { margin-bottom: 8px; }
+        .guide a:not(.btn) { color: var(--accent); }
+        .guide a.btn-primary { color: #fff; }
+        .guide strong { color: var(--text); }
+        .guide code { font-size: 13px; }
+        .guide pre { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 16px 0; }
+        .guide pre code { background: none; padding: 0; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+        .guide .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--text-dim); }
+        .back { display: inline-block; margin-bottom: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+        .back:hover { color: var(--text); }
+        .cta-block { background: linear-gradient(135deg, rgba(26,115,232,0.08), rgba(57,213,255,0.05)); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin: 40px 0; text-align: center; }
+        .cta-block h3 { margin: 0 0 8px; font-family: var(--font-body); font-size: 20px; }
+        .cta-block p { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<nav class="topbar">
+    <div class="topbar-inner">
+        <a href="../" class="logo">
+            <span class="logo-icon">&#9678;</span>
+            <span class="logo-text">NetRoute</span>
+        </a>
+        <div class="nav-links">
+            <a href="../">Inicio</a>
+            <div class="lang-switch">
+                <span class="lang-current">ES</span>
+                <div class="lang-dropdown">
+                    <a href="../../guides/singbox.html">English</a>
+                    <a href="../../ru/guides/singbox.html">Русский</a>
+                    <a href="./singbox.html" class="lang-active">Español</a>
+                    <a href="../../zh/guides/singbox.html">中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<article class="guide">
+    <a href="../" class="back">&larr; Volver al inicio</a>
+    <h1>Rule-set de sing-box desde cualquier sitio web: dominios y redes para Hiddify y sing-box</h1>
+    <p class="lead">sing-box y los clientes construidos sobre él &mdash; las apps oficiales de sing-box, Hiddify, NekoBox &mdash; deciden qué pasa por el proxy mediante <strong>reglas</strong>: listas de dominios y redes que desde la versión 1.8.0 se empaquetan como rule-sets. NetRoute construye ese rule-set directamente desde un sitio web: abre el sitio, haz clic en «Analizar sitio web», descarga el <code>.json</code>.</p>
+
+    <h2 id="syntax">Qué contiene el archivo</h2>
+    <p>Un rule-set en el formato fuente (<code>source</code>) es un documento JSON con <code>version</code> y <code>rules</code>. NetRoute escribe los dominios y las redes como <strong>dos reglas separadas</strong>: según la documentación de sing-box, las condiciones dentro de una regla se combinan con un AND lógico, así que una sola regla con dominios y redes coincidiría solo cuando ambos coincidieran.</p>
+    <pre><code>{
+  "version": 1,
+  "rules": [
+    { "domain_suffix": ["github.com", "githubusercontent.com"] },
+    { "ip_cidr": ["140.82.112.0/20", "185.199.108.0/22", "2606:50c0::/32"] }
+  ]
+}</code></pre>
+    <ul>
+        <li><code>domain_suffix</code> &mdash; coincidencia por sufijo de dominio: el propio dominio y todos sus subdominios. NetRoute compacta la lista: cuando la página usa <code>api.github.com</code> y <code>github.com</code>, solo queda <code>github.com</code>; el prefijo <code>www.</code> se descarta. Se listan todos los dominios del escaneo, incluidos los que no se resolvieron a una IP.</li>
+        <li><code>ip_cidr</code> &mdash; coincidencia por red. Son las mismas redes agregadas que NetRoute emitiría como rutas para un router, IPv4 e IPv6 juntas; la regla está presente cuando al menos un dominio se resolvió a una dirección.</li>
+        <li><code>version: 1</code> &mdash; la primera versión del formato, introducida en sing-box 1.8.0.</li>
+    </ul>
+
+    <figure class="shot">
+        <img class="shot-light" src="../../screenshots/guides/en/singbox-light.png" width="480" height="664" loading="lazy" alt="Popup de NetRoute tras escanear github.com: el formato seleccionado y el resultado en la pestaña Rutas">
+        <img class="shot-dark" src="../../screenshots/guides/en/singbox-dark.png" width="480" height="664" loading="lazy" alt="Popup de NetRoute tras escanear github.com: el formato seleccionado y el resultado en la pestaña Rutas">
+        <figcaption>El popup de NetRoute con el formato «sing-box / Hiddify / NekoBox»: la pestaña Rutas contiene el rule-set terminado, el contador muestra el número de reglas. Datos del escaneo: una página de github.com.</figcaption>
+    </figure>
+
+    <h2>Qué necesitas</h2>
+    <ul>
+        <li>sing-box 1.8.0 o más reciente: el binario <code>sing-box</code> en un equipo, servidor o router, o las apps oficiales <em>sing-box for Android</em>, <em>sing-box for Apple platforms</em>, <em>sing-box for Desktop</em></li>
+        <li>o <a href="https://github.com/hiddify/hiddify-app" target="_blank" rel="noopener">Hiddify</a> &mdash; un cliente construido sobre el núcleo de sing-box que, según su README, acepta configuraciones en el formato de sing-box (Android, iOS, Windows, macOS, Linux)</li>
+        <li>Un outbound de proxy funcional en la configuración &mdash; cualquier protocolo</li>
+        <li>La extensión <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> en Chrome</li>
+    </ul>
+    <div class="callout">
+        <strong>NekoBox para Android</strong> también funciona sobre el núcleo de sing-box, pero, según su README, de una suscripción toma solo los nodos e ignora las reglas de enrutamiento. Un rule-set solo puede llegar a él dentro de una configuración completa de sing-box.
+    </div>
+
+    <h2>Paso 1. Genera el rule-set en NetRoute</h2>
+    <ol>
+        <li>Abre el sitio web en Chrome y recarga la página para que el sniffer de la extensión vea las solicitudes en segundo plano</li>
+        <li>Inicia <strong>NetRoute</strong></li>
+        <li>En <strong>SO de destino</strong> elige <strong>sing-box / Hiddify / NekoBox</strong> &mdash; el grupo «Clientes proxy»</li>
+        <li>Los campos <strong>IP de puerta de enlace</strong> y <strong>Dispositivo</strong> no afectan a este formato</li>
+        <li>Haz clic en <strong>Analizar sitio web</strong></li>
+        <li>En la pestaña <strong>Dominios</strong> desmarca lo que no necesites &mdash; contadores, redes publicitarias, CDN de terceros; las reglas se actualizan al instante</li>
+        <li>Haz clic en <strong>Descargar</strong>: el archivo recibe el nombre del sitio, por ejemplo <code>github_com_rules.json</code></li>
+    </ol>
+    <div class="callout">
+        <strong>Sobre las redes.</strong> La regla <code>ip_cidr</code> está siempre en el archivo cuando hay direcciones resueltas, y no estorba a la regla de dominios. Si quieres solo dominios &mdash; elimina la segunda regla del archivo. Si quieres menos redes &mdash; elige <strong>IPv4 Only</strong> en <strong>Modo de ruta</strong>: la regla no conservará prefijos IPv6.
+    </div>
+
+    <h2>Paso 2. Describe el archivo en la configuración de sing-box</h2>
+    <p>Un archivo local junto a la configuración. <code>format</code> puede omitirse cuando la ruta del archivo termina en <code>.json</code> o <code>.srs</code>; desde 1.10.0 sing-box recarga el archivo por sí mismo cuando cambia.</p>
+    <pre><code>{
+  "route": {
+    "rule_set": [
+      {
+        "type": "local",
+        "tag": "netroute",
+        "format": "source",
+        "path": "github_com_rules.json"
+      }
+    ],
+    "rules": [
+      { "rule_set": "netroute", "action": "route", "outbound": "proxy" }
+    ],
+    "final": "direct"
+  }
+}</code></pre>
+    <ul>
+        <li><code>outbound</code> &mdash; el tag de tu outbound de proxy. <code>"action": "route"</code> es obligatorio a partir de sing-box 1.11.0: el antiguo campo <code>outbound</code> directamente en la regla está obsoleto allí.</li>
+        <li><code>final</code> &mdash; el outbound por defecto para todo lo que no coincidió con ninguna regla; <code>direct</code> da el split tunneling clásico.</li>
+    </ul>
+    <p>Un archivo por URL. Sube el <code>.json</code> a un repositorio de GitHub o a tu propio servidor e indica el enlace directo al archivo raw; por defecto sing-box lo actualiza una vez al día (<code>update_interval</code> = <code>1d</code>):</p>
+    <pre><code>{
+  "type": "remote",
+  "tag": "netroute",
+  "format": "source",
+  "url": "https://raw.githubusercontent.com/you/rules/main/github_com_rules.json",
+  "update_interval": "1d"
+}</code></pre>
+    <p>Si el enlace tiene que descargarse a través del proxy: hasta sing-box 1.13 lo hacía el campo <code>download_detour</code> con el tag de un outbound; 1.14.0 lo declaró obsoleto en favor de <code>http_client</code>, y 1.16.0 lo eliminó.</p>
+    <div class="callout">
+        <strong>Hiddify.</strong> La app acepta configuraciones en el formato de sing-box &mdash; añade el bloque <code>route</code> de arriba junto con tu outbound a esa configuración e impórtala como perfil. Cómo se importa exactamente un perfil en tu versión de Hiddify se describe en la documentación de la app.
+    </div>
+
+    <h2>Paso 3. Comprueba</h2>
+    <p>La sintaxis de la configuración junto con el rule-set:</p>
+    <pre><code>sing-box check -c config.json</code></pre>
+    <p>Después inicia sing-box y abre el sitio. Si se abre a través del proxy mientras los demás sitios salen directamente &mdash; la regla funciona. Si no, repasa los problemas frecuentes de abajo.</p>
+
+    <h2>Rule-set compilado (.srs)</h2>
+    <p>Para listas grandes sing-box ofrece un formato binario. Compila el archivo de NetRoute con el comando de la documentación:</p>
+    <pre><code>sing-box rule-set compile github_com_rules.json
+# → github_com_rules.srs</code></pre>
+    <p>En la configuración indica <code>"format": "binary"</code> y la ruta al <code>.srs</code>. Para una docena de sitios no es necesario.</p>
+
+    <h2>Problemas frecuentes</h2>
+    <h3>sing-box rechaza el archivo</h3>
+    <p>Los rule-sets aparecieron en sing-box 1.8.0; las versiones anteriores y los clientes construidos sobre ellas no conocen el formato. NetRoute escribe la mínima <code>version: 1</code> &mdash; todas las versiones posteriores la leen.</p>
+
+    <h3>La regla no coincide con un subdominio</h3>
+    <p><code>domain_suffix</code> cubre solo los subdominios de los dominios de la lista. Si el sitio obtiene datos de otro dominio, debería verse en la pestaña <strong>Dominios</strong> de NetRoute. Recorre el sitio antes de escanear &mdash; inicia sesión, abre un video &mdash; para que el sniffer de la extensión vea también las solicitudes diferidas.</p>
+
+    <h3>Las conexiones por IP eluden el proxy</h3>
+    <p>Una regla de dominio necesita que sing-box conozca el nombre de destino. Para eso sirve el sniffing: toma el nombre del campo Host de HTTP y del Server Name en TLS y QUIC. Desde sing-box 1.11.0 el sniffing se activa con una regla con <code>"action": "sniff"</code> en <code>route.rules</code> (el antiguo campo <code>sniff</code> del inbound está obsoleto y se eliminó en 1.13.0). Las conexiones sin nombre se comparan con la regla <code>ip_cidr</code> &mdash; para servicios cuyas direcciones cambian, activa <strong>Optimización de rutas &rarr; Prefijo BGP</strong> en las opciones de NetRoute: las redes pasan a ser los prefijos anunciados en lugar de direcciones sueltas.</p>
+
+    <h3>Un rule-set para varios sitios</h3>
+    <p>Haz clic en <strong>Lista de URL</strong> junto al botón de análisis y pega la lista de sitios &mdash; NetRoute construye un rule-set para todos ellos; el archivo se llama <code>bulk_N_rules.json</code>.</p>
+
+    <h2 id="dns-leak">DNS y fugas</h2>
+    <p>Una regla de dominio no cambia cómo el navegador resuelve los nombres: la consulta DNS de <code>github.com</code> sigue yendo al resolver configurado en el sistema o en el propio navegador, y cuando ese es el resolver del ISP, el ISP ve los nombres de los sitios.</p>
+    <ul>
+        <li>En sing-box las reglas DNS pueden referenciar el mismo rule-set: una entrada en <code>dns.rules</code> con <code>"rule_set": "netroute"</code>, <code>"action": "route"</code> y <code>server</code> envía las consultas de estos dominios al servidor DNS elegido. Para que el propio servidor salga por el proxy, dale un <code>detour</code> con el tag del outbound &mdash; un campo de los Dial Fields compartidos; los servidores en el nuevo formato (<code>"type": "https"</code> y otros) aparecieron en sing-box 1.12.0.</li>
+        <li>En Chrome desactiva «Usar DNS seguro» o apúntalo a un resolver en el que confíes: el DNS-over-HTTPS propio del navegador funciona saltándose el resolver del sistema &mdash; consulta la <a href="https://github.com/Alexander2k/netroute-site" target="_blank" rel="noopener">sección Troubleshooting</a> del proyecto.</li>
+    </ul>
+    <p>Comprobación: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> con el cliente activado debe mostrar el resolver del proxy, no el del ISP.</p>
+
+    <h2 id="examples">Archivo de configuración de ejemplo</h2>
+    <p>Plantilla lista para editar. Reemplaza los dominios y redes de ejemplo con la salida de NetRoute para tus sitios.</p>
+    <ul>
+        <li><a href="https://github.com/Alexander2k/netroute-site/blob/main/examples/singbox-rules.json" target="_blank" rel="noopener"><code>singbox-rules.json</code></a> &mdash; un rule-set en el formato fuente con reglas <code>domain_suffix</code> e <code>ip_cidr</code></li>
+    </ul>
+    <pre><code><!-- EMBED:singbox-rules.json -->
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain_suffix": [
+        "avatars.githubusercontent.com",
+        "github.com",
+        "github.githubassets.com"
+      ]
+    },
+    {
+      "ip_cidr": [
+        "140.82.112.0/20",
+        "185.199.108.0/22",
+        "2606:50c0::/32"
+      ]
+    }
+  ]
+}
+<!-- /EMBED --></code></pre>
+
+    <p class="callout"><strong>Consejo:</strong> los formatos de texto se descargan con una cabecera de comentarios. Desactiva <strong>«Incluir comentarios en archivos exportados»</strong> en las opciones de NetRoute para obtener solo las reglas; los formatos JSON nunca llevan comentarios.</p>
+
+    <p><a href="https://github.com/Alexander2k/netroute-site/tree/main/examples" target="_blank" rel="noopener">Todos los ejemplos de configuración en GitHub &rarr;</a></p>
+
+    <h2 id="official-docs">Documentación oficial</h2>
+    <ul>
+        <li><a href="https://sing-box.sagernet.org/configuration/rule-set/" target="_blank" rel="noopener">sing-box: Rule Set &mdash; campos local y remote</a></li>
+        <li><a href="https://sing-box.sagernet.org/configuration/rule-set/source-format/" target="_blank" rel="noopener">sing-box: Source Format &mdash; version, el comando compile</a></li>
+        <li><a href="https://sing-box.sagernet.org/configuration/rule-set/headless-rule/" target="_blank" rel="noopener">sing-box: Headless Rule &mdash; domain_suffix, ip_cidr</a></li>
+        <li><a href="https://sing-box.sagernet.org/configuration/route/rule_action/" target="_blank" rel="noopener">sing-box: Rule Action &mdash; route, sniff</a></li>
+        <li><a href="https://sing-box.sagernet.org/configuration/dns/rule/" target="_blank" rel="noopener">sing-box: DNS Rule</a></li>
+        <li><a href="https://github.com/hiddify/hiddify-app" target="_blank" rel="noopener">Hiddify &mdash; README: formatos de configuración compatibles</a></li>
+    </ul>
+
+    <h2 id="related">Guías relacionadas</h2>
+    <ul>
+        <li><a href="./keenetic.html">Keenetic</a> &mdash; rutas desde un archivo <code>.bat</code></li>
+        <li><a href="./mikrotik.html">MikroTik</a> &mdash; importación de script <code>.rsc</code> en RouterOS</li>
+        <li><a href="./wireguard.html">WireGuard</a> &mdash; split tunneling mediante <code>AllowedIPs</code></li>
+        <li><a href="./linux.html">Linux</a> &mdash; script de shell con <code>ip route</code></li>
+        <li><a href="./openvpn.html">OpenVPN</a> &mdash; directivas <code>route</code> en la configuración del cliente</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; routing.rules para Xray-core, 3X-UI y v2rayN</li>
+        <li><a href="./happ.html">Happ</a> &mdash; perfil de enrutamiento como enlace happ://routing</li>
+        <li><a href="./amnezia.html">AmneziaVPN</a> &mdash; lista de sitios para split tunneling</li>
+    </ul>
+
+    <div class="cta-block">
+        <h3>¿Listo para probar?</h3>
+        <p>NetRoute — extensión gratuita de Chrome para generar rutas desde cualquier sitio web.</p>
+        <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">Instalar extensión</a>
+    </div>
+
+</article>
+
+</body>
+</html>

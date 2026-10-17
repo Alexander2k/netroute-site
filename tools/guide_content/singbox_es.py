@@ -61,7 +61,7 @@ PAGE = {
         <li>Haz clic en <strong>Descargar</strong>: el archivo recibe el nombre del sitio, por ejemplo <code>github_com_rules.json</code></li>
     </ol>
     <div class="callout">
-        <strong>Sobre las redes.</strong> La regla <code>ip_cidr</code> está siempre en el archivo cuando hay direcciones resueltas, y no estorba a la regla de dominios. Si quieres solo dominios, elimina la segunda regla del archivo. Si quieres menos redes, elige <strong>IPv4 Only</strong> en <strong>Modo de ruta</strong>: la regla no conservará prefijos IPv6.
+        <strong>Sobre las redes.</strong> La regla <code>ip_cidr</code> está siempre en el archivo cuando hay direcciones resueltas, y no estorba a la regla de dominios. Si quieres solo dominios &mdash; elimina la segunda regla del archivo. Si quieres menos redes &mdash; elige <strong>IPv4 Only</strong> en <strong>Modo de ruta</strong>: la regla no conservará prefijos IPv6.
     </div>''',
         },
         {

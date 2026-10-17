@@ -78,7 +78,7 @@
         },
         "featureList": [
             "通过Service Worker进行网络嗅探",
-            "DNS竞速（Cloudflare、Google、Quad9、AdGuard）和自定义DoH服务器",
+            "DNS-over-HTTPS：Auto 模式下 Cloudflare、Google、Quad9、AdGuard 和自定义 DoH 服务器并行竞速，否则只查询所选的一个",
             "DoH被封锁时改用浏览器自身的连接",
             "CIDR聚合（IPv4 + IPv6）",
             "通过RIPE Stat进行路由优化（BGP前缀、完整AS、AS + 压缩）",
@@ -140,7 +140,7 @@
                 "name": "NetRoute 如何从网站生成路由？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "NetRoute 发现网页上的所有域名（包括通过 Service Worker 的 AJAX、CDN 和 API 请求），使用并行 DNS-over-HTTPS 查询到 Cloudflare、Google、Quad9 和 AdGuard 将其解析为 IP 地址（DoH 被封锁时改用浏览器自身的连接），将 IP 聚合为优化的 CIDR 子网，并生成特定于平台的路由命令。"
+                    "text": "NetRoute 发现网页上的所有域名（包括通过 Service Worker 的 AJAX、CDN 和 API 请求），并通过 DNS-over-HTTPS 将其解析为 IP 地址：Auto 模式下并行查询 Cloudflare、Google、Quad9、AdGuard 和自定义 DoH 服务器，第一个成功的响应获胜；选定某一提供商时只查询它；结果会被缓存，DoH 被封锁时改用浏览器自身连接中的 IP。随后将 IP 聚合为优化的 CIDR 子网，并生成特定于平台的路由命令。"
                 }
             },
             {
@@ -264,7 +264,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 019-9"/></svg>
             </div>
             <h3>DNS竞速</h3>
-            <p>同时查询Cloudflare、Google、Quad9和AdGuard，通过<code>Promise.any</code>，最快响应获胜。可添加自定义DoH服务器。</p>
+            <p>在「Auto (Racing - Fastest)」模式下，查询通过 <code>Promise.any</code> 同时发往所有 DNS-over-HTTPS 提供商——Cloudflare、Google、Quad9、AdGuard 和你自己的服务器——取第一个成功的响应，其余请求取消。选定某一提供商时只查询它。结果会被缓存。</p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">
@@ -534,7 +534,7 @@
         </details>
         <details class="faq-item">
             <summary>NetRoute 如何从网站生成路由？</summary>
-            <div class="faq-answer">NetRoute 发现网页上的所有域名（包括通过 Service Worker 的 AJAX、CDN 和 API 请求），使用并行 DNS-over-HTTPS 查询到 Cloudflare、Google、Quad9 和 AdGuard 将其解析为 IP 地址（DoH 被封锁时改用浏览器自身的连接），将 IP 聚合为优化的 CIDR 子网，并生成特定于平台的路由命令。</div>
+            <div class="faq-answer">NetRoute 发现网页上的所有域名（包括通过 Service Worker 的 AJAX、CDN 和 API 请求），并通过 DNS-over-HTTPS 将其解析为 IP 地址：Auto 模式下并行查询 Cloudflare、Google、Quad9、AdGuard 和自定义 DoH 服务器，第一个成功的响应获胜；选定某一提供商时只查询它；结果会被缓存，DoH 被封锁时改用浏览器自身连接中的 IP。随后将 IP 聚合为优化的 CIDR 子网，并生成特定于平台的路由命令。</div>
         </details>
         <details class="faq-item">
             <summary>可以用于 VPN 分流吗？</summary>
