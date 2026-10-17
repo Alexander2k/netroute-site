@@ -1,8 +1,8 @@
 # Guía: reglas de enrutamiento de Xray — Xray-core, 3X-UI, v2rayN, Streisand. Español.
 # Mismos hechos y fuentes que xray_ru.py (verificados 2026-10-17); etiquetas de la extensión de _locales/es.
 PAGE = {
-    'title': 'Reglas de enrutamiento de Xray desde cualquier sitio web: para Xray-core, 3X-UI y v2rayN — guía | NetRoute',
-    'description': 'Cómo obtener en NetRoute routing.rules de Xray con los dominios y redes de un sitio y aplicarlas en un config de Xray-core, en los ajustes de Xray del panel 3X-UI o importando reglas en v2rayN.',
+    'title': 'Reglas de enrutamiento Xray para 3X-UI y v2rayN — guía | NetRoute',
+    'description': 'Cómo obtener en NetRoute reglas routing.rules de Xray con dominios y redes de un sitio y aplicarlas en Xray-core, en Xray Settings de 3X-UI o en v2rayN.',
     'keywords': 'xray routing rules, xray reglas de enrutamiento, xray domain: outboundTag, xray split tunneling, 3x-ui routing rules, 3x-ui xray settings routing, v2rayn importar reglas, v2rayn routing setting, v2rayn reglas de enrutamiento personalizadas, xray json routing',
     'og_title': 'Reglas de enrutamiento de Xray desde cualquier sitio web',
     'og_description': 'NetRoute convierte los dominios y redes de un sitio web en routing.rules de Xray — para una configuración de Xray-core, el panel 3X-UI y la importación de reglas en v2rayN.',

@@ -24,6 +24,10 @@
     <meta property="og:image:width" content="1400">
     <meta property="og:image:height" content="560">
     <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="从任意网站生成 sing-box rule-set：Hiddify 与 sing-box 的域名和网段">
+    <meta name="twitter:description" content="NetRoute 将网站的域名和网段整理为 sing-box rule-set。通过带 action route 的规则接入 route.rule_set，或编译为 .srs。">
+    <meta name="twitter:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
@@ -94,7 +98,10 @@
         "@type": "TechArticle",
         "headline": "从任意网站生成 sing-box rule-set：Hiddify 与 sing-box 的域名和网段 — 指南",
         "description": "如何在 NetRoute 中获取包含网站域名和网段的 sing-box rule-set，并将其接入 sing-box 或 Hiddify 配置：route.rule_set、带 action route 的规则、编译为 .srs、DNS。",
-        "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
+        "image": [
+            "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
+            "https://alexander2k.github.io/netroute-site/screenshots/guides/en/singbox-light.webp"
+        ],
         "inLanguage": "zh",
         "datePublished": "2026-10-16",
         "dateModified": "2026-10-17",
@@ -123,6 +130,7 @@
         .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
         .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
         .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide .guide-date { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); margin: 0 0 20px; }
         .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
         .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
         .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
@@ -170,6 +178,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; 返回首页</a>
     <h1>从任意网站生成 sing-box rule-set：Hiddify 与 sing-box 的域名和网段</h1>
+    <p class="guide-date">更新于 <time datetime="2026-10-17">2026-10-17</time> &middot; NetRoute 版本 4.1.3</p>
     <p class="lead">sing-box 及基于它构建的客户端 &mdash; 官方 sing-box 应用、Hiddify、NekoBox &mdash; 依靠<strong>规则</strong>决定哪些流量走代理：规则是域名和网段的列表，自 1.8.0 版起打包为 rule-set。NetRoute 可直接从网站生成这样的 rule-set：打开网站，点击「分析网站」，下载 <code>.json</code> 即可。</p>
 
     <h2 id="syntax">文件内容</h2>
@@ -188,8 +197,8 @@
     </ul>
 
     <figure class="shot">
-        <img class="shot-light" src="../../screenshots/guides/en/singbox-light.png" width="480" height="664" loading="lazy" alt="扫描 github.com 后的 NetRoute 弹窗：已选择的格式和「路由」标签页中的结果">
-        <img class="shot-dark" src="../../screenshots/guides/en/singbox-dark.png" width="480" height="664" loading="lazy" alt="扫描 github.com 后的 NetRoute 弹窗：已选择的格式和「路由」标签页中的结果">
+        <img class="shot-light" src="../../screenshots/guides/en/singbox-light.webp" width="480" height="664" loading="lazy" alt="扫描 github.com 后的 NetRoute 弹窗：已选择的格式和「路由」标签页中的结果">
+        <img class="shot-dark" src="../../screenshots/guides/en/singbox-dark.webp" width="480" height="664" loading="lazy" alt="扫描 github.com 后的 NetRoute 弹窗：已选择的格式和「路由」标签页中的结果">
         <figcaption>选择「sing-box / Hiddify / NekoBox」格式的 NetRoute 弹窗：「路由」标签页中是生成好的 rule-set，计数器显示规则数量。扫描数据：github.com 页面。</figcaption>
     </figure>
 

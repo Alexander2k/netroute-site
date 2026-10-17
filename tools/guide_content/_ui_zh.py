@@ -14,6 +14,8 @@ UI = {
     'cta_h3': '准备好尝试了吗？',
     'cta_p': 'NetRoute — 免费的 Chrome 扩展，可从任何网站生成路由。',
     'cta_btn': '安装扩展',
+    'updated': '更新于',
+    'version_word': '版本',
     'shot_alt_default': '扫描 github.com 后的 NetRoute 弹窗：已选择的格式和「路由」标签页中的结果',
     'shot_caption_default': 'NetRoute 中的结果：在「目标系统」中选择格式，输出显示在「路由」标签页。扫描数据：github.com 页面。',
     'classic_names': {

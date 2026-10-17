@@ -2,8 +2,8 @@
 # Same facts and sources as amnezia_ru.py (verified 2026-10-17); extension labels from _locales/en; the
 # AmneziaVPN screen names follow docs.amnezia.org/documentation/instructions/vpn-split-tunneling (English).
 PAGE = {
-    'title': 'AmneziaVPN site list from any website: split tunneling by addresses — guide | NetRoute',
-    'description': 'How to get a file for import into AmneziaVPN with the addresses and subnets of a website in NetRoute and turn on split tunneling for sites: modes, import via the ⋮ menu, IPv4 and Amnezia Free limits.',
+    'title': 'AmneziaVPN site list for split tunneling — guide | NetRoute',
+    'description': 'How to get an AmneziaVPN import file with a website’s addresses and subnets in NetRoute and turn on split tunneling for sites: modes, ⋮ import, IPv4 only.',
     'keywords': 'amnezia split tunneling, amneziavpn split tunneling sites, amnezia site list, amnezia import ip-list.json, amnezia only the sites listed here, amneziawg split tunneling sites, amnezia service subnets',
     'og_title': 'AmneziaVPN site list from any website',
     'og_description': 'NetRoute turns the addresses and subnets of a website into a file for import into AmneziaVPN — split tunneling for sites in three steps.',

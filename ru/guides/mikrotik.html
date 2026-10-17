@@ -24,6 +24,10 @@
     <meta property="og:image:width" content="1400">
     <meta property="og:image:height" content="560">
     <meta property="og:locale" content="ru_RU">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Импорт маршрутов на MikroTik через .rsc скрипт">
+    <meta name="twitter:description" content="Загрузите сгенерированные в NetRoute маршруты на MikroTik через .rsc скрипт — Files или терминал.">
+    <meta name="twitter:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
@@ -173,10 +177,11 @@
     <p class="lead">MikroTik умеет импортировать <code>.rsc</code> скрипты с командами маршрутизации. NetRoute генерирует именно такой формат — достаточно скачать, загрузить и импортировать.</p>
 
     <figure class="shot">
-        <img class="shot-light" src="../../screenshots/guides/ru/mikrotik-light.png" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат MikroTik, результат на вкладке «Маршруты»">
-        <img class="shot-dark" src="../../screenshots/guides/ru/mikrotik-dark.png" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат MikroTik, результат на вкладке «Маршруты»">
+        <img class="shot-light" src="../../screenshots/guides/ru/mikrotik-light.webp" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат MikroTik, результат на вкладке «Маршруты»">
+        <img class="shot-dark" src="../../screenshots/guides/ru/mikrotik-dark.webp" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат MikroTik, результат на вкладке «Маршруты»">
         <figcaption>Так выглядит результат в NetRoute: формат <strong>MikroTik</strong> выбран в списке «Целевая ОС», вывод &mdash; на вкладке «Маршруты». Данные скана &mdash; страница github.com.</figcaption>
     </figure>
+
 
 
     <section id="syntax" class="syntax-block">
@@ -367,7 +372,11 @@ add dst-address=162.159.0.0/16 gateway=wg-out distance=1
         <li><a href="./keenetic.html">Keenetic</a> — маршруты из BAT-файла</li>
         <li><a href="./wireguard.html">WireGuard</a> — split tunneling через <code>AllowedIPs</code></li>
         <li><a href="./linux.html">Linux</a> — <code>ip route</code> через shell-скрипт</li>
-        <li><a href="./openvpn.html">OpenVPN</a> — директивы <code>route</code> в клиентском конфиге</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — директивы <code>route</code> в клиентском конфиге</li>        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; rule-set для sing-box и Hiddify</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; правила routing.rules для Xray-core, 3X-UI и v2rayN</li>
+        <li><a href="./happ.html">Happ</a> &mdash; профиль маршрутизации ссылкой happ://routing</li>
+        <li><a href="./amnezia.html">AmneziaVPN</a> &mdash; список сайтов для раздельного туннелирования</li>
+
     </ul>
 
     <div class="cta-block">

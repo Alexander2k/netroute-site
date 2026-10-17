@@ -24,6 +24,10 @@
     <meta property="og:image:width" content="1400">
     <meta property="og:image:height" content="560">
     <meta property="og:locale" content="es_ES">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Importar rutas en Keenetic desde archivo .bat">
+    <meta name="twitter:description" content="Carga las rutas generadas en NetRoute a Keenetic en un clic con enlace a la interfaz VPN.">
+    <meta name="twitter:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
@@ -173,10 +177,11 @@
     <p class="lead">Keenetic puede cargar un archivo en formato <code>route ADD</code> de Windows y aplicar automáticamente todas las rutas a una interfaz seleccionada. NetRoute genera exactamente ese archivo — solo tienes que descargarlo y subirlo.</p>
 
     <figure class="shot">
-        <img class="shot-light" src="../../screenshots/guides/en/keenetic-light.png" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: formato Keenetic seleccionado y resultado en la pestaña Rutas">
-        <img class="shot-dark" src="../../screenshots/guides/en/keenetic-dark.png" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: formato Keenetic seleccionado y resultado en la pestaña Rutas">
+        <img class="shot-light" src="../../screenshots/guides/en/keenetic-light.webp" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: formato Keenetic seleccionado y resultado en la pestaña Rutas">
+        <img class="shot-dark" src="../../screenshots/guides/en/keenetic-dark.webp" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: formato Keenetic seleccionado y resultado en la pestaña Rutas">
         <figcaption>Así se ve el resultado en NetRoute: el formato <strong>Keenetic</strong> elegido en «SO de destino», la salida en la pestaña Rutas. Datos del escaneo: una página de github.com.</figcaption>
     </figure>
+
 
 
     <section id="syntax" class="syntax-block">
@@ -343,7 +348,11 @@ REM   System -&gt; Routing -&gt; Upload .bat -&gt; select VPN interface -&gt; co
         <li><a href="./mikrotik.html">MikroTik</a> — importación de script <code>.rsc</code> de RouterOS</li>
         <li><a href="./wireguard.html">WireGuard</a> — split tunneling con <code>AllowedIPs</code></li>
         <li><a href="./linux.html">Linux</a> — <code>ip route</code> con script shell</li>
-        <li><a href="./openvpn.html">OpenVPN</a> — directivas <code>route</code> en config cliente</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — directivas <code>route</code> en config cliente</li>        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; rule-set para sing-box y Hiddify</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; routing.rules para Xray-core, 3X-UI y v2rayN</li>
+        <li><a href="./happ.html">Happ</a> &mdash; perfil de enrutamiento como enlace happ://routing</li>
+        <li><a href="./amnezia.html">AmneziaVPN</a> &mdash; lista de sitios para split tunneling</li>
+
     </ul>
 
     <div class="cta-block">

@@ -1,8 +1,8 @@
 # Guía: perfil de enrutamiento de Happ. Español.
 # Mismos hechos y fuentes que happ_ru.py (verificados 2026-10-17); etiquetas de la extensión de _locales/es.
 PAGE = {
-    'title': 'Perfil de enrutamiento de Happ desde cualquier sitio web: dominios y redes a través del proxy — guía | NetRoute',
-    'description': 'Cómo obtener en NetRoute un perfil de enrutamiento de Happ con dominios y redes de un sitio y añadirlo con un enlace happ://routing/onadd: base64, importación por portapapeles o QR, comprobación.',
+    'title': 'Perfil de enrutamiento de Happ desde cualquier sitio — guía | NetRoute',
+    'description': 'Cómo obtener en NetRoute un perfil de enrutamiento de Happ con dominios y redes de un sitio y añadirlo con el enlace happ://routing/onadd: base64, portapapeles, QR.',
     'keywords': 'happ routing, happ perfil de enrutamiento, happ routing onadd, happ json perfil de enrutamiento, happ proxysites, happ split tunneling, happ reglas para un sitio web, happ xray enrutamiento',
     'og_title': 'Perfil de enrutamiento de Happ desde cualquier sitio web',
     'og_description': 'NetRoute convierte los dominios y redes de un sitio web en un perfil de enrutamiento de Happ. Codifícalo en base64, añádelo con un enlace happ://routing/onadd — solo estos sitios pasan por el proxy.',

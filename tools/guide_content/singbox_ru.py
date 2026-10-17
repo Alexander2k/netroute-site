@@ -7,8 +7,8 @@
 #              dns/rule/, dns/server/https/, shared/dial/, shared/listen/, configuration/ (команды)
 #   Hiddify — README github.com/hiddify/hiddify-app; NekoBox — README github.com/MatsuriDayo/NekoBoxForAndroid
 PAGE = {
-    'title': 'Rule-set sing-box из любого сайта: домены и сети для Hiddify и sing-box — инструкция | NetRoute',
-    'description': 'Как получить rule-set sing-box с доменами и сетями сайта в NetRoute и подключить его в конфиге sing-box или Hiddify: route.rule_set, правило с action route, компиляция в .srs, DNS.',
+    'title': 'Rule-set sing-box из любого сайта для Hiddify — инструкция | NetRoute',
+    'description': 'Как получить в NetRoute rule-set sing-box с доменами и сетями сайта и подключить его в sing-box или Hiddify: route.rule_set, правило с action route, .srs, DNS.',
     'keywords': 'sing-box rule-set, sing-box rule_set source, sing-box domain_suffix ip_cidr, hiddify sing-box конфиг, sing-box srs compile, split tunneling sing-box, маршрутизация по доменам sing-box, sing-box правила для сайта',
     'og_title': 'Rule-set sing-box из любого сайта: домены и сети для Hiddify и sing-box',
     'og_description': 'NetRoute собирает домены и сети сайта в rule-set sing-box. Подключение в route.rule_set, правило с action route, компиляция в .srs.',

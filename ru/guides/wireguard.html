@@ -24,6 +24,10 @@
     <meta property="og:image:width" content="1400">
     <meta property="og:image:height" content="560">
     <meta property="og:locale" content="ru_RU">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Split Tunneling в WireGuard через AllowedIPs">
+    <meta name="twitter:description" content="Генерируйте AllowedIPs из доменов в NetRoute, вставляйте в конфиг пира WireGuard — split tunneling без дополнительных команд маршрутизации.">
+    <meta name="twitter:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
@@ -174,10 +178,11 @@
     <p class="lead">В WireGuard параметр <code>AllowedIPs</code> одновременно и ACL-фильтр, и таблица маршрутизации. NetRoute генерирует готовую строку <code>AllowedIPs</code> из доменов любого сайта — дополнительные <code>ip route</code> команды не нужны, просто отредактируйте конфиг пира и перезапустите туннель.</p>
 
     <figure class="shot">
-        <img class="shot-light" src="../../screenshots/guides/ru/wireguard-light.png" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат WireGuard, результат на вкладке «Маршруты»">
-        <img class="shot-dark" src="../../screenshots/guides/ru/wireguard-dark.png" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат WireGuard, результат на вкладке «Маршруты»">
+        <img class="shot-light" src="../../screenshots/guides/ru/wireguard-light.webp" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат WireGuard, результат на вкладке «Маршруты»">
+        <img class="shot-dark" src="../../screenshots/guides/ru/wireguard-dark.webp" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат WireGuard, результат на вкладке «Маршруты»">
         <figcaption>Так выглядит результат в NetRoute: формат <strong>WireGuard</strong> выбран в списке «Целевая ОС», вывод &mdash; на вкладке «Маршруты». Данные скана &mdash; страница github.com.</figcaption>
     </figure>
+
 
 
     <section id="syntax" class="syntax-block">
@@ -392,7 +397,11 @@ AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 162.159.0.0/16
         <li><a href="./keenetic.html">Keenetic</a> — маршруты из BAT-файла</li>
         <li><a href="./mikrotik.html">MikroTik</a> — импорт <code>.rsc</code>-скрипта в RouterOS</li>
         <li><a href="./linux.html">Linux</a> — <code>ip route</code> через shell-скрипт</li>
-        <li><a href="./openvpn.html">OpenVPN</a> — директивы <code>route</code> в клиентском конфиге</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — директивы <code>route</code> в клиентском конфиге</li>        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; rule-set для sing-box и Hiddify</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; правила routing.rules для Xray-core, 3X-UI и v2rayN</li>
+        <li><a href="./happ.html">Happ</a> &mdash; профиль маршрутизации ссылкой happ://routing</li>
+        <li><a href="./amnezia.html">AmneziaVPN</a> &mdash; список сайтов для раздельного туннелирования</li>
+
     </ul>
 
     <div class="cta-block">

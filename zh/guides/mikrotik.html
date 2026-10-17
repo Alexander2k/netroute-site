@@ -24,6 +24,10 @@
     <meta property="og:image:width" content="1400">
     <meta property="og:image:height" content="560">
     <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="通过 .rsc 脚本导入路由到 MikroTik">
+    <meta name="twitter:description" content="在 NetRoute 中生成 .rsc 脚本，通过 Files 或终端导入到 MikroTik RouterOS。">
+    <meta name="twitter:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
@@ -174,10 +178,11 @@
     <p class="lead">MikroTik 可以导入包含路由命令的 .rsc 脚本文件。NetRoute 正是生成此格式 — 只需下载、上传并导入。</p>
 
     <figure class="shot">
-        <img class="shot-light" src="../../screenshots/guides/en/mikrotik-light.png" width="480" height="664" loading="lazy" alt="扫描 github.com 后的 NetRoute 弹窗：已选择 MikroTik 格式，结果显示在「路由」标签页">
-        <img class="shot-dark" src="../../screenshots/guides/en/mikrotik-dark.png" width="480" height="664" loading="lazy" alt="扫描 github.com 后的 NetRoute 弹窗：已选择 MikroTik 格式，结果显示在「路由」标签页">
+        <img class="shot-light" src="../../screenshots/guides/en/mikrotik-light.webp" width="480" height="664" loading="lazy" alt="扫描 github.com 后的 NetRoute 弹窗：已选择 MikroTik 格式，结果显示在「路由」标签页">
+        <img class="shot-dark" src="../../screenshots/guides/en/mikrotik-dark.webp" width="480" height="664" loading="lazy" alt="扫描 github.com 后的 NetRoute 弹窗：已选择 MikroTik 格式，结果显示在「路由」标签页">
         <figcaption>NetRoute 中的结果：在「目标系统」中选择 <strong>MikroTik</strong> 格式，输出显示在「路由」标签页。扫描数据：github.com 页面。</figcaption>
     </figure>
+
 
 
     <section id="syntax" class="syntax-block">
@@ -352,7 +357,11 @@ add dst-address=162.159.0.0/16 gateway=wg-out distance=1
         <li><a href="./keenetic.html">Keenetic</a> — 通过 <code>.bat</code> 文件添加路由</li>
         <li><a href="./wireguard.html">WireGuard</a> — 通过 <code>AllowedIPs</code> 分流</li>
         <li><a href="./linux.html">Linux</a> — 通过 shell 脚本添加 <code>ip route</code></li>
-        <li><a href="./openvpn.html">OpenVPN</a> — 客户端配置中的 <code>route</code> 指令</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — 客户端配置中的 <code>route</code> 指令</li>        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; 用于 sing-box 和 Hiddify 的 rule-set</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; 用于 Xray-core、3X-UI 和 v2rayN 的 routing.rules</li>
+        <li><a href="./happ.html">Happ</a> &mdash; 以 happ://routing 链接形式提供的路由配置文件</li>
+        <li><a href="./amnezia.html">AmneziaVPN</a> &mdash; 用于分流的网站列表</li>
+
     </ul>
 
     <div class="cta-block">

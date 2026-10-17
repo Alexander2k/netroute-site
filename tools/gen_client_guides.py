@@ -51,6 +51,7 @@ FONTS = 'https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800
 GUIDE_CSS = """        .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
         .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
         .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide .guide-date { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); margin: 0 0 20px; }
         .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
         .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
         .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
@@ -101,34 +102,73 @@ def png_size(path: str):
     return int.from_bytes(head[16:20], 'big'), int.from_bytes(head[20:24], 'big')
 
 
+def shot_paths(page: dict, lang: str):
+    """(relative-from-page prefix, light path, dark path, shots_lang) of the page's render, or None."""
+    fmt = page.get('shot_format')
+    if not fmt:
+        return None
+    shots_lang = 'ru' if lang == 'ru' else 'en'
+    ext = 'webp' if os.path.exists(os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-light.webp')) else 'png'
+    light = os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-light.{ext}')
+    dark = os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-dark.{ext}')
+    if not os.path.exists(light) or not os.path.exists(dark):
+        return None
+    return fmt, shots_lang, ext, light, dark
+
+
+def shot_image_url(page: dict, lang: str):
+    """Absolute URL of the light render for schema/og, or None."""
+    p = shot_paths(page, lang)
+    if not p:
+        return None
+    fmt, shots_lang, ext, _, _ = p
+    return f'{SITE_BASE}/screenshots/guides/{shots_lang}/{fmt}-light.{ext}'
+
+
 def shot_figure(page: dict, ui: dict, lang: str) -> str:
     """<figure> with the light and dark popup renders of the page's format
     (screenshots/guides/<ru|en>/<format>-*.png, Russian popup for the Russian pages), or '' when the
     renders are not there yet. Captured at 2x, so the intrinsic size is halved for layout."""
-    fmt = page.get('shot_format')
-    if not fmt:
+    p = shot_paths(page, lang)
+    if not p:
         return ''
-    shots_lang = 'ru' if lang == 'ru' else 'en'
+    fmt, shots_lang, ext, light, _ = p
     up = '../' if lang == 'en' else '../../'
     rel = f'{up}screenshots/guides/{shots_lang}/{fmt}'
-    light = os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-light.png')
-    dark = os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-dark.png')
-    size = png_size(light)
-    if not size or not os.path.exists(dark):
+    # dimensions come from the PNG capture (the WebP is a conversion of the same image)
+    size = png_size(os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-light.png'))
+    if not size:
         return ''
     w, h = size[0] // 2, size[1] // 2
     alt = page.get('shot_alt') or ui['shot_alt_default']
     caption = page.get('shot_caption') or ui['shot_caption_default']
     return (f'    <figure class="shot">\n'
-            f'        <img class="shot-light" src="{rel}-light.png" width="{w}" height="{h}" loading="lazy" alt="{alt}">\n'
-            f'        <img class="shot-dark" src="{rel}-dark.png" width="{w}" height="{h}" loading="lazy" alt="{alt}">\n'
+            f'        <img class="shot-light" src="{rel}-light.{ext}" width="{w}" height="{h}" loading="lazy" alt="{alt}">\n'
+            f'        <img class="shot-dark" src="{rel}-dark.{ext}" width="{w}" height="{h}" loading="lazy" alt="{alt}">\n'
             f'        <figcaption>{caption}</figcaption>\n'
             f'    </figure>\n')
+
+
+def extension_version() -> str:
+    """Version of the extension the guides describe: manifest.json of the sibling net-route
+    checkout when present, otherwise the highest x.y.z in the home pages' footers."""
+    manifest = os.path.join(ROOT, '..', 'net-route', 'manifest.json')
+    if os.path.exists(manifest):
+        with open(manifest, encoding='utf-8') as f:
+            return json.load(f).get('version', '')
+    versions = []
+    for prefix in ('', 'ru/', 'es/', 'zh/'):
+        path = os.path.join(ROOT, prefix, 'index.html')
+        if os.path.exists(path):
+            with open(path, encoding='utf-8') as f:
+                versions += re.findall(r'<span>NetRoute v(\d+\.\d+\.\d+)</span>', f.read())
+    return max(versions, key=lambda v: tuple(int(x) for x in v.split('.'))) if versions else ''
 
 
 def render_page(lang: str, slug: str, page: dict, ui: dict, all_pages: dict, today: str) -> str:
     prefix, html_lang, locale, _, short = LANGS[lang]
     canonical = url_of(lang, slug)
+    version = extension_version()
     # Only the language versions that exist are linked (the guides are written one language at a
     # time); rerunning the generator adds the links once a version appears
     present = [code for code in LANGS if (code, slug) in all_pages]
@@ -166,12 +206,17 @@ def render_page(lang: str, slug: str, page: dict, ui: dict, all_pages: dict, tod
         'totalTime': page['howto'].get('total_time', 'PT5M'),
         'step': [{'@type': 'HowToStep', 'name': s['name'], 'text': s['text']} for s in page['howto']['steps']],
     })
+    # the article image list: the site banner plus this page's own popup render when it exists
+    images = [f'{SITE_BASE}/screenshots/promo-large.png']
+    shot_url = shot_image_url(page, lang)
+    if shot_url:
+        images.append(shot_url)
     article = jsonld({
         '@context': 'https://schema.org',
         '@type': 'TechArticle',
         'headline': page['title'].split(' | ')[0],
         'description': page['description'],
-        'image': f'{SITE_BASE}/screenshots/promo-large.png',
+        'image': images,
         'inLanguage': html_lang,
         'datePublished': page.get('date_published', today),
         'dateModified': today,
@@ -229,6 +274,10 @@ def render_page(lang: str, slug: str, page: dict, ui: dict, all_pages: dict, tod
     <meta property="og:image:width" content="1400">
     <meta property="og:image:height" content="560">
     <meta property="og:locale" content="{locale}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{page['og_title']}">
+    <meta name="twitter:description" content="{page['og_description']}">
+    <meta name="twitter:image" content="{SITE_BASE}/screenshots/promo-large.png">
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="{up}favicon.svg">
@@ -279,6 +328,7 @@ def render_page(lang: str, slug: str, page: dict, ui: dict, all_pages: dict, tod
 <article class="guide">
     <a href="../" class="back">{ui['back']}</a>
     <h1>{page['h1']}</h1>
+    <p class="guide-date">{ui['updated']} <time datetime="{today}">{today}</time> &middot; NetRoute {ui['version_word']} {version}</p>
     <p class="lead">{page['lead']}</p>
 {body_sections}
     <h2 id="dns-leak">{page['dns_leak']['h2']}</h2>

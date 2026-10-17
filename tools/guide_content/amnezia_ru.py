@@ -7,8 +7,8 @@
 #                исходники amnezia-client, ветка dev: client/core/controllers/ipSplitTunnelingController.cpp
 #                (importSitesFromJson: массив объектов hostname/ips/ip, без резолва; exportSitesToJson)
 PAGE = {
-    'title': 'Список сайтов AmneziaVPN из любого сайта: раздельное туннелирование по адресам — инструкция | NetRoute',
-    'description': 'Как получить в NetRoute файл для импорта в AmneziaVPN с адресами и подсетями сайта и включить раздельное туннелирование сайтов: режимы, импорт через меню ⋮, ограничения IPv4 и Amnezia Free.',
+    'title': 'Список сайтов AmneziaVPN для split tunneling — инструкция | NetRoute',
+    'description': 'Как получить в NetRoute файл для импорта в AmneziaVPN с адресами и подсетями сайта и включить раздельное туннелирование сайтов: режимы, импорт через ⋮, IPv4.',
     'keywords': 'amnezia split tunneling, amneziavpn раздельное туннелирование, amnezia список сайтов, amnezia импорт ip-list.json, amnezia только адреса из списка через vpn, amneziawg split tunneling сайты, amnezia подсети сервиса',
     'og_title': 'Список сайтов AmneziaVPN из любого сайта',
     'og_description': 'NetRoute собирает адреса и подсети сайта в файл для импорта в AmneziaVPN — раздельное туннелирование сайтов за три шага.',

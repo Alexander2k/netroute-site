@@ -15,6 +15,8 @@ UI = {
     'cta_h3': '¿Listo para probar?',
     'cta_p': 'NetRoute — extensión gratuita de Chrome para generar rutas desde cualquier sitio web.',
     'cta_btn': 'Instalar extensión',
+    'updated': 'Actualizado',
+    'version_word': 'versión',
     'shot_alt_default': 'Popup de NetRoute tras escanear github.com: el formato seleccionado y el resultado en la pestaña Rutas',
     'shot_caption_default': 'Así se ve el resultado en NetRoute: el formato elegido en «SO de destino», la salida en la pestaña «Rutas». Datos del escaneo: una página de github.com.',
     'classic_names': {

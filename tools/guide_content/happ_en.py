@@ -1,8 +1,8 @@
 # Guide: Happ routing profile. English.
 # Same facts and sources as happ_ru.py (verified 2026-10-17); extension labels from _locales/en.
 PAGE = {
-    'title': 'Happ routing profile from any website: domains and networks through the proxy — guide | NetRoute',
-    'description': 'How to get a Happ routing profile with the domains and networks of a website in NetRoute and add it with a happ://routing/onadd link: base64 encoding, import from the clipboard or a QR code, checking.',
+    'title': 'Happ routing profile from any website — guide | NetRoute',
+    'description': 'How to get a Happ routing profile with a website’s domains and networks in NetRoute and add it with a happ://routing/onadd link: base64, clipboard, QR code.',
     'keywords': 'happ routing, happ routing profile, happ routing onadd, happ json routing profile, happ proxysites, happ split tunneling, happ rules for a website, happ xray routing',
     'og_title': 'Happ routing profile from any website',
     'og_description': 'NetRoute turns the domains and networks of a website into a Happ routing profile. Encode it in base64, add it with a happ://routing/onadd link — only these sites go through the proxy.',

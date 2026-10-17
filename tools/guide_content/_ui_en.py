@@ -15,6 +15,8 @@ UI = {
     'cta_h3': 'Ready to try?',
     'cta_p': 'NetRoute — a free Chrome extension to generate routes from any website.',
     'cta_btn': 'Install Extension',
+    'updated': 'Updated',
+    'version_word': 'version',
     'shot_alt_default': 'NetRoute popup after scanning github.com: the selected format and the result on the Routes tab',
     'shot_caption_default': 'What the result looks like in NetRoute: the format is selected under “Target OS”, the output is on the Routes tab. Scan data: a github.com page.',
     'classic_names': {

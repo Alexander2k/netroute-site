@@ -24,6 +24,10 @@
     <meta property="og:image:width" content="1400">
     <meta property="og:image:height" content="560">
     <meta property="og:locale" content="ru_RU">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Маршруты для роутера Keenetic из BAT-файла — пошаговая инструкция">
+    <meta name="twitter:description" content="Сгенерируйте маршруты в NetRoute и загрузите BAT-файл на роутер Keenetic с привязкой к VPN-интерфейсу. Обход блокировок по доменам в один клик.">
+    <meta name="twitter:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
@@ -173,10 +177,11 @@
     <p class="lead">Keenetic умеет загружать BAT-файл в формате Windows <code>route ADD</code> и сам применять все маршруты к выбранному VPN-интерфейсу. NetRoute генерирует именно такой файл — остаётся только скачать и загрузить через веб-интерфейс роутера.</p>
 
     <figure class="shot">
-        <img class="shot-light" src="../../screenshots/guides/ru/keenetic-light.png" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат Keenetic, результат на вкладке «Маршруты»">
-        <img class="shot-dark" src="../../screenshots/guides/ru/keenetic-dark.png" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат Keenetic, результат на вкладке «Маршруты»">
+        <img class="shot-light" src="../../screenshots/guides/ru/keenetic-light.webp" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат Keenetic, результат на вкладке «Маршруты»">
+        <img class="shot-dark" src="../../screenshots/guides/ru/keenetic-dark.webp" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат Keenetic, результат на вкладке «Маршруты»">
         <figcaption>Так выглядит результат в NetRoute: формат <strong>Keenetic</strong> выбран в списке «Целевая ОС», вывод &mdash; на вкладке «Маршруты». Данные скана &mdash; страница github.com.</figcaption>
     </figure>
+
 
 
     <section id="syntax" class="syntax-block">
@@ -343,7 +348,11 @@ REM   System -&gt; Routing -&gt; Upload .bat -&gt; select VPN interface -&gt; co
         <li><a href="./mikrotik.html">MikroTik</a> — импорт <code>.rsc</code>-скрипта в RouterOS</li>
         <li><a href="./wireguard.html">WireGuard</a> — split tunneling через <code>AllowedIPs</code></li>
         <li><a href="./linux.html">Linux</a> — <code>ip route</code> через shell-скрипт</li>
-        <li><a href="./openvpn.html">OpenVPN</a> — директивы <code>route</code> в клиентском конфиге</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — директивы <code>route</code> в клиентском конфиге</li>        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; rule-set для sing-box и Hiddify</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; правила routing.rules для Xray-core, 3X-UI и v2rayN</li>
+        <li><a href="./happ.html">Happ</a> &mdash; профиль маршрутизации ссылкой happ://routing</li>
+        <li><a href="./amnezia.html">AmneziaVPN</a> &mdash; список сайтов для раздельного туннелирования</li>
+
     </ul>
 
     <div class="cta-block">

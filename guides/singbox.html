@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <script src="../theme.js"></script>
-    <title>sing-box rule-set from any website: domains and networks for Hiddify and sing-box — guide | NetRoute</title>
-    <meta name="description" content="How to get a sing-box rule-set with the domains and networks of a website in NetRoute and wire it into a sing-box or Hiddify config: route.rule_set, a rule with action route, compiling to .srs, DNS.">
+    <title>sing-box rule-set from any website for Hiddify — guide | NetRoute</title>
+    <meta name="description" content="How to get a sing-box rule-set with a website’s domains and networks in NetRoute and wire it into sing-box or Hiddify: route.rule_set, action route, .srs, DNS.">
     <meta name="keywords" content="sing-box rule-set, sing-box rule_set source, sing-box domain_suffix ip_cidr, hiddify sing-box config, sing-box srs compile, split tunneling sing-box, sing-box rules for a website, sing-box route by domain">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://alexander2k.github.io/netroute-site/guides/singbox.html">
@@ -24,6 +24,10 @@
     <meta property="og:image:width" content="1400">
     <meta property="og:image:height" content="560">
     <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="sing-box rule-set from any website: domains and networks for Hiddify and sing-box">
+    <meta name="twitter:description" content="NetRoute turns the domains and networks of a website into a sing-box rule-set. Wire it into route.rule_set with an action route rule, or compile it to .srs.">
+    <meta name="twitter:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -92,9 +96,12 @@
     {
         "@context": "https://schema.org",
         "@type": "TechArticle",
-        "headline": "sing-box rule-set from any website: domains and networks for Hiddify and sing-box — guide",
-        "description": "How to get a sing-box rule-set with the domains and networks of a website in NetRoute and wire it into a sing-box or Hiddify config: route.rule_set, a rule with action route, compiling to .srs, DNS.",
-        "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
+        "headline": "sing-box rule-set from any website for Hiddify — guide",
+        "description": "How to get a sing-box rule-set with a website’s domains and networks in NetRoute and wire it into sing-box or Hiddify: route.rule_set, action route, .srs, DNS.",
+        "image": [
+            "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
+            "https://alexander2k.github.io/netroute-site/screenshots/guides/en/singbox-light.webp"
+        ],
         "inLanguage": "en",
         "datePublished": "2026-10-16",
         "dateModified": "2026-10-17",
@@ -123,6 +130,7 @@
         .guide { max-width: 820px; margin: 0 auto; padding: 120px 32px 80px; position: relative; z-index: 1; }
         .guide h1 { font-size: 36px; margin-bottom: 12px; letter-spacing: -0.02em; }
         .guide .lead { font-size: 17px; color: var(--text-dim); line-height: 1.7; margin-bottom: 40px; }
+        .guide .guide-date { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); margin: 0 0 20px; }
         .guide h2 { font-size: 24px; margin: 48px 0 16px; color: var(--text); letter-spacing: -0.01em; }
         .guide h3 { font-size: 18px; margin: 24px 0 8px; color: var(--text); font-family: var(--font-mono); }
         .guide p, .guide li { font-size: 15px; color: var(--text-dim); line-height: 1.8; }
@@ -170,6 +178,7 @@
 <article class="guide">
     <a href="../" class="back">&larr; Back to Home</a>
     <h1>sing-box rule-set from any website: domains and networks for Hiddify and sing-box</h1>
+    <p class="guide-date">Updated <time datetime="2026-10-17">2026-10-17</time> &middot; NetRoute version 4.1.3</p>
     <p class="lead">sing-box and the clients built on it &mdash; the official sing-box apps, Hiddify, NekoBox &mdash; decide what goes through the proxy by <strong>rules</strong>: lists of domains and networks, packaged since version 1.8.0 as rule-sets. NetRoute builds such a rule-set straight from a website: open the site, click “Analyze website”, download the <code>.json</code>.</p>
 
     <h2 id="syntax">What is inside the file</h2>
@@ -188,8 +197,8 @@
     </ul>
 
     <figure class="shot">
-        <img class="shot-light" src="../screenshots/guides/en/singbox-light.png" width="480" height="664" loading="lazy" alt="NetRoute popup after scanning github.com: the selected format and the result on the Routes tab">
-        <img class="shot-dark" src="../screenshots/guides/en/singbox-dark.png" width="480" height="664" loading="lazy" alt="NetRoute popup after scanning github.com: the selected format and the result on the Routes tab">
+        <img class="shot-light" src="../screenshots/guides/en/singbox-light.webp" width="480" height="664" loading="lazy" alt="NetRoute popup after scanning github.com: the selected format and the result on the Routes tab">
+        <img class="shot-dark" src="../screenshots/guides/en/singbox-dark.webp" width="480" height="664" loading="lazy" alt="NetRoute popup after scanning github.com: the selected format and the result on the Routes tab">
         <figcaption>The NetRoute popup with the “sing-box / Hiddify / NekoBox” format: the Routes tab holds the finished rule-set, the counter shows the number of rules. Scan data: a github.com page.</figcaption>
     </figure>
 

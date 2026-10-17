@@ -24,6 +24,10 @@
     <meta property="og:image:width" content="1400">
     <meta property="og:image:height" content="560">
     <meta property="og:locale" content="es_ES">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Split Tunneling en WireGuard con AllowedIPs">
+    <meta name="twitter:description" content="Genera AllowedIPs desde dominios en NetRoute y pégalos en el config del peer WireGuard para split tunneling.">
+    <meta name="twitter:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
@@ -174,10 +178,11 @@
     <p class="lead">En WireGuard el parámetro <code>AllowedIPs</code> funciona como filtro ACL y tabla de enrutamiento a la vez. NetRoute genera la cadena <code>AllowedIPs</code> lista desde los dominios de cualquier sitio — no necesitas comandos <code>ip route</code> adicionales, solo edita el config del peer y recarga.</p>
 
     <figure class="shot">
-        <img class="shot-light" src="../../screenshots/guides/en/wireguard-light.png" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: formato WireGuard seleccionado y resultado en la pestaña Rutas">
-        <img class="shot-dark" src="../../screenshots/guides/en/wireguard-dark.png" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: formato WireGuard seleccionado y resultado en la pestaña Rutas">
+        <img class="shot-light" src="../../screenshots/guides/en/wireguard-light.webp" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: formato WireGuard seleccionado y resultado en la pestaña Rutas">
+        <img class="shot-dark" src="../../screenshots/guides/en/wireguard-dark.webp" width="480" height="632" loading="lazy" alt="Popup de NetRoute tras escanear github.com: formato WireGuard seleccionado y resultado en la pestaña Rutas">
         <figcaption>Así se ve el resultado en NetRoute: el formato <strong>WireGuard</strong> elegido en «SO de destino», la salida en la pestaña Rutas. Datos del escaneo: una página de github.com.</figcaption>
     </figure>
+
 
 
     <section id="syntax" class="syntax-block">
@@ -395,7 +400,11 @@ AllowedIPs = 1.1.1.0/24, 8.8.8.0/24, 162.159.0.0/16
         <li><a href="./keenetic.html">Keenetic</a> — rutas desde archivo <code>.bat</code></li>
         <li><a href="./mikrotik.html">MikroTik</a> — importación de script <code>.rsc</code> de RouterOS</li>
         <li><a href="./linux.html">Linux</a> — <code>ip route</code> con script shell</li>
-        <li><a href="./openvpn.html">OpenVPN</a> — directivas <code>route</code> en config cliente</li>
+        <li><a href="./openvpn.html">OpenVPN</a> — directivas <code>route</code> en config cliente</li>        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; rule-set para sing-box y Hiddify</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; routing.rules para Xray-core, 3X-UI y v2rayN</li>
+        <li><a href="./happ.html">Happ</a> &mdash; perfil de enrutamiento como enlace happ://routing</li>
+        <li><a href="./amnezia.html">AmneziaVPN</a> &mdash; lista de sitios para split tunneling</li>
+
     </ul>
 
     <div class="cta-block">

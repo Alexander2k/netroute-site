@@ -68,10 +68,12 @@ def png_size(path: str):
 
 def figure(lang: str, fmt: str) -> str:
     shots_lang = 'ru' if lang == 'ru' else 'en'
-    light = os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-light.png')
-    dark = os.path.join(ROOT, 'screenshots', 'guides', shots_lang, f'{fmt}-dark.png')
-    size = png_size(light)
-    if not size or not os.path.exists(dark):
+    folder = os.path.join(ROOT, 'screenshots', 'guides', shots_lang)
+    light_png = os.path.join(folder, f'{fmt}-light.png')
+    # the pages reference the WebP conversions when they exist (tools/convert_shots_webp.py)
+    ext = 'webp' if os.path.exists(os.path.join(folder, f'{fmt}-light.webp')) and os.path.exists(os.path.join(folder, f'{fmt}-dark.webp')) else 'png'
+    size = png_size(light_png)
+    if not size or not os.path.exists(os.path.join(folder, f'{fmt}-dark.{ext}')):
         return ''
     w, h = size[0] // 2, size[1] // 2
     # English guides live in guides/ (one level below the root), the others in <lang>/guides/
@@ -80,8 +82,8 @@ def figure(lang: str, fmt: str) -> str:
     alt = TEXT[lang]['alt'].format(name=NAMES[fmt])
     caption = TEXT[lang]['caption'].format(name=NAMES[fmt])
     return (f'    <figure class="shot">\n'
-            f'        <img class="shot-light" src="{rel}-light.png" width="{w}" height="{h}" loading="lazy" alt="{alt}">\n'
-            f'        <img class="shot-dark" src="{rel}-dark.png" width="{w}" height="{h}" loading="lazy" alt="{alt}">\n'
+            f'        <img class="shot-light" src="{rel}-light.{ext}" width="{w}" height="{h}" loading="lazy" alt="{alt}">\n'
+            f'        <img class="shot-dark" src="{rel}-dark.{ext}" width="{w}" height="{h}" loading="lazy" alt="{alt}">\n'
             f'        <figcaption>{caption}</figcaption>\n'
             f'    </figure>\n')
 

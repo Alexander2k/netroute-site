@@ -9,8 +9,8 @@
 #   3X-UI — README github.com/MHSanaei/3x-ui, docs/content/docs/ru/operations/outbounds-routing.mdx
 #   Streisand — страница в App Store (id6450534064)
 PAGE = {
-    'title': 'Правила маршрутизации Xray из любого сайта: для Xray-core, 3X-UI и v2rayN — инструкция | NetRoute',
-    'description': 'Как получить в NetRoute правила routing.rules Xray с доменами и сетями сайта и применить их в конфиге Xray-core, в настройках Xray панели 3X-UI или импортом правил в v2rayN.',
+    'title': 'Правила маршрутизации Xray для 3X-UI и v2rayN — инструкция | NetRoute',
+    'description': 'Как получить в NetRoute правила routing.rules Xray с доменами и сетями сайта и применить их в Xray-core, в Xray Settings панели 3X-UI или импортом в v2rayN.',
     'keywords': 'xray routing rules, xray правила маршрутизации, xray domain: outboundTag, xray split tunneling, 3x-ui маршрутизация, 3x-ui routing rules, v2rayn импорт правил, v2rayn routing setting, v2rayn правила маршрутизации, xray json routing',
     'og_title': 'Правила маршрутизации Xray из любого сайта',
     'og_description': 'NetRoute собирает домены и сети сайта в правила routing.rules Xray — для конфига Xray-core, панели 3X-UI и импорта в v2rayN.',

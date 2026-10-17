@@ -24,6 +24,10 @@
     <meta property="og:image:width" content="1400">
     <meta property="og:image:height" content="560">
     <meta property="og:locale" content="ru_RU">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Добавление маршрутов в OpenVPN клиент-конфиг">
+    <meta name="twitter:description" content="Генерируйте route-директивы в NetRoute, вставляйте в .ovpn конфиг и получайте split tunneling за минуту.">
+    <meta name="twitter:image" content="https://alexander2k.github.io/netroute-site/screenshots/promo-large.png">
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
@@ -174,10 +178,11 @@
     <p class="lead">OpenVPN поддерживает попоподсеточные <code>route</code> директивы в клиент-конфиге. NetRoute генерирует их из доменов любого сайта — добавьте в <code>.ovpn</code> и split tunneling готов за минуту.</p>
 
     <figure class="shot">
-        <img class="shot-light" src="../../screenshots/guides/ru/openvpn-light.png" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат OpenVPN, результат на вкладке «Маршруты»">
-        <img class="shot-dark" src="../../screenshots/guides/ru/openvpn-dark.png" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат OpenVPN, результат на вкладке «Маршруты»">
+        <img class="shot-light" src="../../screenshots/guides/ru/openvpn-light.webp" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат OpenVPN, результат на вкладке «Маршруты»">
+        <img class="shot-dark" src="../../screenshots/guides/ru/openvpn-dark.webp" width="480" height="664" loading="lazy" alt="Попап NetRoute после сканирования github.com: выбран формат OpenVPN, результат на вкладке «Маршруты»">
         <figcaption>Так выглядит результат в NetRoute: формат <strong>OpenVPN</strong> выбран в списке «Целевая ОС», вывод &mdash; на вкладке «Маршруты». Данные скана &mdash; страница github.com.</figcaption>
     </figure>
+
 
 
     <section id="syntax" class="syntax-block">
@@ -345,7 +350,11 @@ route 162.159.0.0 255.255.0.0
         <li><a href="./keenetic.html">Keenetic</a> — маршруты из BAT-файла</li>
         <li><a href="./mikrotik.html">MikroTik</a> — импорт <code>.rsc</code>-скрипта в RouterOS</li>
         <li><a href="./wireguard.html">WireGuard</a> — split tunneling через <code>AllowedIPs</code></li>
-        <li><a href="./linux.html">Linux</a> — <code>ip route</code> через shell-скрипт</li>
+        <li><a href="./linux.html">Linux</a> — <code>ip route</code> через shell-скрипт</li>        <li><a href="./singbox.html">sing-box / Hiddify</a> &mdash; rule-set для sing-box и Hiddify</li>
+        <li><a href="./xray.html">Xray / 3X-UI / v2rayN</a> &mdash; правила routing.rules для Xray-core, 3X-UI и v2rayN</li>
+        <li><a href="./happ.html">Happ</a> &mdash; профиль маршрутизации ссылкой happ://routing</li>
+        <li><a href="./amnezia.html">AmneziaVPN</a> &mdash; список сайтов для раздельного туннелирования</li>
+
     </ul>
 
     <div class="cta-block">

@@ -7,8 +7,8 @@
 #          (кнопка «+», буфер обмена, QR, диплинк), happ.su/main/dev-docs/examples-of-links-and-parameters.md
 #   Xray — xtls.github.io/config/routing.html (форма domain: в списках доменов)
 PAGE = {
-    'title': 'Профиль маршрутизации Happ из любого сайта: домены и сети через прокси — инструкция | NetRoute',
-    'description': 'Как получить в NetRoute профиль маршрутизации Happ с доменами и сетями сайта и добавить его ссылкой happ://routing/onadd: кодирование в base64, импорт из буфера обмена или QR-кода, проверка.',
+    'title': 'Профиль маршрутизации Happ из любого сайта — инструкция | NetRoute',
+    'description': 'Как получить в NetRoute профиль маршрутизации Happ с доменами и сетями сайта и добавить его ссылкой happ://routing/onadd: base64, буфер обмена, QR-код.',
     'keywords': 'happ маршрутизация, happ routing профиль, happ routing onadd, happ json профиль маршрутизации, happ proxysites, happ split tunneling, happ правила для сайта, happ xray маршрутизация',
     'og_title': 'Профиль маршрутизации Happ из любого сайта',
     'og_description': 'NetRoute собирает домены и сети сайта в профиль маршрутизации Happ. Кодируете в base64, добавляете ссылкой happ://routing/onadd — только эти сайты идут через прокси.',

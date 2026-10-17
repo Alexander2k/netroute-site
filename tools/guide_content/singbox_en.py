@@ -1,8 +1,8 @@
 # Guide: sing-box rule-set (sing-box, Hiddify and other sing-box based clients). English.
 # Same facts and sources as singbox_ru.py (verified 2026-10-16); extension labels from _locales/en.
 PAGE = {
-    'title': 'sing-box rule-set from any website: domains and networks for Hiddify and sing-box — guide | NetRoute',
-    'description': 'How to get a sing-box rule-set with the domains and networks of a website in NetRoute and wire it into a sing-box or Hiddify config: route.rule_set, a rule with action route, compiling to .srs, DNS.',
+    'title': 'sing-box rule-set from any website for Hiddify — guide | NetRoute',
+    'description': 'How to get a sing-box rule-set with a website’s domains and networks in NetRoute and wire it into sing-box or Hiddify: route.rule_set, action route, .srs, DNS.',
     'keywords': 'sing-box rule-set, sing-box rule_set source, sing-box domain_suffix ip_cidr, hiddify sing-box config, sing-box srs compile, split tunneling sing-box, sing-box rules for a website, sing-box route by domain',
     'og_title': 'sing-box rule-set from any website: domains and networks for Hiddify and sing-box',
     'og_description': 'NetRoute turns the domains and networks of a website into a sing-box rule-set. Wire it into route.rule_set with an action route rule, or compile it to .srs.',
