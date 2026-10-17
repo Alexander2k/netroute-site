@@ -71,7 +71,14 @@ Detailed instructions for applying generated routes on each platform:
 - [Linux](https://alexander2k.github.io/netroute-site/guides/linux.html) — `.sh` script with systemd-networkd / NetworkManager persistence
 - [OpenVPN](https://alexander2k.github.io/netroute-site/guides/openvpn.html) — client config `route` directives for split tunneling
 
-Each guide links to official vendor documentation and covers common pitfalls.
+Rule formats for proxy and VPN clients (NetRoute 4.1.3):
+
+- [sing-box](https://alexander2k.github.io/netroute-site/guides/singbox.html) — rule-set for sing-box and Hiddify (`route.rule_set`, `.srs`)
+- [Happ](https://alexander2k.github.io/netroute-site/guides/happ.html) — routing profile added as a `happ://routing/onadd` link
+- [Xray](https://alexander2k.github.io/netroute-site/guides/xray.html) — `routing.rules` for Xray-core, the 3X-UI panel and rule import in v2rayN
+- [AmneziaVPN](https://alexander2k.github.io/netroute-site/guides/amnezia.html) — site list for split tunneling by addresses
+
+Each guide links to official vendor documentation and covers common pitfalls. The guide pages for the rule formats are generated from `tools/guide_content/` by `tools/gen_client_guides.py`; every guide embeds a render of the real extension popup (`screenshots/guides/`, produced by `scripts/render_guide_shots.cjs` in the extension repository).
 
 ## Available Languages
 

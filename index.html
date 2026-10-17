@@ -68,7 +68,7 @@
             "https://github.com/Alexander2k/netroute-site"
         ],
         "image": "https://alexander2k.github.io/netroute-site/screenshots/promo-large.png",
-        "softwareVersion": "4.1.2",
+        "softwareVersion": "4.1.3",
         "offers": {
             "@type": "Offer",
             "price": "0",
@@ -84,7 +84,10 @@
             "Bulk URL scanning",
             "Domain blacklist with Chrome Sync",
             "Scan history with file download",
-            "Export as .bat, .sh, .rsc, .conf, .ovpn and Keenetic .bat"
+            "Export as .bat, .sh, .rsc, .conf, .ovpn, .json, .yaml, .list, .pac and Keenetic .bat",
+            "Rules for proxy clients: sing-box, Clash/mihomo, Xray, v2rayN, Happ, Shadowrocket/Surge, Quantumult X, PAC",
+            "AmneziaVPN site list for split tunneling",
+            "MikroTik address-list, Keenetic DNS routes (KeeneticOS 5), OpenWrt routes (uci)"
         ]
     }
     </script>
@@ -122,7 +125,7 @@
                 "name": "What platforms does NetRoute support?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "NetRoute generates routing commands for 9 platforms: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), OpenVPN, and Keenetic, plus your own custom template. Both IPv4 and IPv6 are supported (the Keenetic format is IPv4 only)."
+                    "text": "NetRoute outputs 21 formats. Route commands for operating systems and routers: Windows, Linux, macOS, OpenWrt, MikroTik, Cisco, Juniper, Keenetic; rules for VPN and proxy clients: WireGuard (AllowedIPs), OpenVPN, AmneziaVPN, sing-box, Clash/mihomo, Xray, v2rayN, Happ, Shadowrocket/Surge, Quantumult X and PAC; lists for routers: MikroTik address-list and Keenetic DNS routes (KeeneticOS 5). Plus your own template. IPv4 and IPv6 are supported; the Keenetic .bat, AmneziaVPN and PAC formats are IPv4 only."
                 }
             },
             {
@@ -139,6 +142,14 @@
                 "acceptedAnswer": {
                     "@type": "Answer",
                     "text": "NetRoute discovers all domains on a webpage (including AJAX, CDN, and API requests via Service Worker) and resolves them to IP addresses over DNS-over-HTTPS: in Auto mode the query goes to Cloudflare, Google, Quad9, AdGuard and your own DoH servers in parallel and the first successful answer wins; with a chosen provider only that one is asked; answers are cached, and when DoH is blocked the IPs come from the browser’s own connections. It then aggregates the IPs into optimized CIDR subnets and generates platform-specific routing commands."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does NetRoute work with proxy clients such as Hiddify, Happ or v2rayN?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Pick the client’s format under “Target OS” and NetRoute outputs rules with the site’s domains and networks instead of route commands: a rule-set for sing-box (Hiddify, NekoBox), a rule-provider for Clash/mihomo, routing.rules for Xray and the 3X-UI panel, a rule import file for v2rayN, a Happ routing profile, a rule list for Shadowrocket/Surge and Quantumult X, a PAC file and a site list for AmneziaVPN. Domains are folded to suffixes; the networks are the same as in the routes."
                 }
             },
             {
@@ -181,7 +192,7 @@
         <a href="./" class="logo">
             <span class="logo-icon">&#9678;</span>
             <span class="logo-text">NetRoute</span>
-            <span class="logo-ver">v4.1.2</span>
+            <span class="logo-ver">v4.1.3</span>
         </a>
         <div class="nav-links">
             <a href="#features">Features</a>
@@ -215,7 +226,7 @@
         </h1>
         <p class="hero-sub">
             Discover every domain on a webpage. Resolve to IPs.<br>
-            Generate optimized routing commands for <strong>9 platforms</strong> instantly.
+            Generate routes and rules for <strong>21 formats</strong> instantly: routers, operating systems, VPN and proxy clients.
         </p>
         <div class="hero-actions">
             <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" class="btn btn-primary" target="_blank" rel="noopener">
@@ -231,7 +242,7 @@
                 <span class="terminal-title">example_com_route.sh</span>
             </div>
             <pre class="terminal-body"><code><span class="t-comment">#!/bin/bash</span>
-<span class="t-comment"># NetRoute v4.1.2 — generated 2026-10-13</span>
+<span class="t-comment"># NetRoute v4.1.3 — generated 2026-10-17</span>
 
 <span class="t-cmd">ip route add</span> <span class="t-ip">104.21.32.0/24</span> via <span class="t-gw">10.0.0.1</span>
 <span class="t-cmd">ip route add</span> <span class="t-ip">172.67.182.0/24</span> via <span class="t-gw">10.0.0.1</span>
@@ -323,6 +334,20 @@
         </div>
         <div class="feature-card">
             <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M4 6h16M4 12h9M4 18h6"/><circle cx="17.5" cy="16.5" r="3.5"/><path d="M20 19l2 2"/></svg>
+            </div>
+            <h3>Rules for proxy clients</h3>
+            <p>The same domains and networks as rules: sing-box (Hiddify), Clash/mihomo, Xray and 3X-UI, v2rayN, Happ, Shadowrocket/Surge, Quantumult X, PAC &mdash; and a site list for AmneziaVPN.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01M11 7h6M11 17h6"/></svg>
+            </div>
+            <h3>Lists for routers</h3>
+            <p>MikroTik address-list and Keenetic DNS routes (KeeneticOS 5) instead of hundreds of routes; persistent OpenWrt routes via uci.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
             </div>
             <h3>Scan History</h3>
@@ -398,8 +423,8 @@
 <section class="platforms" id="platforms">
     <div class="section-header">
         <span class="section-tag">// supported formats</span>
-        <h2>9 Platform Formats</h2>
-        <p>Native command syntax for every major OS and network equipment vendor.</p>
+        <h2>21 Output Formats</h2>
+        <p>Route commands for operating systems and routers, rules for VPN and proxy clients &mdash; each in its native syntax.</p>
     </div>
     <div class="platform-table-wrap">
         <table class="platform-table">
@@ -456,6 +481,66 @@
                     <td><code>route {net} {mask}</code></td>
                     <td><code>route-ipv6</code></td>
                 </tr>
+                <tr>
+                    <td><span class="platform-badge badge-os">OpenWrt</span></td>
+                    <td><code>uci add network route</code></td>
+                    <td><code>uci add network route6</code></td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge badge-hw">MikroTik address-list</span></td>
+                    <td><code>/ip firewall address-list add</code></td>
+                    <td><code>/ipv6 firewall address-list add</code></td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge badge-hw">Keenetic DNS routes</span></td>
+                    <td><code>object-group fqdn … include</code></td>
+                    <td><code>include {cidr}</code></td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge badge-vpn">AmneziaVPN</span></td>
+                    <td><code>{"hostname", "ips", "ip"}</code></td>
+                    <td>IPv4 only</td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge badge-proxy">sing-box</span></td>
+                    <td><code>domain_suffix</code>, <code>ip_cidr</code></td>
+                    <td><code>ip_cidr</code></td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge badge-proxy">Clash / mihomo</span></td>
+                    <td><code>DOMAIN-SUFFIX</code>, <code>IP-CIDR</code></td>
+                    <td><code>IP-CIDR6</code></td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge badge-proxy">Xray / 3X-UI</span></td>
+                    <td><code>domain:</code>, <code>ip</code></td>
+                    <td><code>ip</code></td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge badge-proxy">v2rayN</span></td>
+                    <td><code>domain[]</code>, <code>ip[]</code></td>
+                    <td><code>ip[]</code></td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge badge-proxy">Happ</span></td>
+                    <td><code>ProxySites</code>, <code>ProxyIp</code></td>
+                    <td><code>ProxyIp</code></td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge badge-proxy">Shadowrocket / Surge</span></td>
+                    <td><code>DOMAIN-SUFFIX</code>, <code>IP-CIDR</code></td>
+                    <td><code>IP-CIDR6</code></td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge badge-proxy">Quantumult X</span></td>
+                    <td><code>host-suffix</code>, <code>ip-cidr</code></td>
+                    <td><code>ip6-cidr</code></td>
+                </tr>
+                <tr>
+                    <td><span class="platform-badge badge-proxy">PAC</span></td>
+                    <td><code>dnsDomainIs</code>, <code>isInNet</code></td>
+                    <td>IPv4 only</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -464,8 +549,8 @@
 <!-- STATS BAR -->
 <section class="stats-bar">
     <div class="stat">
-        <span class="stat-value">9</span>
-        <span class="stat-label">Platform Formats</span>
+        <span class="stat-value">21</span>
+        <span class="stat-label">Output Formats</span>
     </div>
     <div class="stat">
         <span class="stat-value">5</span>
@@ -476,8 +561,8 @@
         <span class="stat-label">+IPv6 Support</span>
     </div>
     <div class="stat">
-        <span class="stat-value">7</span>
-        <span class="stat-label">Export Formats</span>
+        <span class="stat-value">12</span>
+        <span class="stat-label">File Types</span>
     </div>
     <div class="stat">
         <span class="stat-value">4</span>
@@ -513,6 +598,22 @@
             <h3>OpenVPN &mdash; route directives</h3>
             <p>Append <code>route</code> lines to your client <code>.ovpn</code>. Use with <code>route-nopull</code>.</p>
         </a>
+        <a class="feature-card" href="guides/singbox.html" style="text-decoration:none;display:block;">
+            <h3>sing-box &mdash; rule-set</h3>
+            <p>The site’s domains and networks as a rule-set for sing-box and Hiddify: <code>route.rule_set</code>, compiling to <code>.srs</code>.</p>
+        </a>
+        <a class="feature-card" href="guides/happ.html" style="text-decoration:none;display:block;">
+            <h3>Happ &mdash; routing profile</h3>
+            <p>A JSON profile with the <code>ProxySites</code> and <code>ProxyIp</code> lists; into the app as a <code>happ://routing/onadd</code> link.</p>
+        </a>
+        <a class="feature-card" href="guides/xray.html" style="text-decoration:none;display:block;">
+            <h3>Xray &mdash; routing.rules</h3>
+            <p>Rules for an Xray-core config, the 3X-UI panel and import into v2rayN.</p>
+        </a>
+        <a class="feature-card" href="guides/amnezia.html" style="text-decoration:none;display:block;">
+            <h3>AmneziaVPN &mdash; site list</h3>
+            <p>Hosts with addresses and subnets for split tunneling, import via the ⋮ menu.</p>
+        </a>
     </div>
 </section>
 
@@ -525,7 +626,7 @@
     <div class="faq-list">
         <details class="faq-item">
             <summary>What platforms does NetRoute support?</summary>
-            <div class="faq-answer">NetRoute generates routing commands for 9 platforms: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), OpenVPN, and Keenetic, plus your own custom template. Both IPv4 and IPv6 are supported (the Keenetic format is IPv4 only).</div>
+            <div class="faq-answer">NetRoute outputs 21 formats. Route commands for operating systems and routers: Windows, Linux, macOS, OpenWrt, MikroTik, Cisco, Juniper, Keenetic; rules for VPN and proxy clients: WireGuard (AllowedIPs), OpenVPN, AmneziaVPN, sing-box, Clash/mihomo, Xray, v2rayN, Happ, Shadowrocket/Surge, Quantumult X and PAC; lists for routers: MikroTik address-list and Keenetic DNS routes (KeeneticOS 5). Plus your own template. IPv4 and IPv6 are supported; the Keenetic .bat, AmneziaVPN and PAC formats are IPv4 only.</div>
         </details>
         <details class="faq-item">
             <summary>Is NetRoute free?</summary>
@@ -534,6 +635,10 @@
         <details class="faq-item">
             <summary>How does NetRoute generate routes from a website?</summary>
             <div class="faq-answer">NetRoute discovers all domains on a webpage (including AJAX, CDN, and API requests via Service Worker) and resolves them to IP addresses over DNS-over-HTTPS: in Auto mode the query goes to Cloudflare, Google, Quad9, AdGuard and your own DoH servers in parallel and the first successful answer wins; with a chosen provider only that one is asked; answers are cached, and when DoH is blocked the IPs come from the browser’s own connections. It then aggregates the IPs into optimized CIDR subnets and generates platform-specific routing commands.</div>
+        </details>
+        <details class="faq-item">
+            <summary>Does NetRoute work with proxy clients such as Hiddify, Happ or v2rayN?</summary>
+            <div class="faq-answer">Yes. Pick the client’s format under “Target OS” and NetRoute outputs rules with the site’s domains and networks instead of route commands: a rule-set for sing-box (Hiddify, NekoBox), a rule-provider for Clash/mihomo, routing.rules for Xray and the 3X-UI panel, a rule import file for v2rayN, a Happ routing profile, a rule list for Shadowrocket/Surge and Quantumult X, a PAC file and a site list for AmneziaVPN. Domains are folded to suffixes; the networks are the same as in the routes.</div>
         </details>
         <details class="faq-item">
             <summary>Can I use NetRoute for VPN split tunneling?</summary>
@@ -568,6 +673,10 @@
                 <a href="guides/wireguard.html">WireGuard</a>
                 <a href="guides/linux.html">Linux</a>
                 <a href="guides/openvpn.html">OpenVPN</a>
+                <a href="guides/singbox.html">sing-box</a>
+                <a href="guides/happ.html">Happ</a>
+                <a href="guides/xray.html">Xray</a>
+                <a href="guides/amnezia.html">AmneziaVPN</a>
             </div>
             <div class="footer-col">
                 <h4>Resources</h4>
@@ -581,7 +690,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <span>NetRoute v4.1.2</span>
+        <span>NetRoute v4.1.3</span>
     </div>
 </footer>
 
