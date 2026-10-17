@@ -1,4 +1,4 @@
-# Инструкция: список сайтов AmneziaVPN для раздельного туннелирования. Русский.
+# Инструкция: список сайтов AmneziaVPN для split tunneling. Русский.
 #
 # Источники фактов (проверены 2026-10-17):
 #   NetRoute — popup.html, _locales/ru/messages.json, modules/RuleFormats.js
@@ -8,13 +8,13 @@
 #                (importSitesFromJson: массив объектов hostname/ips/ip, без резолва; exportSitesToJson)
 PAGE = {
     'title': 'Список сайтов AmneziaVPN для split tunneling — инструкция | NetRoute',
-    'description': 'Как получить в NetRoute файл для импорта в AmneziaVPN с адресами и подсетями сайта и включить раздельное туннелирование сайтов: режимы, импорт через ⋮, IPv4.',
+    'description': 'Как получить в NetRoute файл для импорта в AmneziaVPN с адресами и подсетями сайта и включить split tunneling по сайтам: режимы, импорт через ⋮, IPv4.',
     'keywords': 'amnezia split tunneling, amneziavpn раздельное туннелирование, amnezia список сайтов, amnezia импорт ip-list.json, amnezia только адреса из списка через vpn, amneziawg split tunneling сайты, amnezia подсети сервиса',
     'og_title': 'Список сайтов AmneziaVPN из любого сайта',
-    'og_description': 'NetRoute собирает адреса и подсети сайта в файл для импорта в AmneziaVPN — раздельное туннелирование сайтов за три шага.',
+    'og_description': 'NetRoute собирает адреса и подсети сайта в файл для импорта в AmneziaVPN — split tunneling по сайтам за три шага.',
     'breadcrumb': 'AmneziaVPN',
     'h1': 'Список сайтов AmneziaVPN из любого сайта',
-    'lead': 'AmneziaVPN умеет пускать через VPN только адреса из списка &mdash; это «раздельное туннелирование сайтов». Список состоит из IPv4-адресов и подсетей, и собрать его вручную для сайта с десятками доменов долго. NetRoute делает это со страницы: открыли сайт, нажали «Анализировать сайт», скачали файл для импорта.',
+    'lead': 'AmneziaVPN умеет пускать через VPN только адреса из списка &mdash; это split tunneling по сайтам, в интерфейсе приложения он называется «Раздельное туннелирование». Список состоит из IPv4-адресов и подсетей, и собрать его вручную для сайта с десятками доменов долго. NetRoute делает это со страницы: открыли сайт, нажали «Анализировать сайт», скачали файл для импорта.',
     'howto': {
         'name': 'Как импортировать список сайтов NetRoute в AmneziaVPN',
         'description': 'Сгенерируйте список AmneziaVPN в расширении NetRoute, импортируйте файл в параметрах раздельного туннелирования сайтов через меню ⋮ и включите режим «Только адреса из списка должны открываться через VPN».',
@@ -22,7 +22,7 @@ PAGE = {
         'steps': [
             {'name': 'Сгенерируйте список в NetRoute', 'text': 'Откройте нужный сайт в Chrome, запустите NetRoute, в списке «Целевая ОС» выберите «AmneziaVPN (site list)», нажмите «Анализировать сайт» и скачайте файл <сайт>_rules.json.'},
             {'name': 'Импортируйте файл в AmneziaVPN', 'text': 'Откройте параметры раздельного туннелирования сайтов, в меню ⋮ выберите импорт — «Заменить список с сайтами» или «Добавить импортированные сайты к существующим» — и укажите файл.'},
-            {'name': 'Включите режим и подключитесь', 'text': 'Выберите режим «Только адреса из списка должны открываться через VPN», включите раздельное туннелирование и подключитесь к VPN.'},
+            {'name': 'Включите режим и подключитесь', 'text': 'Выберите режим «Только адреса из списка должны открываться через VPN», включите split tunneling и подключитесь к VPN.'},
         ],
     },
     'sections': [
@@ -45,7 +45,7 @@ PAGE = {
         {
             'h2': 'Что понадобится',
             'html': '''    <ul>
-        <li>Приложение <a href="https://amnezia.org/" target="_blank" rel="noopener">AmneziaVPN</a> с настроенным подключением. По документации раздельное туннелирование по адресам недоступно в Amnezia Free</li>
+        <li>Приложение <a href="https://amnezia.org/" target="_blank" rel="noopener">AmneziaVPN</a> с настроенным подключением. По документации split tunneling по адресам недоступен в Amnezia Free</li>
         <li>Платформа с туннелированием по адресам: по документации iOS, macOS и Linux поддерживают только его, Windows и Android &mdash; и по адресам, и по приложениям</li>
         <li>Расширение <a href="https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla" target="_blank" rel="noopener">NetRoute</a> в Chrome</li>
     </ul>''',
@@ -78,7 +78,7 @@ PAGE = {
             'h2': 'Шаг 3. Включите режим и подключитесь',
             'html': '''    <ol>
         <li>Выберите режим <strong>Только адреса из списка должны открываться через VPN</strong> &mdash; через туннель пойдут только сайты из файла, остальной трафик напрямую. Второй режим, <strong>Адреса из списка не должны открываться через VPN</strong>, делает наоборот: исключает список из туннеля</li>
-        <li>Включите раздельное туннелирование сайтов</li>
+        <li>Включите split tunneling по сайтам</li>
         <li>Подключитесь к VPN</li>
     </ol>''',
         },
@@ -106,11 +106,11 @@ PAGE = {
     ],
     'dns_leak': {
         'h2': 'DNS и утечки',
-        'html': '''    <p>Раздельное туннелирование AmneziaVPN работает по адресам: в туннель уходит трафик к адресам из списка, а DNS-запросы браузера идут туда, куда настроен его резолвер. Если это резолвер провайдера, он видит имена сайтов, даже когда сам трафик идёт через VPN. В Chrome отключите «Использовать безопасный DNS» или укажите в нём резолвер, которому доверяете; настройки DNS самого AmneziaVPN смотрите в его документации.</p>
+        'html': '''    <p>Split tunneling в AmneziaVPN работает по адресам: в туннель уходит трафик к адресам из списка, а DNS-запросы браузера идут туда, куда настроен его резолвер. Если это резолвер провайдера, он видит имена сайтов, даже когда сам трафик идёт через VPN. В Chrome отключите «Использовать безопасный DNS» или укажите в нём резолвер, которому доверяете; настройки DNS самого AmneziaVPN смотрите в его документации.</p>
     <p>Проверка: <a href="https://www.dnsleaktest.com/" target="_blank" rel="noopener">dnsleaktest.com</a> при подключённом VPN покажет, чей резолвер отвечает на ваши запросы.</p>''',
     },
     'official_docs': [
-        {'url': 'https://docs.amnezia.org/ru/documentation/instructions/vpn-split-tunneling', 'label': 'AmneziaVPN: раздельное туннелирование &mdash; режимы, импорт, ограничения (ru)'},
+        {'url': 'https://docs.amnezia.org/ru/documentation/instructions/vpn-split-tunneling', 'label': 'AmneziaVPN: split tunneling &mdash; режимы, импорт, ограничения (ru)'},
         {'url': 'https://github.com/amnezia-vpn/amnezia-client', 'label': 'AmneziaVPN: исходный код клиента &mdash; формат импорта в ipSplitTunnelingController (en)'},
         {'url': 'https://amnezia.org/blog/what-is-split-tunneling-and-why-you-need-it', 'label': 'Amnezia: что такое split tunneling (en)'},
     ],
@@ -122,8 +122,8 @@ PAGE = {
         'badge': 'vpn',
         'badge_label': 'VPN-клиент',
         'title': 'AmneziaVPN',
-        'text': 'Список сайтов для раздельного туннелирования: хосты с IPv4-адресами и подсети, импорт через меню ⋮.',
+        'text': 'Список сайтов для split tunneling: хосты с IPv4-адресами и подсети, импорт через меню ⋮.',
     },
-    'related_desc': 'список сайтов для раздельного туннелирования',
+    'related_desc': 'список сайтов для split tunneling',
     'date_published': '2026-10-17',
 }

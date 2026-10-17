@@ -81,7 +81,7 @@ TEXTS = {
         'feature_old': '"Экспорт в .bat, .sh, .rsc, .conf, .ovpn и .bat для Keenetic"',
         'feature_new': ('"Экспорт в .bat, .sh, .rsc, .conf, .ovpn, .json, .yaml, .list, .pac и .bat для Keenetic",\n'
                         '            "Правила для прокси-клиентов: sing-box, Clash/mihomo, Xray, v2rayN, Happ, Shadowrocket/Surge, Quantumult X, PAC",\n'
-                        '            "Список сайтов AmneziaVPN для раздельного туннелирования",\n'
+                        '            "Список сайтов AmneziaVPN для split tunneling",\n'
                         '            "MikroTik address-list, DNS-маршруты Keenetic (KeeneticOS 5), маршруты OpenWrt (uci)"'),
         'faq1_old': 'NetRoute генерирует команды маршрутизации для 9 платформ: Windows, Linux, macOS, MikroTik, Cisco, Juniper, WireGuard (AllowedIPs), OpenVPN и Keenetic, а также по вашему собственному шаблону. Поддерживаются IPv4 и IPv6 (формат Keenetic — только IPv4).',
         'faq1_new': 'NetRoute выдаёт 21 формат. Команды маршрутов для систем и роутеров: Windows, Linux, macOS, OpenWrt, MikroTik, Cisco, Juniper, Keenetic; правила для VPN- и прокси-клиентов: WireGuard (AllowedIPs), OpenVPN, AmneziaVPN, sing-box, Clash/mihomo, Xray, v2rayN, Happ, Shadowrocket/Surge, Quantumult X и PAC; списки для роутеров: MikroTik address-list и DNS-маршруты Keenetic (KeeneticOS 5). Плюс свой шаблон. Поддерживаются IPv4 и IPv6; форматы Keenetic .bat, AmneziaVPN и PAC — только IPv4.',
@@ -106,7 +106,7 @@ TEXTS = {
             ('guides/singbox.html', 'sing-box &mdash; rule-set', 'Домены и сети сайта как rule-set для sing-box и Hiddify: <code>route.rule_set</code>, компиляция в <code>.srs</code>.'),
             ('guides/happ.html', 'Happ &mdash; профиль маршрутизации', 'JSON-профиль со списками <code>ProxySites</code> и <code>ProxyIp</code>; в приложение &mdash; ссылкой <code>happ://routing/onadd</code>.'),
             ('guides/xray.html', 'Xray &mdash; routing.rules', 'Правила для конфига Xray-core, панели 3X-UI и импорта в v2rayN.'),
-            ('guides/amnezia.html', 'AmneziaVPN &mdash; список сайтов', 'Хосты с адресами и подсети для раздельного туннелирования, импорт через меню ⋮.'),
+            ('guides/amnezia.html', 'AmneziaVPN &mdash; список сайтов', 'Хосты с адресами и подсети для split tunneling, импорт через меню ⋮.'),
         ],
         'guides_anchor_href': 'guides/openvpn.html',
         'footer_links': [('guides/singbox.html', 'sing-box'), ('guides/happ.html', 'Happ'), ('guides/xray.html', 'Xray'), ('guides/amnezia.html', 'AmneziaVPN')],
