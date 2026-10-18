@@ -259,7 +259,8 @@ def render_page(lang: str, slug: str, page: dict, ui: dict, all_pages: dict, tod
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="{CSP}">
-    <script src="{up}theme.js"></script>
+    <script>try{{var t=localStorage.getItem('netroute-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}}catch(e){{}}</script>
+    <script src="{up}theme.js" defer></script>
     <title>{page['title']}</title>
     <meta name="description" content="{page['description']}">
     <meta name="keywords" content="{page['keywords']}">
@@ -281,8 +282,7 @@ def render_page(lang: str, slug: str, page: dict, ui: dict, all_pages: dict, tod
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="{up}favicon.svg">
-    <link rel="preload" as="style" href="{up}style.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{up}style.css"></noscript>
+    <link rel="stylesheet" href="{up}style.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="{FONTS}" onload="this.onload=null;this.rel='stylesheet'">

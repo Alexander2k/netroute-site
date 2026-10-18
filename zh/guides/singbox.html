@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
-    <script src="../../theme.js"></script>
+    <script>try{var t=localStorage.getItem('netroute-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+    <script src="../../theme.js" defer></script>
     <title>从任意网站生成 sing-box rule-set：Hiddify 与 sing-box 的域名和网段 — 指南 | NetRoute</title>
     <meta name="description" content="如何在 NetRoute 中获取包含网站域名和网段的 sing-box rule-set，并将其接入 sing-box 或 Hiddify 配置：route.rule_set、带 action route 的规则、编译为 .srs、DNS。">
     <meta name="keywords" content="sing-box rule-set, sing-box rule_set source, sing-box domain_suffix ip_cidr, hiddify sing-box 配置, sing-box srs 编译, sing-box 分流, sing-box 网站规则, sing-box 按域名路由">
@@ -31,8 +32,7 @@
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-    <link rel="preload" as="style" href="../../style.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="../../style.css"></noscript>
+    <link rel="stylesheet" href="../../style.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap" onload="this.onload=null;this.rel='stylesheet'">

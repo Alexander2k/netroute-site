@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
-    <script src="../../theme.js"></script>
+    <script>try{var t=localStorage.getItem('netroute-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+    <script src="../../theme.js" defer></script>
     <title>从任意网站生成 Happ 路由配置文件：让域名和网段走代理 — 指南 | NetRoute</title>
     <meta name="description" content="如何在 NetRoute 中获取包含网站域名和网段的 Happ 路由配置文件，并通过 happ://routing/onadd 链接添加：base64 编码、从剪贴板或二维码导入、检查。">
     <meta name="keywords" content="happ routing, happ 路由配置文件, happ routing onadd, happ json routing profile, happ proxysites, happ 分流, happ 网站规则, happ xray 路由">
@@ -31,8 +32,7 @@
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-    <link rel="preload" as="style" href="../../style.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="../../style.css"></noscript>
+    <link rel="stylesheet" href="../../style.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap" onload="this.onload=null;this.rel='stylesheet'">

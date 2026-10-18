@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
-    <script src="../../theme.js"></script>
+    <script>try{var t=localStorage.getItem('netroute-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+    <script src="../../theme.js" defer></script>
     <title>Añadir rutas en Linux mediante script .sh — Guía paso a paso | NetRoute</title>
     <meta name="description" content="Cómo aplicar rutas generadas en Linux. Ejecuta el script .sh de NetRoute, haz las rutas persistentes con systemd-networkd, NetworkManager o cron. Sirve para Ubuntu, Debian, Fedora, Arch.">
     <meta name="keywords" content="linux ip route add script, linux vpn split tunnel, systemd-networkd rutas estáticas, networkmanager rutas, rutas persistentes linux">
@@ -31,8 +32,7 @@
     <meta name="theme-color" content="#0e1117">
 
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-    <link rel="preload" as="style" href="../../style.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="../../style.css"></noscript>
+    <link rel="stylesheet" href="../../style.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap" onload="this.onload=null;this.rel='stylesheet'">

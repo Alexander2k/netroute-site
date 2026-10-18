@@ -541,16 +541,35 @@ def check_csp_meta(path: str, content: str, fails: Failures):
 
 
 def check_no_render_blocking_css(path: str, content: str, fails: Failures):
-    """Stylesheets loaded synchronously block first paint and hurt LCP/FCP.
-    Each <link rel="stylesheet"> should either (a) be inside <noscript> as a
-    fallback, or (b) come from a <link rel="preload" as="style" onload=...>
-    pair. Any sync <link rel="stylesheet"> outside <noscript> fails this check.
+    """Third-party stylesheets (fonts) must not block the first paint: they load through
+    <link rel="preload" as="style" onload=...> with a <noscript> fallback.
+    The site's OWN stylesheet (style.min.css) is the one allowed render-blocking link: loading it
+    async painted the first frame unstyled and shifted the whole body when it arrived
+    (Lighthouse CLS 0.43 on desktop, 2026-10-18).
     """
     # Strip <noscript> blocks (sync stylesheets there are intentional fallbacks)
     stripped = re.sub(r'<noscript>.*?</noscript>', '', content, flags=re.DOTALL)
     blockers = re.findall(r'<link\s+[^>]*rel="stylesheet"[^>]*>', stripped)
     for b in blockers:
+        if re.search(r'href="[^"]*style\.min\.css"', b):
+            continue
         fails.add(path, f'render-blocking stylesheet: {b}')
+
+
+def check_own_stylesheet(path: str, content: str, fails: Failures):
+    """Every page loads the minified own stylesheet directly (no async swap -> no layout shift)."""
+    if not re.search(r'<link rel="stylesheet" href="[^"]*style\.min\.css">', content):
+        fails.add(path, 'page does not load style.min.css as a regular stylesheet')
+
+
+def check_no_render_blocking_scripts(path: str, content: str, fails: Failures):
+    """External scripts in <head> must not block the first paint: each <script src> there needs
+    `defer` or `async` (the theme is applied before paint by a tiny inline script instead).
+    """
+    head = content.split('</head>', 1)[0]
+    for tag in re.findall(r'<script\s[^>]*src="[^"]+"[^>]*>', head):
+        if not re.search(r'\b(defer|async)\b', tag):
+            fails.add(path, f'render-blocking script in <head>: {tag}')
 
 
 def _resolve_relative_url(from_path: str, href: str) -> tuple[str, str]:
@@ -747,6 +766,8 @@ def main():
         check_guide_comments_toggle_note(path, content, fails)
         check_guide_article_schema(path, content, fails)
         check_no_render_blocking_css(path, content, fails)
+        check_no_render_blocking_scripts(path, content, fails)
+        check_own_stylesheet(path, content, fails)
         check_csp_meta(path, content, fails)
         check_linux_guide_persistence(path, content, fails)
         check_keenetic_guide_correct_cli(path, content, fails)

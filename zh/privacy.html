@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
-    <script src="../theme.js"></script>
+    <script>try{var t=localStorage.getItem('netroute-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+    <script src="../theme.js" defer></script>
     <title>隐私政策 — NetRoute</title>
     <meta name="description" content="NetRoute 隐私政策：无跟踪、无分析、不收集个人数据。说明扩展发出的网络请求和本地存储的数据，所有处理都在您的浏览器中本地进行。">
     <meta name="robots" content="index, follow">
@@ -26,8 +27,7 @@
     <link rel="alternate" hreflang="es" href="https://alexander2k.github.io/netroute-site/es/privacy.html">
     <link rel="alternate" hreflang="zh" href="https://alexander2k.github.io/netroute-site/zh/privacy.html">
     <link rel="alternate" hreflang="x-default" href="https://alexander2k.github.io/netroute-site/privacy.html">
-    <link rel="preload" as="style" href="../style.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="../style.css"></noscript>
+    <link rel="stylesheet" href="../style.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap" onload="this.onload=null;this.rel='stylesheet'">

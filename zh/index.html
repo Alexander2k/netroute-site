@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
-    <script src="../theme.js"></script>
+    <script>try{var t=localStorage.getItem('netroute-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+    <script src="../theme.js" defer></script>
     <title>WireGuard、Keenetic、MikroTik、Cisco 路由生成器 — NetRoute Chrome 扩展</title>
     <meta name="description" content="免费Chrome扩展：从网站域名生成VPN分流路由。支持WireGuard AllowedIPs、Keenetic .bat、MikroTik .rsc、Cisco、OpenVPN。隐私优先，无数据收集。">
     <meta name="keywords" content="路由生成器, 域名转IP路由, wireguard allowedips生成器, mikrotik路由, vpn分流路由, cisco ip route生成器, openvpn路由, CIDR聚合工具, BGP路由优化, DNS解析器, 网络路由自动化, 选择性VPN路由">
@@ -43,8 +44,7 @@
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="icon" type="image/png" href="../favicon.png">
     <link rel="apple-touch-icon" href="../icon.png">
-    <link rel="preload" as="style" href="../style.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="../style.css"></noscript>
+    <link rel="stylesheet" href="../style.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@300..800&family=Google+Sans+Flex:wght,ROND@400..800,0..100&display=swap" onload="this.onload=null;this.rel='stylesheet'">

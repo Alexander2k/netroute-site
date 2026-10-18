@@ -1,8 +1,10 @@
 /*
  * Theme switch for the NetRoute site.
- * Loaded synchronously in <head> so a saved choice applies before the first paint
- * (no light flash on a dark page). Without a saved choice the system preference
- * (prefers-color-scheme) decides, as before. The toggle button is added to the top bar.
+ * A saved choice is applied before the first paint by a one-line inline script in each
+ * page's <head> (tools/defer_theme_script.py); this file is loaded with `defer` so it no
+ * longer blocks rendering, and applies the saved theme again (harmless). Without a saved
+ * choice the system preference (prefers-color-scheme) decides, as before. The toggle button
+ * is added to the top bar.
  */
 (function () {
     'use strict';
