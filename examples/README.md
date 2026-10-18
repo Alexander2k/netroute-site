@@ -19,7 +19,7 @@ Ready-to-edit configuration templates for each platform supported by [NetRoute](
 | [`amnezia-sites.json`](amnezia-sites.json) | AmneziaVPN | Site list for import (hosts with addresses, subnets) |
 | [`openwrt-routes.sh`](openwrt-routes.sh) | OpenWrt | Persistent routes via `uci` |
 
-The rule-format examples are rendered by the extension's own `RuleFormats` module from a fixed sample scan (a github.com page), so they match the 4.1.3 output exactly; JSON formats carry no comments.
+The rule-format examples are rendered by the extension's own `RuleFormats` module from a fixed sample scan (a github.com page), so they match the 4.1.4 output exactly; JSON formats carry no comments.
 
 Each file contains inline comments explaining the syntax and how to apply it. Replace the example IPs/CIDRs with output from the [NetRoute Chrome extension](https://chromewebstore.google.com/detail/netroute-domain-to-ip-map/binkmcoafjdoalbbbakpaojbknjmdmla) for your target sites.
 

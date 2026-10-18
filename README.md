@@ -71,7 +71,7 @@ Detailed instructions for applying generated routes on each platform:
 - [Linux](https://alexander2k.github.io/netroute-site/guides/linux.html) — `.sh` script with systemd-networkd / NetworkManager persistence
 - [OpenVPN](https://alexander2k.github.io/netroute-site/guides/openvpn.html) — client config `route` directives for split tunneling
 
-Rule formats for proxy and VPN clients (NetRoute 4.1.3):
+Rule formats for proxy and VPN clients (NetRoute 4.1.4):
 
 - [sing-box](https://alexander2k.github.io/netroute-site/guides/singbox.html) — rule-set for sing-box and Hiddify (`route.rule_set`, `.srs`)
 - [Happ](https://alexander2k.github.io/netroute-site/guides/happ.html) — routing profile added as a `happ://routing/onadd` link
